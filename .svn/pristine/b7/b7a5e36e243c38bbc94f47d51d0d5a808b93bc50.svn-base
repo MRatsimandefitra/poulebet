@@ -1,0 +1,102 @@
+{% extends 'BackAdminBundle::layout.html.twig' %}
+{% block title %} {{ parent() }} {% endblock %}
+{% block ariane %} {{ parent() }} {% endblock %}
+
+{% block page %}
+
+    <div class="box-header-response">
+        {{ 'Listes des Membres'|trans }}
+    </div>
+    <div class="box-response">
+        <div class="search">
+            <label class="white" for="">
+                Afficher
+            </label>
+            <select>
+                <option value="0">0</option>
+                <option value="0">10</option>
+                <option value="0">20</option>
+                <option value="0">30</option>
+            </select>
+            <label class="white" for="">
+                Entrees
+            </label>
+        </div>
+        <table class="table-user">
+            <thead>
+            <td>{{ 'Nom d\' Utilisateur'|trans }}</td>
+            <td>{{ 'E-mail'|trans }}</td>
+            <td>{{ 'Pays'|trans }}</td>
+            <td>{{ 'Nombre de pronos'|trans }}</td>
+            <td>{{ 'Score total'|trans }}</td>
+            {#{% if is_granted('ROLE_SUPER_ADMIN') %}#}
+            <td>{{ 'Actions'|trans }}</td>
+            {#{% endif %}#}
+            </thead>
+            <tbody>
+            {% for row in entities %}
+                <tr>
+                    <td>
+                        {{ row.username }}
+                    </td>
+                    <td>
+                        {{ row.email }}
+                    </td>
+                    <td>
+                        {% if row.pays is not null %}
+                            {{ row.pays }}
+                        {% else %}
+                            ---
+                        {% endif %}
+                    </td>
+                    <td>
+                        ---
+                    </td>
+                    <td>
+                        ---
+                    </td>
+                    {#{% if is_granted('ROLE_SUPER_ADMIN') %}#}
+                    <td>
+                        <a href="{{ path('update_admin_utilisateur', {'id': row.id }) }}"> {{ 'Update'|trans }}</a> |
+                        <a href="{{ path('remove_admin_utilisateur', {'id': row.id }) }}"> {{ 'Delete'|trans }}</a> |
+                        <a href="{{ path('details_admin_utilisateur', {'id': row.id }) }}"> {{ 'Details'|trans }}</a>
+                    </td>
+                    {#{% endif %}#}
+
+                </tr>
+            {% endfor %}
+            </tbody>
+            <thead>
+            <td>{{ 'Nom d\' Utilisateur'|trans }}</td>
+            <td>{{ 'E-mail'|trans }}</td>
+            <td>{{ 'Pays'|trans }}</td>
+            <td>{{ 'Nombre de pronos'|trans }}</td>
+            <td>{{ 'Score total'|trans }}</td>
+            {#{% if is_granted('ROLE_SUPER_ADMIN') %}#}
+            <td>{{ 'Actions'|trans }}</td>
+            {#{% endif %}#}
+            </thead>
+        </table>
+        <div class="search">
+            <label class="white" for="">
+                Afficher
+
+                Entrees
+            </label>
+
+            <div class="pagignation">
+                <ul class="pagination">
+                    <li>
+
+                    </li>
+                    <li>
+
+                    </li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

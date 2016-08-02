@@ -1,0 +1,78 @@
+{% extends "BackSignupBundle::layout.html.twig" %}
+{% block title %} {{ parent() }} {% endblock %}
+{% block ariane %} {{ parent() }} {% endblock %}
+
+{% block page %}
+    <div class="col-md-7">
+
+    </div>
+    <div class="col-md-5">
+        <div class="login">
+
+            {#<form action="&#123;&#35;{{ path("fos_user_security_check") }}&#35;&#125;" method="post">#}
+            {# {% if error %}
+                 <div class="error">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+             {% endif %}#}
+
+            {#  <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>#}
+            {{ form_start(form) }}
+            <div class="error">
+                {% if form_errors(form) %}
+                    <div class="error">
+                        {{ form_errors(form) }}
+                    </div>
+                {% endif %}
+
+            </div>
+                <div class="box-login-input">
+                    <img class="logo-input" src="{{ asset('images/icon/usergnome.png') }}" height="25" width="25"/>
+                    {#<input type="text" placeholder="{{ 'security.login.username'|trans }}" id="username"
+                           name="_username" value="" required="required"/>#}
+                    {{ form_widget(form.username, {'attr': {'placeholder': 'security.login.username' }}) }}
+                    {{ form_errors(form.username) }}
+                </div>
+            <div class="box-login-input">
+                <img class="logo-input" src="{{ asset('images/icon/usergnome.png') }}" height="25" width="25"/>
+                {#<input type="text" placeholder="{{ 'security.login.username'|trans }}" id="username"
+                       name="_username" value="" required="required"/>#}
+                    {{ form_widget(form.email, {'attr': {'placeholder': 'security.login.email' }}) }}
+                    {{ form_errors(form.email) }}
+                </div>
+                <div class="box-login-input">
+                    <img class="logo-input" src="{{ asset('images/icon/gadana.png') }}" height="25" width="25"/>
+                    {#<input type="password" id="password" name="_password" required="required"
+                           placeholder="{{ 'security.login.password'|trans }}"/>#}
+                    {{ form_widget(form.password, {'attr': {'placeholder': 'security.login.password' }}) }}
+                    {{ form_errors(form.email) }}
+                </div>
+                <div class="box-login-input">
+                    <img class="logo-input" src="{{ asset('images/icon/gadana.png') }}" height="25" width="25"/>
+                    {#<input type="password" id="password" name="_password" required="required"
+                           placeholder="{{ 'security.login.password'|trans }}"/>#}
+                    {{ form_widget(form.nomAdmin, {'attr': {'placeholder': 'security.login.nomAdmin' }}) }}
+                    {{ form_errors(form.nomAdmin) }}
+                </div>
+            <div class="box-login-input">
+                <img class="logo-input" src="{{ asset('images/icon/gadana.png') }}" height="25" width="25"/>
+                {#<input type="password" id="password" name="_password" required="required"
+                       placeholder="{{ 'security.login.password'|trans }}"/>#}
+                {{ form_widget(form.prenomAdmin, {'attr': {'placeholder': 'security.login.prenomAdmin' }}) }}
+                {{ form_errors(form.prenomAdmin) }}
+            </div>
+
+            {#<div class="box-login-input">
+                <input type="checkbox" id="remember_me" name="_remember_me" value="on"/>
+                <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+            </div>#}
+                <div class="box-login-input">
+                    <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}"/>
+                </div>
+            {#</form>#}
+            {{ form_end(form) }}
+        </div>
+        <div class="login">
+            {#<a href="{{ path('fos_user_registration_register') }}"> Je souhaite créer un compte </a> <br />#}
+            {#<a href="{{ path('fos_user_resetting_check_email') }}"> J'ai oubiée mon mot de passe</a> <br />#}
+        </div>
+    </div>
+{% endblock page %}

@@ -1,0 +1,47 @@
+# http://symfony.com/doc/current/book/security.html
+security:
+
+    # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
+    encoders:
+            Api\DBBundle\Entity\User: bcrypt
+    role_hierarchy:
+        ROLE_PREMIUM:     [ROLE_VOYAGEUR,ROLE_USER]
+        ROLE_GUIDE:       ROLE_USER
+        ROLE_API:         ROLE_USER
+        ROLE_HEBERGEMENT:       ROLE_USER
+        ROLE_LOCATAIRE:       ROLE_USER
+        ROLE_AGENCE:       ROLE_USER
+        ROLE_ORGANISATEUR:       ROLE_USER
+        ROLE_PRO:         [ROLE_USER,ROLE_GUIDE,ROLE_HEBERGEMENT, ROLE_LOCATAIRE, ROLE_AGENCE, ROLE_ORGANISATEUR]
+        ROLE_ADMIN:       [ROLE_USER, ROLE_PRO, ROLE_GUIDE]
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_DEVELOPPER: ROLE_SUPER_ADMIN
+    providers:
+        mainuser:
+            entity:
+                class: ApiDBBundle:User
+                property: email
+
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        main:
+            anonymous: ~
+            pattern: ^/
+            provider: mainuser
+            form_login:
+                login_path: login
+                check_path: login_check
+                always_use_default_target_path: true
+                default_target_path: /
+            logout:
+                path: logout
+                target: /
+
+    access_control:
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/hebergements/compte/, roles: ROLE_HEBERGEMENT }
+        #- { path: ^/admin, roles: ROLE_ADMIN }

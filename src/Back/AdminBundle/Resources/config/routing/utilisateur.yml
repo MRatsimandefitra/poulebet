@@ -1,0 +1,13 @@
+index_admin_utilisateur:
+    path:     /
+    defaults: { _controller: BackAdminBundle:Utilisateur:index }
+update_admin_utilisateur:
+    path:     /update/{id}
+    defaults: { _controller: BackAdminBundle:Utilisateur:update }
+
+remove_admin_utilisateur:
+    path:     /remove/{id}
+    defaults: { _controller: BackAdminBundle:Utilisateur:remove }
+details_admin_utilisateur:
+    path:     /details/{id}
+    defaults: { _controller: BackAdminBundle:Utilisateur:details }

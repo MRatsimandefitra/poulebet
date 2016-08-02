@@ -1,0 +1,13 @@
+{% extends '::basegmt.html.twig' %}
+{% block title %}{{ parent() }}{% endblock %}
+{% block ariane %}{{ parent() }}{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="users">
+
+        {% block page %}
+
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}

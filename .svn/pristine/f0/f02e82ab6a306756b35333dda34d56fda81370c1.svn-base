@@ -1,0 +1,4 @@
+services:
+#    ws_rest.example:
+#        class: Ws\RestBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]

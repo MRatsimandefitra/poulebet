@@ -1,0 +1,106 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#eceeef+0,f6f6f6+52,eceeef+100 */
+
+}
+
+header {
+    min-height: 150px;
+
+}
+
+header div.box-top {
+    min-height: 120px;
+    border: 1px solid #c4c4c3;
+    /* background: rgb(236, 238, 239); *//* Old browsers *//*
+     background: -moz-radial-gradient(center, ellipse cover, rgba(236, 238, 239, 1) 0%, rgba(246, 246, 246, 1) 52%, rgba(236, 238, 239, 1) 100%); *//* FF3.6-15 *//*
+     background: -webkit-radial-gradient(center, ellipse cover, rgba(236, 238, 239, 1) 0%, rgba(246, 246, 246, 1) 52%, rgba(236, 238, 239, 1) 100%); *//* Chrome10-25,Safari5.1-6 *//*
+     background: radial-gradient(ellipse at center, rgba(236, 238, 239, 1) 0%, rgba(246, 246, 246, 1) 52%, rgba(236, 238, 239, 1) 100%); *//* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ *//*
+     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eceeef', endColorstr='#eceeef', GradientType=1); *//* IE6-9 fallback on horizontal gradient *//*
+     padding: 5px;*/
+    background-color: #e9e9e9;
+}
+
+header div.box-top div.box-header {
+    border-bottom: 1px solid #c4c4c3;
+    height: 20px;
+    padding: 5px;
+}
+
+div.contenu {
+    padding: 30px;
+}
+
+header ul.menu {
+
+    margin-top: 15px;
+    margin-left: 15px;
+}
+
+header ul.menu li {
+    list-style: none;
+    display: inline-block;
+    margin-left: 35px;
+}
+
+header ul.menu li img {
+    display: block;
+}
+
+header ul.menu li a {
+    color: #68676d;
+    text-align: center;
+}
+
+div.layout {
+
+}
+
+div.box-response {
+    border: 1px solid #c4c4c3;
+    min-height: 200px;
+    background-color: #f2f2f2;
+    padding: 25px;
+}
+
+div.box-header-response {
+    background-color: #e9e9e9;
+    border-top: 1px solid #c4c4c3;
+    border-left: 1px solid #c4c4c3;
+    border-right: 1px solid #c4c4c3;
+    padding: 8px;
+
+}
+
+div.search {
+    background-color: #00acec;
+    padding: 5px;
+    color: #FFF;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table thead {
+    background-color: #c1dffd;
+
+}
+
+table, th, td {
+    border: 1px solid #c4c4c3;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2
+}

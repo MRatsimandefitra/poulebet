@@ -1,0 +1,3 @@
+ws_rest_homepage:
+    path:     /
+    defaults: { _controller: WsRestBundle:Default:index }

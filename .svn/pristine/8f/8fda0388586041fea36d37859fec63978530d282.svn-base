@@ -1,0 +1,43 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'form_login'}}) }}
+
+<div>
+    {{ form_errors(form.nom) }}
+    <div>{{ form_label(form.nom) }}</div>
+    <div>{{ form_widget(form.nom) }}</div>
+</div>
+<div>
+    {{ form_errors(form.prenom) }}
+    <div>{{ form_label(form.prenom) }}</div>
+    <div>{{ form_widget(form.prenom) }}</div>
+</div>
+<div>
+    {{ form_errors(form.username) }}
+    <div>{{ form_label(form.username) }}</div>
+    <div>{{ form_widget(form.username) }}</div>
+</div>
+<div>
+    {{ form_errors(form.email) }}
+    <div>{{ form_label(form.email) }}</div>
+    <div>{{ form_widget(form.email) }}</div>
+</div>
+<div>
+    {{ form_errors(form.plainPassword.first) }}
+    <div>{{ form_label(form.plainPassword.first) }}</div>
+    <div>{{ form_widget(form.plainPassword.first) }}</div>
+</div>
+<div>
+    {{ form_errors(form.plainPassword.second) }}
+    <div>
+        {{ form_label(form.plainPassword.second) }}
+    </div>
+    <div>
+        {{ form_widget(form.plainPassword.second) }} 
+    </div>
+
+</div>
+<div>
+    <input type="submit" value="{{ 'registration.submit'|trans }}" />
+</div>
+{{ form_end(form) }}

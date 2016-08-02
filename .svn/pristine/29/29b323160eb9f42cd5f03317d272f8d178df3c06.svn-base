@@ -1,0 +1,9 @@
+{% extends '::admin.html.twig' %}
+{% block title %} {{ parent() }} {% endblock %}
+{% block ariane %} {{ parent() }} {% endblock %}
+
+{% block body %}
+    {% block page %}
+
+    {% endblock %}
+{% endblock %}
