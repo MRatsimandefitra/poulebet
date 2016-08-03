@@ -5,3 +5,11 @@ index_admin:
 route_prefix_utilisateur:
     resource: "@BackAdminBundle/Resources/config/routing/utilisateur.yml"
     prefix:   /utilisateurs
+route_prefix_administrateurs:
+    resource: "@BackAdminBundle/Resources/config/routing/administrator.yml"
+    prefix:   /administrateurs
+
+route_prefix_admin_email:
+    resource: "@BackAdminBundle/Resources/config/routing/email.yml"
+    prefix:   /emails
+

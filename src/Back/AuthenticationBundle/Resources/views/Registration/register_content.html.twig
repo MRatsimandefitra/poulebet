@@ -1,43 +1,36 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'form_login'}}) }}
-
+{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'form_login form-group'}}) }}
 <div>
-    {{ form_errors(form.nom) }}
-    <div>{{ form_label(form.nom) }}</div>
-    <div>{{ form_widget(form.nom) }}</div>
+    <h3>{{'registration.inscription'|trans}}</h3>
 </div>
 <div>
-    {{ form_errors(form.prenom) }}
-    <div>{{ form_label(form.prenom) }}</div>
-    <div>{{ form_widget(form.prenom) }}</div>
+    <div class="error">{{ form_errors(form.nom) }}</div>
+    <div>{{ form_widget(form.nom,{'attr':{'class':'form-control input-sm','placeholder':'form.nom'|trans }} ) }}</div>
 </div>
 <div>
-    {{ form_errors(form.username) }}
-    <div>{{ form_label(form.username) }}</div>
-    <div>{{ form_widget(form.username) }}</div>
+    <div class="error">{{ form_errors(form.prenom) }}</div>
+    <div>{{ form_widget(form.prenom,{'attr':{'class':'form-control input-sm','placeholder':'form.prenom'|trans}}) }}</div>
 </div>
 <div>
-    {{ form_errors(form.email) }}
-    <div>{{ form_label(form.email) }}</div>
-    <div>{{ form_widget(form.email) }}</div>
+    <div class="error">{{ form_errors(form.username) }}</div>
+    <div>{{ form_widget(form.username,{'attr':{'class':'form-control input-sm' ,'placeholder':'form.username'|trans  }}) }}</div>
 </div>
 <div>
-    {{ form_errors(form.plainPassword.first) }}
-    <div>{{ form_label(form.plainPassword.first) }}</div>
-    <div>{{ form_widget(form.plainPassword.first) }}</div>
+    <div class="error">{{ form_errors(form.email) }}</div>
+    <div>{{ form_widget(form.email,{'attr':{'class':'form-control input-sm' ,'placeholder':'form.email'|trans }}) }}</div>
 </div>
 <div>
-    {{ form_errors(form.plainPassword.second) }}
+    <div class="error">{{ form_errors(form.plainPassword.first) }}</div>
+    <div>{{ form_widget(form.plainPassword.first,{'attr':{'class':'form-control input-sm' ,'placeholder':'form.password'|trans }}) }}</div>
+</div>
+<div>
+    <div class="error">{{ form_errors(form.plainPassword.second)}}</div>
     <div>
-        {{ form_label(form.plainPassword.second) }}
+        {{ form_widget(form.plainPassword.second,{'attr':{'class':'form-control input-sm'  ,'placeholder':'form.password_confirmation'|trans  }}) }} 
     </div>
-    <div>
-        {{ form_widget(form.plainPassword.second) }} 
-    </div>
-
 </div>
 <div>
-    <input type="submit" value="{{ 'registration.submit'|trans }}" />
+    <input class ="btn btn-primary" type="submit" value="{{ 'registration.submit'|trans }}" />
 </div>
 {{ form_end(form) }}

@@ -1,0 +1,3 @@
+index_admin_email:
+    path:     /
+    defaults: { _controller: BackAdminBundle:Email:index }

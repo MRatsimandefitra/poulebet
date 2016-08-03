@@ -1,0 +1,60 @@
+{% extends 'BackAdminBundle::layout.html.twig' %}
+{% block title %} {{ parent() }} {% endblock %}
+{% block ariane %} {{ parent() }} {% endblock %}
+
+{% block page %}
+    <div class="box-header-response">
+        {{ 'Listes des administrateurs'|trans }}
+    </div>
+    <div class="box-response">
+        {#{{ form(form) }}#}
+        <form action="{{ path('edit_administrator', {'id': id}) }}" method="post">
+            <table class="table">
+                <tr>
+                    <td>{{ 'Fonctionalité'|trans }}</td>
+                    <td>{{ 'Lecture'|trans }}</td>
+                    <td>{{ 'Ecriture'|trans }}</td>
+                    <td>{{ 'Modification'|trans }}</td>
+                    <td>{{ 'Suppression'|trans }}</td>
+                    {#<td>
+                        {{ 'Actions'|trans }}
+                    </td>#}
+                </tr>
+
+                {% for row in droitAdminData %}
+                    {{ row.lecture }}
+                    <tr>
+                        <td>
+                            <input type="text" disabled="true" value="{{ row.droit.fonctionnalite }}"/>
+                        </td>
+                        <td>
+                            {% if verify(row.id) %}
+                                <input type="checkbox" name="lecture_{{ row.id }}" checked="true"/>
+                            {% else %}
+                                <input type="checkbox" name="lecture_{{ row.id }}" checked="false"/>
+                            {% endif %}
+                            {#{{ form_widget(form.lecture) }}#}
+                        </td>
+                        <td>
+                            <input type="checkbox" name="modification_{{ row.id }}"/>
+                            {#{{ form_widget(form.modification) }}#}
+                        </td>
+                        <td>
+                            <input type="checkbox" name="suppression_{{ row.id }}"/>
+                            {#{{ form_widget(form.suppression) }}#}
+                        </td>
+                        <td>
+                            <input type="checkbox" name="ajout_{{ row.id }}"/>
+                            {#{{ form_widget(form.ajout) }}#}
+                        </td>
+                        {#<td>
+
+                        </td>#}
+                    </tr>
+
+                {% endfor %}
+            </table>
+            <input type="submit" value="send">
+        </form>
+    </div>
+{% endblock %}

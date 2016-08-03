@@ -1,0 +1,76 @@
+{% extends 'BackAdminBundle::layout.html.twig' %}
+{% block title %} {{ parent() }} {% endblock %}
+{% block ariane %} {{ parent() }} {% endblock %}
+
+{% block page %}
+    <div class="box-header-response">
+        {{ 'Listes des administrateurs'|trans }}
+    </div>
+    <div class="box-response">
+        <div class="search">
+            <label class="white" for="">
+                Afficher
+            </label>
+            <select>
+                <option value="0">0</option>
+                <option value="0">10</option>
+                <option value="0">20</option>
+                <option value="0">30</option>
+            </select>
+            <label class="white" for="">
+                Entrees
+            </label>
+        </div>
+        <table class="table-user">
+            <thead>
+            <td>{{ 'Id'|trans }}</td>
+            <td>{{ 'email'|trans }}</td>
+            <td>{{ 'nom'|trans }}</td>
+            <td>{{ 'prenom'|trans }}</td>
+            <td>{{ 'Roles'|trans }}</td>
+            <td>{{ "Actions"|trans }}</td>
+            </thead>
+            <tbody>
+            {% for row in entities %}
+                <tr>
+                    <td>
+                        {{ row.id }}
+                    </td>
+                    <td>
+                        {{ row.email }}
+                    </td>
+                    <td>
+                        {{ row.nom }}
+                    </td>
+                    <td>
+                        {{ row.prenom }}
+                    </td>
+                    <td>
+                        ROLES
+                    </td>
+                    <td>
+                        <a href="{{ path('edit_administrator', {'id': row.id }) }}"> {{ 'Edit'|trans }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            <thead>
+            <td>{{ 'Id'|trans }}</td>
+            <td>{{ 'email'|trans }}</td>
+            <td>{{ 'nom'|trans }}</td>
+            <td>{{ 'prenom'|trans }}</td>
+            <td>{{ 'Roles'|trans }}</td>
+            <td>{{ "Actions"|trans }}</td>
+            </thead>
+        </table>
+        <div class="search">
+            <label class="white" for="">
+                Afficher
+
+                Entrees
+            </label>
+
+
+        </div>
+    </div>
+{% endblock %}

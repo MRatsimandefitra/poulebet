@@ -13,12 +13,12 @@ use Doctrine\ORM\Mapping as ORM;
 class DroitAdmin
 {
     /**
-     * @@ORM\ManyToOne(targetEntity="Droit", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Droit", cascade={"persist"})
      * @ORM\JoinColumn(name="droit_id")
      */
     private $droit;
     /**
-     * @@ORM\ManyToOne(targetEntity="Admin", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Admin", cascade={"persist"})
      * @ORM\JoinColumn(name="admin_id")
      */
     private $admin;
@@ -165,4 +165,5 @@ class DroitAdmin
     {
         return $this->ajout;
     }
+
 }

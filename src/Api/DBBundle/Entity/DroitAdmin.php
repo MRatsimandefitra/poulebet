@@ -13,12 +13,12 @@ use Doctrine\ORM\Mapping as ORM;
 class DroitAdmin
 {
     /**
-     * @@ORM\ManyToOne(targetEntity="Droit", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Droit", cascade={"persist"})
      * @ORM\JoinColumn(name="droit_id")
      */
     private $droit;
     /**
-     * @@ORM\ManyToOne(targetEntity="Admin", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Admin", cascade={"persist"})
      * @ORM\JoinColumn(name="admin_id")
      */
     private $admin;
@@ -164,5 +164,54 @@ class DroitAdmin
     public function getAjout()
     {
         return $this->ajout;
+    }
+
+
+    /**
+     * Set droit
+     *
+     * @param \Api\DBBundle\Entity\Droit $droit
+     *
+     * @return DroitAdmin
+     */
+    public function setDroit(\Api\DBBundle\Entity\Droit $droit = null)
+    {
+        $this->droit = $droit;
+
+        return $this;
+    }
+
+    /**
+     * Get droit
+     *
+     * @return \Api\DBBundle\Entity\Droit
+     */
+    public function getDroit()
+    {
+        return $this->droit;
+    }
+
+    /**
+     * Set admin
+     *
+     * @param \Api\DBBundle\Entity\Admin $admin
+     *
+     * @return DroitAdmin
+     */
+    public function setAdmin(\Api\DBBundle\Entity\Admin $admin = null)
+    {
+        $this->admin = $admin;
+
+        return $this;
+    }
+
+    /**
+     * Get admin
+     *
+     * @return \Api\DBBundle\Entity\Admin
+     */
+    public function getAdmin()
+    {
+        return $this->admin;
     }
 }

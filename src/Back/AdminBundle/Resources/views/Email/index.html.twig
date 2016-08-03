@@ -1,0 +1,21 @@
+{% extends 'BackAdminBundle::layout.html.twig' %}
+{% block title %} {{ parent() }} {% endblock %}
+{% block ariane %} {{ parent() }} {% endblock %}
+
+{% block page %}
+<div class="box-header-response">
+    {{ 'Listes des Membres'|trans }}
+</div>
+<div class="box-response">
+    <div class="col-lg-12">
+        <form action="" method="post">
+            {{ 'Ajouter une nouvelle adresse email : '|trans }}
+            <input type="email" name="email" /> {{ '@poulebet.com'|trans }}
+            <input type="submit" value="{{ 'Créer'|trans }}" />
+         </form>
+    </div>
+    <div class="col-lg-12">
+        {{ form(form) }}
+    </div>
+</div>
+{% endblock %}
