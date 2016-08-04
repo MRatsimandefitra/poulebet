@@ -1,0 +1,19 @@
+{% extends 'BackAdminBundle::layout.html.twig' %}
+{% block title %} {{ parent() }} {% endblock %}
+{% block ariane %} {{ parent() }} {% endblock %}
+
+{% block page %}
+    <div class="box-header-response">
+        {{ 'Listes des roles assignés'|trans }}
+    </div>
+    <div class="box-response">
+        {{ form_start(form) }}
+        {{ form_row(form.lecture) }}
+        {{ form_row(form.modification) }}
+        {{ form_row(form.suppression) }}
+        {{ form_row(form.ajout) }}
+        {{ form_row(form.droit) }}
+        <input type="submit" name="{{ 'send'|trans }}"/>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

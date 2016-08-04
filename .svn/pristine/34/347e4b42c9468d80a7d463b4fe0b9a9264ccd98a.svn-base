@@ -1,0 +1,22 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<form  class="form_login form-group" action="{{ path('fos_user_resetting_send_email') }}" method="POST">
+    <div>
+        <h3>{{ 'resetting.request.title'|trans }}</h3>
+    </div>
+    <div>
+        {% if invalid_username is defined %}
+            <p>{{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}) }}</p>
+        {% else %} 
+            <p>{{ 'resetting.request.libelle1'|trans }}</p>
+            <p>{{ 'resetting.request.libelle2'|trans }}</p>
+        {% endif %}
+    </div>
+    <div>
+        <input class="form-control input-sm" type="text" id="username" name="username" required="required" />
+    </div>    
+    <div>
+        <input class ="btn btn-primary" type="submit" value="{{ 'resetting.request.submit'|trans }}" />
+        <input class ="btn btn-default" type="button" value="{{ 'resetting.request.cancel'|trans }}" />
+    </div>
+</form>

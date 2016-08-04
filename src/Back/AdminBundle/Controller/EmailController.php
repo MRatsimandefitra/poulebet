@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class EmailController extends ApiController
 {
-    const FORM_EMAIL = 'Api\DBBundle\Request\Email';
+    const FORM_EMAIL = 'Api\DBBundle\Form\EmailBoType';
     const FORM_LIST_EMAIL = 'Api\DBBundle\Request\ListEmail';
 
     public function indexAction(Request $request)
@@ -18,16 +18,53 @@ class EmailController extends ApiController
         if (!$utilisateur) {
             $utilisateur = new Utilisateur();
         }
+        $emai = $request->request->get('email');
+        if(!isset($emai) && $emai != null && $emai != ""){
+            die('sans ajout email');
+            $utilisateur->setEmail($request->request->get('email'));
+            if($this->setInUtilisateur($utilisateur, $request)){
+                $this->get('doctrine.orm.entity_manager')->persist($utilisateur);
+                $this->get('doctrine.orm.entity_manager')->flush();
+            }
+
+        }
+
         $form = $this->formPost(self::FORM_EMAIL, $utilisateur);
+
         $form->handleRequest($request);
+
         if ($form->isValid()) {
-            $utilisateur->setUsername($form['email']->getData());
+
+           // var_dump($this->setInUtilisateur($utilisateur, $request)); die;
+            if(is_object($utilisateur->getEmail())){
+                $utilisateur = $utilisateur->getEmail();
+            }
+            if($this->setInUtilisateur($utilisateur, $request)){
+                $this->get('doctrine.orm.entity_manager')->persist($utilisateur);
+                $this->get('doctrine.orm.entity_manager')->flush();
+                $this->addFlash('success' , 'success');
+                return $this->redirectToRoute('index_admin_email');
+            }else{
+                $this->addFlash('error', 'error');
+                return $this->redirectToRoute('index_admin_email');
+            }
+        }
+        return $this->render('BackAdminBundle:Email:index.html.twig', array(
+            'form' => $form->createView()
+        ));
+    }
+
+    private function setInUtilisateur($utilisateur, $request){
+        try{
+            $utilisateur->setUsername($utilisateur->getEmail());
+
             $utilisateur->setIsEnable(true);
             $utilisateur->setSalt('bcrypt');
             $utilisateur->setRoles(array('ROLE_USER'));
             $utilisateur->setNom('anonymous');
             $utilisateur->setPrenom('anonymous');
-
+            $utilisateur->setDateNaissance(new \DateTime('now'));
+            $utilisateur->setDateCreation(new \DateTime('now'));
             $factory = $this->get('security.encoder_factory');
             $encoder = $factory->getEncoder($utilisateur);
             $password = $encoder->encodePassword($request->request->get('password'), $utilisateur->getSalt());
@@ -35,15 +72,16 @@ class EmailController extends ApiController
 
 
             $utilisateur->setCreatedAt(new \DateTime('now'));
-            //$utilisateur->setUserToken(md5(md5(uniqid($utilisateur->getUsername() . '' . $utilisateur->getPassword(), true));
 
-            $this->get('doctrine.orm.entity_manager')->persist($utilisateur);
-            $this->get('doctrine.orm.entity_manager')->flush();
+            $utilisateur->setUserToken(md5(uniqid('keyword', true)));
 
+            return true;
+        }catch(\Exception $e){
+            return false;
         }
-        return $this->render('BackAdminBundle:Email:index.html.twig', array(
-            'form' => $form->createView()
-        ));
+
+
     }
+
 
 }

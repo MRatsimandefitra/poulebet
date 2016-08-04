@@ -14,6 +14,7 @@ class AdministratorController extends ApiController
     const ENTITY_DROIT_ADMIN = 'ApiDBBundle:DroitAdmin';
     const FORM_ADMIN = 'Api\DBBundle\Form\AdminType';
     const FORM_ADMIN_DROIT = 'Api\DBBundle\Form\DroitAdminType';
+    const FORM_ADMIN_DROIT_ADD_ROLES = 'Api\DBBundle\Form\DroitAdminRoleType';
 
     public function indexAction()
     {
@@ -24,6 +25,67 @@ class AdministratorController extends ApiController
 
         ));
     }
+
+    public function listRolesAction($idAdmin)
+    {
+        $entity = $this->getRepoFrom(self::ENTITY_DROIT_ADMIN, array('admin' => $this->getRepoFormId(self::ENTITY_ADMIN, $idAdmin)));
+        if (!$entity) {
+            return $this->redirectToRoute('add_roles_administrator');
+        }
+
+        return $this->render('BackAdminBundle:Administrator:list_roles.html.twig', array(
+            'entities' => $entity,
+            'idAdmin' => $idAdmin
+        ));
+    }
+
+    public function addRolesAction(Request $request)
+    {
+        //var_dump($request->getContent()); die;
+        $droitAdmin = new DroitAdmin();
+        $form = $this->formPost(self::FORM_ADMIN_DROIT_ADD_ROLES, $droitAdmin);
+        $droitAdmin->setAdmin($this->getUser());
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+
+            $this->get('doctrine.orm.entity_manager')->persist($droitAdmin);
+            $this->get('doctrine.orm.entity_manager')->flush();
+            return $this->redirectToRoute('index_administrator');
+        }
+        return $this->render('BackAdminBundle:Administrator:add_roles.html.twig', array(
+            'form' => $form->createView()
+        ));
+    }
+
+
+    public function  editDroitRolesAdminAction(Request $request, $idAdmin, $idDroitAdmin)
+    {
+
+        $entity = $this->getRepoFormId(self::ENTITY_DROIT_ADMIN, $idDroitAdmin);
+        if (!$entity) {
+
+        }
+        $form = $this->formPost(self::FORM_ADMIN_DROIT, $entity);
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $this->insert($entity, array('success' => 'success', 'error' => 'error'));
+
+        }
+
+        return $this->render('BackAdminBundle:Administrator:edit_droit_roles.html.twig', array(
+            'form' => $form->createView(),
+            'idDroitAdmin' => $idDroitAdmin,
+            'idAdmin' => $idAdmin
+        ));
+    }
+
+
+
+
+
+
+
+
 
     public function editAction(Request $request, $id)
     {
@@ -59,36 +121,33 @@ class AdministratorController extends ApiController
                     'id' => $v[1],
                 );
             }
-
+            /*echo "<PRE>";
+            print_r($array);
+            echo "</pre>";
+            die;*/
             foreach ($array as $kA => $vA) {
-
                 $droitE = $this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_DROIT)->find($vA['id']);
-                $dAdminEntity = $this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_DROIT_ADMIN)->findOneBy(array('droit' => $droitE));
 
+                $dAdminEntity = $this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_DROIT_ADMIN)->findOneBy(array('droit' => $droitE));
                 if ($vA['champ'] == 'lecture') {
                     $dAdminEntity->setLecture(true);
                 }
                 if ($vA['champ'] == 'suppression') {
                     $dAdminEntity->setSuppression(true);
-                    die('suppression');
                 }
                 if ($vA['champ'] == 'ajout') {
                     $dAdminEntity->setAjout(true);
-                    die('ajout');
                 }
                 if ($vA['champ'] == 'modification') {
                     $dAdminEntity->setModification(true);
-                    die('modification');
                 }
 
-                //$this->get('doctrine.orm.entity_manager')->persist($dAdminEntity);
-
-                //  $this->get('doctrine.orm.entity_manager')->flush();
+                // $this->get('doctrine.orm.entity_manager')->persist($dAdminEntity);
+                $this->get('doctrine.orm.entity_manager')->flush();
+                //
 
             }
-
-            die('ies man');
-            return $this->redirectToRoute('index_administrator');
+            die('okok');
         }
 
         $droitAdminData = $this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_DROIT_ADMIN)->findBy(array('admin' => $this->getUser()));

@@ -28,6 +28,7 @@
       <column name="prenom" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
       <column name="nom" sqlType="VARCHAR" precision="100" scale="0" nullable="false" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="FK_9E9B4067642B8210" table="droit_admin" schema="" catalog="poulebet" columns="admin_id"/>
       <index name="UNIQ_880E0D7692FC23A8" unique="true" columns="username_canonical"/>
       <index name="UNIQ_880E0D76A0D96FBF" unique="true" columns="email_canonical"/>
     </table>
@@ -81,6 +82,7 @@
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="fonctionnalite" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="FK_9E9B40675AA93370" table="droit_admin" schema="" catalog="poulebet" columns="droit_id"/>
     </table>
     <table name="droit_admin" schema="" catalog="poulebet" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -88,7 +90,13 @@
       <column name="modification" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
       <column name="suppression" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
       <column name="ajout" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
+      <column name="droit_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="admin_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="FK_9E9B4067642B8210" columns="admin_id" ref-table="admin" ref-schema="" ref-catalog="poulebet" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="FK_9E9B40675AA93370" columns="droit_id" ref-table="droit" ref-schema="" ref-catalog="poulebet" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="IDX_9E9B40675AA93370" unique="false" columns="droit_id"/>
+      <index name="IDX_9E9B4067642B8210" unique="false" columns="admin_id"/>
     </table>
     <table name="live_score" schema="" catalog="poulebet" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>

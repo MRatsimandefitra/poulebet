@@ -6,6 +6,15 @@
 
     <div class="box-header-response">
         {{ 'Listes des Membres'|trans }}
+        <div class="link">
+            {#{% if is_granted('ROLE_SUPER_ADMIN') %}#}
+            <a href="{{ path('index_administrator') }}">{{ 'Gestion administrateur'|trans }}</a> |
+            {#{% endif %}#}
+            <a href="{{ path('export_csv_utilisateur') }}">{{ 'Export csv'|trans }}</a>
+        </div>
+        <div class="clear">
+
+        </div>
     </div>
     <div class="box-response">
         <div class="search">

@@ -5,6 +5,7 @@ namespace Back\AdminBundle\Controller;
 use Api\CommonBundle\Controller\ApiController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class UtilisateurController extends ApiController
 {
@@ -15,11 +16,33 @@ class UtilisateurController extends ApiController
 
     public function indexAction()
     {
+
         $utilisateur = $this->getRepo(self::ENTITY_UTILISATEUR)->findAll();
 
         return $this->render('BackAdminBundle:Utilisateur:index.html.twig', array(
             'entities' => $utilisateur
         ));
+    }
+
+    public function exportCsvUtilisateurAction(){
+
+        $data = $this->getAllRepo(self::ENTITY_UTILISATEUR);
+        $name = $this->get('kernel')->getRootDir().'/../web/csv/utilisateurs.csv';
+        $handle   = fopen($name, 'w');
+        fputcsv($handle, array('Email', 'Utilisateurs', 'Nom', 'Prenom'));
+        foreach($data as $value){
+            fputcsv($handle, array($value->getEmail(), $value->getUsername(), $value->getNom(), $value->getPrenom()));
+        }
+        fclose($handle);
+        return new Response(
+            file_get_contents($name),
+            200,
+            array(
+                'Content-Type'        => 'text/csv; charset=utf-8',
+                'Content-Disposition' => sprintf('attachment; filename="%s"', $n = 'liste_utilisateurs.csv')
+            )
+        );
+
     }
 
     /*public function updateAction(Request $request, $id)

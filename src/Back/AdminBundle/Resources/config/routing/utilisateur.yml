@@ -15,3 +15,7 @@ details_admin_utilisateur:
 list_admin_droit:
     path:     /droits
     defaults: { _controller: BackAdminBundle:Utilisateur:listDroit }
+
+export_csv_utilisateur:
+    path:     /exportcsv
+    defaults: { _controller: BackAdminBundle:Utilisateur:exportCsvUtilisateur }

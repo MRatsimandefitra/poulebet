@@ -1,0 +1,20 @@
+{% extends 'BackAdminBundle::layout.html.twig' %}
+{% block title %} {{ parent() }} {% endblock %}
+{% block ariane %} {{ parent() }} {% endblock %}
+
+{% block page %}
+
+    <div class="box-header-response">
+        {{ 'Détails membres'|trans }}
+    </div>
+    <div class="box-response">
+        <div class="col-lg-4">
+            {{ entity.id }}<br/>
+
+
+        </div>
+        <div class="col-lg-4">
+
+        </div>
+    </div>
+{% endblock %}

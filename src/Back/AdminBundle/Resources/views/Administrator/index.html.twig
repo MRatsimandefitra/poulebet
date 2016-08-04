@@ -49,7 +49,11 @@
                         ROLES
                     </td>
                     <td>
-                        <a href="{{ path('edit_administrator', {'id': row.id }) }}"> {{ 'Edit'|trans }}</a>
+                        --
+                        <a href="{{ path('list_roles_administrator', {'idAdmin': row.id }) }}"> {{ 'LIST ROLE'|trans }}</a>
+                        |
+                        <a href="{{ path('edit_administrator', {'id': row.id }) }}"> {{ 'EDIT ROLE'|trans }}</a> |
+                        <a href="{{ path('add_roles_administrator') }}"> {{ 'ADD ROLE'|trans }}</a>
                     </td>
                 </tr>
             {% endfor %}

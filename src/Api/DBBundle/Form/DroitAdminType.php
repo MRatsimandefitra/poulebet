@@ -22,10 +22,11 @@ class DroitAdminType extends AbstractType
             ->add('modification')
             ->add('suppression')
             ->add('ajout')
-            ->add('droit', EntityType::class, array(/*'class' => 'ApiDBBundle:Droit',*/
+            //  ->add('droit', EntityType::class, array(/*'class' => 'ApiDBBundle:Droit',*/
 
-            ))
-            ->add('admin', self::FORM_ADMIN);
+            // ))
+            //   ->add('admin', self::FORM_ADMIN);
+        ;
     }
     
     /**
