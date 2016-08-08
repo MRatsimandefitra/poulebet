@@ -13,4 +13,8 @@
 !var/sessions/.gitkeep
 !var/SymfonyRequirements.php
 /vendor/
+.idea/
+/idea/
 /web/bundles/
+composer.lock
+var/cache/
