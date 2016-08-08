@@ -32,6 +32,11 @@
       <index name="UNIQ_880E0D7692FC23A8" unique="true" columns="username_canonical"/>
       <index name="UNIQ_880E0D76A0D96FBF" unique="true" columns="email_canonical"/>
     </table>
+    <table name="adresse_societe" schema="" catalog="poulebet" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="adresse" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
     <table name="championat" schema="" catalog="poulebet" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="nomChampionat" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
@@ -93,8 +98,8 @@
       <column name="droit_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="admin_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
-      <foreign-key name="FK_9E9B4067642B8210" columns="admin_id" ref-table="admin" ref-schema="" ref-catalog="poulebet" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
       <foreign-key name="FK_9E9B40675AA93370" columns="droit_id" ref-table="droit" ref-schema="" ref-catalog="poulebet" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="FK_9E9B4067642B8210" columns="admin_id" ref-table="admin" ref-schema="" ref-catalog="poulebet" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
       <index name="IDX_9E9B40675AA93370" unique="false" columns="droit_id"/>
       <index name="IDX_9E9B4067642B8210" unique="false" columns="admin_id"/>
     </table>
@@ -210,6 +215,19 @@
       <index name="IDX_B562A06945B51F25" unique="false" columns="voteutilisateur_id"/>
       <index name="IDX_B562A069FB88E14F" unique="false" columns="utilisateur_id"/>
     </table>
+    <table name="parameter_mail" schema="" catalog="poulebet" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="emailSite" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="nomExpediteur" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="seuriteSMTP" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="portSMTP" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="userSMTP" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="passwordSMTP" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="serveurSMTP" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="createdAt" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="updatedAt" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
     <table name="pays" schema="" catalog="poulebet" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="nomPays" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
@@ -220,6 +238,15 @@
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="cheminPub" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
       <column name="type" sqlType="TINYINT" precision="3" scale="0" nullable="false" jdbcType="-6"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
+    <table name="template_mail" schema="" catalog="poulebet" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="libelleMail" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="objectMail" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="messages" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="createdAt" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="updatedAt" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
       <primary-key name="PRIMARY" columns="id"/>
     </table>
     <table name="utilisateur" schema="" catalog="poulebet" type="TABLE">
