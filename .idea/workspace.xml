@@ -6,6 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="2d4e1720-7fcf-4bce-9515-35c464ca9f62" name="Default" comment="BO-EMAIL-PART-1">
       <change type="DELETED" beforePath="$PROJECT_DIR$/app/config/parameters.yml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Back/AdminBundle/Controller/EmailController.php" afterPath="$PROJECT_DIR$/src/Back/AdminBundle/Controller/EmailController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Ws/RestBundle/Controller/InscriptionController.php" afterPath="$PROJECT_DIR$/src/Ws/RestBundle/Controller/InscriptionController.php" />
     </list>
     <ignored path="poublet.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -71,16 +73,26 @@
       <file leaf-file-name="EmailController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Back/AdminBundle/Controller/EmailController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-13.884615" vertical-offset="1424" max-vertical-offset="2669">
-              <caret line="105" column="10" selection-start-line="105" selection-start-column="8" selection-end-line="105" selection-end-column="13" />
+            <state vertical-scroll-proportion="-17.846153" vertical-offset="913" max-vertical-offset="2652">
+              <caret line="81" column="0" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
               <folding>
                 <element signature="e#47#93#0#PHP" expanded="true" />
                 <element signature="e#1043#1068#1#PHP" expanded="true" />
                 <element signature="e#2280#2299#1#PHP" expanded="true" />
                 <element signature="e#2418#2437#1#PHP" expanded="true" />
                 <element signature="e#2493#2532#0#PHP" expanded="true" />
-                <element signature="e#5737#5781#0#PHP" expanded="true" />
+                <element signature="e#5731#5775#0#PHP" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ApiController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Api/CommonBundle/Controller/ApiController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-4.8076925" vertical-offset="181" max-vertical-offset="4505">
+              <caret line="22" column="20" selection-start-line="22" selection-start-column="20" selection-end-line="22" selection-end-column="20" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -142,33 +154,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/css/style.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2816" max-vertical-offset="3485">
-              <caret line="170" column="13" selection-start-line="170" selection-start-column="13" selection-end-line="170" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="InscriptionController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Ws/RestBundle/Controller/InscriptionController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.74081236" vertical-offset="960" max-vertical-offset="3111">
-              <caret line="85" column="28" selection-start-line="85" selection-start-column="28" selection-end-line="85" selection-end-column="28" />
+            <state vertical-scroll-proportion="0.211838" vertical-offset="391" max-vertical-offset="2550">
+              <caret line="67" column="35" selection-start-line="67" selection-start-column="35" selection-end-line="67" selection-end-column="35" />
               <folding>
-                <element signature="e#5629#9304#0#PHP" expanded="false" />
+                <element signature="e#518#1793#0#PHP" expanded="false" />
+                <element signature="e#5686#9361#0#PHP" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="inscription.yml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Ws/RestBundle/Resources/config/routing/inscription.yml">
+      <file leaf-file-name="memore_code_norm.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/memore_code_norm.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="323">
-              <caret line="2" column="60" selection-start-line="2" selection-start-column="60" selection-end-line="2" selection-end-column="60" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="153">
+              <caret line="3" column="20" selection-start-line="3" selection-start-column="20" selection-end-line="3" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -197,7 +200,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/Api/DBBundle/Form/EmailType.php" />
         <option value="$PROJECT_DIR$/src/Api/DBBundle/Form/EmailBoType.php" />
         <option value="$PROJECT_DIR$/src/Back/AdminBundle/Resources/config/routing/utilisateur.yml" />
         <option value="$PROJECT_DIR$/src/Ws/RestBundle/Resources/config/routing.yml" />
@@ -245,9 +247,10 @@
         <option value="$PROJECT_DIR$/web/css/style.css" />
         <option value="dbtable:/6ee6a5d1/3eb6855d-ee9a-470a-85cd-eb5d80ef1dd4/poulebet..adresse_societe" />
         <option value="$PROJECT_DIR$/src/Back/AdminBundle/Resources/views/Email/parameters.html.twig" />
-        <option value="$PROJECT_DIR$/src/Ws/RestBundle/Controller/InscriptionController.php" />
-        <option value="$PROJECT_DIR$/src/Back/AdminBundle/Controller/EmailController.php" />
         <option value="$PROJECT_DIR$/src/Api/DBBundle/Form/TemplateMailType.php" />
+        <option value="$PROJECT_DIR$/src/Back/AdminBundle/Controller/EmailController.php" />
+        <option value="$PROJECT_DIR$/memore_code_norm.txt" />
+        <option value="$PROJECT_DIR$/src/Ws/RestBundle/Controller/InscriptionController.php" />
       </list>
     </option>
   </component>
@@ -2117,7 +2120,7 @@
     <layout>
       <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" x="92" y="92" width="1182" height="544" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19086461" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2512235" sideWeight="0.6845688" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31973898" sideWeight="0.6845688" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4397394" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16641453" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290469" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -2215,11 +2218,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/web/images/group.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/images/home.png">
       <provider selected="true" editor-type-id="images">
         <state />
@@ -2440,14 +2438,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Api/CommonBundle/Controller/ApiController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36462092" vertical-offset="1837" max-vertical-offset="4505">
-          <caret line="118" column="20" selection-start-line="118" selection-start-column="20" selection-end-line="118" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Back/AdminBundle/Controller/AdministratorController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-10.807693" vertical-offset="161" max-vertical-offset="2941">
@@ -2600,21 +2590,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Back/AdminBundle/Controller/EmailController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.884615" vertical-offset="1424" max-vertical-offset="2703">
-          <caret line="105" column="10" selection-start-line="105" selection-start-column="8" selection-end-line="105" selection-end-column="13" />
-          <folding>
-            <element signature="e#47#93#0#PHP" expanded="true" />
-            <element signature="e#1043#1068#1#PHP" expanded="true" />
-            <element signature="e#2280#2299#1#PHP" expanded="true" />
-            <element signature="e#2418#2437#1#PHP" expanded="true" />
-            <element signature="e#2493#2532#0#PHP" expanded="true" />
-            <element signature="e#5737#5781#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="dbDummy://dbtable:/6ee6a5d1/3eb6855d-ee9a-470a-85cd-eb5d80ef1dd4/poulebet..adresse_societe">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
@@ -2654,12 +2629,44 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Api/CommonBundle/Controller/ApiController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.8076925" vertical-offset="181" max-vertical-offset="4505">
+          <caret line="22" column="20" selection-start-line="22" selection-start-column="20" selection-end-line="22" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Back/AdminBundle/Controller/EmailController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-17.846153" vertical-offset="913" max-vertical-offset="2652">
+          <caret line="81" column="0" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
+          <folding>
+            <element signature="e#47#93#0#PHP" expanded="true" />
+            <element signature="e#1043#1068#1#PHP" expanded="true" />
+            <element signature="e#2280#2299#1#PHP" expanded="true" />
+            <element signature="e#2418#2437#1#PHP" expanded="true" />
+            <element signature="e#2493#2532#0#PHP" expanded="true" />
+            <element signature="e#5731#5775#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/memore_code_norm.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="153">
+          <caret line="3" column="20" selection-start-line="3" selection-start-column="20" selection-end-line="3" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Ws/RestBundle/Controller/InscriptionController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.74081236" vertical-offset="960" max-vertical-offset="3111">
-          <caret line="85" column="28" selection-start-line="85" selection-start-column="28" selection-end-line="85" selection-end-column="28" />
+        <state vertical-scroll-proportion="0.211838" vertical-offset="391" max-vertical-offset="2550">
+          <caret line="67" column="35" selection-start-line="67" selection-start-column="35" selection-end-line="67" selection-end-column="35" />
           <folding>
-            <element signature="e#5629#9304#0#PHP" expanded="false" />
+            <element signature="e#518#1793#0#PHP" expanded="false" />
+            <element signature="e#5686#9361#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
