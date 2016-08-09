@@ -42,7 +42,6 @@ class InscriptionController extends ApiRestController
          if ($this->setDataInUtilisateur($utilisateur, $request)) {
              $user = $this->getEm()->getRepository(self::ENTITY_UTILISATEUR)->findByEmailArray($email);
              $token = $this->generateToken($user['userToken']);
-
              // mail
              $mm = $this->get('mail.manager');
              $mm->setSubject($this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_UTILISATEUR));

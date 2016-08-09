@@ -13,8 +13,6 @@ use Symfony\Component\Validator\Constraints\DateTime;
 class InscriptionController extends ApiRestController
 {
     const ENTITY_UTILISATEUR = 'ApiDBBundle:Utilisateur';
-    const ENTITY_DROIT_ADMIN = '';
-    const ENTITY_DROIT = 'ApiDBBundle:';
 
      public function postUserFromAndroidAction(Request $request)
      {
@@ -42,13 +40,8 @@ class InscriptionController extends ApiRestController
          if ($this->setDataInUtilisateur($utilisateur, $request)) {
              $user = $this->getEm()->getRepository(self::ENTITY_UTILISATEUR)->findByEmailArray($email);
              $token = $this->generateToken($user['userToken']);
-
-             // mail
-             $mm = $this->get('mail.manager');
-             $mm->setSubject($this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_UTILISATEUR));
-
              return new JsonResponse(array(
-                 'token' => $token,
+                 'token'=>$token,
                  'infos_users' => $user,
                  'code_erreur' => 0,
                  'success' => true,
@@ -153,7 +146,7 @@ class InscriptionController extends ApiRestController
             $utilisateur->setCreatedAt(new \DateTime('now'));
             $utilisateur->setDateCreation(new \DateTime('now'));
             $utilisateur->setIsEnable(true);
-            $utilisateur->setPassword(md5(uniqid($request->get('email'))));
+
             $utilisateur->setUserToken(md5(uniqid($request->get('username') . '' . $request->get('password'), true)));
 
             if ($request->get('photo')) {

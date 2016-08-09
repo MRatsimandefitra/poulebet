@@ -35,6 +35,10 @@ class Admin extends BaseUser
      * @ORM\Column(name="nom",type="string", length=100)
      */
     protected $nom;
+    /**
+     * @ORM\Column(name="isSuperAdmin",type="boolean", nullable=true)
+     */
+    protected $isSuperAdmin;
 
 
     /**
@@ -83,5 +87,29 @@ class Admin extends BaseUser
     public function getNom()
     {
         return $this->nom;
+    }
+
+    /**
+     * Set isSuperAdmin
+     *
+     * @param boolean $isSuperAdmin
+     *
+     * @return Admin
+     */
+    public function setIsSuperAdmin($isSuperAdmin)
+    {
+        $this->isSuperAdmin = $isSuperAdmin;
+
+        return $this;
+    }
+
+    /**
+     * Get isSuperAdmin
+     *
+     * @return boolean
+     */
+    public function getIsSuperAdmin()
+    {
+        return $this->isSuperAdmin;
     }
 }

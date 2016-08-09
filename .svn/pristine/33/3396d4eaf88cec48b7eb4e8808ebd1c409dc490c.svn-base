@@ -13,54 +13,87 @@ use Symfony\Component\Validator\Constraints\DateTime;
 class InscriptionController extends ApiRestController
 {
     const ENTITY_UTILISATEUR = 'ApiDBBundle:Utilisateur';
-    const ENTITY_DROIT_ADMIN = '';
-    const ENTITY_DROIT = 'ApiDBBundle:';
 
-     public function postUserFromAndroidAction(Request $request)
-     {
+    public function postUtilisateurAction(Request $request)
+    {
 
+        $username = $request->get('username');
+        $email = $request->get('email');
+        if(!$email){
+            return new JsonResponse(array(
+                'success' => false,
+                'code_error' => 4,
+                'message' => "Email non spécifié"
+            ));
+        }
+        $data = $this->get('doctrine.orm.default_entity_manager')->getRepository(self::ENTITY_UTILISATEUR)->testIfUserExist($username, $email);
+        if ($data) {
+            return new JsonResponse(array(
+                'success' => false,
+                'code_erreur' => 2,
+                'message' => 'Cet email existe déjà'
+            ));
+        }
+        $utilisateur = new Utilisateur();
 
-         $username = $request->get('username');
-         $email = $request->get('email');
-         if(!$email){
-             return new JsonResponse(array(
-                 'success' => false,
-                 'code_error' => 4,
-                 'message' => "Veuillez remplir les champs requis"
-             ));
-         }
-         $data = $this->get('doctrine.orm.default_entity_manager')->getRepository(self::ENTITY_UTILISATEUR)->testIfUserExist($username, $email);
-         if ($data) {
-             return new JsonResponse(array(
-                 'success' => false,
-                 'code_erreur' => 2,
-                 'message' => 'Cet E-mail existe déjà'
-             ));
-         }
-         $utilisateur = new Utilisateur();
+        if ($this->setDataInUtilisateur($utilisateur, $request)) {
+            $user = $this->getEm()->getRepository(self::ENTITY_UTILISATEUR)->findByEmailArray($email);
+            $token = $this->generateToken($user['userToken']);
+            return new JsonResponse(array(
+                'token'=>$token,
+                'infos_users' => $user,
+                'code_erreur' => 0,
+                'success' => true,
+                'message' => "Inscription réussi"
+            ));
+        }
+        return new JsonResponse(array(
+                'success' => true,
+            'code_erreur' => 2,
+                'message' => "KO"
+        ));
+    }
 
-         if ($this->setDataInUtilisateur($utilisateur, $request)) {
-             $user = $this->getEm()->getRepository(self::ENTITY_UTILISATEUR)->findByEmailArray($email);
-             $token = $this->generateToken($user['userToken']);
+    public function postUserFromAndroidAction(Request $request)
+    {
 
-             // mail
-             $mm = $this->get('mail.manager');
-             $mm->setSubject($this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_UTILISATEUR));
+        $prenom = $request->get('prenom');
+        $email = $request->get('email');
+        if (!$email or !$prenom) {
+            return new JsonResponse(array(
+                'success' => false,
+                'code_erreur' => 4,
+                'message' => "Veuillez remplir les champs requis"
+            ));
+        }
+        $data = $this->get('doctrine.orm.default_entity_manager')->getRepository(self::ENTITY_UTILISATEUR)->testIfEmailExist($email);
+        if ($data) {
+            return new JsonResponse(array(
+                'success' => false,
+                'code_erreur' => 1,
+                'message' => 'Cet E-mail existe déjà'
+            ));
+        }
+        $utilisateur = new Utilisateur();
 
-             return new JsonResponse(array(
-                 'token' => $token,
-                 'infos_users' => $user,
-                 'code_erreur' => 0,
-                 'success' => true,
-                 'message' => "Mot de passe envoyé par mail"
-             ));
-         }
-         return new JsonResponse(array(
+        if ($this->setDataFromAndoidInUtilisateur($utilisateur, $request)) {
+            $user = $this->getEm()->getRepository(self::ENTITY_UTILISATEUR)->findByEmailArray($email);
+            $token = $this->generateToken($user['userToken']);
+
+            return new JsonResponse(array(
+                'token' => $token,
+                'infos_users' => $user,
+                'success' => true,
+                'code_erreur' => 0,
+                'message' => "Inscription réussi"
+            ));
+        }
+        return new JsonResponse(array(
             'success' => true,
             'code_erreur' => 0,
             'message' => "OK"
         ));
-     }
+    }
 
     /**
      * @param Request $request
@@ -153,7 +186,7 @@ class InscriptionController extends ApiRestController
             $utilisateur->setCreatedAt(new \DateTime('now'));
             $utilisateur->setDateCreation(new \DateTime('now'));
             $utilisateur->setIsEnable(true);
-            $utilisateur->setPassword(md5(uniqid($request->get('email'))));
+
             $utilisateur->setUserToken(md5(uniqid($request->get('username') . '' . $request->get('password'), true)));
 
             if ($request->get('photo')) {
@@ -256,13 +289,6 @@ class InscriptionController extends ApiRestController
             if ($request->get('prenom')) {
                 $utilisateur->setPrenom($request->get('prenom'));
             }
-            $utilisateur->setUsername($request->get('email'));
-            $utilisateur->setSalt('bcrypt');
-            $utilisateur->setRoles(array('ROLE_USER'));
-            $utilisateur->setCreatedAt(new \DateTime('now'));
-            $utilisateur->setUserToken(md5(uniqid($request->get('email') . '' . $request->get('prenom'), true)));
-            $utilisateur->setDateCreation(new \DateTime('now'));
-
             $this->get('doctrine.orm.entity_manager')->persist($utilisateur);
             $this->get('doctrine.orm.entity_manager')->flush();
             return true;

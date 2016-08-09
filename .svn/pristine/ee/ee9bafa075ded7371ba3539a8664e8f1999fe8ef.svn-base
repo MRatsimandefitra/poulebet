@@ -91,12 +91,9 @@ class EmailController extends ApiController
 
     public function parametersAction(Request $request)
     {
-        $parameters = $this->getAllEntity(self::ENTITY_PARAMETRE_EMAIL);
-        if (!$parameters ) {
+
+        if (!$this->getAllEntity(self::ENTITY_PARAMETRE_EMAIL)) {
             $parameter = new ParameterMail();
-        }
-        else {
-          $parameter = $parameters[count($parameters)-1];  
         }
         $formParameters = $this->formPost(self::FORM_PARAMETRE_EMAIL, $parameter);
 
@@ -107,6 +104,7 @@ class EmailController extends ApiController
 
         return $this->render('BackAdminBundle:Email:parameters.html.twig', array(
             'formParameter' => $formParameters->createView(),
+ 
         ));
     }
 

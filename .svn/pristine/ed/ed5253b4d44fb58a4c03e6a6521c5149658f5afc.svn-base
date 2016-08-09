@@ -24,32 +24,20 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="parameter-email">
-                            {{ form_label(formParameter.emailSite) }}
-                            {{ form_widget(formParameter.emailSite) }}
-                            
-                            {{ form_label(formParameter.nomExpediteur) }}
-                            {{ form_widget(formParameter.nomExpediteur) }}
-                            
-                            {{ form_label(formParameter.seuriteSMTP) }}
-                            {{ form_widget(formParameter.seuriteSMTP) }}
-                            
-                            {{ form_label(formParameter.portSMTP) }}
-                            {{ form_widget(formParameter.portSMTP) }}
-                            
-                            {{ form_label(formParameter.userSMTP) }}
-                            {{ form_widget(formParameter.userSMTP) }}
-                            
-                            {{ form_label(formParameter.passwordSMTP) }}
-                            {{ form_widget(formParameter.passwordSMTP) }}
-                            
-                            {{ form_label(formParameter.serveurSMTP) }}
-                            {{ form_widget(formParameter.serveurSMTP) }}
+
+                            {{ form_widget(formParameter.emailSite, {'attr': {'placeholder': 'Email du site'|trans }}) }}
+                            {{ form_widget(formParameter.nomExpediteur, {'attr': {'placeholder': 'Nom Expéditeur'|trans }}) }}
+                            {{ form_widget(formParameter.seuriteSMTP, {'attr': {'placeholder': 'Sécurité SMTP'|trans }}) }}
+                            {{ form_widget(formParameter.portSMTP, {'attr': {'placeholder': 'Port SMTP'|trans }}) }}
+                            {{ form_widget(formParameter.userSMTP, {'attr': {'placeholder': 'Utilisateur SMTP'|trans }}) }}
+                            {{ form_widget(formParameter.passwordSMTP, {'attr': {'placeholder': 'Password SMTP'|trans,'type':'password' }}) }}
+                            {{ form_widget(formParameter.serveurSMTP, {'attr': {'placeholder': 'Serveur SMTP'|trans }}) }}
 
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="adresse-societe">
-                            <label>{{ 'Adresse' }} :</label>
+                            {{ 'Adresse' }} :
                             {{ form_widget(formParameter.adresse_societe) }}
                         </div>
                     </div>
@@ -57,20 +45,20 @@
             <div class="col-lg-6">
 
                 <div class="template-tmp">
-                    <label>{{ 'Template mot de passe temporaire'|trans }}</label>
+                    {{ 'Template mot de passe temporaire'|trans }}
                     {{ form_widget(formParameter.subject_inscription) }}
                     {{ form_widget(formParameter.template_inscription) }}
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="template-change">
-                    <label>{{ 'Template changement de mot de passe'|trans }}</label>
+                    {{ 'Template changement de mot de passe'|trans }}
                     {{ form_widget(formParameter.subject_mdp_oublie) }}
                     {{ form_widget(formParameter.template_mdp_oublie) }}
                 </div>
             </div>
                 <div class="col-lg-12">
-                    <input class='btn btn-primary' type="submit" value="{{ 'Enregister'|trans }}"/>
+                    <input type="submit" value="{{ 'send'|trans }}"/>
                 </div>
                 
         </div>

@@ -3,69 +3,12 @@
 {% block ariane %} {{ parent() }} {% endblock %}
 
 {% block page %}
-    {#<div class="box-header-response">
+    <div class="box-header-response">
         {{ 'Listes des administrateurs'|trans }}
-    </div>#}
-    <div class="col-lg-12">
-        <div class="box-header-response">
-            {{ 'Listes des administrateurs'|trans }} :
-            <div class="link">
-                {#{% if is_granted('ROLE_SUPER_ADMIN') %}#}
-                <a href="{{ path('index_administrator') }}">{{ 'Listes Administrateur'|trans }}</a>
-                {#{% endif %}#}
-            </div>
-            <div class="clear">
-
-            </div>
-        </div>
     </div>
-    <div class="col-lg-12">
-        <div class="box-response">
+    <div class="box-response">
         {#{{ form(form) }}#}
         <form action="{#{{ path('edit_roles_admin_droit', {'id': id}) }}#}" method="post">
-            <div class="user-admin">
-                <table class="table">
-                    <tr>
-                        <td>{{ 'ID'|trans }}</td>
-                        <td>{{ 'login'|trans }}</td>
-                        <td>{{ 'Email'|trans }}</td>
-                        <td>{{ 'Nom'|trans }}</td>
-                        <td>
-                            {{ 'Prenom'|trans }}
-                        </td>
-                        <td>
-                            {{ 'Super Admin'|trans }}
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            {{ admin.id }}
-                        </td>
-                        <td>
-                            {{ admin.username }}
-                        </td>
-                        <td>
-                            {{ admin.email }}
-                        </td>
-                        <td>
-                            {{ admin.nom }}
-                        </td>
-                        <td>
-                            {{ admin.prenom }}
-                        </td>
-                        <td>
-                            {% if admin.isSuperAdmin %}
-                                <input type="checkbox" name="is_super_admin" checked="true"/>
-                            {% else %}
-                                <input type="checkbox" name="is_super_admin"/>
-                            {% endif %}
-
-                        </td>
-                    </tr>
-                </table>
-            </div>
-
             <table class="table">
                 <tr>
                     <td>{{ 'Fonctionalité'|trans }}</td>
@@ -132,6 +75,5 @@
             </table>
             <input type="submit" value="send">
         </form>
-    </div>
     </div>
 {% endblock %}

@@ -21,6 +21,12 @@ class Societe
      */
     private $id;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="designation", type="string", length=255, nullable=true)
+     */
+    private $designation;
 
     /**
      * @var string
@@ -40,6 +46,29 @@ class Societe
         return $this->id;
     }
 
+    /**
+     * Set designation
+     *
+     * @param string $designation
+     *
+     * @return Societe
+     */
+    public function setDesignation($designation)
+    {
+        $this->designation = $designation;
+
+        return $this;
+    }
+
+    /**
+     * Get designation
+     *
+     * @return string
+     */
+    public function getDesignation()
+    {
+        return $this->designation;
+    }
 
     /**
      * Set adresse

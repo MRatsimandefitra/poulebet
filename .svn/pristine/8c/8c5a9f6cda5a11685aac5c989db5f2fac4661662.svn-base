@@ -30,7 +30,3 @@ ws_rest_forgotten_password:
     path:     /forgotten_password/{email}
     defaults: { _controller: WsRestBundle:Authentication:forgottenPassword }
     methods: GET
-ws_rest_forgotten_password_post:
-    path:     /forgotten_password
-    defaults: { _controller: WsRestBundle:Authentication:forgottenPassword }
-    methods: POST
