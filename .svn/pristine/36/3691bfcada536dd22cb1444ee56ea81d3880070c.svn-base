@@ -1,0 +1,12 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: poulebet
+    database_user: root
+    database_password: null
+    mailer_transport: gmail
+    mailer_host: smtp.gmail.com
+    mailer_user: miora.ratsimandefitra@gmail.com  
+    mailer_password: ---
+    secret: 8f2fddca291a6a7a884560fb8f1c6db6ec84361f

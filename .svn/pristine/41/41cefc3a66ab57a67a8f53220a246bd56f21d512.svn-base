@@ -1,0 +1,104 @@
+{% extends 'BackAdminBundle::layout.html.twig' %}
+{% block title %} {{ parent() }} {% endblock %}
+{% block ariane %} {{ parent() }} {% endblock %}
+
+{% block page %}
+    <div class="box-header-response">
+        {{ 'Listes des roles assignés'|trans }}
+        <div class="link">
+            <a href="{{ path('index_administrator') }}">{{ 'retour'|trans }}</a>
+        </div>
+    </div>
+    <div class="box-response">
+        <div class="search">
+            <label class="white" for="">
+                Afficher
+            </label>
+            <select>
+                <option value="0">0</option>
+                <option value="0">10</option>
+                <option value="0">20</option>
+                <option value="0">30</option>
+            </select>
+            <label class="white" for="">
+                Entrees
+            </label>
+        </div>
+        <table class="table-user">
+            <thead>
+            <td>{{ 'Id'|trans }}</td>
+            <td>{{ 'ROLE'|trans }}</td>
+            <td>{{ 'LECTURE'|trans }}</td>
+            <td>{{ 'MODIFICATION'|trans }}</td>
+            <td>{{ 'SUPPRESSION'|trans }}</td>
+            <td>{{ 'AJOUT'|trans }}</td>
+            <td>{{ 'ACTIONS'|trans }}</td>
+
+            </thead>
+            <tbody>
+            {% for row in entities %}
+                <tr>
+                    <td>
+                        {{ row.id }}
+                    </td>
+
+                    <td>
+                        {{ row.droit.fonctionnalite }}
+                    </td>
+
+                    <td>
+                        {% if row.lecture %}
+                            <img src="{{ asset('images/check.png') }}" width="25" height="25" alt=""/>
+                        {% else %}
+                            --
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if row.modification %}
+                            <img src="{{ asset('images/check.png') }}" width="25" height="25" alt=""/>
+                        {% else %}
+                            --
+                        {% endif %}
+
+                    </td>
+                    <td>
+                        {% if row.suppression %}
+                            <img src="{{ asset('images/check.png') }}" width="25" height="25" alt=""/>
+                        {% else %}
+                            --
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if row.ajout %}
+                            <img src="{{ asset('images/check.png') }}" width="25" height="25" alt=""/>
+                        {% else %}
+                            --
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{{ path('edit_roles_administrator_droit', {'idDroitAdmin': row.id, 'idAdmin' : idAdmin }) }}"> {{ 'EDIT DROIT'|trans }}</a>
+                        |
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+            <thead>
+            <td>{{ 'Id'|trans }}</td>
+            <td>{{ 'email'|trans }}</td>
+            <td>{{ 'nom'|trans }}</td>
+            <td>{{ 'prenom'|trans }}</td>
+            <td>{{ 'Roles'|trans }}</td>
+            <td>{{ "Actions"|trans }}</td>
+            </thead>
+        </table>
+        <div class="search">
+            <label class="white" for="">
+                Afficher
+
+                Entrees
+            </label>
+
+
+        </div>
+    </div>
+{% endblock %}

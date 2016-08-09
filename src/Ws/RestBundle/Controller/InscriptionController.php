@@ -4,6 +4,7 @@ namespace Ws\RestBundle\Controller;
 
 use Api\DBBundle\Entity\Utilisateur;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,33 +17,76 @@ class InscriptionController extends ApiRestController
     public function postUtilisateurAction(Request $request)
     {
 
-        $username = $request->request->get('username');
-        $email = $request->request->get('email');
+        $username = $request->get('username');
+        $email = $request->get('email');
+        if(!$email){
+            return new JsonResponse(array(
+                'success' => false,
+                'message' => "email non renseigné"
+            ));
+        }
         $data = $this->get('doctrine.orm.default_entity_manager')->getRepository(self::ENTITY_UTILISATEUR)->testIfUserExist($username, $email);
         if ($data) {
             return new JsonResponse(array(
-                'code' => 'error.exist',
-                'isexist' => true
+                'success' => false,
+                'message' => 'email existe déjà'
             ));
         }
         $utilisateur = new Utilisateur();
 
         if ($this->setDataInUtilisateur($utilisateur, $request)) {
-            return new JsonResponse(
-                array(
-                    'code' => 'OK',
-                    'isOk' => true
-                )
-            );
+            $user = $this->getEm()->getRepository(self::ENTITY_UTILISATEUR)->findByEmailArray($email);
+            $token = $this->generateToken($user['userToken']);
+            return new JsonResponse(array(
+                'token'=>$token,
+                'infos_users' => $user,
+                'success' => true,
+                'message' => "Inscription réussi"
+            ));
         }
-        return new JsonResponse(
-            array(
-                'code' => 'NOK',
-                'isOk' => false
-            )
-        );
+        return new JsonResponse(array(
+                'success' => true,
+                'message' => "KO"
+        ));
     }
 
+    public function postUserFromAndroidAction(Request $request)
+    {
+
+        $prenom = $request->get('prenom');
+        $email = $request->get('email');
+        if (!$email or !$prenom) {
+            return new JsonResponse(array(
+                'success' => false,
+                'message' => "Veuillez remplir les champs requis"
+            ));
+        }
+        $data = $this->get('doctrine.orm.default_entity_manager')->getRepository(self::ENTITY_UTILISATEUR)->testIfEmailExist($email);
+        if ($data) {
+            return new JsonResponse(array(
+                'success' => false,
+                'code_erreur' => 2,
+                'message' => 'Cet E-mail existe déjà'
+            ));
+        }
+        $utilisateur = new Utilisateur();
+
+        if ($this->setDataFromAndoidInUtilisateur($utilisateur, $request)) {
+            $user = $this->getEm()->getRepository(self::ENTITY_UTILISATEUR)->findByEmailArray($email);
+            $token = $this->generateToken($user['userToken']);
+
+            return new JsonResponse(array(
+                'token' => $token,
+                'infos_users' => $user,
+                'success' => true,
+                'message' => "Inscription réussi"
+            ));
+        }
+        return new JsonResponse(array(
+            'success' => true,
+            'message' => "OK"
+        ));
+    }
 
     /**
      * @param Request $request
@@ -85,7 +129,7 @@ class InscriptionController extends ApiRestController
 
     public function postProfilUtilisateurAction(Request $request)
     {
-        $username = $request->request->get('username');
+        $username = $request->get('username');
         $utilisateur = $this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_UTILISATEUR)->findOneBy(array('username' => $username));
         if (!$utilisateur) {
             return new JsonResponse(array(
@@ -128,75 +172,88 @@ class InscriptionController extends ApiRestController
             $utilisateur->setDateCreation(new \DateTime('now'));
             $utilisateur->setIsEnable(true);
 
-            $utilisateur->setUserToken(md5(uniqid($request->request->get('username') . '' . $request->request->get('password'), true)));
+            $utilisateur->setUserToken(md5(uniqid($request->get('username') . '' . $request->get('password'), true)));
 
-            if ($request->request->get('photo')) {
-                $utilisateur->setCheminPhoto($request->request->get('photo'));
+            if ($request->get('photo')) {
+                $utilisateur->setCheminPhoto($request->get('photo'));
             }
 
-            if ($request->request->get('email')) {
-                $utilisateur->setEmail($request->request->get('email'));
+            if ($request->get('email')) {
+                $utilisateur->setEmail($request->get('email'));
             }
 
-            if ($request->request->get('username')) {
-                $utilisateur->setUsername($request->request->get('username'));
+            if ($request->get('username')) {
+                $utilisateur->setUsername($request->get('username'));
             }
 
-            if ($request->request->get('nom')) {
-                $utilisateur->setNom($request->request->get('nom'));
+            if ($request->get('nom')) {
+                $utilisateur->setNom($request->get('nom'));
             }
 
-            if ($request->request->get('prenom')) {
-                $utilisateur->setPrenom($request->request->get('prenom'));
+            if ($request->get('prenom')) {
+                $utilisateur->setPrenom($request->get('prenom'));
             }
 
-            if ($request->request->get('sexe')) {
-                $utilisateur->setSexe($request->request->get('sexe'));
+            if ($request->get('sexe')) {
+                $utilisateur->setSexe($request->get('sexe'));
             }
 
-            if ($request->request->get('password')) {
-                $factory = $this->get('security.encoder_factory');
-                $encoder = $factory->getEncoder($utilisateur);
-                $password = $encoder->encodePassword($request->request->get('password'), $utilisateur->getSalt());
+            if ($request->get('password')) {
+                $password = $this->encodePassword($request->get('password'));
                 $utilisateur->setPassword($password);
             }
+            else {
+                $pass = $this->generatePassword();
+                $message = \Swift_Message::newInstance()
+                    ->setSubject('Votre mot de passe')
+                    ->setFrom('miora.ratsimandefitra@gmail.com')
+                    ->setTo($request->get('email'))
+                    ->setBody(
+                            $this->renderView(
+                                'Email/forgotten_password.html.twig',
+                                array('password' => $pass)
+                            ),
+                            'text/html');
+                if($this->sendEmail($message)){
+                    $utilisateur->setPassword($this->encodePassword($pass));
+                }
+            }
 
-
-            if ($request->request->get('days') && $request->request->get('month') && $request->request->get('years')) {
-                $days = $request->request->get('days');
-                $month = $request->request->get('month');
-                $years = $request->request->get('years');
+            if ($request->get('days') && $request->get('month') && $request->get('years')) {
+                $days = $request->get('days');
+                $month = $request->get('month');
+                $years = $request->get('years');
 
                 $dateNaissance = $years . '-' . $month . '-' . $days;
                 $utilisateur->setDateNaissance(new \DateTime($dateNaissance));
             }
 
 
-            if ($request->request->get('telephone')) {
-                $utilisateur->setTelephone($request->request->get('telephone'));
+            if ($request->get('telephone')) {
+                $utilisateur->setTelephone($request->get('telephone'));
             }
 
-            if ($request->request->get('adresse1')) {
-                $utilisateur->setAdresse1($request->request->get('adresse1'));
+            if ($request->get('adresse1')) {
+                $utilisateur->setAdresse1($request->get('adresse1'));
             }
 
-            if ($request->request->get('adresse2')) {
-                $utilisateur->setAdresse2($request->request->get('adresse2'));
+            if ($request->get('adresse2')) {
+                $utilisateur->setAdresse2($request->get('adresse2'));
             }
 
-            if ($request->request->get('adresse3')) {
-                $utilisateur->setAdresse3($request->request->get('adresse3'));
+            if ($request->get('adresse3')) {
+                $utilisateur->setAdresse3($request->get('adresse3'));
             }
 
-            if ($request->request->get('fax')) {
-                $utilisateur->setFax($request->request->get('fax'));
+            if ($request->get('fax')) {
+                $utilisateur->setFax($request->get('fax'));
             }
 
-            if ($request->request->get('ville')) {
-                $utilisateur->setVille($request->request->get('ville'));
+            if ($request->get('ville')) {
+                $utilisateur->setVille($request->get('ville'));
             }
-            if ($request->request->get('pays')) {
-                $utilisateur->setPays($request->request->get('pays'));
+            if ($request->get('pays')) {
+                $utilisateur->setPays($request->get('pays'));
             }
 
             $this->get('doctrine.orm.entity_manager')->persist($utilisateur);
@@ -207,6 +264,22 @@ class InscriptionController extends ApiRestController
         }
     }
 
-
+    private function setDataFromAndoidInUtilisateur(Utilisateur $utilisateur, $request)
+    {
+        try {
+            $utilisateur->setCreatedAt(new \DateTime('now'));
+            if ($request->get('email')) {
+                $utilisateur->setEmail($request->get('email'));
+            }
+            if ($request->get('prenom')) {
+                $utilisateur->setPrenom($request->get('prenom'));
+            }
+            $this->get('doctrine.orm.entity_manager')->persist($utilisateur);
+            $this->get('doctrine.orm.entity_manager')->flush();
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
 }
 

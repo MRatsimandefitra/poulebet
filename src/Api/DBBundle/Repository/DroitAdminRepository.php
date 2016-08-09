@@ -10,4 +10,13 @@ namespace Api\DBBundle\Repository;
  */
 class DroitAdminRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getDroitByAdminId($idAdmin)
+    {
+
+        $dql = "SELECT da from ApiDBBundle:DroitAdmin as da WHERE da.admin = :idAdmin ";
+        $query = $this->getEntityManager()->createQuery($dql);
+        $query->setParameter('idAdmin', $idAdmin);
+        $query->getResult();
+
+    }
 }

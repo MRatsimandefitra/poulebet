@@ -1,0 +1,27 @@
+ws_rest_homepage:
+    path:     /
+    defaults: { _controller: WsRestBundle:Default:index }
+
+ws_rest_inscription:
+    path:     /inscription
+    defaults: { _controller: WsRestBundle:Inscription:postUtilisateur }
+    methods: POST
+
+ws_rest_get_profil:
+    path:     /profil
+    defaults: { _controller: WsRestBundle:Inscription:getProfilUtilisateur }
+    methods: GET
+
+ws_rest_post_profil:
+    path:     /profil/update
+    defaults: { _controller: WsRestBundle:Inscription:postProfilUtilisateur }
+    methods: POST
+    
+ws_rest_authentication:
+    path:     /authentication/{email}/{password}
+    defaults: { _controller: WsRestBundle:Authentication:authentication }
+    methods: GET
+ws_rest_inscription_test:
+    path:     /inscription/{username}/{email}/{password}
+    defaults: { _controller: WsRestBundle:Inscription:postUtilisateur }
+    methods: GET

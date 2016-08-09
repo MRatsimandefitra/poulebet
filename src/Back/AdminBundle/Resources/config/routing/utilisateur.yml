@@ -11,3 +11,11 @@ remove_admin_utilisateur:
 details_admin_utilisateur:
     path:     /details/{id}
     defaults: { _controller: BackAdminBundle:Utilisateur:details }
+
+list_admin_droit:
+    path:     /droits
+    defaults: { _controller: BackAdminBundle:Utilisateur:listDroit }
+
+export_csv_utilisateur:
+    path:     /exportcsv
+    defaults: { _controller: BackAdminBundle:Utilisateur:exportCsvUtilisateur }

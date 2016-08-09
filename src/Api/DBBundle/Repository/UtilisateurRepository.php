@@ -22,4 +22,26 @@ class UtilisateurRepository extends \Doctrine\ORM\EntityRepository
         }
         return false;
     }
+
+    public function testIfEmailExist($email)
+    {
+        $dql = "SELECT u FROM ApiDBBundle:Utilisateur u
+                WHERE  u.email =:email";
+        $query = $this->getEntityManager()->createQuery($dql);
+        $query->setParameter('email', $email);
+        if ($query->getResult()) {
+            return true;
+        }
+        return false;
+    }
+    public function findByEmailArray($email)
+    {
+
+        $dql = "SELECT u FROM ApiDBBundle:Utilisateur u
+                WHERE u.email =:email";
+        $query = $this->getEntityManager()->createQuery($dql);
+        $query->setParameters(array('email' => $email));
+        $res = $query->getArrayResult();
+        return $res[0];
+    }
 }

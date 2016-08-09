@@ -2,7 +2,12 @@
 
 namespace Api\DBBundle\Form;
 
+use Doctrine\DBAL\Types\DateTimeType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,24 +20,24 @@ class UtilisateurType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username')
-            ->add('email')
-            ->add('password')
-            ->add('salt')
-            ->add('roles')
-            ->add('isEnable')
+            ->add('username', TextType::class, array())
+            ->add('email', EmailType::class, array())
+            //->add('password', PasswordType::class, array())
+            //->add('salt')
+            //->add('roles')
+            //->add('isEnable')
             ->add('nom')
             ->add('prenom')
             ->add('sexe')
-            ->add('dateNaissance', 'date')
-            ->add('dateCreation', 'date')
-            ->add('createdAt', 'datetime')
-            ->add('updatedAt', 'datetime')
-            ->add('userToken')
-            ->add('cheminPhoto')
-            ->add('achatProno')
-            ->add('dateProno', 'datetime')
-            ->add('validiteProno', 'datetime')
+            ->add('dateNaissance', DateType::class, array())
+            ->add('dateCreation', DateType::class, array())
+            /* ->add('createdAt', DateTimeType::class, array())
+             ->add('updatedAt', DateTimeType::class, array())*/
+            //->add('userToken')
+            //->add('cheminPhoto')
+            /* ->add('achatProno')
+             ->add('dateProno', 'datetime')
+             ->add('validiteProno', 'datetime')*/
             ->add('adresse1')
             ->add('adresse2')
             ->add('adresse3')

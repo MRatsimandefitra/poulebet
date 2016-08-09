@@ -16,4 +16,17 @@ ws_rest_post_profil:
     path:     /profil/update
     defaults: { _controller: WsRestBundle:Inscription:postProfilUtilisateur }
     methods: POST
-
+ws_rest_authentication_post:
+    path:     /authentication
+    defaults: { _controller: WsRestBundle:Authentication:authentication }
+    methods: POST
+    
+ws_rest_inscription_test:
+    path:     /inscription/{username}/{email}/{password}
+    defaults: { _controller: WsRestBundle:Inscription:postUtilisateur }
+    methods: GET
+    
+ws_rest_forgotten_password:
+    path:     /forgotten_password/{email}
+    defaults: { _controller: WsRestBundle:Authentication:forgottenPassword }
+    methods: GET
