@@ -17,3 +17,6 @@ list_roles_administrator:
 edit_roles_administrator_droit:
     path:     /roles/list/{idAdmin}/droit/{idDroitAdmin}
     defaults: { _controller: BackAdminBundle:Administrator:editDroitRolesAdmin }
+edit_roles_admin_droit:
+    path:     /roles/edit/{id}
+    defaults: { _controller: BackAdminBundle:Administrator:editDroitAdmin }

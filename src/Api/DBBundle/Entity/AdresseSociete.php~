@@ -63,3 +63,4 @@ class AdresseSociete
         return $this->adresse;
     }
 }
+

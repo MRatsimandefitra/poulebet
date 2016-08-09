@@ -311,4 +311,3 @@ class ParameterMail
         return $this->updatedAt;
     }
 }
-

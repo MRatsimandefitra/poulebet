@@ -21,8 +21,7 @@ class AdministratorController extends ApiController
         $administrator = $this->getAllRepo(self::ENTITY_ADMIN);
 
         foreach ($administrator as $vAdministrator) {
-            var_dump($this->getRepo(self::ENTITY_DROIT_ADMIN)->getDroitByAdminId(2));
-            die;
+
         }
         //$roles = $this->getRepoFrom(self::ENTITY_DROIT_ADMIN, array(''))
         return $this->render('BackAdminBundle:Administrator:index.html.twig', array(
@@ -85,6 +84,85 @@ class AdministratorController extends ApiController
 
 
 
+    public function editDroitAdminAction(Request $request, $id){
+        $droit = $this->getAllRepo(self::ENTITY_DROIT);
+        $user = $this->getUser();
+
+        foreach ($droit as $k => $vDroit) {
+            if (!$this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_DROIT_ADMIN)->findBy(array('droit' => $vDroit, 'admin' => $user))) {
+                $adminDroit = new DroitAdmin();
+                $adminDroit->setLecture(true);
+                $adminDroit->setModification(false);
+                $adminDroit->setAjout(false);
+                $adminDroit->setSuppression(false);
+                $adminDroit->setAdmin($user);
+                $adminDroit->setDroit($vDroit);
+                $this->get('doctrine.orm.entity_manager')->persist($adminDroit);
+                $this->get('doctrine.orm.entity_manager')->flush();
+
+            }
+        }
+
+        $form = $this->formPost(self::FORM_ADMIN_DROIT, null);
+        $form->handleRequest($request);
+        $params = $request->getContent();
+
+        if ($params) {
+            $exp = explode("&", str_replace('=on', '', $params));
+            foreach ($exp as $k => $v) {
+                $war[] = explode('_', $v);
+            }
+
+            foreach ($war as $k => $v) {
+                $array[] = array(
+                    'champ' => $v[0],
+                    'id' => $v[1],
+                );
+            }
+            /*echo "<PRE>";
+            print_r($array);
+            echo "</pre>";
+            die;*/
+            foreach ($array as $kA => $vA) {
+                $droitE = $this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_DROIT)->find($vA['id']);
+
+                $dAdminEntity = $this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_DROIT_ADMIN)->findOneBy(array('droit' => $droitE));
+                if ($vA['champ'] == 'lecture') {
+                    $dAdminEntity->setLecture(true);
+                }
+                if ($vA['champ'] == 'suppression') {
+                    $dAdminEntity->setSuppression(true);
+                }
+                if ($vA['champ'] == 'ajout') {
+                    $dAdminEntity->setAjout(true);
+                }
+                if ($vA['champ'] == 'modification') {
+                    $dAdminEntity->setModification(true);
+                }
+
+                // $this->get('doctrine.orm.entity_manager')->persist($dAdminEntity);
+                $this->get('doctrine.orm.entity_manager')->flush();
+                //
+
+            }
+            die('okok');
+        }
+
+        $droitAdminData = $this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_DROIT_ADMIN)->findBy(array('admin' => $this->getUser()));
+
+        /*if($form->isValid()){
+
+            //$this->insert($administrator, array('success' => 'success' , 'error' => 'error'));
+
+        }*/
+        return $this->render('BackAdminBundle:Administrator:edit.html.twig', array(
+            'form' => $form->createView(),
+            'droit' => $droit,
+            'id' => $this->getUser()->getId(),
+            'droitAdminData' => $droitAdminData
+        ));
+
+    }
 
 
 

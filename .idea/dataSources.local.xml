@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="dataSourceStorageLocal">
-    <data-source name="MySQL - poulebet@localhost" uuid="3eb6855d-ee9a-470a-85cd-eb5d80ef1dd4">
+    <data-source name="MySQL - pouletbet@localhost" uuid="cc7fd5a0-6e13-470b-9c84-5ce3f32ff0a3">
       <secret-storage>master_key</secret-storage>
       <user-name>root</user-name>
-      <schema-pattern>poulebet.*</schema-pattern>
-      <default-schemas>poulebet.*</default-schemas>
+      <schema-pattern>pouletbet.*</schema-pattern>
+      <default-schemas>pouletbet.*</default-schemas>
     </data-source>
   </component>
 </project>

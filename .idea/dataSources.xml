@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="4056992450">
-    <data-source source="LOCAL" name="MySQL - poulebet@localhost" uuid="3eb6855d-ee9a-470a-85cd-eb5d80ef1dd4">
+  <component name="DataSourceManagerImpl" format="xml" hash="2183943610">
+    <data-source source="LOCAL" name="MySQL - pouletbet@localhost" uuid="cc7fd5a0-6e13-470b-9c84-5ce3f32ff0a3">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
-      <auto-commit>false</auto-commit>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/poulebet</jdbc-url>
+      <jdbc-url>jdbc:mysql://localhost:3306/pouletbet</jdbc-url>
       <driver-properties>
         <property name="zeroDateTimeBehavior" value="convertToNull" />
         <property name="tinyInt1isBit" value="false" />
         <property name="characterEncoding" value="utf8" />
         <property name="characterSetResults" value="utf8" />
         <property name="yearIsDateType" value="false" />
-        <property name="allowMultiQueries" value="true" />
       </driver-properties>
       <libraries />
     </data-source>

@@ -14,4 +14,8 @@
 !var/SymfonyRequirements.php
 .idea/*
 /vendor/
+.idea/
+/idea/
 /web/bundles/
+composer.lock
+var/cache/

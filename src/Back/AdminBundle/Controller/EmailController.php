@@ -3,7 +3,7 @@
 namespace Back\AdminBundle\Controller;
 
 use Api\CommonBundle\Controller\ApiController;
-use Api\DBBundle\Entity\AdresseSociete;
+use Api\DBBundle\Entity\Societe;
 use Api\DBBundle\Entity\ParameterMail;
 use Api\DBBundle\Entity\TemplateMail;
 use Api\DBBundle\Entity\Utilisateur;
@@ -15,8 +15,8 @@ class EmailController extends ApiController
     const FORM_EMAIL = 'Api\DBBundle\Form\EmailBoType';
     const FORM_LIST_EMAIL = 'Api\DBBundle\Request\ListEmail';
     const FORM_PARAMETRE_EMAIL = 'Api\DBBundle\Form\ParameterMailType';
-    const FORM_ADRESSE = 'Api\DBBundle\Form\AdresseSocieteType';
-    const ENTITY_ADRESSE = 'ApiDBBundle:AdresseSociete';
+    const FORM_ADRESSE = 'Api\DBBundle\Form\SocieteType';
+    const ENTITY_ADRESSE = 'ApiDBBundle:Societe';
     const ENTITY_PARAMETRE_EMAIL = 'ApiDBBundle:ParameterMail';
     const ENTITY_TEMPLATE_MAIl = 'ApiDBBundle:TemplateMail';
     const FORM_TEMPLATE_EMAIL = 'Api\DBBundle\Form\TemplateMailType';
@@ -95,7 +95,7 @@ class EmailController extends ApiController
         // 1- get adresse
         $adresses = $this->getAllEntity(self::ENTITY_ADRESSE);
         if (!$adresses) {
-            $adresses = new AdresseSociete();
+            $adresses = new Societe();
         }
         $formAdress = $this->formPost(self::FORM_ADRESSE, $adresses);
         $formAdress->handleRequest($request);

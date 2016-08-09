@@ -8,7 +8,7 @@
     </div>
     <div class="box-response">
         {#{{ form(form) }}#}
-        <form action="{{ path('edit_administrator', {'id': id}) }}" method="post">
+        <form action="{#{{ path('edit_roles_admin_droit', {'id': id}) }}#}" method="post">
             <table class="table">
                 <tr>
                     <td>{{ 'Fonctionalité'|trans }}</td>
@@ -22,29 +22,48 @@
                 </tr>
 
                 {% for row in droitAdminData %}
-                    {{ row.lecture }}
+                    {{ row.id  }}  - Lecture : {{ row.lecture  }}<br />
+                    {{ row.id  }} -  Modification {{ row.modification }}<br />
+                {% if row.lecture == 1 %}
+                    {{ row.id  }}  - isdefined <br />
+                {% endif %}
                     <tr>
                         <td>
                             <input type="text" disabled="true" value="{{ row.droit.fonctionnalite }}"/>
                         </td>
                         <td>
-                            {% if verify(row.id) %}
+                            {% if row.lecture is defined and row.lecture == 1 %}
                                 <input type="checkbox" name="lecture_{{ row.id }}" checked="true"/>
                             {% else %}
-                                <input type="checkbox" name="lecture_{{ row.id }}" checked="false"/>
+                                <input type="checkbox" name="lecture_{{ row.id }}"/>
                             {% endif %}
                             {#{{ form_widget(form.lecture) }}#}
                         </td>
                         <td>
-                            <input type="checkbox" name="modification_{{ row.id }}"/>
+                            {% if row.modification == true %}
+                                <input type="checkbox" name="lecture_{{ row.id }}" checked="true"/>
+                            {% else %}
+                                <input type="checkbox" name="lecture_{{ row.id }}" />
+                            {% endif %}
+                            {#<input type="checkbox" name="modification_{{ row.id }}"/>#}
                             {#{{ form_widget(form.modification) }}#}
                         </td>
                         <td>
-                            <input type="checkbox" name="suppression_{{ row.id }}"/>
+                            {% if row.suppression == true %}
+                                <input type="checkbox" name="lecture_{{ row.id }}" checked="true"/>
+                            {% else %}
+                                <input type="checkbox" name="lecture_{{ row.id }}" />
+                            {% endif %}
+                            {#<input type="checkbox" name="suppression_{{ row.id }}"/>#}
                             {#{{ form_widget(form.suppression) }}#}
                         </td>
                         <td>
-                            <input type="checkbox" name="ajout_{{ row.id }}"/>
+                            {% if row.ajout == true %}
+                                <input type="checkbox" name="lecture_{{ row.id }}" checked="true"/>
+                            {% else %}
+                                <input type="checkbox" name="lecture_{{ row.id }}" />
+                            {% endif %}
+                            {#<input type="checkbox" name="ajout_{{ row.id }}"/>#}
                             {#{{ form_widget(form.ajout) }}#}
                         </td>
                         {#<td>
