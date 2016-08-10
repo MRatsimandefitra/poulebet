@@ -10,17 +10,29 @@ use Symfony\Component\HttpFoundation\Response;
 class UtilisateurController extends ApiController
 {
     const ENTITY_UTILISATEUR = 'ApiDBBundle:Utilisateur';
+    const ENTITY_ADMIN = 'ApiDBBundle:Admin';
+    const ENTITY_DROIT_ADMIN = 'ApiDBBundle:DroitAdmin';
     const FORM_UTILISATEUR = 'Api\DBBundle\Form\UtilisateurType';
     const ENTITY_DROIT = 'ApiDBBundle:Droit';
     const FORM_DROIT_ADMIN = 'Api\DBBundle\Form\DroitAdminType';
 
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-
-        $utilisateur = $this->getRepo(self::ENTITY_UTILISATEUR)->findAll();
-
+        $tri = $request->get('tri');
+        $droit = $this->getRepo(self::ENTITY_DROIT)->findOneByFonctionnalite('Utilisateurs');
+        $currentDroitAdmin = $this->getRepo(self::ENTITY_DROIT_ADMIN)->findOneBy(array('admin' => $this->getUser(), 'droit' => $droit ));
+        $champ = $request->get('champ');
+        $utilisateur = $this->getRepo(self::ENTITY_UTILISATEUR)->getAllUtilisateurs($champ, $tri);
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $utilisateur, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
         return $this->render('BackAdminBundle:Utilisateur:index.html.twig', array(
-            'entities' => $utilisateur
+            'entities' => $utilisateur,
+            'currentAdmin' => $currentDroitAdmin,
+            'pagination' => $pagination
         ));
     }
 

@@ -198,3 +198,13 @@ div.template-tmp textarea, div.template-change textarea {
     margin: 10px;
     padding: 5px;
 }
+
+div.tri{
+    float: right;
+}
+div.tri div.up{
+    display: block;
+}
+div.tri div.down{
+    display: block;
+}

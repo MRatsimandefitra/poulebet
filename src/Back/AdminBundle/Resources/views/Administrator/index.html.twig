@@ -57,8 +57,11 @@
                     <td>
 
                         {#<a href="{{ path('list_roles_administrator', {'idAdmin': row.id }) }}"> {{ 'LIST ROLE'|trans }}</a>#}
-
-                        <a href="{{ path('edit_roles_admin_droit', {'id': row.id }) }}"> {{ 'EDITER ROLE'|trans }}</a>
+                       {# {% if currentAdmin.modification is defined %}
+                            {% if currentAdmin.modification == true %}#}
+                                <a href="{{ path('edit_roles_admin_droit', {'id': row.id }) }}"> {{ 'EDITER ROLE'|trans }}</a>
+                         {#   {% endif %}
+                        {% endif %}#}
 
                     </td>
                 </tr>

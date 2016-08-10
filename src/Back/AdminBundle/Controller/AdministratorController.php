@@ -18,6 +18,8 @@ class AdministratorController extends ApiController
 
     public function indexAction()
     {
+        $droit = $this->getRepo(self::ENTITY_DROIT)->findOneByFonctionnalite('Utilisateurs');
+        $currentDroitAdmin = $this->getRepo(self::ENTITY_DROIT_ADMIN)->findOneBy(array('admin' => $this->getUser(), 'droit' => $droit ));
         $administrator = $this->getAllRepo(self::ENTITY_ADMIN);
 
         foreach ($administrator as $vAdministrator) {
@@ -26,6 +28,7 @@ class AdministratorController extends ApiController
         //$roles = $this->getRepoFrom(self::ENTITY_DROIT_ADMIN, array(''))
         return $this->render('BackAdminBundle:Administrator:index.html.twig', array(
             'entities' => $administrator,
+            'currentAdmin' => $currentDroitAdmin
 
         ));
     }
@@ -95,7 +98,7 @@ class AdministratorController extends ApiController
                 $adminDroit->setModification(false);
                 $adminDroit->setAjout(false);
                 $adminDroit->setSuppression(false);
-                $adminDroit->setAdmin($this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_ADMIN)->find($id));
+                $adminDroit->setAedit_roles_admin_droitdmin($this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_ADMIN)->find($id));
                 $adminDroit->setDroit($vDroit);
                 $this->get('doctrine.orm.entity_manager')->persist($adminDroit);
                 $this->get('doctrine.orm.entity_manager')->flush();

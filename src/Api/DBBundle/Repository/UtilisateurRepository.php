@@ -44,4 +44,18 @@ class UtilisateurRepository extends \Doctrine\ORM\EntityRepository
         $res = $query->getArrayResult();
         return $res[0];
     }
+
+    public function getAllUtilisateurs($champ, $tri){
+
+        if($tri and $champ){
+            $dql = "SELECT u from ApiDBBundle:Utilisateur u
+                ORDER by u.email ASC ";
+            $query = $this->getEntityManager()->createQuery($dql);
+            //$query->setParameters( array('tri' => $tri, 'champ' => $champ) );
+            return $query->getResult();
+        }
+        $dql = "SELECT u from ApiDBBundle:Utilisateur u";
+        $query = $this->getEntityManager()->createQuery($dql);
+        return $query->getResult();
+    }
 }

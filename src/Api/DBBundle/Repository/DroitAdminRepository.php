@@ -28,4 +28,9 @@ class DroitAdminRepository extends \Doctrine\ORM\EntityRepository
         $query->setParameter('idDroit', $idDroit);
         $query->getResult();
     }
+
+    public function findDroitAdminAndAdmin(){
+        $dql ="SELECT da from ApiDBBundle:DroitAdmin da
+                LEFT JOIN da.admin a";
+    }
 }

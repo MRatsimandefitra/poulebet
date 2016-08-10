@@ -24,7 +24,6 @@
                 Afficher
             </label>
             <select>
-                <option value="0">0</option>
                 <option value="0">10</option>
                 <option value="0">20</option>
                 <option value="0">30</option>
@@ -32,14 +31,64 @@
             <label class="white" for="">
                 Entrees
             </label>
+            <div class="count">
+                {{ 'Total' }} : {{ pagination.getTotalItemCount }}
+            </div>
         </div>
         <table class="table-user">
             <thead>
-            <td>{{ 'Nom d\' Utilisateur'|trans }}</td>
-            <td>{{ 'E-mail'|trans }}</td>
-            <td>{{ 'Pays'|trans }}</td>
-            <td>{{ 'Nombre de pronos'|trans }}</td>
-            <td>{{ 'Score total'|trans }}</td>
+            <td>{{ 'Nom d\' Utilisateur'|trans }}
+                <div class="tri">
+                    <a href="{{ path('index_admin_utilisateur',{'tri': 'asc', 'champ': 'username'}) }}">
+                        <img class="tri" id="up" src="{{ asset('images/up.png') }}" width="16" height="16" alt=""/>
+                    </a>
+                    <a href="{{ path('index_admin_utilisateur',{'tri': 'desc'}) }}">
+                        <img class="tri" id="up" src="{{ asset('images/down.png') }}" width="16" height="16" alt=""/>
+                    </a>
+                </div>
+
+            </td>
+            <td>{{ 'E-mail'|trans }}
+                <div class="tri">
+                    <a href="{{ path('index_admin_utilisateur',{'tri': 'asc', 'champ': 'email'}) }}">
+                        <img class="tri" id="up" src="{{ asset('images/up.png') }}" width="16" height="16" alt=""/>
+                    </a>
+                    <a href="{{ path('index_admin_utilisateur',{'tri': 'desc'}) }}">
+                        <img class="tri" id="up" src="{{ asset('images/down.png') }}" width="16" height="16" alt=""/>
+                    </a>
+                </div>
+            </td>
+            <td>{{ 'Pays'|trans }}
+                <div class="tri">
+                    <a href="{{ path('index_admin_utilisateur',{'tri': 'asc'}) }}">
+                        <img class="tri" id="up" src="{{ asset('images/up.png') }}" width="16" height="16" alt=""/>
+                    </a>
+                    <a href="{{ path('index_admin_utilisateur',{'tri': 'desc'}) }}">
+                        <img class="tri" id="up" src="{{ asset('images/down.png') }}" width="16" height="16" alt=""/>
+                    </a>
+                </div>
+
+            </td>
+            <td>{{ 'Nombre de pronos'|trans }}
+                <div class="tri">
+                    <a href="{{ path('index_admin_utilisateur',{'tri': 'asc'}) }}">
+                        <img class="tri" id="up" src="{{ asset('images/up.png') }}" width="16" height="16" alt=""/>
+                    </a>
+                    <a href="{{ path('index_admin_utilisateur',{'tri': 'desc'}) }}">
+                        <img class="tri" id="up" src="{{ asset('images/down.png') }}" width="16" height="16" alt=""/>
+                    </a>
+                </div>
+            </td>
+            <td>{{ 'Score total'|trans }}
+                <div class="tri">
+                    <a href="{{ path('index_admin_utilisateur',{'tri': 'asc'}) }}">
+                        <img class="tri" id="up" src="{{ asset('images/up.png') }}" width="16" height="16" alt=""/>
+                    </a>
+                    <a href="{{ path('index_admin_utilisateur',{'tri': 'desc'}) }}">
+                        <img class="tri" id="up" src="{{ asset('images/down.png') }}" width="16" height="16" alt=""/>
+                    </a>
+                </div>
+            </td>
             {#{% if is_granted('ROLE_SUPER_ADMIN') %}#}
             <td>{{ 'Actions'|trans }}</td>
             {#{% endif %}#}
@@ -68,9 +117,21 @@
                     </td>
                     {#{% if is_granted('ROLE_SUPER_ADMIN') %}#}
                     <td>
-                        <a href="{{ path('update_admin_utilisateur', {'id': row.id }) }}"> {{ 'Update'|trans }}</a> |
-                        <a href="{{ path('remove_admin_utilisateur', {'id': row.id }) }}"> {{ 'Delete'|trans }}</a> |
-                        <a href="{{ path('details_admin_utilisateur', {'id': row.id }) }}"> {{ 'Details'|trans }}</a>
+                        {% if currentAdmin.modification is defined %}
+                            {% if currentAdmin.modification == true %}
+                                <a href="{{ path('update_admin_utilisateur', {'id': row.id }) }}"> {{ 'Update'|trans }}</a> |
+                            {% endif %}
+                        {% endif %}
+                        {% if currentAdmin.suppression is defined %}
+                            {% if currentAdmin.suppression == true %}
+                            <a href="{{ path('remove_admin_utilisateur', {'id': row.id }) }}"> {{ 'Delete'|trans }}</a> |
+                            {% endif %}
+                        {% endif %}
+                        {% if currentAdmin.lecture is defined %}
+                            {% if currentAdmin.lecture == true %}
+                                  <a href="{{ path('details_admin_utilisateur', {'id': row.id }) }}"> {{ 'Details'|trans }}</a>
+                            {% endif %}
+                        {% endif %}
                     </td>
                     {#{% endif %}#}
 
@@ -89,24 +150,14 @@
             </thead>
         </table>
         <div class="search">
-            <label class="white" for="">
+            {#<label class="white" for="">
                 Afficher
 
                 Entrees
-            </label>
+            </label>#}
 
-            <div class="pagignation">
-                <ul class="pagination">
-                    <li>
-
-                    </li>
-                    <li>
-
-                    </li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                </ul>
+            <div class="navigation">
+                {{ knp_pagination_render(pagination) }}
             </div>
         </div>
     </div>
