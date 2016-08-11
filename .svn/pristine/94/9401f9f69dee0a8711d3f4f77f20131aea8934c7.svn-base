@@ -56,7 +56,7 @@ class InscriptionController extends ApiRestController
                  'infos_users' => $user,
                  'code_erreur' => 0,
                  'success' => true,
-                 'message' => "Votre mot de passe est envoyé par mail"
+                 'message' => "Mot de passe envoyé par mail"
              ));
          }
          return new JsonResponse(array(
