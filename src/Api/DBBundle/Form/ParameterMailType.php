@@ -3,6 +3,7 @@
 namespace Api\DBBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,7 +18,12 @@ class ParameterMailType extends AbstractType
         $builder
             ->add('emailSite')
             ->add('nomExpediteur')
-            ->add('seuriteSMTP')
+            ->add('seuriteSMTP', ChoiceType::class, array(
+                'choices' => array(
+                    'TLS' => 'TLS',
+                    'SSL' => 'SSL'
+                )
+            ))
             ->add('portSMTP')
             ->add('userSMTP')
             ->add('passwordSMTP')

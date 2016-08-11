@@ -9,9 +9,10 @@
             {{ 'Gestion Emails '|trans }} :
             <div class="link">
                 {#{% if is_granted('ROLE_SUPER_ADMIN') %}#}
-                <a href="{#{{ path('index_administrator') }}#}">{{ 'Parametres Email'|trans }}</a> |
+                {#<a href="&#123;&#35;{{ path('index_administrator') }}&#35;&#125;">{{ 'Parametres Email'|trans }}</a> |#}
                 {#{% endif %}#}
-                <a href="{#{{ path('export_csv_utilisateur') }}#}">{{ 'Ajout Email'|trans }}</a>
+                {#<a href="&#123;&#35;{{ path('export_csv_utilisateur') }}&#35;&#125;">{{ 'Ajout Email'|trans }}</a>#}
+                {#<a href="{{ path('test_email') }}">{{ 'Test Email'|trans }}</a>#}
             </div>
             <div class="clear">
 

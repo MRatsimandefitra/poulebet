@@ -13,6 +13,7 @@ class SecurityController extends ApiController
 
     public function loginAction(Request $request)
     {
+        die('okok');
         if ($this->getUser()) {
             return $this->redirectToRoute('index_home');
         }

@@ -33,10 +33,12 @@
                         <td>
                             {{ 'Prenom'|trans }}
                         </td>
+                        {% if is_granted('ROLE_SUPER_ADMIN') %}
                         <td>
                             {{ 'Super Admin'|trans }}
 
                         </td>
+                        {% endif %}
                     </tr>
                     <tr>
                         <td>
@@ -54,6 +56,7 @@
                         <td>
                             {{ admin.prenom }}
                         </td>
+                        {% if is_granted('ROLE_SUPER_ADMIN') %}
                         <td>
                             {% if admin.isSuperAdmin %}
                                 <input type="checkbox" name="is_super_admin" checked="true"/>
@@ -62,6 +65,7 @@
                             {% endif %}
 
                         </td>
+                        {% endif %}
                     </tr>
                 </table>
             </div>

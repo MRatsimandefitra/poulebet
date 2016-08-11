@@ -5,6 +5,7 @@ namespace Api\DBBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -27,14 +28,18 @@ class Admin extends BaseUser
     }
 
     /**
+     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="prenom",type="string", length=100)
      */
     protected $prenom;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(name="nom",type="string", length=100)
      */
     protected $nom;
+
     /**
      * @ORM\Column(name="isSuperAdmin",type="boolean", nullable=true)
      */

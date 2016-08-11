@@ -6,7 +6,7 @@
     <div class="box-header-response">
         {{ 'Listes des administrateurs'|trans }}
         <div class="link">
-            <a href="{{ path('index_admin_utilisateur') }}">{{ "Liste des Utilisateurs"|trans }}</a>
+            {#<a href="{{ path('index_admin_utilisateur') }}">{{ "Liste des Utilisateurs"|trans }}</a>#}
         </div>
     </div>
     <div class="box-response">
@@ -59,9 +59,17 @@
                         {#<a href="{{ path('list_roles_administrator', {'idAdmin': row.id }) }}"> {{ 'LIST ROLE'|trans }}</a>#}
                        {# {% if currentAdmin.modification is defined %}
                             {% if currentAdmin.modification == true %}#}
+                        {% if row.enabled == true %}
                                 <a href="{{ path('edit_roles_admin_droit', {'id': row.id }) }}"> {{ 'EDITER ROLE'|trans }}</a>
+                        {% endif %}
                          {#   {% endif %}
                         {% endif %}#}
+                            &nbsp; | &nbsp;
+                        {% if is_granted('ROLE_SUPER_ADMIN') %}
+                            {% if row.enabled == false %}
+                                <a href="{{ path('edit_validate_administrator', {'id': row.id }) }}">{{ 'VALIDER COMPTE' }}</a>
+                            {% endif %}
+                        {% endif %}
 
                     </td>
                 </tr>

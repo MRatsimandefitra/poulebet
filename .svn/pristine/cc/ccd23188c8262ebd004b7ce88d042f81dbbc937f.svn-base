@@ -150,7 +150,6 @@ class InscriptionController extends ApiRestController
     private function setDataInUtilisateur(Utilisateur $utilisateur, $request)
     {
 
-
         try {
             $utilisateur->setRoles(array('ROLE_USER'));
 
@@ -190,14 +189,13 @@ class InscriptionController extends ApiRestController
                 $utilisateur->setPassword($password);
             }
             else {
-
                 $parameter = $this->getParameterMail();
                 $pass = $this->generatePassword();
                 $email = $request->get('email');
                 $prenom = $request->get('prenom');
                 $body = $parameter->getTemplateInscription();
-
                 $mailerService = $this->getMailerService();
+                
                 $res = str_replace('{{prenom}}',$prenom,$body);
                 $res = str_replace('{{email}}',$email ,$res);
                 $res = str_replace('{{password}}',$pass,$res);
@@ -207,7 +205,7 @@ class InscriptionController extends ApiRestController
                 $mailerService->setFrom($parameter->getEmailSite());
                 $mailerService->setTo($email);
                 $mailerService->addParams('body',$res);
-
+                                            
                 if($mailerService->send()){
                     $utilisateur->setPassword($this->encodePassword($pass));
                 }

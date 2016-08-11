@@ -110,4 +110,43 @@ class EmailController extends ApiController
         ));
     }
 
+    public function testEmailAction(){
+       /* $hostDb = "smtp.gmail.com";
+        $portDb = 465;
+        $portTLS = 587;
+        //$config = $this->get('swiftmailer.mailer.default.transport.real')->getPort();
+        $userDb = 'dev.ywoume@gmail.com';
+        $passwordDb = 'tsilaina150';
+        $transport = \Swift_SmtpTransport::newInstance($hostDb,$portTLS)
+            ->setUsername($userDb)
+            ->setPassword($passwordDb)
+            ->setEncryption('tls')
+
+        ;
+        $mailer = \Swift_Mailer::newInstance($transport);
+        $message = \Swift_Message::newInstance()
+            ->setSubject('sujet')
+            ->setFrom('dev.ywoume@gmail.com')
+            ->setTo('ywoume@gmail.com')
+            ->setBody('okok baina')
+        ;
+        $mailer->send($message);*/
+        $parameters = $this->get('doctrine.orm.entity_manager')->getRepository('ApiDBBundle:ParameterMail')->findAll();
+
+        foreach($parameters as $vParameter){
+            $body = $vParameter->getTemplateInscription();
+            $subject = $vParameter->getSubjectInscription();
+        }
+
+     //   die('okok');
+        $sm = $this->get('mail.manager');
+        $sm->setSubject($subject);
+        $sm->setFrom('dev.ywoume@gmail.com');
+        $sm->setTo('ywoume@gmail.com');
+        $sm->setBody($body);
+        $sm->setParams(array('email' => 'coco@gmail.com', 'password' => 'mon passs', 'adresseSociete' => 'mon adresse'));
+
+        $sm->send();
+        die('okok');
+    }
 }

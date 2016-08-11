@@ -98,7 +98,7 @@ class AdministratorController extends ApiController
                 $adminDroit->setModification(false);
                 $adminDroit->setAjout(false);
                 $adminDroit->setSuppression(false);
-                $adminDroit->setAedit_roles_admin_droitdmin($this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_ADMIN)->find($id));
+                $adminDroit->setAdmin($this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_ADMIN)->find($id));
                 $adminDroit->setDroit($vDroit);
                 $this->get('doctrine.orm.entity_manager')->persist($adminDroit);
                 $this->get('doctrine.orm.entity_manager')->flush();
@@ -113,17 +113,19 @@ class AdministratorController extends ApiController
         // if super_admin posted
         if ($request->get('is_super_admin')) {
             foreach ($droit as $vDroit) {
-                $adminDroit = $this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_DROIT_ADMIN)->findOneBy(array('droit' => $vDroit));
+
+                $adminDroit = $this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_DROIT_ADMIN)->findOneBy(array('droit' => $vDroit, 'admin' => $this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_ADMIN)->find($id) ));
                 //  var_dump($adminDroit);die;
                 //  var_dump($adminDroit); die;
                 $adminDroit->setAjout(true);
                 $adminDroit->setModification(true);
                 $adminDroit->setLecture(true);
                 $adminDroit->setSuppression(true);
-                // $this->get('doctrine.orm.entity_manager')->persist($adminDroit);
+                 $this->get('doctrine.orm.entity_manager')->persist($adminDroit);
                 $this->get('doctrine.orm.entity_manager')->flush();
             }
             $adminSup = $this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_ADMIN)->find($id);
+            $adminSup->setRoles(array('ROLE_SUPER_ADMIN'));
             $adminSup->setSuperAdmin(true);
             $this->get('doctrine.orm.entity_manager')->persist($adminSup);
             $this->get('doctrine.orm.entity_manager')->flush();
@@ -165,6 +167,7 @@ class AdministratorController extends ApiController
         print_r($array);
         echo "</pre>";
         die;*/
+
             foreach ($array as $kA => $vA) {
 
                 $droitE = $this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_DROIT)->find($vA['id']);
@@ -219,6 +222,13 @@ class AdministratorController extends ApiController
     }
 
 
+    public function validerCompteAction($id){
+        $admin = $this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_ADMIN)->find($id);
+        $admin->setEnabled(true);
+        $this->get('doctrine.orm.entity_manager')->flush();
+        return $this->redirectToRoute('index_administrator');
+
+    }
     /* public function editAction(Request $request, $id)
      {
 

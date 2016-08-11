@@ -20,3 +20,6 @@ edit_roles_administrator_droit:
 edit_roles_admin_droit:
     path:     /roles/edit/{id}
     defaults: { _controller: BackAdminBundle:Administrator:editDroitAdmin }
+edit_validate_administrator:
+    path: /validate/{id}
+    defaults: { _controller: BackAdminBundle:Administrator:validerCompte }

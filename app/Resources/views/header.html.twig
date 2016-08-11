@@ -8,6 +8,18 @@
                         <a href="#">{{ 'Accueil'|trans }}</a>
                     </li>
                     <li>
+                        <img src="{{ asset('images/admin.png') }}" alt=""/>
+                        <a href="{{ path('index_administrator') }}">{{ 'Administrateurs'|trans }}</a>
+                    </li>
+                    <li>
+                        <img src="{{ asset('images/user.png') }}" alt=""/>
+                        <a href="{{ path('index_admin_utilisateur') }}">{{ 'Utilisateurs'|trans }}</a>
+                    </li>
+                    <li>
+                        <img src="{{ asset('images/mail.png') }}" alt=""/>
+                        <a href="{{ path('index_admin_parameter') }}">{{ "Gestion Email"|trans }}</a>
+                    </li>
+                    <li>
                         <img src="{{ asset('images/match.png') }}" alt=""/>
                         <a href="{{ path('index_admin_match') }}">{{ 'Matchs'|trans }}</a>
                     </li>
@@ -15,18 +27,12 @@
                         <img src="{{ asset('images/master-prono.png') }}" alt=""/>
                         <a href="{{ path('index_admin_pronostic') }}">{{ 'Master prono'|trans }}</a>
                     </li>
-                    <li>
-                        <img src="{{ asset('images/user.png') }}" alt=""/>
-                        <a href="{{ path('index_admin_utilisateur') }}">{{ 'Utilisateurs'|trans }}</a>
-                    </li>
+
                     <li>
                         <img src="{{ asset('images/statistique.png') }}" alt=""/>
                         <a href="#">{{ "Statistiques"|trans }}</a>
                     </li>
-                    <li>
-                        <img src="{{ asset('images/mail.png') }}" alt=""/>
-                        <a href="{{ path('index_admin_email') }}">{{ "Gestion Email"|trans }}</a>
-                    </li>
+
                     <li>
                         <img src="{{ asset('images/classement.png') }}" alt=""/>
                         <a href="#">{{ 'Classement'|trans }}</a>
