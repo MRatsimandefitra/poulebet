@@ -34,3 +34,6 @@ ws_rest_forgotten_password_post:
     path:     /forgotten_password
     defaults: { _controller: WsRestBundle:Authentication:forgottenPassword }
     methods: POST
+route_prefix_ws_rest_mention:
+    resource: "@WsRestBundle/Resources/config/routing/mention.yml"
+    prefix:   /mentions

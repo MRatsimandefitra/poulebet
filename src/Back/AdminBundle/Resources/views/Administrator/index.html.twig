@@ -9,6 +9,7 @@
 
         </div>
     </div>
+
     {% if currentAdmin.lecture == true %}
         <div class="box-response">
         <div class="search">
@@ -77,7 +78,6 @@
                                         </a> &nbsp;&nbsp;
                                 {% endif %}
                             {% endif %}
-
                             {% if currentAdmin.modification == true %}
                                 <a href="{{ path('edit_administrator_profile', {'id': row.id}) }}" title="{{ 'Modifier cet admnistrateur' }}">
                                     <span class="orange">

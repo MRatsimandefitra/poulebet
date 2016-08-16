@@ -19,13 +19,32 @@ class AdministratorController extends ApiController
 
     public function indexAction()
     {
-        $droit = $this->getRepo(self::ENTITY_DROIT)->findOneByFonctionnalite('Administration');
+      //  $droit = $this->getRepo(self::ENTITY_DROIT)->findOneByFonctionnalite('Administration');
         /*$currentDroitAdmin = $this->getRepo(self::ENTITY_DROIT_ADMIN)->findBy(array('admin' => $this->getUser(), 'droit' => $droit ));*/
         $currentDroitAdmin = $this->getRepo(self::ENTITY_DROIT_ADMIN)->findDroitAdminByUserConnected($this->getUser());
+        if(!$currentDroitAdmin){
+            $droit = $this->getAllRepo(self::ENTITY_DROIT);
+            $user = $this->getUser();
+
+            foreach ($droit as $k => $vDroit) {
+                if (!$this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_DROIT_ADMIN)->findBy(array('droit' => $vDroit, 'admin' => $this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_ADMIN)->find($id)))) {
+                    $adminDroit = new DroitAdmin();
+                    $adminDroit->setLecture(true);
+                    $adminDroit->setModification(false);
+                    $adminDroit->setAjout(false);
+                    $adminDroit->setSuppression(false);
+                    $adminDroit->setAdmin($this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_ADMIN)->find($id));
+                    $adminDroit->setDroit($vDroit);
+                    $this->get('doctrine.orm.entity_manager')->persist($adminDroit);
+                    $this->get('doctrine.orm.entity_manager')->flush();
+
+                }
+            }
+        }
         $administrator = $this->getAllRepo(self::ENTITY_ADMIN);
         return $this->render('BackAdminBundle:Administrator:index.html.twig', array(
             'entities' => $administrator,
-            'currentAdmin' => $currentDroitAdmin[0]
+            'currentAdmin' => (!$currentDroitAdmin)? array() : $currentDroitAdmin[0]
         ));
     }
 
