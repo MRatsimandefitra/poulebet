@@ -68,9 +68,8 @@
                        {# {% if currentAdmin.modification is defined %}
                             {% if currentAdmin.modification == true %}#}
                         {% if row.enabled == true %}
-                            {% if currentAdmin.modification == true  %}
-                                {% if is_granted('ROLE_SUPER_ADMIN') %}
-
+                            {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                {% if currentAdmin.modification == true or is_granted('ROLE_SUPER_ADMIN')  %}
                                     <a href="{{ path('edit_roles_admin_droit', {'id': row.id }) }}" title="{{ 'EDITER ROLE'|trans }}">
                                         <span class="orange">
                                         <span class="glyphicon glyphicon-check" aria-hidden="true"></span>
