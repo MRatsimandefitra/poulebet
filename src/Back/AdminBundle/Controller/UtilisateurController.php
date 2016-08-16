@@ -121,7 +121,7 @@ class UtilisateurController extends ApiController
         $entity = $this->getRepoFormId(self::ENTITY_UTILISATEUR, $id);
         return $this->render('BackAdminBundle:Utilisateur:details.html.twig', array(
             'entity' => $entity,
-            'currentAdmin' => $currentAdmin
+            'currentAdmin' => $currentAdmin[0]
         ));
     }
 
