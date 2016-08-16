@@ -33,4 +33,14 @@ class DroitAdminRepository extends \Doctrine\ORM\EntityRepository
         $dql ="SELECT da from ApiDBBundle:DroitAdmin da
                 LEFT JOIN da.admin a";
     }
+
+    public function findDroitAdminByUserConnected($user){
+        $dql = "SELECT da, a, d from ApiDBBundle:DroitAdmin as da
+                LEFT JOIN da.admin a
+                LEFT JOIN da.droit d
+                WHERE da.admin = :currentuser ";
+        $query = $this->getEntityManager()->createQuery($dql);
+        $query->setParameter('currentuser', $user);
+        return $query->getResult();
+    }
 }

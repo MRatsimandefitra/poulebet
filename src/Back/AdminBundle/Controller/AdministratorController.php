@@ -20,11 +20,12 @@ class AdministratorController extends ApiController
     public function indexAction()
     {
         $droit = $this->getRepo(self::ENTITY_DROIT)->findOneByFonctionnalite('Administration');
-        $currentDroitAdmin = $this->getRepo(self::ENTITY_DROIT_ADMIN)->findOneBy(array('admin' => $this->getUser(), 'droit' => $droit ));
+        /*$currentDroitAdmin = $this->getRepo(self::ENTITY_DROIT_ADMIN)->findBy(array('admin' => $this->getUser(), 'droit' => $droit ));*/
+        $currentDroitAdmin = $this->getRepo(self::ENTITY_DROIT_ADMIN)->findDroitAdminByUserConnected($this->getUser());
         $administrator = $this->getAllRepo(self::ENTITY_ADMIN);
         return $this->render('BackAdminBundle:Administrator:index.html.twig', array(
             'entities' => $administrator,
-            'currentAdmin' => $currentDroitAdmin
+            'currentAdmin' => $currentDroitAdmin[0]
         ));
     }
 
