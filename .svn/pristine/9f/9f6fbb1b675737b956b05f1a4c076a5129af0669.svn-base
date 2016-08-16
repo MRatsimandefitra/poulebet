@@ -1,0 +1,42 @@
+{% extends 'BackAdminBundle::layout.html.twig' %}
+{% block title %} {{ parent() }} {% endblock %}
+{% block ariane %} {{ parent() }} {% endblock %}
+
+{% block page %}
+    <div class="box-header-response">
+        {{ 'Editions profile Administrateur '|trans }}
+        <div class="link">
+            {#<a href="{{ path('index_admin_utilisateur') }}">{{ "Liste des Utilisateurs"|trans }}</a>#}
+        </div>
+    </div>
+    <div class="box-response">
+        <div class="edit-profil-admin">
+            {{ form_start(form) }}
+            <div>
+                <label for="">{{ "Username"|trans }}</label>
+                {{ form_widget(form.username) }}
+            </div>
+            <div>
+                <label for="">{{ "Email"|trans }}</label>
+                {{ form_widget(form.email) }}
+            </div>
+            <div>
+                <label for="">{{ "Password"|trans }}</label>
+                {{ form_widget(form.password) }}
+            </div>
+            <div>
+                <label for="">{{ "Nom"|trans }}</label>
+                {{ form_widget(form.nom) }}
+            </div>
+            <div>
+                <label for="">{{ "Prénom"|trans }}</label>
+                {{ form_widget(form.prenom) }}
+            </div>
+
+            <input type="submit" value="{{ 'UPDATE'|trans }}"/>
+            {{ form_end(form) }}
+        </div>
+
+    </div>
+
+{% endblock %}

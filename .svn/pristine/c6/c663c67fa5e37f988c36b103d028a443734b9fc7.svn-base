@@ -3,7 +3,6 @@
 namespace Back\AdminBundle\Controller;
 
 use Api\CommonBundle\Controller\ApiController;
-use Api\DBBundle\Entity\Admin;
 use Api\DBBundle\Entity\DroitAdmin;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,63 +18,19 @@ class AdministratorController extends ApiController
 
     public function indexAction()
     {
-        $droit = $this->getRepo(self::ENTITY_DROIT)->findOneByFonctionnalite('Administration');
+        $droit = $this->getRepo(self::ENTITY_DROIT)->findOneByFonctionnalite('Administrateur');
         $currentDroitAdmin = $this->getRepo(self::ENTITY_DROIT_ADMIN)->findOneBy(array('admin' => $this->getUser(), 'droit' => $droit ));
+
         $administrator = $this->getAllRepo(self::ENTITY_ADMIN);
+
+        foreach ($administrator as $vAdministrator) {
+
+        }
+        //$roles = $this->getRepoFrom(self::ENTITY_DROIT_ADMIN, array(''))
         return $this->render('BackAdminBundle:Administrator:index.html.twig', array(
             'entities' => $administrator,
             'currentAdmin' => $currentDroitAdmin
         ));
-    }
-
-    public function editAdministratorProfilAction(Request $request, $id){
-        $currentAdmin = $this->getAdministratorById($id);
-
-        $factory = $this->get('security.encoder_factory');
-        $encoder = $factory->getEncoder($currentAdmin);
-
-        $currentAdmin->setUsername($currentAdmin->getUsername());
-        $form = $this->formPost(self::FORM_ADMIN, $currentAdmin);
-        $form->handleRequest($request);
-        if($form->isValid()){
-            $password = $encoder->encodePassword($form->get('password')->getData(), $currentAdmin->getSalt());
-            $currentAdmin->setPassword($password);
-
-            $this->insert($currentAdmin, array('success' => 'success' , 'error' => 'error'));
-            return $this->redirectToRoute('index_administrator');
-        }
-        return $this->render('BackAdminBundle:Administrator:edit_profile.html.twig', array(
-           'form' => $form->createView()
-        ));
-    }
-
-
-    public function addAdministratorAction(Request $request){
-        $administrator = new Admin();
-        $factory = $this->get('security.encoder_factory');
-
-        $encoder = $factory->getEncoder($administrator);
-
-
-        $form = $this->formPost(self::FORM_ADMIN, $administrator);
-        $form->handleRequest($request);
-        if($form->isValid()){
-            $password = $encoder->encodePassword($form->get('password')->getData(), $administrator->getSalt());
-            $administrator->setPassword($password);
-            $this->insert($administrator, array('success' => 'success', 'error' => 'error'));
-            return $this->redirectToRoute('index_administrator');
-        }
-        return $this->render('BackAdminBundle:Administrator:add_admininstrator.html.twig', array(
-            'form' => $form->createView()
-        ));
-    }
-
-    public function deleteAdministratorAction($id){
-        $currentAdmin = $this->getAdministratorById($id);
-
-        $this->remove($currentAdmin);
-        return $this->redirectToRoute('index_administrator');
-
     }
 
     public function listRolesAction($idAdmin)
@@ -291,10 +246,6 @@ class AdministratorController extends ApiController
         $this->get('doctrine.orm.entity_manager')->flush();
         return $this->redirectToRoute('edit_roles_admin_droit',array('id'=>$id));
 
-    }
-
-    private function getAdministratorById($id){
-        return $this->getRepoFormId(self::ENTITY_ADMIN, $id);
     }
     /* public function editAction(Request $request, $id)
      {

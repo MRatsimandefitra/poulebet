@@ -1,0 +1,37 @@
+div.edit-profil-admin{
+
+    padding: 25px;
+}
+div.edit-profil-admin label{
+    margin-right: 15px;
+    width: 100px;
+}
+div.edit-profil-admin div{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+div.edit-profil-admin input[type=text],div.edit-profil-admin input[type=email],div.edit-profil-admin input[type=password]{
+    width: 200px;
+    padding: 3px;
+}
+span.red{
+    color: #c73724;
+}
+span.green{
+    color: #75c75f;
+}
+span.orange{
+    color: #c7781f;
+}
+span.violet{
+    color: #816ac7;
+}
+a:link{
+    text-decoration: none;
+}
+a{
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: none;
+}
