@@ -83,6 +83,22 @@ class AdministratorController extends ApiController
         if($form->isValid()){
             $password = $encoder->encodePassword($form->get('password')->getData(), $administrator->getSalt());
             $administrator->setPassword($password);
+            $administrator->setEnabled(true);
+
+            $mailer = $this->get('mail.manager');
+            $mailer->setSubject("Email de validation");
+            $mailer->setFrom("toDefine@gmail.com");
+            $mailer->setTo($administrator->getEmail());
+            $text =
+                "<p>Bonjour</p>
+                <p>L'adminitrateur de POULBET a validé votre inscription
+                Nous vous invitons à vous connecter avec votre compte.</p>
+                <p>Cordialement,</p>
+                <p>L'équipe.</p>";
+
+            $mailer->addParams('body',$text);
+            $mailer->send();
+
             $this->insert($administrator, array('success' => 'success', 'error' => 'error'));
             return $this->redirectToRoute('index_administrator');
         }

@@ -3,18 +3,138 @@
 {% block ariane %} {{ parent() }} {% endblock %}
 
 {% block page %}
-
+    {{ form_start(form) }}
     <div class="box-header-response">
         {{ 'Détails membres'|trans }}
     </div>
     <div class="box-response">
-        <div class="col-lg-4">
-            {{ entity.id }}<br/>
-
-
+        <div class="search">
+            {% include 'sous_menu.html.twig' %}
+            <div class="space"></div>
         </div>
-        <div class="col-lg-4">
+        <table>
+            <tr>
+                <td>{{ 'photo'|trans }}</td>
+                <td>
+                    {#<img src="#" alt="" width="100" height="100"/>#}
+                    {#{{ form_widget(form.cheminPhoto) }}#}
+                </td>
+            </tr>
 
-        </div>
+            <tr>
+                <td>{{ 'Username'|trans }}</td>
+                <td>{#{{ entity.username }}#}
+                {{ form_widget(form.username) }}
+                </td>
+            </tr>
+            <tr>
+                <td>{{ 'Email'|trans }}</td>
+                <td>
+                    {{ form_widget(form.email) }}
+                </td>
+            </tr>
+            <tr>
+                <td>{{ 'Password'|trans }}</td>
+                <td>
+                    {{ form_widget(form.password) }}
+                </td>
+            </tr>
+            <tr>
+                <td>{{ 'Sexe'|trans }}</td>
+                <td>
+                    {{ form_widget(form.sexe) }}
+                </td>
+            </tr>
+            <tr>
+                <td>{{ 'Enable'|trans }}</td>
+                <td>
+                    {{ form_widget(form.isEnable) }}
+                </td>
+            </tr>
+            <tr>
+                <td>{{ 'Nom'|trans }}</td>
+                <td>
+                    {{ form_widget(form.nom) }}
+                </td>
+            </tr>
+            <tr>
+                <td>{{ 'Prenom'|trans }}</td>
+                <td>
+                    {{ form_widget(form.prenom) }}
+                </td>
+            </tr>
+            <tr>
+                <td>{{ 'Date de naissance'|trans }}</td>
+                <td>
+                    {{ form_widget(form.dateNaissance) }}
+                </td>
+            </tr>
+
+            <tr>
+                <td>{{ 'Date prono'|trans }}</td>
+                <td>
+                    {{ form_widget(form.dateProno) }}
+                </td>
+            </tr>
+            <tr>
+                <td>{{ 'Achat prono'|trans }}</td>
+                <td>
+                    {{ form_widget(form.achatProno) }}
+                </td>
+            </tr>
+            <tr>
+                <td>{{ 'Validité prono'|trans }}</td>
+                <td>
+                    {{ form_widget(form.validiteProno) }}
+                </td>
+            </tr>
+            <tr>
+                <td>{{ 'Adresse 1'|trans }}</td>
+                <td>
+                    {{ form_widget(form.adresse1) }}
+                </td>
+            </tr>
+            <tr>
+                <td>{{ 'Adresse 2'|trans }}</td>
+                <td>
+                    {{ form_widget(form.adresse2) }}
+                </td>
+            </tr>
+            <tr>
+                <td>{{ 'Adresse 3'|trans }}</td>
+                <td>
+                    {{ form_widget(form.adresse3) }}
+                </td>
+            </tr>
+            <tr>
+                <td>{{ 'Ville'|trans }}</td>
+                <td>
+                    {{ form_widget(form.ville) }}
+                </td>
+            </tr>
+            <tr>
+                <td>{{ 'Pays'|trans }}</td>
+                <td>
+                    {{ form_widget(form.pays) }}
+                </td>
+            </tr>
+            <tr>
+                <td>{{ 'Téléphone'|trans }}</td>
+                <td>
+                    {{ form_widget(form.telephone) }}
+                </td>
+            </tr>
+            <tr>
+                <td>{{ 'Fax'|trans }}</td>
+                <td>
+                    {{ form_widget(form.fax) }}
+                </td>
+            </tr>
+
+        </table>
+        <button class="btn">
+            {{ 'UPDATE'|trans }}
+        </button>
+        {{ form_end(form) }}
     </div>
 {% endblock %}

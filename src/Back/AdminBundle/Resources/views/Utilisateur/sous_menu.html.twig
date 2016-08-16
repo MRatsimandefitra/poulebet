@@ -1,0 +1,11 @@
+<div class="link">
+    {% if currentAdmin.suppression == true %}
+        <a href="#">Supprimer cet utilisateur</a>
+    {% endif %}
+    {% if currentAdmin.lecture == true %}
+        <a href="#">{{ 'Liste des utilisateurs'|trans }}</a>
+    {% endif %}
+    {% if currentAdmin.modification == true %}
+        <a href="#">{{ 'Modifier cet utilisateur'|trans }}</a>
+    {% endif %}
+</div>

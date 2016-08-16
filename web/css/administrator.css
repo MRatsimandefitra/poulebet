@@ -35,3 +35,7 @@ a{
 a:hover{
     text-decoration: none;
 }
+div.search div.link{
+    float: right;
+    margin-left: 10px;
+}

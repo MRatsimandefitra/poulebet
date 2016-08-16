@@ -11,6 +11,7 @@ class UtilisateurController extends ApiController
 {
     const ENTITY_UTILISATEUR = 'ApiDBBundle:Utilisateur';
     const ENTITY_ADMIN = 'ApiDBBundle:Admin';
+    const  FORM_UTILISATEUR_ADMIN = 'Api\DBBundle\Form\UtilisateurAdminType';
     const ENTITY_DROIT_ADMIN = 'ApiDBBundle:DroitAdmin';
     const FORM_UTILISATEUR = 'Api\DBBundle\Form\UtilisateurType';
     const ENTITY_DROIT = 'ApiDBBundle:Droit';
@@ -57,6 +58,41 @@ class UtilisateurController extends ApiController
 
     }
 
+    public function updateUtilisateurAction(Request $request, $id){
+
+        $entity = $this->getRepoFormId(self::ENTITY_UTILISATEUR, $id);
+        $currentAdmin = $this->getRepo(self::ENTITY_DROIT_ADMIN);
+        $factory = $this->get('security.encoder_factory');
+        $encoder = $factory->getEncoder($this->getRepoFormId(self::ENTITY_UTILISATEUR, $id));
+
+        $form = $this->formPost(self::FORM_UTILISATEUR_ADMIN, $entity);
+        $form->handleRequest($request);
+        if($form->isValid()){
+            $password = $encoder->encodePassword($entity->getPassword(), $entity->getSalt());
+            if(!$entity->getPassword()){
+                $entity->setPassword($password);
+            }
+
+            $this->insert($entity, array('success' => 'success', 'error' => 'error'));
+            return $this->redirectToRoute('index_admin_utilisateur');
+        }
+        return $this->render('BackAdminBundle:Utilisateur:update.html.twig', array(
+            'entity' => $entity,
+            'form' => $form->createView()
+        ));
+    }
+
+
+    public function deleteUtilisateurAction($id){
+        $currentUtilisateur = $this->getRepoFormId(self::ENTITY_UTILISATEUR, $id);
+        $this->remove($currentUtilisateur);
+        $this->addFlash(
+            'notice',
+            'Utilisateur a bien été supprimer'
+        );
+        return $this->redirectToRoute('index_admin_utilisateur');
+    }
+
     /*public function updateAction(Request $request, $id)
     {
         $entity = $this->getRepoFormId(self::EENTITY_ADMIN, $id);
@@ -80,8 +116,8 @@ class UtilisateurController extends ApiController
 
     public function detailsAction($id)
     {
-        $entity = $this->getRepoFormId(self::ENTITY_ADMIN, $id);
-        var_dump($entity);die();
+
+        $entity = $this->getRepoFormId(self::ENTITY_UTILISATEUR, $id);
         return $this->render('BackAdminBundle:Utilisateur:details.html.twig', array(
             'entity' => $entity
         ));

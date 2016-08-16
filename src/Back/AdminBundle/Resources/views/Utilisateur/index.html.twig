@@ -22,6 +22,11 @@
     <div class="col-lg-12">
         {% if currentAdmin.lecture == true %}
         <div class="box-response">
+            {% for flash_message in app.session.flashBag.get('notice') %}
+                <div class="flash-notice">
+                    {{ flash_message }}
+                </div>
+            {% endfor %}
         <div class="search">
             <label class="white" for="">
                 Afficher
@@ -130,13 +135,13 @@
 
                         {% if currentAdmin.suppression is defined %}
                             {% if currentAdmin.suppression == true %}
-                            <a href="{{ path('remove_admin_utilisateur', {'id': row.id }) }}"> {{ 'Delete'|trans }}</a> |
+                                <a id="supprimer-utilisateur" href="{{ path('remove_admin_utilisateur', {'id': row.id }) }}"> {{ 'Delete'|trans }}</a> |
                             {% endif %}
                         {% endif %}
 
                         {% if currentAdmin.lecture is defined %}
                             {% if currentAdmin.lecture == true %}
-                                  <!--<a href="{{ path('details_admin_utilisateur', {'id': row.id }) }}"> {{ 'Details'|trans }}</a>-->
+                                  <a href="{{ path('details_admin_utilisateur', {'id': row.id }) }}"> {{ 'Details'|trans }}</a>
                             {% endif %}
                         {% endif %}
                     </td>
