@@ -27,19 +27,20 @@ class AdministratorController extends ApiController
             $user = $this->getUser();
 
             foreach ($droit as $k => $vDroit) {
-                if (!$this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_DROIT_ADMIN)->findBy(array('droit' => $vDroit, 'admin' => $this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_ADMIN)->find($id)))) {
+                if (!$this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_DROIT_ADMIN)->findBy(array('droit' => $vDroit, 'admin' => $this->getUser()))) {
                     $adminDroit = new DroitAdmin();
                     $adminDroit->setLecture(true);
                     $adminDroit->setModification(false);
                     $adminDroit->setAjout(false);
                     $adminDroit->setSuppression(false);
-                    $adminDroit->setAdmin($this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_ADMIN)->find($id));
+                    $adminDroit->setAdmin($this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_ADMIN)->find($this->getUser()->getId()));
                     $adminDroit->setDroit($vDroit);
                     $this->get('doctrine.orm.entity_manager')->persist($adminDroit);
                     $this->get('doctrine.orm.entity_manager')->flush();
 
                 }
             }
+            $currentDroitAdmin = $this->getRepo(self::ENTITY_DROIT_ADMIN)->findDroitAdminByUserConnected($this->getUser());
         }
         $administrator = $this->getAllRepo(self::ENTITY_ADMIN);
         return $this->render('BackAdminBundle:Administrator:index.html.twig', array(
