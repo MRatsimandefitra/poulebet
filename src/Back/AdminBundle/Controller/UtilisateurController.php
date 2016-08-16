@@ -117,10 +117,11 @@ class UtilisateurController extends ApiController
 
     public function detailsAction($id)
     {
-
+        $currentAdmin = $this->getRepo(self::ENTITY_DROIT_ADMIN)->findDroitAdminByUserConnected($this->getUser());
         $entity = $this->getRepoFormId(self::ENTITY_UTILISATEUR, $id);
         return $this->render('BackAdminBundle:Utilisateur:details.html.twig', array(
-            'entity' => $entity
+            'entity' => $entity,
+            'currentAdmin' => $currentAdmin
         ));
     }
 
