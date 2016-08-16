@@ -1,11 +1,11 @@
 <div class="link">
-    {% if currentAdmin.suppression == true %}
+    {% if currentAdmin.suppression == true or is_granted('ROLE_SUPER_ADMIN') %}
         <a href="#">Supprimer cet utilisateur</a>
-    {% endif %}
-    {% if currentAdmin.lecture == true %}
+    {% endif %} |
+    {% if currentAdmin.lecture == true or is_granted('ROLE_SUPER_ADMIN') %}
         <a href="#">{{ 'Liste des utilisateurs'|trans }}</a>
-    {% endif %}
-    {% if currentAdmin.modification == true %}
+    {% endif %} |
+    {% if currentAdmin.modification == true or is_granted('ROLE_SUPER_ADMIN')  %}
         <a href="#">{{ 'Modifier cet utilisateur'|trans }}</a>
     {% endif %}
 </div>

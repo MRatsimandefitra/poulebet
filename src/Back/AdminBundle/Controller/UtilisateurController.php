@@ -61,7 +61,7 @@ class UtilisateurController extends ApiController
     public function updateUtilisateurAction(Request $request, $id){
 
         $entity = $this->getRepoFormId(self::ENTITY_UTILISATEUR, $id);
-        $currentAdmin = $this->getRepo(self::ENTITY_DROIT_ADMIN);
+        $currentAdmin = $this->getRepo(self::ENTITY_DROIT_ADMIN)->findDroitAdminByUserConnected($this->getUser());
         $factory = $this->get('security.encoder_factory');
         $encoder = $factory->getEncoder($this->getRepoFormId(self::ENTITY_UTILISATEUR, $id));
 
@@ -78,7 +78,8 @@ class UtilisateurController extends ApiController
         }
         return $this->render('BackAdminBundle:Utilisateur:update.html.twig', array(
             'entity' => $entity,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'currentAdmin' => $currentAdmin[0]
         ));
     }
 
