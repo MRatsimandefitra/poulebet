@@ -33,6 +33,7 @@ class UtilisateurRepository extends \Doctrine\ORM\EntityRepository
             return true;
         }
         return false;
+        
     }
     public function findByEmailArray($email)
     {

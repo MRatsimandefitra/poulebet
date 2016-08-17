@@ -1115,7 +1115,7 @@ class MatchController extends Controller
               }
           }*/
 
-        return $this->render('BackAdminBundle:Pronostic:index.html.twig', array(
+        return $this->render('BackAdminBundle:Matchs:index.html.twig', array(
             'items' => $items,
             'totalMatch' => $totalMatch,
             'search' => $dateMatchSearch

@@ -19,6 +19,7 @@ class UtilisateurController extends ApiController
 
     public function indexAction(Request $request)
     {
+        //var_dump($request->request); die;
         $tri = $request->get('tri');
         $droit = $this->getRepo(self::ENTITY_DROIT)->findOneByFonctionnalite('Utilisateurs');
         $currentDroitAdmin = $this->getRepo(self::ENTITY_DROIT_ADMIN)->findOneBy(array('admin' => $this->getUser(), 'droit' => $droit ));

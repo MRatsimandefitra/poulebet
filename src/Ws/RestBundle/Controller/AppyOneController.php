@@ -60,10 +60,11 @@ class AppyOneController extends ApiRestController{
         $res2 = json_decode($res2);
                   
         return new JsonResponse(array(
-            'sessid'=>$res->sessid,
-            'session_name'=>$res->session_name,
-            'appyone_Nid'=>$pari_sport->Nid,
-            'icone_design_general'=>$pari_sport->icone_design_general,
+            'success'=>true,
+            'sessid'=> $res->sessid,
+            'session_name'=> $res->session_name,
+            'appyone_Nid'=> $pari_sport->Nid,
+            'icone_design_general'=> $pari_sport->icone_design_general,
             'appyone_token'=>$res->token,
             'appyone_details'=>$res2 
         ));

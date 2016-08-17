@@ -32,11 +32,13 @@
                 Afficher
             </label>
 
-            <select class="nbaffiche">
-                <option value="0">10</option>
-                <option value="0">20</option>
-                <option value="0">30</option>
-            </select>
+            <form id="nbpage" method="get" action="{{ path('index_admin_utilisateur') }}" >
+                <select class="nbaffiche" onchange="onSelectChange(this.value);" >
+                    <option value="0">10</option>
+                    <option value="0">20</option>
+                    <option value="0">30</option>
+                </select>
+            </form>
 
             <label class="white" for="">
                 Entrees
