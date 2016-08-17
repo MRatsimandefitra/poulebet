@@ -11,4 +11,12 @@ $(document).ready(function(){
         }
         return true;
     });
+
+
 });
+function onSelectChange(value){
+    document.getElementById('nbpage').submit();
+    xhttp.open("GET", null, false);
+    xhttp.send();
+
+}
