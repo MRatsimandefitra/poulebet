@@ -1,0 +1,101 @@
+{% extends 'BackAdminBundle::layout.html.twig' %}
+{% block title %} {{ parent() }} {% endblock %}
+{% block ariane %} {{ parent() }} {% endblock %}
+
+{% block page %}
+
+    <div class="box-header-response">
+        {{ 'Détails membres'|trans }}
+
+    </div>
+    <div class="box-response">
+        <div class="search">
+            {% include 'BackAdminBundle:Utilisateur:sous_menu.html.twig'  %}
+            <div class="space"></div>
+        </div>
+        <table>
+            <tr>
+                <td>{{ 'photo'|trans }}</td>
+                <td>
+                    <img src="#" alt="" width="100" height="100"/>
+                </td>
+            </tr>
+            <tr>
+                <td>{{ 'Id'|trans }}</td>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <td>{{ 'Username'|trans }}</td>
+                <td>{{ entity.username }}</td>
+            </tr>
+            <tr>
+                <td>{{ 'Email'|trans }}</td>
+                <td>{{ entity.email }}</td>
+            </tr>
+            <tr>
+                <td>{{ 'Enable'|trans }}</td>
+                <td>
+                    {% if entity.isEnable == true %}
+                        <span class="green">
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        </span>
+                    {% else %}
+                        <span class="red">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                        </span>
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td>{{ 'Nom'|trans }}</td>
+                <td>{{ entity.nom }}</td>
+            </tr>
+            <tr>
+                <td>{{ 'Prenom'|trans }}</td>
+                <td>{{ entity.prenom }}</td>
+            </tr>
+            <tr>
+                <td>{{ 'Date de naissance'|trans }}</td>
+                <td>{{ entity.dateNaissance|date('d-m-Y') }}</td>
+            </tr>
+
+            <tr>
+                <td>{{ 'Date prono'|trans }}</td>
+                <td>{{ entity.dateProno|date('d-m-Y') }}</td>
+            </tr>
+            <tr>
+                <td>{{ 'Validité prono'|trans }}</td>
+                <td>{{ entity.validiteProno|date('d-m-Y') }}</td>
+            </tr>
+            <tr>
+                <td>{{ 'Adresse 1'|trans }}</td>
+                <td> {{ entity.adresse1 }} </td>
+            </tr>
+            <tr>
+                <td>{{ 'Adresse 2'|trans }}</td>
+                <td> {{ entity.adresse2 }} </td>
+            </tr>
+            <tr>
+                <td>{{ 'Adresse 3'|trans }}</td>
+                <td> {{ entity.adresse3 }} </td>
+            </tr>
+            <tr>
+                <td>{{ 'Pays'|trans }}</td>
+                <td> {{ entity.pays }} </td>
+            </tr>
+            <tr>
+                <td>{{ 'Téléphone'|trans }}</td>
+                <td> {{ entity.telephone }} </td>
+            </tr>
+            <tr>
+                <td>{{ 'Fax'|trans }}</td>
+                <td> {{ entity.fax }} </td>
+            </tr>
+            <tr>
+                <td>{{ 'Créer le'|trans }}</td>
+                <td>{{ entity.dateNaissance|date('d-m-Y') }}</td>
+            </tr>
+        </table>
+    </div>
+
+{% endblock %}

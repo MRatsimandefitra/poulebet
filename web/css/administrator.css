@@ -39,3 +39,7 @@ div.search div.link{
     float: right;
     margin-left: 10px;
 }
+div.box-textarea{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

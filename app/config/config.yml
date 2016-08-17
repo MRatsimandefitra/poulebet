@@ -4,6 +4,7 @@ imports:
     - { resource: services.yml }
     - { resource: config_knp.yml }
     - { resource: parameter_email.php }
+    - { resource: config_apidoc.yml }
    #  - { resource: config_gmail.yml }
     - { resource: "@BackAdminBundle/Resources/config/services.yml" }
     - { resource: "@ApiDBBundle/Resources/config/services.yml" }
