@@ -33,6 +33,7 @@ class UtilisateurRepository extends \Doctrine\ORM\EntityRepository
             return true;
         }
         return false;
+        
     }
     public function findByEmailArray($email)
     {
@@ -42,7 +43,11 @@ class UtilisateurRepository extends \Doctrine\ORM\EntityRepository
         $query = $this->getEntityManager()->createQuery($dql);
         $query->setParameters(array('email' => $email));
         $res = $query->getArrayResult();
-        return $res[0];
+        if($res){
+          return $res[0];  
+        }
+        return null;
+        
     }
 
     public function getAllUtilisateurs($champ, $tri){
