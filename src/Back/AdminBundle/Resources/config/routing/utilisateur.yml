@@ -19,3 +19,18 @@ list_admin_droit:
 export_csv_utilisateur:
     path:     /exportcsv
     defaults: { _controller: BackAdminBundle:Utilisateur:exportCsvUtilisateur }
+    
+mvtCredit_utilisateur:
+    path:     /credit/{id}
+    defaults: { _controller: BackAdminBundle:Utilisateur:credit }
+    
+add_mvtCredit_utilisateur:
+    path:   /creditAdd/{id_utilisateur}
+    defaults: { _controller: BackAdminBundle:Utilisateur:addMvtCredit }
+
+update_mvtCredit_utilisateur:
+    path:   /updateMvtCredit/{id_mvtCredit}
+    defaults: { _controller: BackAdminBundle:Utilisateur:updateMvtCredit }
+remove_mvtCredit_utilisateur:
+    path:   /removeMvtCredit/{id_mvtCredit}
+    defaults: { _controller: BackAdminBundle:Utilisateur:removeMvtCredit }
