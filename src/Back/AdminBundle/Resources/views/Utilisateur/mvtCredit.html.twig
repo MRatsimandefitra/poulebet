@@ -1,0 +1,63 @@
+{% extends 'BackAdminBundle::layout.html.twig' %}
+{% block title %} {{ parent() }} {% endblock %}
+{% block ariane %} {{ parent() }} {% endblock %}
+{% block page %}
+    <div class="col-lg-12">
+        <div class="box-header-response">
+            {{ 'Mouvement de crédit'|trans }}
+            <div class="link">
+                    {% if currentAdmin.ajout == true %}
+                        <a href="{{ path('add_mvtCredit_utilisateur',{'id_utilisateur':utilisateur.id}) }}">{{ 'Ajouter un mouvement de crédit'|trans }}</a>
+                    {% endif %}    
+            </div>
+            <div class="clear">
+
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <table class="table-user">
+            <thead>
+                <td>{{ "Date "|trans }}</td>
+                <td>{{ "Entrée crédit "|trans }}</td>
+                <td>{{ "Sortie crédit "|trans }}</td>
+                <td>{{ "Solde "|trans }}</td>
+                <td>{{ "Type crédit "|trans }}</td>
+                <td>{{ "Actions "|trans }}</td>
+            </thead>
+            <tbody>
+                {% for row in mvtCredit %}
+                    <tr>
+                        <td>{{row.dateMvt | date('d/m/Y')}}</td>
+                        <td>{{row.entreeCredit}}</td>
+                        <td>{{row.sortieCredit}}</td>
+                        <td>{{row.soldeCredit}}</td>
+                        <td>{% if row.credit.typeCredit == 0 %} 
+                                {{" 3 credits gratuits à jouer  chaque jour  "|trans}}
+                            {% elseif row.credit.typeCredit == 1 %}
+                                {{" pack 1 credit  "|trans}}
+                            {% elseif row.credit.typeCredit == 3 %}
+                                {{"pack 3 credit "|trans}}
+                            {% elseif row.credit.typeCredit == 5 %}
+                                {{"pack 5 credits"|trans}}
+                            {% elseif row.credit.typeCredit == 10 %}
+                                {{"pack 10 credits"|trans}}
+                            {% elseif row.credit.typeCredit == 20 %}
+                                {{"pack 20 credits"|trans}}
+                            {% elseif row.credit.typeCredit == 21 %}
+                                 {{"credit 1 partage de l'app sur facebook"|trans}}
+                            {% endif %}</td>
+                            <td>
+                                {% if currentAdmin.modification == true %}
+                                <a href="{{path('update_mvtCredit_utilisateur',{'id_mvtCredit':row.id})}}">{{"Modifier" |trans }}</a>|
+                                {% endif %}
+                                {% if currentAdmin.suppression == true %}
+                                <a href="{{path('remove_mvtCredit_utilisateur',{'id_mvtCredit':row.id})}}">{{"Supprimer" |trans }}</a>
+                                {% endif %}
+                            </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}           

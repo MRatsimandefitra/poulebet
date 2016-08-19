@@ -1,0 +1,11 @@
+<div class="link">
+    {% if currentAdmin.suppression == true or is_granted('ROLE_SUPER_ADMIN') %}
+        <a id="supprimer-utilisateur" href="{{ path('remove_admin_utilisateur', {'id': entity.id }) }}">Supprimer cet utilisateur</a>
+    {% endif %} |
+    {% if currentAdmin.lecture == true or is_granted('ROLE_SUPER_ADMIN') %}
+        <a href="{{ path('index_admin_utilisateur') }}">{{ 'Liste des utilisateurs'|trans }}</a>
+    {% endif %} |
+    {% if currentAdmin.modification == true or is_granted('ROLE_SUPER_ADMIN')  %}
+        <a href="{{ path('update_admin_utilisateur', {'id': entity.id }) }}">{{ 'Modifier cet utilisateur'|trans }}</a>
+    {% endif %}
+</div>

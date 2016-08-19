@@ -6,21 +6,17 @@ use Api\CommonBundle\Controller\ApiController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Api\DBBundle\Entity\MvtCredit;
 
 class UtilisateurController extends ApiController
 {
     const ENTITY_UTILISATEUR = 'ApiDBBundle:Utilisateur';
     const ENTITY_ADMIN = 'ApiDBBundle:Admin';
-    const ENTITY_MVTCREDIT = 'ApiDBBundle:MvtCredit';
-    const FORM_UTILISATEUR_ADMIN = 'Api\DBBundle\Form\UtilisateurAdminType';
+    const  FORM_UTILISATEUR_ADMIN = 'Api\DBBundle\Form\UtilisateurAdminType';
     const ENTITY_DROIT_ADMIN = 'ApiDBBundle:DroitAdmin';
     const FORM_UTILISATEUR = 'Api\DBBundle\Form\UtilisateurType';
     const ENTITY_DROIT = 'ApiDBBundle:Droit';
     const FORM_DROIT_ADMIN = 'Api\DBBundle\Form\DroitAdminType';
-    const FORM_MVTCREDIT = 'Api\DBBundle\Form\MvtCreditType';
-    
-    
+
     public function indexAction(Request $request)
     {
         //var_dump($request->request); die;
@@ -136,63 +132,5 @@ class UtilisateurController extends ApiController
         return $this->render('BackAdminBundle:Utilisateur:list_droit.html.twig', array(
             'entities' => $droits
         ));
-    }
-    
-    public function creditAction($id){
-        $droit = $this->getRepo(self::ENTITY_DROIT)->findOneByFonctionnalite('Utilisateurs');
-        $currentDroitAdmin = $this->getRepo(self::ENTITY_DROIT_ADMIN)->findOneBy(array('admin' => $this->getUser(), 'droit' => $droit ));
-        $user = $this->getRepo(self::ENTITY_UTILISATEUR)->find($id);
-        $mvtCredit = $this->getRepo(self::ENTITY_MVTCREDIT)->findByUtilisateur($user);
-        return $this->render("BackAdminBundle:Utilisateur:mvtCredit.html.twig", array(
-            'mvtCredit' =>$mvtCredit,
-            'utilisateur' =>$user,
-            'currentAdmin'=>$currentDroitAdmin
-        ));
-    }
-    public function addMvtCreditAction(Request $request){
-        $entity = new MvtCredit();
-        $id = $request->get('id_utilisateur');
-        $utilisateur = $this->getRepo(self::ENTITY_UTILISATEUR)->find($id);
-        $form = $this->formPost(self::FORM_MVTCREDIT, $entity);
-        $form->handleRequest($request);
-        if($form->isValid()){
-            // initialisation des données
-            $entity->setEntreeCredit($entity->getCredit()->getTypeCredit());
-            $entity->setDateMvt(new \DateTime('now'));
-            $entity->setUtilisateur($utilisateur);
-            $solde = $entity->getEntreeCredit()-$entity->getSortieCredit();
-            $entity->setSoldeCredit($solde);
-            //insertion 
-            $this->insert($entity, array('success' => 'success', 'error' => 'error'));
-            return $this->redirectToRoute('mvtCredit_utilisateur',array('id'=>$id));
-        }
-        return $this->render('BackAdminBundle:Utilisateur:add_MvtCredit.html.twig', array(
-            'form' => $form->createView(),
-            'utilisateur'=>$utilisateur
-        ));
-    }
-    public function updateMvtCreditAction(Request $request){
-        $id_MvtCredit = $request->get("id_mvtCredit");
-        $entity = $this->getRepo(self::ENTITY_MVTCREDIT)->find($id_MvtCredit);
-        $form = $this->formPost(self::FORM_MVTCREDIT, $entity);
-        $form->handleRequest($request);
-        if($form->isValid()){
-            // initialisation des données
-            $entity->setEntreeCredit($entity->getCredit()->getTypeCredit());
-            $solde = $entity->getEntreeCredit()- $entity->getSortieCredit();
-            $entity->setSoldeCredit($solde);
-            //insertion 
-            $this->insert($entity, array('success' => 'success', 'error' => 'error'));
-            return $this->redirectToRoute('mvtCredit_utilisateur',array('id'=>$entity->getUtilisateur()->getId()));
-        }
-        return $this->render('BackAdminBundle:Utilisateur:update_mvtCredit.html.twig', array(
-            'form' => $form->createView(),
-        ));
-    }
-    public function removeMvtCreditAction($id_mvtCredit){
-        $entity = $this->getRepo(self::ENTITY_MVTCREDIT)->find($id_mvtCredit);
-        $this->remove($entity);
-        return $this->redirectToRoute('mvtCredit_utilisateur',array('id'=>$entity->getUtilisateur()->getId()));
-        
     }
 }

@@ -43,6 +43,7 @@
       <column name="nomChampionat" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="id"/>
       <exported-key name="FK_A2E2F23F8E5873AB" table="match_individuel" schema="" catalog="poulebet" columns="championat_id"/>
+      <exported-key name="FK_6B1E60418E5873AB" table="matchs" schema="" catalog="poulebet" columns="championat_id"/>
     </table>
     <table name="class_annee" schema="" catalog="poulebet" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -77,6 +78,17 @@
       <primary-key name="PRIMARY" columns="id"/>
       <exported-key name="FK_B81291BD11E3C7" table="lot" schema="" catalog="poulebet" columns="concours_id"/>
       <exported-key name="FK_A2E2F23FD11E3C7" table="match_individuel" schema="" catalog="poulebet" columns="concours_id"/>
+      <exported-key name="FK_6B1E6041D11E3C7" table="matchs" schema="" catalog="poulebet" columns="concours_id"/>
+    </table>
+    <table name="country" schema="" catalog="poulebet" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="iso" sqlType="VARCHAR" precision="2" scale="0" nullable="false" jdbcType="12"/>
+      <column name="name" sqlType="VARCHAR" precision="80" scale="0" nullable="false" jdbcType="12"/>
+      <column name="nicename" sqlType="VARCHAR" precision="80" scale="0" nullable="false" jdbcType="12"/>
+      <column name="iso3" sqlType="VARCHAR" precision="3" scale="0" nullable="true" jdbcType="12"/>
+      <column name="numcode" sqlType="SMALLINT" precision="5" scale="0" nullable="false" jdbcType="5"/>
+      <column name="phonecode" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
     </table>
     <table name="credit" schema="" catalog="poulebet" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -104,6 +116,11 @@
       <index name="IDX_9E9B40675AA93370" unique="false" columns="droit_id"/>
       <index name="IDX_9E9B4067642B8210" unique="false" columns="admin_id"/>
     </table>
+    <table name="equipe_sigle" schema="" catalog="poulebet" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="cheminLogoDomicile" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+    </table>
     <table name="live_score" schema="" catalog="poulebet" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <primary-key name="PRIMARY" columns="id"/>
@@ -125,6 +142,7 @@
       <column name="finValidation" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
       <primary-key name="PRIMARY" columns="id"/>
       <exported-key name="FK_A2E2F23FA6A714B7" table="match_individuel" schema="" catalog="poulebet" columns="lotofoot15_id"/>
+      <exported-key name="FK_6B1E6041A6A714B7" table="matchs" schema="" catalog="poulebet" columns="lotofoot15_id"/>
     </table>
     <table name="loto_foot7" schema="" catalog="poulebet" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -132,6 +150,7 @@
       <column name="finValidation" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
       <primary-key name="PRIMARY" columns="id"/>
       <exported-key name="FK_A2E2F23F83AF5C05" table="match_individuel" schema="" catalog="poulebet" columns="lotofoot7_id"/>
+      <exported-key name="FK_6B1E604183AF5C05" table="matchs" schema="" catalog="poulebet" columns="lotofoot7_id"/>
     </table>
     <table name="match_individuel" schema="" catalog="poulebet" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -166,6 +185,40 @@
       <index name="IDX_A2E2F23F8E5873AB" unique="false" columns="championat_id"/>
       <index name="IDX_A2E2F23FA6A714B7" unique="false" columns="lotofoot15_id"/>
       <index name="IDX_A2E2F23FD11E3C7" unique="false" columns="concours_id"/>
+    </table>
+    <table name="matchs" schema="" catalog="poulebet" type="TABLE">
+      <column name="id" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <column name="championat_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="concours_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="lotofoot7_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="lotofoot15_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="dateMatch" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <column name="equipeDomicile" sqlType="VARCHAR" precision="50" scale="0" nullable="true" jdbcType="12"/>
+      <column name="cheminLogoDomicile" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="score" sqlType="VARCHAR" precision="15" scale="0" nullable="true" jdbcType="12"/>
+      <column name="equipeVisiteur" sqlType="VARCHAR" precision="50" scale="0" nullable="true" jdbcType="12"/>
+      <column name="cheminLogoVisiteur" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="cot1Pronostic" sqlType="DOUBLE" precision="22" scale="0" nullable="true" jdbcType="8"/>
+      <column name="coteNPronistic" sqlType="DOUBLE" precision="22" scale="0" nullable="true" jdbcType="8"/>
+      <column name="cote2Pronostic" sqlType="DOUBLE" precision="22" scale="0" nullable="true" jdbcType="8"/>
+      <column name="status_match" sqlType="VARCHAR" precision="50" scale="0" nullable="true" jdbcType="12"/>
+      <column name="masterProno" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
+      <column name="resultatDomicile" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="resultatVisiteur" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="tempsEcoules" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="vote1Concours" sqlType="DOUBLE" precision="22" scale="0" nullable="true" jdbcType="8"/>
+      <column name="coteNConcours" sqlType="DOUBLE" precision="22" scale="0" nullable="true" jdbcType="8"/>
+      <column name="cote2Concours" sqlType="DOUBLE" precision="22" scale="0" nullable="true" jdbcType="8"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="FK_6B1E6041A6A714B7" columns="lotofoot15_id" ref-table="loto_foot15" ref-schema="" ref-catalog="poulebet" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="FK_6B1E604183AF5C05" columns="lotofoot7_id" ref-table="loto_foot7" ref-schema="" ref-catalog="poulebet" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="FK_6B1E60418E5873AB" columns="championat_id" ref-table="championat" ref-schema="" ref-catalog="poulebet" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="FK_6B1E6041D11E3C7" columns="concours_id" ref-table="concours" ref-schema="" ref-catalog="poulebet" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="UNIQ_6B1E6041BF396750" unique="true" columns="id"/>
+      <index name="IDX_6B1E604183AF5C05" unique="false" columns="lotofoot7_id"/>
+      <index name="IDX_6B1E60418E5873AB" unique="false" columns="championat_id"/>
+      <index name="IDX_6B1E6041A6A714B7" unique="false" columns="lotofoot15_id"/>
+      <index name="IDX_6B1E6041D11E3C7" unique="false" columns="concours_id"/>
     </table>
     <table name="mention" schema="" catalog="poulebet" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
