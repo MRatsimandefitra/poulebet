@@ -209,10 +209,13 @@
       <column name="vote1Concours" sqlType="DOUBLE" precision="22" scale="0" nullable="true" jdbcType="8"/>
       <column name="coteNConcours" sqlType="DOUBLE" precision="22" scale="0" nullable="true" jdbcType="8"/>
       <column name="cote2Concours" sqlType="DOUBLE" precision="22" scale="0" nullable="true" jdbcType="8"/>
+      <column name="master_prono_1" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
+      <column name="master_prono_n" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
+      <column name="master_prono_2" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
       <primary-key name="PRIMARY" columns="id"/>
-      <foreign-key name="FK_6B1E6041A6A714B7" columns="lotofoot15_id" ref-table="loto_foot15" ref-schema="" ref-catalog="poulebet" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
       <foreign-key name="FK_6B1E604183AF5C05" columns="lotofoot7_id" ref-table="loto_foot7" ref-schema="" ref-catalog="poulebet" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
       <foreign-key name="FK_6B1E60418E5873AB" columns="championat_id" ref-table="championat" ref-schema="" ref-catalog="poulebet" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="FK_6B1E6041A6A714B7" columns="lotofoot15_id" ref-table="loto_foot15" ref-schema="" ref-catalog="poulebet" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
       <foreign-key name="FK_6B1E6041D11E3C7" columns="concours_id" ref-table="concours" ref-schema="" ref-catalog="poulebet" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
       <index name="UNIQ_6B1E6041BF396750" unique="true" columns="id"/>
       <index name="IDX_6B1E604183AF5C05" unique="false" columns="lotofoot7_id"/>

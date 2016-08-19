@@ -120,6 +120,24 @@ class Matchs
      * @ORM\Column(name="masterProno", type="boolean", nullable=true, nullable=true)
      */
     private $masterProno;
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="master_prono_1", type="boolean", nullable=true, nullable=true)
+     */
+    private $masterProno1;
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="master_prono_n", type="boolean", nullable=true, nullable=true)
+     */
+    private $masterPronoN;
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="master_prono_2", type="boolean", nullable=true, nullable=true)
+     */
+    private $masterProno2;
 
     /**
      * @var bool
@@ -664,5 +682,29 @@ class Matchs
     public function getStatusMatch()
     {
         return $this->statusMatch;
+    }
+
+    /**
+     * Set dateMatch
+     *
+     * @param \DateTime $dateMatch
+     *
+     * @return Matchs
+     */
+    public function setDateMatch($dateMatch)
+    {
+        $this->dateMatch = $dateMatch;
+
+        return $this;
+    }
+
+    /**
+     * Get dateMatch
+     *
+     * @return \DateTime
+     */
+    public function getDateMatch()
+    {
+        return $this->dateMatch;
     }
 }

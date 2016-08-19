@@ -120,6 +120,24 @@ class Matchs
      * @ORM\Column(name="masterProno", type="boolean", nullable=true, nullable=true)
      */
     private $masterProno;
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="master_prono_1", type="boolean", nullable=true, nullable=true)
+     */
+    private $masterProno1;
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="master_prono_n", type="boolean", nullable=true, nullable=true)
+     */
+    private $masterPronoN;
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="master_prono_2", type="boolean", nullable=true, nullable=true)
+     */
+    private $masterProno2;
 
     /**
      * @var bool
@@ -688,5 +706,77 @@ class Matchs
     public function getDateMatch()
     {
         return $this->dateMatch;
+    }
+
+    /**
+     * Set masterProno1
+     *
+     * @param boolean $masterProno1
+     *
+     * @return Matchs
+     */
+    public function setMasterProno1($masterProno1)
+    {
+        $this->masterProno1 = $masterProno1;
+
+        return $this;
+    }
+
+    /**
+     * Get masterProno1
+     *
+     * @return boolean
+     */
+    public function getMasterProno1()
+    {
+        return $this->masterProno1;
+    }
+
+    /**
+     * Set masterPronoN
+     *
+     * @param boolean $masterPronoN
+     *
+     * @return Matchs
+     */
+    public function setMasterPronoN($masterPronoN)
+    {
+        $this->masterPronoN = $masterPronoN;
+
+        return $this;
+    }
+
+    /**
+     * Get masterPronoN
+     *
+     * @return boolean
+     */
+    public function getMasterPronoN()
+    {
+        return $this->masterPronoN;
+    }
+
+    /**
+     * Set masterProno2
+     *
+     * @param boolean $masterProno2
+     *
+     * @return Matchs
+     */
+    public function setMasterProno2($masterProno2)
+    {
+        $this->masterProno2 = $masterProno2;
+
+        return $this;
+    }
+
+    /**
+     * Get masterProno2
+     *
+     * @return boolean
+     */
+    public function getMasterProno2()
+    {
+        return $this->masterProno2;
     }
 }
