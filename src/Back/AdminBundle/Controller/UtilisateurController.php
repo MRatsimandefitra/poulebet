@@ -70,22 +70,16 @@ class UtilisateurController extends ApiController
         $currentAdmin = $this->getRepo(self::ENTITY_DROIT_ADMIN)->findDroitAdminByUserConnected($this->getUser());
         $factory = $this->get('security.encoder_factory');
         $encoder = $factory->getEncoder($this->getRepoFormId(self::ENTITY_UTILISATEUR, $id));
-        $password = $entity->getPassword();
+
         $form = $this->formPost(self::FORM_UTILISATEUR_ADMIN, $entity);
         $form->handleRequest($request);
         if($form->isValid()){
-            if($entity->getPassword()){
-                $password = $this->encodePassword($entity->getPassword());
-                $entity->setPassword($password);  
+            $password = $encoder->encodePassword($entity->getPassword(), $entity->getSalt());
+            if(!$entity->getPassword()){
+                $entity->setPassword($password);
             }
-            else{
-               $entity->setPassword($password); 
-            }
+
             $this->insert($entity, array('success' => 'success', 'error' => 'error'));
-            $this->addFlash(
-                'notice',
-                'La mise à jour réussie'
-            );
             return $this->redirectToRoute('index_admin_utilisateur');
         }
         return $this->render('BackAdminBundle:Utilisateur:update.html.twig', array(

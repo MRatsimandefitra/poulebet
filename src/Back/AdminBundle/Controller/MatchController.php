@@ -4,6 +4,8 @@ namespace Back\AdminBundle\Controller;
 
 use Api\CommonBundle\Controller\ApiController;
 use Api\DBBundle\Entity\Championat;
+use Api\DBBundle\Entity\LotoFoot15;
+use Api\DBBundle\Entity\LotoFoot7;
 use Api\DBBundle\Entity\Match;
 use Api\DBBundle\Entity\matchIndividuel;
 use Api\DBBundle\Entity\Matchs;
@@ -18,6 +20,8 @@ class MatchController extends ApiController
     const ENTITY_CHAMPIONAT = 'ApiDBBundle:Championat';
     const ENTITY_COUNTRY = 'ApiDBBundle:Country';
     const ENTITY_MATCH = 'ApiDBBundle:Matchs';
+    const ENTITY_LOTOFOOT7 = 'ApiDBBundle:LotoFoot7';
+    const ENTITY_LOTOFOOT15 = 'ApiDBBundle:LotoFoot15';
 
     public function indexAction(Request $request)
     {
@@ -164,20 +168,90 @@ class MatchController extends ApiController
         ));
     }
 
-    public function insertMatchAction(Request $request){
+    public function addLotoFootAction(Request $request){
 
-        return $this->render('BackAdminBundle:Matchs:index.html.twig', array(
-       /*     'matchs' => $matchs,
-            'championat' => $championatData,
-            'country' => $country,*/
-            /*'items' => $items,
-            'totalMatch' => $totalMatch,
-            'search' => $dateMatchSearch,
-            'dateSearch' => $dateMatchSearch,
-            'timeSearch' => $heureMatchSearch,
-            'country' => $country,
-            'championat' => $championatData*/
-            /*'form' => $form->createView()*/
+        if($request->get('numero')){
+            $numero = $request->get('numero');
+        }
+        if($request->get('finvalidation')){
+            $finValidation = $request->get('finvalidation');
+        }
+        if($request->get('lotofoot')){
+            $lotofoot = $request->get('lotofoot');
+            if($lotofoot =='lf7'){
+                $lotofoot7 = new LotoFoot7();
+                $lotofoot7->setNumero($numero);
+                $date = new \DateTime($finValidation);
+                $lotofoot7->setFinValidation($date);
+                $this->insert($lotofoot7, array('success' => 'success' , 'error' => 'error'));
+            }
+            if($lotofoot == 'lf15'){
+                $lotofoot15 = new LotoFoot15();
+                $lotofoot15->setNumero($numero);
+
+                $lotofoot15->setFinValidation(new \DateTime($finValidation));
+                $this->insert($lotofoot15, array('success' => 'success' , 'error' => 'error'));
+            }
+        }
+
+
+
+        return $this->render('BackAdminBundle:Matchs:add_loto_foot.html.twig', array(
+
         ));
+    }
+
+    public function listLotofootAction(Request $request){
+
+        $lotoFoot7 = $this->getAllEntity(self::ENTITY_LOTOFOOT7);
+        $lotoFoot15 = $this->getAllEntity(self::ENTITY_LOTOFOOT15);
+
+        return $this->render('BackAdminBundle:Matchs:list_lotofoot.html.twig', array(
+                'lotoFoot7' => $lotoFoot7,
+                'lotoFoot15' => $lotoFoot15
+        ));
+    }
+
+    public function editLotofootAction(Request $request, $id, $idLotoFoot){
+
+        if($idLotoFoot == 7){
+            $currentLotoFoot = $this->getRepoFormId(self::ENTITY_LOTOFOOT7, $id);
+        }
+        if($idLotoFoot == 15){
+            $currentLotoFoot = $this->getRepoFormId(self::ENTITY_LOTOFOOT15, $id);
+        }
+
+        if($request->get('numero')){
+            $numero = $request->get('numero');
+        }
+        if($request->get('finvalidation')){
+            $finValidation = $request->get('finvalidation');
+        }
+        if($request->get('lotofoot')){
+            $lotofoot = $request->get('lotofoot');
+            if($lotofoot =='lf7'){
+                $lotofoot7 = $this->getRepoFormId(self::ENTITY_LOTOFOOT7, $id);
+                $lotofoot7->setNumero($numero);
+                $date = new \DateTime($finValidation);
+                $lotofoot7->setFinValidation($date);
+                $this->insert($lotofoot7, array('success' => 'success' , 'error' => 'error'));
+            }
+            if($lotofoot == 'lf15'){
+                $lotofoot15 = $this->getRepoFormId(self::ENTITY_LOTOFOOT15, $id);
+                $lotofoot15->setNumero($numero);
+
+                $lotofoot15->setFinValidation(new \DateTime($finValidation));
+                $this->insert($lotofoot15, array('success' => 'success' , 'error' => 'error'));
+            }
+        }
+        return $this->render('BackAdminBundle:Matchs:edit_lotofoot.html.twig', array(
+                'currentLotoFoot' => $currentLotoFoot,
+                'idLotoFoot' => $idLotoFoot
+        ));
+    }
+
+
+    public function removeLotoFootAction(){
+
     }
 }

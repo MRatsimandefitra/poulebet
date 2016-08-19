@@ -140,6 +140,20 @@ class Utilisateur
     private $achatProno;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateProno", type="datetime", nullable=true)
+     */
+    private $dateProno;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="validiteProno", type="datetime", nullable=true)
+     */
+    private $validiteProno;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="adresse1", type="string", length=255, nullable=true)
@@ -576,6 +590,53 @@ class Utilisateur
         return $this->achatProno;
     }
 
+    /**
+     * Set dateProno
+     *
+     * @param \DateTime $dateProno
+     *
+     * @return Utilisateur
+     */
+    public function setDateProno($dateProno)
+    {
+        $this->dateProno = $dateProno;
+
+        return $this;
+    }
+
+    /**
+     * Get dateProno
+     *
+     * @return \DateTime
+     */
+    public function getDateProno()
+    {
+        return $this->dateProno;
+    }
+
+    /**
+     * Set validiteProno
+     *
+     * @param \DateTime $validiteProno
+     *
+     * @return Utilisateur
+     */
+    public function setValiditeProno($validiteProno)
+    {
+        $this->validiteProno = $validiteProno;
+
+        return $this;
+    }
+
+    /**
+     * Get validiteProno
+     *
+     * @return \DateTime
+     */
+    public function getValiditeProno()
+    {
+        return $this->validiteProno;
+    }
 
     /**
      * Set adresse1

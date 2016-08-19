@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Match
  *
  * @ORM\Table(name="matchs")
- * @ORM\Entity(repositoryClass="Api\DBBundle\Repository\MatchRepository")
+ * @ORM\Entity(repositoryClass="Api\DBBundle\Repository\MatchsRepository")
  */
 class Matchs
 {
