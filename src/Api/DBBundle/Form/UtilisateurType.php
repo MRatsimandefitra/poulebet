@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -22,22 +23,25 @@ class UtilisateurType extends AbstractType
         $builder
             ->add('username', TextType::class, array())
             ->add('email', EmailType::class, array())
-            //->add('password', PasswordType::class, array())
+            ->add('password', PasswordType::class, array('required'=>false))
             //->add('salt')
-            //->add('roles')
-            //->add('isEnable')
+            ->add('isEnable')
             ->add('nom')
             ->add('prenom')
-            ->add('sexe')
+            ->add('sexe', ChoiceType::class, array(
+                "choices"=>array(
+                    "Masculin"=>"0",
+                    "Féminin"=>"1"
+                )
+            ))
             ->add('dateNaissance', DateType::class, array())
-            ->add('dateCreation', DateType::class, array())
             /* ->add('createdAt', DateTimeType::class, array())
              ->add('updatedAt', DateTimeType::class, array())*/
             //->add('userToken')
             //->add('cheminPhoto')
-            /* ->add('achatProno')
-             ->add('dateProno', 'datetime')
-             ->add('validiteProno', 'datetime')*/
+             ->add('achatProno')
+            /*->add('dateProno', 'datetime')
+            ->add('validiteProno', 'datetime')*/
             ->add('adresse1')
             ->add('adresse2')
             ->add('adresse3')

@@ -23,7 +23,8 @@
         {% if currentAdmin.lecture == true %}
             <div class="box-response">
                 {% for flash_message in app.session.flashBag.get('notice') %}
-                    <div class="flash-notice">
+                    <div class="alert alert-success fade in">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                         {{ flash_message }}
                     </div>
                 {% endfor %}
@@ -101,6 +102,7 @@
                     </a>
                 </div>
             </td>
+            <td>{{ 'Achat pronostic' |trans }}</td>
             {#{% if is_granted('ROLE_SUPER_ADMIN') %}#}
             <td>{{ 'Actions'|trans }}</td>
             {#{% endif %}#}
@@ -126,6 +128,13 @@
                     </td>
                     <td>
                         ---
+                    </td>
+                    <td>
+                        {% set achatProno = '' %}
+                        {% if row.achatProno %}
+                            {% set achatProno = 'checked' %}
+                        {% endif %}
+                        <input type="checkbox" {{achatProno}} disabled>
                     </td>
                     {#{% if is_granted('ROLE_SUPER_ADMIN') %}#}
                     <td>
@@ -163,6 +172,7 @@
                     <td>{{ 'Pays'|trans }}</td>
                     <td>{{ 'Nombre de pronos'|trans }}</td>
                     <td>{{ 'Score total'|trans }}</td>
+                    <td>{{ 'Achat pronostic' |trans }}</td>
                     {#{% if is_granted('ROLE_SUPER_ADMIN') %}#}
                     <td>{{ 'Actions'|trans }}</td>
                     {#{% endif %}#}

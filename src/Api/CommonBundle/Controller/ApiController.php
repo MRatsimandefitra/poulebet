@@ -260,4 +260,7 @@ class ApiController extends Controller
         }
         return $form;
     }
+    protected function encodePassword($password){
+        return md5($password);
+    }
 }

@@ -8,6 +8,9 @@
         <link rel="stylesheet" href="{{ asset('css/administrator.css') }}"/>
         <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}"/>
         <link rel="stylesheet" href="{{ asset('css/bootstrap-theme.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('css/flags.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('css/match.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('css/jquery.datetimepicker.css') }}"/>
         {#{% include 'header_css.html.twig' %}#}
     {% endblock %}
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
@@ -31,13 +34,16 @@
     </div>
     {% block body %}{% endblock %}
     {% block javascripts %}
-        <script src="{{ asset('js/jquery-3.1.0.min.js') }}"></script>
+        <script src="{{ asset('js/jquery.js') }}"></script>
         <script src="{{ asset('js/bootstrap.js') }}"></script>
+        <script src="{{ asset('js/jquery.datetimepicker.full.js') }}"></script>
+        <script src="{{ asset('js/datetimepicker.js') }}"></script>
         <script src="{{ asset('js/lis_admin.js') }}"></script>
         <script src="{{ asset('js/edit_admin.js') }}"></script>
         <script src="{{ asset('js/utilisateur.js') }}"></script>
         <script src="{{ asset('js/tinymce/tinymce.min.js') }}" ></script>
         <script src="{{ asset('js/tinyMCE.js') }}"></script>
+
     {% endblock %}
 </div>
 </body>
