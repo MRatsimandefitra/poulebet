@@ -1,0 +1,45 @@
+{% extends 'BackAdminBundle::layout.html.twig' %}
+{% block title %} {{ parent() }} {% endblock %}
+{% block ariane %} {{ parent() }} {% endblock %}
+
+{% block page %}
+    <div class="col-lg-12">
+        <div class="box-header-response">
+            {{ 'PushNotification '|trans }} :
+            <div class="link">
+                {#{% if is_granted('ROLE_SUPER_ADMIN') %}#}
+                {#<a href="&#123;&#35;{{ path('index_administrator') }}&#35;&#125;">{{ 'Parametres Email'|trans }}</a> |#}
+                {#{% endif %}#}
+                {#<a href="&#123;&#35;{{ path('export_csv_utilisateur') }}&#35;&#125;">{{ 'Ajout Email'|trans }}</a>#}
+                {#<a href="{{ path('test_email') }}">{{ 'Test Email'|trans }}</a>#}
+            </div>
+            <div class="clear">
+
+            </div>
+        </div>
+    </div>
+    <div class="box-response">
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-lg-6">
+                    <form action="{{ path('add_notification') }}" method="post">
+                        <div class="form-group row">
+                            {{ form_label (form.message)}}
+                            {{ form_widget (form.message,{'attr':{'class':'form-control'}}) }}
+                        </div>
+                        <div class="form-group row">
+                            {{ form_label (form.utilisateurs)}}
+                            {{ form_widget (form.utilisateurs ,{'attr':{'class':'form-control'}})}}
+                        </div>
+                        <div class="form-group row">
+                            <input type="submit" class="btn btn-primary" value={{"Envoyer"|trans}}>
+                        </div>
+                            {{ form_rest(form)}}
+                    </form>
+                </div>
+            <div>    
+        </div>
+    </div>
+      
+
+{% endblock %}

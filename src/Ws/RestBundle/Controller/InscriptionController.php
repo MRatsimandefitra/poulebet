@@ -3,6 +3,7 @@
 namespace Ws\RestBundle\Controller;
 
 use Api\DBBundle\Entity\Utilisateur;
+use Api\DBBundle\Entity\Device;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -25,7 +26,8 @@ class InscriptionController extends ApiRestController
          $username = $request->get('username');
          $prenom = $request->get('prenom');
          $email = $request->get('email');
-         if(!$email || !$prenom){
+         $password = $request->get('password');
+         if(!$email || !$prenom || !$password){
              return new JsonResponse(array(
                  'success' => false,
                  'code_error' => 4,
@@ -45,8 +47,32 @@ class InscriptionController extends ApiRestController
          if ($this->setDataInUtilisateur($utilisateur, $request)) {
              $user = $this->getEm()->getRepository(self::ENTITY_UTILISATEUR)->findByEmailArray($email);
              $token = $this->generateToken($user['userToken']);
-
+             $deviceToken = $request->get("gcm_device_token");
+             if($deviceToken){
+                 $device = new Device();
+                 $device->setToken($deviceToken);
+                 $device->setUtilisateur($utilisateur);
+                 $this->insert($device);
+             }
              // mail
+            $parameter = $this->getParameterMail();
+            $pass = $this->generatePassword();
+            $email = $request->get('email');
+            $prenom = $request->get('prenom');
+            $body = $parameter->getTemplateInscription();
+
+            $mailerService = $this->getMailerService();
+            $res = str_replace('{{prenom}}',$prenom,$body);
+            $res = str_replace('{{email}}',$email ,$res);
+            $res = str_replace('{{password}}',$pass,$res);
+            $res = str_replace('{{adresseSociete}}', $parameter->getAdresseSociete(), $res);
+
+            $mailerService->setSubject($parameter->getSubjectInscription());
+            $mailerService->setFrom($parameter->getEmailSite());
+            $mailerService->setTo($email);
+            $mailerService->addParams('body',$res);
+            $mailerService->send();
+                
              /*$mm = $this->get('mail.manager');
              $mm->setSubject($this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_UTILISATEUR));*/
 
@@ -55,7 +81,7 @@ class InscriptionController extends ApiRestController
                  'infos_users' => $user,
                  'code_erreur' => 0,
                  'success' => true,
-                 'message' => "Votre mot de passe est envoyé par mail"
+                 'message' => "Vous êtes inscrit"
              ));
          }
          return new JsonResponse(array(
@@ -184,6 +210,7 @@ class InscriptionController extends ApiRestController
             if ($request->get('password')) {
                 $password = $this->encodePassword($request->get('password'));
                 $utilisateur->setPassword($password);
+                
             }
             else {
 

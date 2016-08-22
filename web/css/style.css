@@ -15,8 +15,9 @@ header {
 header div.box-top {
     min-height: 100px;
     border-bottom: 1px solid #c4c4c3;
-    margin-left: 25px;
-    margin-right: 25px;
+    /*margin-left: 25px;
+    margin-right: 25px;*/
+    font-size: 12px;
     /* background: rgb(236, 238, 239); *//* Old browsers *//*
      background: -moz-radial-gradient(center, ellipse cover, rgba(236, 238, 239, 1) 0%, rgba(246, 246, 246, 1) 52%, rgba(236, 238, 239, 1) 100%); *//* FF3.6-15 *//*
      background: -webkit-radial-gradient(center, ellipse cover, rgba(236, 238, 239, 1) 0%, rgba(246, 246, 246, 1) 52%, rgba(236, 238, 239, 1) 100%); *//* Chrome10-25,Safari5.1-6 *//*
@@ -82,6 +83,7 @@ div.box-header-response {
     margin-left: 25px;
     padding-bottom: 15px;
     margin-bottom: 15px;
+    margin-top: 15px;
     border-bottom: 1px solid #c4c4c3;;
 
 }
@@ -207,4 +209,8 @@ div.tri div.up{
 }
 div.tri div.down{
     display: block;
+}
+tr.selected{
+    background-color: #8c9ac7;
+    color: #FFF;
 }

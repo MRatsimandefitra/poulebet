@@ -97,6 +97,7 @@ class EmailController extends ApiController
         $droit = $this->getRepo(self::ENTITY_DROIT)->findOneByFonctionnalite('Gestion Email');
         $parameters = $this->getAllEntity(self::ENTITY_PARAMETRE_EMAIL);
         $currentDroitAdmin = $this->getRepo(self::ENTITY_DROIT_ADMIN)->findOneBy(array('admin' => $this->getUser(), 'droit' => $droit ));
+
         if (!$parameters ) {
             $parameter = new ParameterMail();
         }

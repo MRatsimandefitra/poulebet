@@ -3,6 +3,7 @@
 namespace Ws\RestBundle\Controller;
 
 use Api\DBBundle\Entity\Utilisateur;
+use Api\DBBundle\Entity\Device;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,6 +12,7 @@ use Symfony\Component\Validator\Constraints\DateTime;
 
 class AuthenticationController extends ApiRestController{
     const ENTITY_UTILISATEUR = 'ApiDBBundle:Utilisateur';
+    const ENTITY_DEVICE = 'ApiDBBundle:Device';
     
     
     public function authenticationAction(Request $request){
@@ -18,7 +20,18 @@ class AuthenticationController extends ApiRestController{
             $email = $request->get('email');
             $password = $request->get('password');
             $user = $this->getEm()->getRepository(self::ENTITY_UTILISATEUR)->findByEmailArray($email);
+            $userEntity = $this->getEm()->getRepository(self::ENTITY_UTILISATEUR)->findByEmail($email);
+            // récupération de token google cloud message du device
+            $gcm_device_token=$request->get("gcm_device_token");
+            $device = $this->getEm()->getRepository(self::ENTITY_DEVICE)->findByToken($gcm_device_token);
             if($user){
+                if(!$device || $device->getUtilisateur()->getId() != $user['id']){
+                    $device = new Device();
+                    $device->setToken($gcm_device_token);
+                    $userEntity = $this->getEm()->getRepository(self::ENTITY_UTILISATEUR)->find($user['id']);
+                    $device->setUtilisateur($userEntity);
+                    $this->insert($device);
+                }
                 $pass_result = $this->encodePassword($password);
                 if($user['password'] == $pass_result){
                     $token = $this->generateToken($user['userToken']);

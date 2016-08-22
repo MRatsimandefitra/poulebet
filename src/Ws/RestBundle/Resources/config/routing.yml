@@ -38,7 +38,7 @@ ws_rest_forgotten_password_post:
 ws_rest_appyone_data:
     path:     /data
     defaults: { _controller: WsRestBundle:AppyOne:getData }
-    methods: POST
+    methods: GET
 
 route_prefix_ws_rest_mention:
     resource: "@WsRestBundle/Resources/config/routing/mention.yml"

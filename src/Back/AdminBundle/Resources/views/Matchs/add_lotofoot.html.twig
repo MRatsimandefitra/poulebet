@@ -1,0 +1,174 @@
+{% extends 'BackAdminBundle::layout.html.twig' %}
+{% block title %} {{ parent() }} {% endblock %}
+{% block ariane %} {{ parent() }} {% endblock %}
+
+{% block page %}
+
+    <div class="box-header-response">
+        {{ 'Listes des Matchs du jour'|trans }}
+        {% include '@BackAdmin/Matchs/sous_menu.html.twig' %}
+    </div>
+
+    <div class="col-lg-12">
+        <div class="list">
+            <div class="form-filter">
+
+            </div>
+            <div class="list">
+                <table>
+                    <tr>
+                        <td>Numero</td>
+                        <td>LOTO FOOT</td>
+                        <td>Date Fin validation</td>
+                    </tr>
+                    <tr>
+                        <td>{{ entity.numero }}</td>
+                        <td>
+                            {% if idLotoFoot == 7 %}
+                                {{ 'LOTO FOOT 7' }}
+                            {% endif %}
+                            {% if idLotoFoot == 15 %}
+                                {{ 'LOTO FOOT 15' }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {{ entity.finValidation|date('d/m/Y') }}
+
+                        </td>
+                    </tr>
+                </table>
+                <br/><br/>
+
+                <div class="search">
+                    <form action="" method="post">
+                        {% if searchValue is defined and searchValue is not empty and searchValue.date_match is defined %}
+                            {{ 'Date' }} <input type="text" name="date_match" id="datepic"
+                                                value="{{ searchValue.date_match }}"/>
+                        {% else %}
+                            {{ 'Date' }} <input type="text" name="date_match" id="datepic"/>
+
+                        {% endif %}
+
+                        {{ 'Championat'|trans }}
+                        <select name="championat_match" id="">
+
+
+                            {% if searchValue is defined and searchValue is not empty and searchValue.championat_match is defined %}
+                                <option value="{{ searchValue.championat_match }}">{{ searchValue.championat_match }}</option>
+                                {% for rowChampionat  in championat %}
+                                    <option value="{{ rowChampionat.nomChampionat }}">{{ rowChampionat.nomChampionat }}</option>
+                                {% endfor %}
+                            {% else %}
+                                <option value=""></option>
+                                {% for rowChampionat  in championat %}
+                                    <option value="{{ rowChampionat.nomChampionat }}">{{ rowChampionat.nomChampionat }}</option>
+                                {% endfor %}
+
+                            {% endif %}
+                        </select>
+                        {{ 'Pays' }}
+                        <select name="pays_match" id="">
+                            {% if searchValue is defined and searchValue is not empty and searchValue.pays_match is defined %}
+                                <option value="{{ searchValue.pays_match }}">{{ searchValue.pays_match }}</option>
+                                {% for rowPays in pays %}
+                                    <option value="{{ rowPays.name }}">{{ rowPays.name }}</option>
+                                {% endfor %}
+                            {% else %}
+                                <option value=""></option>
+                                {% for rowPays in pays %}
+                                    <option value="{{ rowPays.name }}">{{ rowPays.name }}</option>
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+
+                        <input type="submit" value="{{ 'Chercher les matchs' }}"/>
+
+
+                        <br/><br/>
+                        {% if matchs is defined and matchs is not null %}
+
+                        <table>
+                            <tr>
+                                <td>Selection</td>
+                                <td>Date</td>
+                                <td>Equipe 1</td>
+                                <td>Score</td>
+                                <td>Equipe 2</td>
+                                <td>Status</td>
+                            </tr>
+                            {% for rowMatchs in matchs %}
+                                {% if idLotoFoot == 7  %}
+                                    {% if rowMatchs.lotoFoot7 is not null and rowMatchs.lotoFoot7  %}
+                                        <tr class="selected">
+
+                                    {% else %}
+                                        <tr class="">
+
+                                    {% endif %}
+                                {% endif %}
+                                {% if idLotoFoot == 15  %}
+                                    {% if rowMatchs.lotoFoot15 is not null and rowMatchs.lotoFoot15  %}
+                                        <tr class="selected">
+
+                                    {% else %}
+                                        <tr class="">
+
+                                    {% endif %}
+                                {% endif %}
+
+                                    <td>
+                                        {% if idLotoFoot == 7 %}
+                                            {% if rowMatchs.lotoFoot7 is not null and rowMatchs.lotoFoot7 %}
+                                                {{ rowMatchs.lotoFoot7.numero }}
+
+                                            {% else %}
+                                                <input type="checkbox" name="select_{{ rowMatchs.id }}"/>
+
+                                            {% endif %}
+                                        {% endif %}
+                                        {% if idLotoFoot == 15 %}
+
+                                            {% if rowMatchs.lotoFoot15 is not null %}
+                                                <input type="checkbox" name="select_{{ rowMatchs.id }}" checked="true"/>
+
+                                            {% else %}
+                                                {% if rowMatchs.lotoFoot15.numero is defined %}
+                                                    {{ rowMatchs.lotoFoot15.numero }}
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endif %}
+
+
+                                    </td>
+                                    <td>
+                                        {{ rowMatchs.dateMatch|date('d/m/Y h:i') }}
+                                    </td>
+                                    <td>{{ rowMatchs.equipeDomicile }}</td>
+                                    <td>
+                                        {{ rowMatchs.score }}
+                                    </td>
+                                    <td>
+                                        {{ rowMatchs.equipeVisiteur }}
+                                    </td>
+                                    <td>
+                                        {{ rowMatchs.statusMatch }}
+                                        <input type="hidden" name="idMatch" value="{{ rowMatchs.id }}"/>
+                                        <input type="hidden" name="idLotoFoot" value="{{ idLotoFoot }}"/>
+                                    </td>
+
+                                </tr>
+                            {% endfor %}
+                        </table>
+                        <br/>
+                        <input type="submit" value="{{ 'Inserer matchs' }}"/>
+                        <br/><br/>
+                    </form>
+
+                    {% else %}
+                        {{ 'Vous devez effectué une recherche des matchs ' }}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

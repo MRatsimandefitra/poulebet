@@ -21,3 +21,6 @@ route_prefix_admin_match:
 route_prefix_admin_mention:
     resource: "@BackAdminBundle/Resources/config/routing/mentions.yml"
     prefix:   /mentions
+route_prefix_admin_notification:
+    resource: "@BackAdminBundle/Resources/config/routing/notification.yml"
+    prefix:   /notification
