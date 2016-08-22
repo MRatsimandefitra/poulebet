@@ -194,8 +194,12 @@
                     }
 
                     $('input.selection_match').each(function(){
+                                var i = 0;
                                 if($(this).is(':checked')){
-
+                                    i = i + 1;
+                                    if(i!=7){
+                                        $('input#addMatch').prop('disable', true);
+                                    }
                                 }
                     }
                    );

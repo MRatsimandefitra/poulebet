@@ -9,6 +9,7 @@
         {% include '@BackAdmin/Matchs/sous_menu.html.twig' %}
     </div>
     <br/><br/>
+    {% if droitAdmin.lecture is defined and droitAdmin.lecture %}
     <div class="col-lg-12">
         <div class="col-lg-1">
 
@@ -162,7 +163,9 @@
                                     <input type="checkbox" name="c_guest_{{ row.id }}"/> 2
                                 {% endif %}
                                 <input type="hidden" name="identifiant" value="{{ row.id }}"/>
-                                <input type="submit" value="{{ 'send' }}"/>
+                                {% if droitAdmin.ajout is defined and droitAdmin.ajout == true or droitAdmin.modification is defined and droitAdmin.modification == true %}
+                                        <input type="submit" value="{{ 'send' }}"/>
+                                {% endif %}
                             </form>
 
                             {#<a href="#">{{ 'Enregister'|trans }}</a>#}
@@ -176,4 +179,7 @@
             <div class="space"></div>
         </div>
     </div>
+        {% else %}
+                {{ 'vous n\' avez pas le droit de lecture sur un match ' }}
+            {% endif %}
 {% endblock %}

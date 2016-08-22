@@ -22,6 +22,8 @@ class MatchController extends ApiController
     const ENTITY_MATCH = 'ApiDBBundle:Matchs';
     const ENTITY_LOTOFOOT7 = 'ApiDBBundle:LotoFoot7';
     const ENTITY_LOTOFOOT15 = 'ApiDBBundle:LotoFoot15';
+    const ENTITY_DROIT_ADMIN = 'ApiDBBundle:DroitAdmin';
+    const ENTITY_DROIT = 'ApiDBBundle:Droit';
 
     public function indexAction(Request $request)
     {
@@ -152,11 +154,14 @@ class MatchController extends ApiController
         //var_dump($dql); die;
         $championatData = $this->getAllEntity(self::ENTITY_CHAMPIONAT);
         $country = $this->getAllEntity(self::ENTITY_COUNTRY);
+
+        $droitAdmin = $this->getDroitAdmin('Matchs');
         return $this->render('BackAdminBundle:Matchs:index.html.twig', array(
             'matchs' => $matchs,
             'championat' => $championatData,
             'country' => $country,
-            'searchValue' => $searchValue
+            'searchValue' => $searchValue,
+            'droitAdmin' => $droitAdmin[0]
             /*'items' => $items,
             'totalMatch' => $totalMatch,
             'search' => $dateMatchSearch,
@@ -205,10 +210,11 @@ class MatchController extends ApiController
 
         $lotoFoot7 = $this->getAllEntity(self::ENTITY_LOTOFOOT7);
         $lotoFoot15 = $this->getAllEntity(self::ENTITY_LOTOFOOT15);
-
+        $droitAdmin = $this->getDroitAdmin('Matchs');
         return $this->render('BackAdminBundle:Matchs:list_lotofoot.html.twig', array(
                 'lotoFoot7' => $lotoFoot7,
-                'lotoFoot15' => $lotoFoot15
+                'lotoFoot15' => $lotoFoot15,
+                'droitAdmin' => $droitAdmin[0]
         ));
     }
 
@@ -420,5 +426,11 @@ class MatchController extends ApiController
             'nbMatchs7' => $nbMatchs7,
             'nbMatchs15' => $nbMatchs15
         ));
+
+
+    }
+    private function getDroitAdmin($droit){
+        $droitAdmin = $this->getRepo(self::ENTITY_DROIT_ADMIN)->findBy(array('admin' => $this->getUser(), 'droit' => $this->getRepo(self::ENTITY_DROIT)->findOneBy(array('fonctionnalite' => $droit))));
+        return $droitAdmin;
     }
 }

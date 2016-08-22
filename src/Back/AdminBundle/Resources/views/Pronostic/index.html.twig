@@ -7,39 +7,40 @@
         {{ 'Listes des Matchs du jour'|trans }}
     </div>
     <br/><br/>
-    <div class="col-lg-2">
+    {% if droitAdmin.lecture is defined and droitAdmin.lecture %}
+        <div class="col-lg-2">
 
-    </div>
-    <div class="col-lg-8">
-        <div class="search">
-            <form action="" method="get">
-                {{ "Date"|trans }}
-                <input type="text" name="date_master_prono" id="datepic"/>
-                {{ 'Pays'|trans }}
-                <select name="pays_master_prono" id="">
-                    <option value=""></option>
-                    {% for rowCountry in  country %}
-                        <option value="{{ rowCountry.iso }}">{{ rowCountry.name }}</option>
-                    {% endfor %}
-                </select>
-                {{ 'Championat'|trans }}
-                <select name="championat_master_prono" id="">
-                    <option value=""></option>
-                    {% for rowChampionat in championat %}
-                        <option value="{{ rowChampionat.nomChampionat }}">
-                            {{ rowChampionat.nomChampionat }}
-                        </option>
-                    {% endfor %}
-                </select>
-                <input type="submit" value="{{ 'Seach'|trans }}"/>
-            </form>
         </div>
-    </div>
-    <div class="col-lg-2">
+        <div class="col-lg-8">
+            <div class="search">
+                <form action="" method="get">
+                    {{ "Date"|trans }}
+                    <input type="text" name="date_master_prono" id="datepic"/>
+                    {{ 'Pays'|trans }}
+                    <select name="pays_master_prono" id="">
+                        <option value=""></option>
+                        {% for rowCountry in  country %}
+                            <option value="{{ rowCountry.iso }}">{{ rowCountry.name }}</option>
+                        {% endfor %}
+                    </select>
+                    {{ 'Championat'|trans }}
+                    <select name="championat_master_prono" id="">
+                        <option value=""></option>
+                        {% for rowChampionat in championat %}
+                            <option value="{{ rowChampionat.nomChampionat }}">
+                                {{ rowChampionat.nomChampionat }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <input type="submit" value="{{ 'Seach'|trans }}"/>
+                </form>
+            </div>
+        </div>
+        <div class="col-lg-2">
 
-    </div>
-    <br /><br /><br />
-    <div class="col-lg-12">
+        </div>
+        <br/><br/><br/>
+        <div class="col-lg-12">
             <table>
                 <tr>
                     <td>
@@ -97,15 +98,15 @@
                             {% endif %}
                         </td>
                         <td>
-                           {# {% if row.cot1Pronostic > row.coteNpronistic and row.cot1Pronostic > row.cote2Pronostic %}
-                                {{ row.cot1Pronostic }}
-                            {% endif %}
-                            {% if row.cote2Pronostic > row.cot1Pronostic and row.cote2Pronostic > row.coteNpronistic   %}
-                                {{ row.cote2Pronostic }}
-                            {% endif %}
-                            {% if row.coteNpronistic > row.cote2Pronostic and row.coteNpronistic > row.cot1Pronostic %}
-                                {{ row.coteNpronistic }}
-                            {% endif %}#}
+                            {# {% if row.cot1Pronostic > row.coteNpronistic and row.cot1Pronostic > row.cote2Pronostic %}
+                                 {{ row.cot1Pronostic }}
+                             {% endif %}
+                             {% if row.cote2Pronostic > row.cot1Pronostic and row.cote2Pronostic > row.coteNpronistic   %}
+                                 {{ row.cote2Pronostic }}
+                             {% endif %}
+                             {% if row.coteNpronistic > row.cote2Pronostic and row.coteNpronistic > row.cot1Pronostic %}
+                                 {{ row.coteNpronistic }}
+                             {% endif %}#}
                             {% if row.masterProno1 %}
                                 {{ row.cot1Pronostic }}
                             {% endif %}
@@ -120,10 +121,20 @@
                             {{ row.dateMatch|date('h:i') }}
                         </td>
                         <td>
-                            <a href="{{ path('remove_admin_pronostic', {'id': row.id }) }}" onclick="supprimer('Etes vous sur de vouloir supprimer ce pronostic ?');"> <span class="glyphicon glyphicon-remove red" aria-hidden="true"></span> {{ 'Suppression Master prono'|trans }}</a> &nbsp;  &nbsp;
+                            {% if droitAdmin.suppression is defined and droitAdmin.suppression %}
+                                <a href="{{ path('remove_admin_pronostic', {'id': row.id }) }}"
+                                   onclick="supprimer('Etes vous sur de vouloir supprimer ce pronostic ?');"> <span
+                                            class="glyphicon glyphicon-remove red"
+                                            aria-hidden="true"></span> {{ 'Suppression Master prono'|trans }}
+                                </a> &nbsp;  &nbsp;
+                            {% endif %}
                         </td>
                     </tr>
-                    {% endfor %}
+                {% endfor %}
             </table>
-    </div>
+        </div>
+
+    {% else %}
+        {{ 'Vous n\'etes pas autorisé à lire cette page' }}
+    {% endif %}
 {% endblock %}

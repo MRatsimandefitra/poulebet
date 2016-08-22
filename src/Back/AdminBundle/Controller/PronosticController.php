@@ -12,6 +12,8 @@ class PronosticController extends ApiController
     const ENTITY_MATCH = 'ApiDBBundle:Matchs';
     const ENTITY_COUNTRY = 'ApiDBBundle:Country';
     const ENTITY_CHAMPIONAT = 'ApiDBBundle:Championat';
+    const ENTITY_DROIT_ADMIN = 'ApiDBBundle:DroitAdmin';
+    const ENTITY_DROIT = 'ApiDBBundle:Droit';
 
     public function indexAction(Request $request)
     {
@@ -47,10 +49,13 @@ class PronosticController extends ApiController
             $dql .= ' WHERE ' . implode(' AND ', $where);
         }
         $matchs = $this->get('doctrine.orm.entity_manager')->createQuery($dql)->setParameters($params)->getResult();
+        $droitAdmin = $this->getDroitAdmin('Master Pronostic');
+
         return $this->render('BackAdminBundle:Pronostic:index.html.twig', array(
             'matchs' => $matchs,
             'country' => $coutry,
-            'championat' => $championat
+            'championat' => $championat,
+            'droitAdmin' => $droitAdmin[0]
             /*'items' => $items,
             'totalMatch' => $totalMatch,
             'search' => $dateMatchSearch*/
@@ -77,5 +82,10 @@ class PronosticController extends ApiController
         }
 
 
+    }
+
+    private function getDroitAdmin($droit){
+        $droitAdmin = $this->getRepo(self::ENTITY_DROIT_ADMIN)->findBy(array('admin' => $this->getUser(), 'droit' => $this->getRepo(self::ENTITY_DROIT)->findOneBy(array('fonctionnalite' => $droit))));
+        return $droitAdmin;
     }
 }
