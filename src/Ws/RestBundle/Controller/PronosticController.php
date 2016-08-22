@@ -9,7 +9,8 @@ class PronosticController extends ApiRestController
 {
 
     const ENTITY_UTILISATEUR = 'ApiDBBundle:Utilisateur';
-
+    const ENTITY_CHAMPIONNAT = 'ApiDBBundle:Championnat';
+    
     public function getUtilisateurAchatPromoAction()
     {
 
@@ -28,6 +29,12 @@ class PronosticController extends ApiRestController
             $result['isConnected'] = true;
             return new JsonResponse($result);
         }
+    }
+    /**
+     * récupérer les championnats qui on des matchs
+     */
+    public function getChampionnatAction(){
+        
     }
 
 

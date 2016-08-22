@@ -30,9 +30,11 @@
                             {{ row.finValidation|date('d-m-Y') }}
                         </td>
                         <td>
-                            <a href="{{ path('edit_loto_foot', {'idLotoFoot': 7, 'id': row.id }) }}"><span class="glyphicon glyphicon-remove red" aria-hidden="true"></span> Supprimer </a> |
+                            <a href="{{ path('edit_loto_foot', {'idLotoFoot': 7, 'id': row.id }) }}"> <span class="glyphicon glyphicon-pencil orange" aria-hidden="true"></span> Modifier </a> |
+                            <a onclick="supprimer('Etes vous sur de vouloir supprimer ?');" href="{{ path('remove_loto_foot', {'idLotoFoot': 7 , 'id': row.id}) }}"><span class="glyphicon glyphicon-remove red" aria-hidden="true"></span> Supprimer </a>
+                            <a href="{{ path('add_match_loto_foot', {'idLotoFoot': 7, 'id': row.id }) }}"><span class="glyphicon glyphicon-plus green" aria-hidden="true"></span>  {{ 'Ajouter Match' }}</a>
 
-                            <a href="#"> <span class="glyphicon glyphicon-pencil orange" aria-hidden="true"></span> Modifier </a>
+
                         </td>
                     </tr>
                 {% endfor %}
@@ -49,9 +51,10 @@
                         </td>
                         <td>
 
-                            <a href="{{ path('edit_loto_foot', {'idLotoFoot': 15, 'id': row.id }) }}"><span class="glyphicon glyphicon-remove red" aria-hidden="true"></span> Supprimer </a> |
+                            <a href="{{ path('edit_loto_foot', {'idLotoFoot': 15, 'id': row.id }) }}"><span class="glyphicon glyphicon-pencil orange" aria-hidden="true"></span> Modifier </a> |
 
-                            <a href="#"> <span class="glyphicon glyphicon-pencil orange" aria-hidden="true"></span> Modifier </a>
+                            <a onclick="supprimer('Etes vous sur de vouloir supprimer ?');" href="{{ path('remove_loto_foot', {'idLotoFoot': 7 , 'id': row.id}) }}"> <span class="glyphicon glyphicon-remove red" aria-hidden="true"></span> supprimer </a>
+                            <a href="{{ path('add_match_loto_foot', {'idLotoFoot': 15, 'id': row.id }) }}"><span class="glyphicon glyphicon-plus green" aria-hidden="true"></span>  {{ 'Ajouter Match' }}</a>
                         </td>
                     </tr>
                 {% endfor %}

@@ -86,16 +86,41 @@
                             {{ row.equipeVisiteur }}
                         </td>
                         <td>
-                                pronostic
+                            {% if row.masterProno1 %}
+                                {{ '1' }}
+                            {% endif %}
+                            {% if row.masterPronoN %}
+                                {{ 'N' }}
+                            {% endif %}
+                            {% if row.masterProno2 %}
+                                {{ '2' }}
+                            {% endif %}
                         </td>
                         <td>
-                                cote
+                           {# {% if row.cot1Pronostic > row.coteNpronistic and row.cot1Pronostic > row.cote2Pronostic %}
+                                {{ row.cot1Pronostic }}
+                            {% endif %}
+                            {% if row.cote2Pronostic > row.cot1Pronostic and row.cote2Pronostic > row.coteNpronistic   %}
+                                {{ row.cote2Pronostic }}
+                            {% endif %}
+                            {% if row.coteNpronistic > row.cote2Pronostic and row.coteNpronistic > row.cot1Pronostic %}
+                                {{ row.coteNpronistic }}
+                            {% endif %}#}
+                            {% if row.masterProno1 %}
+                                {{ row.cot1Pronostic }}
+                            {% endif %}
+                            {% if row.masterPronoN %}
+                                {{ row.cote2Pronostic }}
+                            {% endif %}
+                            {% if row.masterProno2 %}
+                                {{ row.coteNpronistic }}
+                            {% endif %}
                         </td>
                         <td>
                             {{ row.dateMatch|date('h:i') }}
                         </td>
                         <td>
-                            <a href="#"> <span class="glyphicon glyphicon-remove red" aria-hidden="true"></span> {{ 'Suppression Master prono'|trans }}</a> &nbsp;  &nbsp;
+                            <a href="{{ path('remove_admin_pronostic', {'id': row.id }) }}" onclick="supprimer('Etes vous sur de vouloir supprimer ce pronostic ?');"> <span class="glyphicon glyphicon-remove red" aria-hidden="true"></span> {{ 'Suppression Master prono'|trans }}</a> &nbsp;  &nbsp;
                         </td>
                     </tr>
                     {% endfor %}

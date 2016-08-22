@@ -4,6 +4,7 @@ namespace Back\AdminBundle\Controller;
 
 use Api\CommonBundle\Controller\ApiController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
 
 class PronosticController extends ApiController
@@ -11,6 +12,7 @@ class PronosticController extends ApiController
     const ENTITY_MATCH = 'ApiDBBundle:Matchs';
     const ENTITY_COUNTRY = 'ApiDBBundle:Country';
     const ENTITY_CHAMPIONAT = 'ApiDBBundle:Championat';
+
     public function indexAction(Request $request)
     {
         //$matchs = $this->getAllEntity(self::ENTITY_MATCH);
@@ -40,6 +42,7 @@ class PronosticController extends ApiController
             $where[] = ' c.nomChampionat = :championat';
             $params['championat'] = $request->get('championat_master_prono');
         }
+        $where[] = " m.masterProno1 IS NOT NULL OR m.masterPronoN IS NOT NULL OR m.masterProno2 IS NOT NULL";
         if (!empty($where)) {
             $dql .= ' WHERE ' . implode(' AND ', $where);
         }
@@ -52,5 +55,27 @@ class PronosticController extends ApiController
             'totalMatch' => $totalMatch,
             'search' => $dateMatchSearch*/
         ));
+    }
+
+    public function removePronosticAction($id){
+        $entity = $this->getRepoFormId(self::ENTITY_MATCH, $id);
+        try{
+
+            $entity->setMasterProno1(null);
+
+            $entity->setMasterPronoN(null);
+            $entity->setMasterProno2(null);
+            $entity->setCot1Pronostic(null);
+            $entity->setCoteNPronistic(null);
+            $entity->setCote2Pronostic(null);
+            $this->get('doctrine.orm.entity_manager')->flush();
+
+            return $this->redirectToRoute('index_admin_pronostic');
+
+        }catch(Exception $e){
+            return false;
+        }
+
+
     }
 }
