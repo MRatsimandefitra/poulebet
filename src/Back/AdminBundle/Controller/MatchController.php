@@ -4,6 +4,8 @@ namespace Back\AdminBundle\Controller;
 
 use Api\CommonBundle\Controller\ApiController;
 use Api\DBBundle\Entity\Championat;
+use Api\DBBundle\Entity\LotoFoot15;
+use Api\DBBundle\Entity\LotoFoot7;
 use Api\DBBundle\Entity\Match;
 use Api\DBBundle\Entity\matchIndividuel;
 use Api\DBBundle\Entity\Matchs;
@@ -18,6 +20,8 @@ class MatchController extends ApiController
     const ENTITY_CHAMPIONAT = 'ApiDBBundle:Championat';
     const ENTITY_COUNTRY = 'ApiDBBundle:Country';
     const ENTITY_MATCH = 'ApiDBBundle:Matchs';
+    const ENTITY_LOTOFOOT7 = 'ApiDBBundle:LotoFoot7';
+    const ENTITY_LOTOFOOT15 = 'ApiDBBundle:LotoFoot15';
 
     public function indexAction(Request $request)
     {
@@ -164,20 +168,232 @@ class MatchController extends ApiController
         ));
     }
 
-    public function insertMatchAction(Request $request){
+    public function addLotoFootAction(Request $request){
 
-        return $this->render('BackAdminBundle:Matchs:index.html.twig', array(
-       /*     'matchs' => $matchs,
-            'championat' => $championatData,
-            'country' => $country,*/
-            /*'items' => $items,
-            'totalMatch' => $totalMatch,
-            'search' => $dateMatchSearch,
-            'dateSearch' => $dateMatchSearch,
-            'timeSearch' => $heureMatchSearch,
-            'country' => $country,
-            'championat' => $championatData*/
-            /*'form' => $form->createView()*/
+        if($request->get('numero')){
+            $numero = $request->get('numero');
+        }
+        if($request->get('finvalidation')){
+            $finValidation = $request->get('finvalidation');
+        }
+        if($request->get('lotofoot')){
+            $lotofoot = $request->get('lotofoot');
+            if($lotofoot =='lf7'){
+                $lotofoot7 = new LotoFoot7();
+                $lotofoot7->setNumero($numero);
+                $date = new \DateTime($finValidation);
+                $lotofoot7->setFinValidation($date);
+                $this->insert($lotofoot7, array('success' => 'success' , 'error' => 'error'));
+            }
+            if($lotofoot == 'lf15'){
+                $lotofoot15 = new LotoFoot15();
+                $lotofoot15->setNumero($numero);
+
+                $lotofoot15->setFinValidation(new \DateTime($finValidation));
+                $this->insert($lotofoot15, array('success' => 'success' , 'error' => 'error'));
+            }
+        }
+
+
+
+        return $this->render('BackAdminBundle:Matchs:add_loto_foot.html.twig', array(
+
+        ));
+    }
+
+    public function listLotofootAction(Request $request){
+
+        $lotoFoot7 = $this->getAllEntity(self::ENTITY_LOTOFOOT7);
+        $lotoFoot15 = $this->getAllEntity(self::ENTITY_LOTOFOOT15);
+
+        return $this->render('BackAdminBundle:Matchs:list_lotofoot.html.twig', array(
+                'lotoFoot7' => $lotoFoot7,
+                'lotoFoot15' => $lotoFoot15
+        ));
+    }
+
+    public function editLotofootAction(Request $request, $id, $idLotoFoot){
+
+        if($idLotoFoot == 7){
+            $currentLotoFoot = $this->getRepoFormId(self::ENTITY_LOTOFOOT7, $id);
+        }
+        if($idLotoFoot == 15){
+            $currentLotoFoot = $this->getRepoFormId(self::ENTITY_LOTOFOOT15, $id);
+        }
+
+        if($request->get('numero')){
+            $numero = $request->get('numero');
+        }
+        if($request->get('finvalidation')){
+            $finValidation = $request->get('finvalidation');
+        }
+        if($request->get('lotofoot')){
+            $lotofoot = $request->get('lotofoot');
+            if($lotofoot =='lf7'){
+                $lotofoot7 = $this->getRepoFormId(self::ENTITY_LOTOFOOT7, $id);
+                $lotofoot7->setNumero($numero);
+                $date = new \DateTime($finValidation);
+                $lotofoot7->setFinValidation($date);
+                $this->insert($lotofoot7, array('success' => 'success' , 'error' => 'error'));
+            }
+            if($lotofoot == 'lf15'){
+                $lotofoot15 = $this->getRepoFormId(self::ENTITY_LOTOFOOT15, $id);
+                $lotofoot15->setNumero($numero);
+
+                $lotofoot15->setFinValidation(new \DateTime($finValidation));
+                $this->insert($lotofoot15, array('success' => 'success' , 'error' => 'error'));
+            }
+        }
+        return $this->render('BackAdminBundle:Matchs:edit_lotofoot.html.twig', array(
+                'currentLotoFoot' => $currentLotoFoot,
+                'idLotoFoot' => $idLotoFoot
+        ));
+    }
+
+
+    public function removeLotoFootAction($id, $idLotoFoot){
+        if($idLotoFoot == 7){
+            $lotoFoot = $this->getRepoFormId(self::ENTITY_LOTOFOOT7, $id);
+        }
+        if($idLotoFoot == 15){
+            $lotoFoot = $this->getRepoFormId(self::ENTITY_LOTOFOOT15, $id);
+        }
+        $this->remove($lotoFoot);
+        return $this->redirectToRoute('list_loto_foot');
+    }
+
+    public function addMatchInLotoFootAction(Request $request,$id, $idLotoFoot){
+
+
+        if($idLotoFoot == 7){
+            $lotoFoot = $this->getRepoFormId(self::ENTITY_LOTOFOOT7, $id);
+        }
+        if($idLotoFoot == 15){
+            $lotoFoot = $this->getRepoFormId(self::ENTITY_LOTOFOOT15, $id);
+        }
+        $championat = $this->getAllEntity(self::ENTITY_CHAMPIONAT);
+        $pays = $this->getAllEntity(self::ENTITY_COUNTRY);
+
+        $dql ="SELECT m, lf7, lf15 from ApiDBBundle:Matchs m
+              LEFT JOIN m.lotoFoot7 lf7
+              LEFT JOIN m.lotoFoot15 lf15 ";
+        $where = array();
+        $params = array();
+        $searchValue = array();
+
+        if($request->get('date_match')){
+            $dateMatch = $request->get('date_match');
+            $where[] = "m.dateMatch BETWEEN :dateStart AND :dateEnd";
+            $dateStart = $dateMatch.' 00:00:00';
+            $dateEnd = $dateMatch. ' 23:59:59';
+
+            $params["dateStart"] = $dateStart;
+            $params["dateEnd"] = $dateEnd;
+            $searchValue['date_match'] = $dateMatch;
+        }
+
+        # champinat seul
+        if($request->get('championat_match')){
+
+            $championat = $request->get('championat_match');
+            $dql .= " LEFT JOIN m.championat c";
+            $where[] = " c.nomChampionat LIKE :championat ";
+            $params["championat"] = '%'.$championat.'%';
+            $searchValue['championat_match'] = $championat;
+        }
+
+        if($request->get('pays_match')){
+            $pays= $request->get('pays_match');
+            $where[] = " m.equipeVisiteur LIKE :pays or m.equipeDomicile LIKE :pays ";
+            $params['pays'] = "%".$pays."%";
+            $searchValue['pays_match'] = $pays;
+        }
+        if (!empty($where)) {
+            $dql .= ' WHERE ' . implode(' AND ', $where);
+        }
+
+        if(empty($params)){
+            $matchs = $this->get('doctrine.orm.entity_manager')->createQuery($dql)->getResult();
+        }else{
+
+            $matchs = $this->get('doctrine.orm.entity_manager')->createQuery($dql)->setParameters($params)->getResult();
+        }
+        //var_dump($matchs); die;
+        if($request->get('idMatch')){
+            $idMatch = $request->get('idMatch');
+            $match = $this->getRepoFormId(self::ENTITY_MATCH, $idMatch);
+        }
+       /* if($request->get('idLotoFoot')){
+            $idLotoFoot = $request->get('idLotoFoot');
+        }*/
+        $data = explode('&', $request->getContent());
+        $arrayData = array();
+        //$i = 0;
+        $idarray = array();
+        foreach($data as $vData){
+           /* $i = $i + 3;
+            if($i > 9){
+                var_dump()); die;
+            }*/
+            if(substr($vData, 0, 7) == 'select_'){
+                $arrayData[] = $vData;
+                $idarray[] = str_replace('=on','', str_replace('select_','',$vData ));
+            }
+        }
+
+        if($idLotoFoot == 7){
+
+            if(count($arrayData) < 7){
+                //  die('erreur < 7');
+            }
+            if(count($arrayData) > 7){
+                die('erreur > 7');
+            }
+            if(count($arrayData) == 7){
+
+                foreach($idarray as $vId){
+
+                    $matchsEntity = $this->getRepoFormId(self::ENTITY_MATCH, $vId);
+                    $matchsEntity->setLotoFoot7(null);
+                    $this->get('doctrine.orm.entity_manager')->persist($matchsEntity);
+                    $this->get('doctrine.orm.entity_manager')->flush();
+                }
+                foreach($idarray as $vId){
+                    $matchsEntity = $this->getRepoFormId(self::ENTITY_MATCH, $vId);
+                    $matchsEntity->setLotoFoot7($lotoFoot);
+                    $this->get('doctrine.orm.entity_manager')->persist($matchsEntity);
+                    $this->get('doctrine.orm.entity_manager')->flush();
+                }
+
+            }
+        }
+        if($idLotoFoot == 15){
+            if(count($arrayData) == 14 or count($arrayData) == 15){
+                foreach($idarray as $vId){
+
+                    $matchsEntity = $this->getRepoFormId(self::ENTITY_MATCH, $vId);
+                    $matchsEntity->setLotoFoot15(null);
+                    $this->get('doctrine.orm.entity_manager')->persist($matchsEntity);
+                    $this->get('doctrine.orm.entity_manager')->flush();
+                }
+                foreach($idarray as $vId){
+
+                    $matchsEntity = $this->getRepoFormId(self::ENTITY_MATCH, $vId);
+                    $matchsEntity->setLotoFoot15($lotoFoot);
+                    $this->get('doctrine.orm.entity_manager')->persist($matchsEntity);
+                    $this->get('doctrine.orm.entity_manager')->flush();
+                }
+
+            }
+        }
+
+        return $this->render('BackAdminBundle:Matchs:add_lotofoot.html.twig', array(
+            'entity' => $lotoFoot,
+            'idLotoFoot' => $idLotoFoot,
+            'championat' => $championat,
+            'pays' => $pays,
+            'matchs' => $matchs,
+            'searchValue' => $searchValue
         ));
     }
 }

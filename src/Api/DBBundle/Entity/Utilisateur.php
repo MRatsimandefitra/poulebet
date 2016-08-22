@@ -180,8 +180,11 @@ class Utilisateur
      * @ORM\Column(name="fax", type="string", length=15, nullable=true)
      */
     private $fax;
-
-
+    
+    /**
+    * @ORM\OneToMany(targetEntity="Api\DBBundle\Entity\Device", mappedBy="utilisateur")
+    */
+    private $devices;
     /**
      * Get id
      *
@@ -743,5 +746,51 @@ class Utilisateur
     public function getVille()
     {
         return $this->ville;
+    }
+    public function __toString() {
+        return $this->nom ." ".$this->prenom;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->devices = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    
+
+    /**
+     * Add device
+     *
+     * @param \Api\DBBundle\Entity\Device $device
+     *
+     * @return Utilisateur
+     */
+    public function addDevice(\Api\DBBundle\Entity\Device $device)
+    {
+        $this->devices[] = $device;
+
+        return $this;
+    }
+
+    /**
+     * Remove device
+     *
+     * @param \Api\DBBundle\Entity\Device $device
+     */
+    public function removeDevice(\Api\DBBundle\Entity\Device $device)
+    {
+        $this->devices->removeElement($device);
+    }
+
+    /**
+     * Get devices
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDevices()
+    {
+        return $this->devices;
     }
 }

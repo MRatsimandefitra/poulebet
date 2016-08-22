@@ -187,4 +187,3 @@ class Mention
         return $this->createdAt;
     }
 }
-

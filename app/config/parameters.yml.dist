@@ -25,3 +25,7 @@ parameters:
     appyone_nid: 3571
     appyone_url_liste_application: http://appyone.arkeup.com/liste-application-appy
     appyone_url_details : http://appyone.arkeup.com/application/{id}/details
+
+    #push notification
+    gcm_url_android: https://android.googleapis.com/gcm/send
+    apikey: AIzaSyAS-madxMynBNrzfnDTMIuSjBa_9Yi5Iss

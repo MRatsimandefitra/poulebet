@@ -72,7 +72,7 @@ class ApiController extends Controller
         try {
             $this->getEm()->persist($object);
             $this->getEm()->flush();
-            $this->addFlash("success", $this->get('translator')->trans($msg['success']));
+            //$this->addFlash("success", $this->get('translator')->trans($msg['success']));
             return true;
         } catch (Exception $e) {
             $this->addFlash("error", $this->get('translator')->trans($msg['error']));
@@ -262,5 +262,17 @@ class ApiController extends Controller
     }
     protected function encodePassword($password){
         return md5($password);
+    }
+    protected function sendGCMNotification($data){
+        $http = $this->get('http');
+        // chargement des paramètres de gcm
+        $apikey = $this->getParameter("apikey");
+        $gcm_url_android = $this->getParameter("gcm_url_android");
+        $header = 'Authorization: key='. $apikey;
+        $http->setHeaders($header);
+        $http->setUrl($gcm_url_android);
+        $http->setRawPostData(json_encode($data));
+        $http->execute();
+        return true;
     }
 }
