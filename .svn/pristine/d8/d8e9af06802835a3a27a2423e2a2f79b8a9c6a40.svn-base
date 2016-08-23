@@ -1,7 +1,0 @@
-index_admin:
-    path:     /
-    defaults: { _controller: BackAdminBundle:Admin:index }
-
-route_prefix_utilisateur:
-    resource: "@BackAdminBundle/Resources/config/routing/utilisateur.yml"
-    prefix:   /utilisateurs

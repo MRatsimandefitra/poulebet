@@ -1,3 +1,0 @@
-index_admin_pronostic:
-    path:     /
-    defaults: { _controller: BackAdminBundle:Pronostic:index }

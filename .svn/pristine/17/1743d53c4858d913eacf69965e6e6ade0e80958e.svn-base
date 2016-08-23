@@ -1,3 +1,0 @@
-index_admin:
-    path:     /
-    defaults: { _controller: BackAdminBundle:Admin:index }

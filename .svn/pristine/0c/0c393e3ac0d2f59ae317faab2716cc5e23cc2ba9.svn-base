@@ -1,3 +1,0 @@
-back_admin_homepage:
-    path:     /
-    defaults: { _controller: BackAdminBundle:Default:index }

@@ -1,7 +1,0 @@
-index_administrator:
-    path:     /
-    defaults: { _controller: BackAdminBundle:Administrator:index }
-
-edit_administrator:
-    path:     /edit/{id}
-    defaults: { _controller: BackAdminBundle:Administrator:edit }
