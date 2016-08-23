@@ -17,6 +17,15 @@ use Doctrine\ORM\Mapping as ORM;
 class Matchs
 {
     /**
+     * @ORM\ManyToOne(targetEntity="Teams", cascade={"persist"})
+     */
+    private $teamsDomicile;
+    /**
+     * @ORM\ManyToOne(targetEntity="Teams", cascade={"persist"})
+     */
+    private $teamsVisiteur;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Championat", cascade={"persist"})
      * @ORM\JoinColumn(name="championat_id")
      */
@@ -782,5 +791,53 @@ class Matchs
     public function getMasterProno2()
     {
         return $this->masterProno2;
+    }
+
+    /**
+     * Set teamsDomicile
+     *
+     * @param \Api\DBBundle\Entity\Teams $teamsDomicile
+     *
+     * @return Matchs
+     */
+    public function setTeamsDomicile(\Api\DBBundle\Entity\Teams $teamsDomicile = null)
+    {
+        $this->teamsDomicile = $teamsDomicile;
+
+        return $this;
+    }
+
+    /**
+     * Get teamsDomicile
+     *
+     * @return \Api\DBBundle\Entity\Teams
+     */
+    public function getTeamsDomicile()
+    {
+        return $this->teamsDomicile;
+    }
+
+    /**
+     * Set teamsVisiteur
+     *
+     * @param \Api\DBBundle\Entity\Teams $teamsVisiteur
+     *
+     * @return Matchs
+     */
+    public function setTeamsVisiteur(\Api\DBBundle\Entity\Teams $teamsVisiteur = null)
+    {
+        $this->teamsVisiteur = $teamsVisiteur;
+
+        return $this;
+    }
+
+    /**
+     * Get teamsVisiteur
+     *
+     * @return \Api\DBBundle\Entity\Teams
+     */
+    public function getTeamsVisiteur()
+    {
+        return $this->teamsVisiteur;
     }
 }

@@ -1,0 +1,48 @@
+{% extends 'BackAdminBundle::layout.html.twig' %}
+{% block title %} {{ parent() }} {% endblock %}
+{% block ariane %} {{ parent() }} {% endblock %}
+
+{% block page %}
+
+    <div class="box-header-response">
+        {{ 'Listes des Matchs du jour'|trans }}
+        {% include '@BackAdmin/Matchs/sous_menu.html.twig' %}
+    </div>
+
+    <div class="col-lg-12">
+        <div class="list">
+           <table>
+               <tr>
+                   <td>ID</td>
+                   <td>Championat</td>
+                   <td>Full Name</td>
+                   <td>Type Championat</td>
+                   <td>{{ "Actions" }}</td>
+               </tr>
+               {% for row in entities %}
+                <tr>
+                    <td>{{ row.id }}</td>
+                    <td>
+                        {{ row.nomChampionat }}
+                    </td>
+                    <td>
+                        {{ row.fullNameChampionat }}
+                    </td>
+                    <td>
+                        {{ row.typeChampionat }}
+                    </td>
+                    <td>
+                        {% if droitAdmin.modification is defined and droitAdmin.modification %}
+                            <a href="{{ path('edit_championat', {'id': row.id }) }}">
+                                <span class="glyphicon glyphicon-pencil orange" aria-hidden="true"></span>
+                            </a>
+                            {% endif %}
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+           </table>
+        </div>
+    </div>
+{% endblock %}

@@ -34,17 +34,18 @@ class NotificationController extends ApiController {
             $this->insert($notification);
             $users = $notification->getUtilisateurs();
             $device_token = array();
-            $message = $request->get("message");
+            $message = $notification->getMessage();
             $messageData = array("message"=>$message);
             foreach($users as $user){
                 $devices = $user->getDevices();
                 foreach ($devices as $device){
-                    $device_token[] = $device->getToken();
+                    //$device_token[] = $device->getToken();
+                    array_push($device_token, $device->getToken());
                 } 
             }
             $data = array(
-                'registration_ids',$device_token,
-                'data',$messageData
+                'registration_ids' => $device_token,
+                'data' => $messageData
             );
             $this->sendGCMNotification($data);
             return $this->redirectToRoute('add_notification');

@@ -4,12 +4,13 @@ namespace Ws\RestBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 class PronosticController extends ApiRestController
 {
 
     const ENTITY_UTILISATEUR = 'ApiDBBundle:Utilisateur';
-    const ENTITY_CHAMPIONNAT = 'ApiDBBundle:Championnat';
+    const ENTITY_CHAMPIONNAT = 'ApiDBBundle:Championat';
     
     public function getUtilisateurAchatPromoAction()
     {
@@ -33,8 +34,17 @@ class PronosticController extends ApiRestController
     /**
      * récupérer les championnats qui on des matchs
      */
-    public function getChampionnatAction(){
-        
+    public function getChampionnatAction(Request $request){
+        $allChampionnat = $this->getEm()->getRepository(self::ENTITY_CHAMPIONNAT)->findBy(
+                array(
+                    "matchs"
+                ));
+        $ct = count($allChampionnat);
+        echo($ct);
+        die();
+        return new JsonResponse(array(
+            'championnat'=>null
+        ));
     }
 
 

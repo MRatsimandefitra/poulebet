@@ -96,6 +96,14 @@
       <primary-key name="PRIMARY" columns="id"/>
       <exported-key name="FK_14AE9480CE062FF9" table="mvt_credit" schema="" catalog="poulebet" columns="credit_id"/>
     </table>
+    <table name="device" schema="" catalog="poulebet" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="utilisateur_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="token" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="true" jdbcType="-1"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="FK_92FB68EFB88E14F" columns="utilisateur_id" ref-table="utilisateur" ref-schema="" ref-catalog="poulebet" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="IDX_92FB68EFB88E14F" unique="false" columns="utilisateur_id"/>
+    </table>
     <table name="droit" schema="" catalog="poulebet" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="fonctionnalite" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
@@ -281,6 +289,22 @@
       <index name="IDX_B562A06945B51F25" unique="false" columns="voteutilisateur_id"/>
       <index name="IDX_B562A069FB88E14F" unique="false" columns="utilisateur_id"/>
     </table>
+    <table name="notification" schema="" catalog="poulebet" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="message" sqlType="LONGTEXT" precision="2147483647" scale="0" nullable="true" jdbcType="-1"/>
+      <column name="createdAt" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="FK_C88750F2EF1A9D84" table="notification_utilisateur" schema="" catalog="poulebet" columns="notification_id"/>
+    </table>
+    <table name="notification_utilisateur" schema="" catalog="poulebet" type="TABLE">
+      <column name="notification_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="utilisateur_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="notification_id,utilisateur_id"/>
+      <foreign-key name="FK_C88750F2FB88E14F" columns="utilisateur_id" ref-table="utilisateur" ref-schema="" ref-catalog="poulebet" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <foreign-key name="FK_C88750F2EF1A9D84" columns="notification_id" ref-table="notification" ref-schema="" ref-catalog="poulebet" ref-columns="id" update-rule="3" delete-rule="0" deferrability="2"/>
+      <index name="IDX_C88750F2EF1A9D84" unique="false" columns="notification_id"/>
+      <index name="IDX_C88750F2FB88E14F" unique="false" columns="utilisateur_id"/>
+    </table>
     <table name="parameter_mail" schema="" catalog="poulebet" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="emailSite" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
@@ -316,6 +340,15 @@
       <column name="adresse" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="id"/>
     </table>
+    <table name="teams_pays" schema="" catalog="poulebet" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="codePays" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="fullName" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="codeNumericPays" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <index name="UNIQ_DED2C0B831E6BDC0" unique="true" columns="codePays"/>
+    </table>
     <table name="template_mail" schema="" catalog="poulebet" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="libelleMail" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
@@ -344,8 +377,6 @@
       <column name="userToken" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <column name="cheminPhoto" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <column name="achatProno" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
-      <column name="dateProno" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
-      <column name="validiteProno" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
       <column name="adresse1" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <column name="adresse2" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <column name="adresse3" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
@@ -354,9 +385,11 @@
       <column name="fax" sqlType="VARCHAR" precision="15" scale="0" nullable="true" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="id"/>
       <foreign-key name="FK_1D1C63B3A73F0036" columns="ville_id" ref-table="ville" ref-schema="" ref-catalog="poulebet" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="FK_92FB68EFB88E14F" table="device" schema="" catalog="poulebet" columns="utilisateur_id"/>
       <exported-key name="FK_14AE9480FB88E14F" table="mvt_credit" schema="" catalog="poulebet" columns="utilisateur_id"/>
       <exported-key name="FK_C18AB575FB88E14F" table="mvt_lot" schema="" catalog="poulebet" columns="utilisateur_id"/>
       <exported-key name="FK_B562A069FB88E14F" table="mvt_point" schema="" catalog="poulebet" columns="utilisateur_id"/>
+      <exported-key name="FK_C88750F2FB88E14F" table="notification_utilisateur" schema="" catalog="poulebet" columns="utilisateur_id"/>
       <exported-key name="FK_AE9155E7FB88E14F" table="vote_utilisateur" schema="" catalog="poulebet" columns="utilisateur_id"/>
       <index name="IDX_1D1C63B3A73F0036" unique="false" columns="ville_id"/>
     </table>

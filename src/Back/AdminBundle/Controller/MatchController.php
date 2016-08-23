@@ -13,6 +13,7 @@ use Back\AdminBundle\Resources\Request\MatchSearch;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints\DateTime;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class MatchController extends ApiController
 {
@@ -24,6 +25,9 @@ class MatchController extends ApiController
     const ENTITY_LOTOFOOT15 = 'ApiDBBundle:LotoFoot15';
     const ENTITY_DROIT_ADMIN = 'ApiDBBundle:DroitAdmin';
     const ENTITY_DROIT = 'ApiDBBundle:Droit';
+    const DROITS = 'Matchs';
+    const FORM_MATCHS = 'Api\DBBundle\Form\MatchsType';
+    const FORM_CHAMPIONAT = 'Api\DBBundle\Form\ChampionatType';
 
     public function indexAction(Request $request)
     {
@@ -173,6 +177,57 @@ class MatchController extends ApiController
         ));
     }
 
+
+    public function editMatchsAction(Request $request, $id){
+        //die('okok');
+        // et cirrent matchs
+        $currentMatchs = $this->getRepoFormId(self::ENTITY_MATCH, $id);
+       // var_dump($currentMatchs); die;
+        $form = $this->formPost(self::FORM_MATCHS, $currentMatchs);
+
+        $form->handleRequest($request);
+        if($form->isValid()){
+
+            $dir = $this->get('kernel')->getRootDir().'/../web/upload/admin/flag/';
+            $logoDomicile = $currentMatchs->getCheminLogoDomicile();
+            $logoVisiteur = $currentMatchs->getCheminLogoVisiteur();
+
+            $logoDomicileName = uniqid().'.'.$logoDomicile->guessExtension();
+            $logoVisiteurName = uniqid().'.'.$logoVisiteur->guessExtension();
+            $logoDomicile->move($dir, $logoDomicileName);
+            $logoVisiteur->move($dir, $logoVisiteurName);
+
+            $currentMatchs->setCheminLogoDomicile($logoDomicileName);
+            $currentMatchs->setCheminLogoVisiteur($logoVisiteurName);
+            $this->insert($currentMatchs, array('success' => 'success' , 'error' => 'error'));
+
+        }
+        // roles
+        $wsRoles = $this->get('roles.manager');
+        $droitAdmin = $wsRoles->getDroitAdmin(self::DROITS);
+        // list championat
+        $championatData = $this->getAllEntity(self::ENTITY_CHAMPIONAT);
+        // pays
+        $country = $this->getAllEntity(self::ENTITY_COUNTRY);
+
+        return $this->render('BackAdminBundle:Matchs:edit_matchs.html.twig', array(
+            'form' => $form->createView(),
+            'matchs' => $currentMatchs,
+            'championat' => $championatData,
+            'country' => $country,
+            /*
+            'searchValue' => $searchValue,*/
+            'droitAdmin' => $droitAdmin[0]
+            /*'items' => $items,
+            'totalMatch' => $totalMatch,
+            'search' => $dateMatchSearch,
+            'dateSearch' => $dateMatchSearch,
+            'timeSearch' => $heureMatchSearch,
+            'country' => $country,
+            'championat' => $championatData*/
+            /*'form' => $form->createView()*/
+        ));
+    }
     public function addLotoFootAction(Request $request){
 
         if($request->get('numero')){
@@ -218,6 +273,30 @@ class MatchController extends ApiController
         ));
     }
 
+    public function listChampionatAction(Request $request){
+
+        $championat = $this->getAllEntity(self::ENTITY_CHAMPIONAT);
+        $wsDA = $this->get('roles.manager');
+        $droitAdmin= $wsDA->getDroitAdmin('Matchs');
+        return $this->render('BackAdminBundle:Matchs:list_championat.html.twig', array(
+            'entities' => $championat,
+            'droitAdmin' => $droitAdmin[0]
+        ));
+    }
+
+    public function editChampionatAction(Request $request, $id){
+        $championat = $this->getRepoFormId(self::ENTITY_CHAMPIONAT, $id);
+        $form = $this->formPost(self::FORM_CHAMPIONAT, $championat);
+        $form->handleRequest($request);
+        if($form->isValid()){
+            $this->insert($championat, array('success' => 'success' , 'error' => 'error'));
+            return $this->redirectToRoute('list_championat');
+        }
+        return $this->render('@BackAdmin/Matchs/edit_championat.html.twig', array(
+            'form' => $form->createView(),
+            'championat' => $championat
+        ));
+    }
     public function editLotofootAction(Request $request, $id, $idLotoFoot){
 
         if($idLotoFoot == 7){

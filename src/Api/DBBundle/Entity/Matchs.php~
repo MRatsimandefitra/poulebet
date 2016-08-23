@@ -1,5 +1,9 @@
 <?php
 
+
+
+
+
 namespace Api\DBBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -8,10 +12,19 @@ use Doctrine\ORM\Mapping as ORM;
  * Match
  *
  * @ORM\Table(name="matchs")
- * @ORM\Entity(repositoryClass="Api\DBBundle\Repository\MatchRepository")
+ * @ORM\Entity(repositoryClass="Api\DBBundle\Repository\MatchsRepository")
  */
 class Matchs
 {
+    /**
+     * @ORM\ManyToOne(targetEntity="Teams", cascade={"persist"})
+     */
+    private $teamsDomicile;
+    /**
+     * @ORM\ManyToOne(targetEntity="Teams", cascade={"persist"})
+     */
+    private $teamsVisiteur;
+
     /**
      * @ORM\ManyToOne(targetEntity="Championat", cascade={"persist"})
      * @ORM\JoinColumn(name="championat_id")
@@ -706,5 +719,125 @@ class Matchs
     public function getDateMatch()
     {
         return $this->dateMatch;
+    }
+
+    /**
+     * Set masterProno1
+     *
+     * @param boolean $masterProno1
+     *
+     * @return Matchs
+     */
+    public function setMasterProno1($masterProno1)
+    {
+        $this->masterProno1 = $masterProno1;
+
+        return $this;
+    }
+
+    /**
+     * Get masterProno1
+     *
+     * @return boolean
+     */
+    public function getMasterProno1()
+    {
+        return $this->masterProno1;
+    }
+
+    /**
+     * Set masterPronoN
+     *
+     * @param boolean $masterPronoN
+     *
+     * @return Matchs
+     */
+    public function setMasterPronoN($masterPronoN)
+    {
+        $this->masterPronoN = $masterPronoN;
+
+        return $this;
+    }
+
+    /**
+     * Get masterPronoN
+     *
+     * @return boolean
+     */
+    public function getMasterPronoN()
+    {
+        return $this->masterPronoN;
+    }
+
+    /**
+     * Set masterProno2
+     *
+     * @param boolean $masterProno2
+     *
+     * @return Matchs
+     */
+    public function setMasterProno2($masterProno2)
+    {
+        $this->masterProno2 = $masterProno2;
+
+        return $this;
+    }
+
+    /**
+     * Get masterProno2
+     *
+     * @return boolean
+     */
+    public function getMasterProno2()
+    {
+        return $this->masterProno2;
+    }
+
+    /**
+     * Set teamsDomicile
+     *
+     * @param \Api\DBBundle\Entity\Teams $teamsDomicile
+     *
+     * @return Matchs
+     */
+    public function setTeamsDomicile(\Api\DBBundle\Entity\Teams $teamsDomicile = null)
+    {
+        $this->teamsDomicile = $teamsDomicile;
+
+        return $this;
+    }
+
+    /**
+     * Get teamsDomicile
+     *
+     * @return \Api\DBBundle\Entity\Teams
+     */
+    public function getTeamsDomicile()
+    {
+        return $this->teamsDomicile;
+    }
+
+    /**
+     * Set teamsVisiteur
+     *
+     * @param \Api\DBBundle\Entity\Teams $teamsVisiteur
+     *
+     * @return Matchs
+     */
+    public function setTeamsVisiteur(\Api\DBBundle\Entity\Teams $teamsVisiteur = null)
+    {
+        $this->teamsVisiteur = $teamsVisiteur;
+
+        return $this;
+    }
+
+    /**
+     * Get teamsVisiteur
+     *
+     * @return \Api\DBBundle\Entity\Teams
+     */
+    public function getTeamsVisiteur()
+    {
+        return $this->teamsVisiteur;
     }
 }

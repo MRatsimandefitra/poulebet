@@ -13,3 +13,6 @@ services:
     http:
         class: Api\CommonBundle\Utils\Http
         arguments: ["@service_container"]
+    roles.manager:
+        class: Api\CommonBundle\Utils\Roles
+        arguments: ["@service_container"]

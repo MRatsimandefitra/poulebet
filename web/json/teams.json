@@ -1,0 +1,3196 @@
+{
+    "alb": {
+        "skks_alb": [
+            "Skenderbeu",
+            "KF Skënderbeu Korçë"
+        ]
+    },
+    "aut": {
+        "auswfc_aut": [
+            "Austria Wien",
+            "FK Austria Wien"
+        ],
+        "rapw_aut": [
+            "Rapid Wien",
+            "SK Rapid Wien"
+        ],
+        "rbsalzfc_aut": [
+            "Salzburg",
+            "FC Red Bull Salzburg"
+        ],
+        "strmgsk_aut": [
+            "Sturm Graz",
+            "SK Sturm Graz"
+        ]
+    },
+    "aze": {
+        "qaraghfk_aze": [
+            "Qarabağ",
+            "FK Qarabağ Ağdam"
+        ],
+        "intbakpak_aze": [
+            "Inter Baku",
+            "Inter Baki PIK"
+        ],
+        "neftbakpfk_aze": [
+            "Neftchi",
+            "Neftchi PFK"
+        ],
+        "gabfk_aze": [
+            "Gabala",
+            "Gabala FK"
+        ],
+        "simzaqpak_aze": [
+            "Simurq",
+            "Simurq PIK"
+        ],
+        "azalpfc_aze": [
+            "AZAL",
+            "AZAL PFK"
+        ],
+        "xlfk_aze": [
+            "Khazar",
+            "Khazar Lankaran FK"
+        ],
+        "sumfk_aze": [
+            "Sumgayit",
+            "Sumgayit FK"
+        ],
+        "bakfk_aze": [
+            "FC Baku",
+            "FK Baki"
+        ],
+        "anpfk_aze": [
+            "Araz",
+            "Araz-Naxçıvan PFK"
+        ],
+        "kapazfk_aze": [
+            "Kapaz",
+            "Kapaz PFK"
+        ],
+        "fkrevan_aze": [
+            "Revan",
+            "Rəvan FK"
+        ],
+        "ziraik_aze": [
+            "Zira",
+            "Zirə FK"
+        ]
+    },
+    "bel": {
+        "gentkaa_bel": [
+            "AA Gent",
+            "KAA Gent"
+        ],
+        "andrsc_bel": [
+            "Anderlecht",
+            "RSC Anderlecht"
+        ],
+        "rantwfc_bel": [
+            "Antwerp",
+            "Royal Antwerp FC"
+        ],
+        "kbeershac_bel": [
+            "Beerschot",
+            "Koninklijke Beerschot AC"
+        ],
+        "cbrukv_bel": [
+            "Brugge",
+            "Club Brugge KV"
+        ],
+        "cebruksv_bel": [
+            "Cercle Brugge",
+            "Cercle Brugge KSV"
+        ],
+        "rchasc_bel": [
+            "Charleroi",
+            "R. Charleroi SC"
+        ],
+        "fcdend_bel": [
+            "Dender",
+            "FC Dender"
+        ],
+        "fcmolbruss_bel": [
+            "FC Brussels",
+            "FC Molenbeek Brussels"
+        ],
+        "genkkrc_bel": [
+            "Genk",
+            "KRC Genk"
+        ],
+        "gerbeekfc_bel": [
+            "Germinal Beerschot",
+            "KFC Germinal Beerschot Antwerpen"
+        ],
+        "kskhei_bel": [
+            "Heist",
+            "KSK Heist"
+        ],
+        "eupkas_bel": [
+            "KAS Eupen",
+            "KAS Eupen"
+        ],
+        "kortkv_bel": [
+            "Kortrijk",
+            "KV Kortrijk"
+        ],
+        "kliesk_bel": [
+            "Lierse",
+            "K. Lierse SK"
+        ],
+        "lokovksc_bel": [
+            "Lokeren",
+            "KSC Lokeren OV"
+        ],
+        "lomutd_bel": [
+            "Lommel Utd",
+            "Lommel United"
+        ],
+        "mechkv_bel": [
+            "Mechelen",
+            "KV Mechelen"
+        ],
+        "raecmons_bel": [
+            "Mons",
+            "RAEC Mons"
+        ],
+        "rexcmos_bel": [
+            "Mouscron",
+            "R. Excelsior Mouscron"
+        ],
+        "rmousper_bel": [
+            "Mouscron Peruwelz",
+            "Royal Mouscron-Péruwelz"
+        ],
+        "ohleuvfc_bel": [
+            "OH Leuven",
+            "FC Oud-Heverlee Leuven"
+        ],
+        "kvoos_bel": [
+            "Oostende",
+            "KV Oostende"
+        ],
+        "rbdbor_bel": [
+            "RBD Borinage",
+            "Royal Boussu Dour Borinage"
+        ],
+        "rosksv_bel": [
+            "Roeselare",
+            "KSV Roeselare"
+        ],
+        "rupboofc_bel": [
+            "Rupel Boom",
+            "Rupel Boom FC"
+        ],
+        "strudvv_bel": [
+            "Sint-Truidense",
+            "K. Sint-Truidense VV"
+        ],
+        "standwet_bel": [
+            "St. Wetteren",
+            "Standaard Wetteren"
+        ],
+        "stanlie_bel": [
+            "Standard",
+            "R. Standard de Liège"
+        ],
+        "kvktie_bel": [
+            "Tienen",
+            "KVK Tienen"
+        ],
+        "rfctourn_bel": [
+            "Tournai",
+            "RFC Tournai"
+        ],
+        "afctub_bel": [
+            "Tubize",
+            "AFC Tubize"
+        ],
+        "kvturn_bel": [
+            "Turnhout",
+            "KV Turnhout"
+        ],
+        "csvis_bel": [
+            "Visé",
+            "CS Visé"
+        ],
+        "waasbev_bel": [
+            "Waasland-Beveren",
+            "KV Red Star Waasland"
+        ],
+        "westkvc_bel": [
+            "Westerlo",
+            "KVC Westerlo"
+        ],
+        "zultwasv_bel": [
+            "Zulte Waregem",
+            "SV Zulte Waregem"
+        ]
+    },
+    "blg": {
+        "cskaspfc_blg": [
+            "CSKA Sofia",
+            "PFC CSKA Sofia"
+        ],
+        "levspfc_blg": [
+            "Levski Sofia",
+            "PFC Levski Sofia"
+        ],
+        "litlovpfc_blg": [
+            "Litex Lovech",
+            "PFC Litex Lovech"
+        ],
+        "ludogorpfc_blg": [
+            "Ludogorets",
+            "PFC Ludogorets Razgrad"
+        ]
+    },
+    "bra": {
+        "cruec_bra": [
+            "Cruzeiro",
+            "Cruzeiro Esporte Clube"
+        ],
+        "flfc_bra": [
+            "Fluminense",
+            "Fluminense Football Club"
+        ],
+        "sccp_bra": [
+            "Corinthians",
+            "Sport Club Corinthians Paulista"
+        ],
+        "spfc_bra": [
+            "São Paulo",
+            "São Paulo Futebol Clube"
+        ],
+        "sci_bra": [
+            "Internacional",
+            "Sport Club Internacional"
+        ],
+        "gfbpa_bra": [
+            "Grêmio",
+            "Grêmio Foot-Ball Porto Alegrense"
+        ],
+        "gec_bra": [
+            "Goiás",
+            "Goiás Esporte Clube"
+        ],
+        "cam_bra": [
+            "Atlético Mineiro",
+            "Clube Atlético Mineiro"
+        ],
+        "scr_bra": [
+            "Sport Recife",
+            "Sport Club do Recife"
+        ],
+        "sfc_bra": [
+            "Santos",
+            "Santos Futebol Clube"
+        ],
+        "sep_bra": [
+            "Palmeiras",
+            "Sociedade Esportiva Palmeiras"
+        ],
+        "cap_bra": [
+            "Atlético Paranaense",
+            "Clube Atlético Paranaense"
+        ],
+        "bfr_bra": [
+            "Botafogo",
+            "Botafogo de Futebol e Regatas"
+        ],
+        "criec_bra": [
+            "Criciuma",
+            "Criciúma Esporte Clube"
+        ],
+        "ecb_bra": [
+            "Bahia",
+            "Esporte Clube Bahia"
+        ],
+        "acf_bra": [
+            "Chapecoense",
+            "Associação Chapecoense de Futebol"
+        ],
+        "cfbc_bra": [
+            "Coritiba",
+            "Coritiba Foot Ball Club"
+        ],
+        "ecv_bra": [
+            "Vitória",
+            "Esporte Clube Vitória"
+        ],
+        "crf_bra": [
+            "Flamengo",
+            "Clube de Regatas do Flamengo"
+        ],
+        "fifc_bra": [
+            "Figueirense",
+            "Figueirense Futebol Clube"
+        ]
+    },
+    "brus": {
+        "batebfc_brus": [
+            "BATE Borisov",
+            "FC BATE Borisov"
+        ],
+        "dinmfc_brus": [
+            "Dinamo Minsk",
+            "FC Dinamo Minsk"
+        ],
+        "dnemogfc_brus": [
+            "Dnepr Mogilev",
+            "FC Dnepr Mogilev"
+        ]
+    },
+    "cro": {
+        "dinzank_cro": [
+            "Dinamo Zagreb",
+            "NK Dinamo Zagreb"
+        ],
+        "hajshnk_cro": [
+            "Hajduk Split",
+            "HNK Hajduk Split"
+        ],
+        "rijehnk_cro": [
+            "Rijeka",
+            "HNK Rijeka"
+        ]
+    },
+    "cyp": {
+        "aeklfc_cyp": [
+            "AEK",
+            "AEK Larnaca FC"
+        ],
+        "aellfc_cyp": [
+            "AEL",
+            "AEL Limassol FC"
+        ],
+        "aeppfc_cyp": [
+            "AEP",
+            "AEP Paphos FC"
+        ],
+        "apepkfc_cyp": [
+            "APEP",
+            "APEP Kyperounda FC"
+        ],
+        "apoelfc_cyp": [
+            "APOEL",
+            "APOEL FC"
+        ],
+        "apopkpfc_cyp": [
+            "APOP",
+            "APOP / Kinyras Peyias FC"
+        ],
+        "alkilfc_cyp": [
+            "Alki",
+            "Alki Larnaca FC"
+        ],
+        "anorffc_cyp": [
+            "Anorthosis",
+            "Anorthosis Famagusta FC"
+        ],
+        "apollfc_cyp": [
+            "Apollon",
+            "Apollon Limassol FC"
+        ],
+        "arislfc_cyp": [
+            "Aris Limassol",
+            "Aris Limassol FC"
+        ],
+        "doxkafc_cyp": [
+            "Doxa",
+            "Doxa Katokopia FC"
+        ],
+        "ermafc_cyp": [
+            "Ermis",
+            "Ermis Aradippou FC"
+        ],
+        "ethnafc_cyp": [
+            "Ethnikos Achnas",
+            "Ethnikos Achnas FC"
+        ],
+        "neasfc_cyp": [
+            "Nea Salamis",
+            "Nea Salamis FC"
+        ],
+        "olynfc_cyp": [
+            "Olympiakos",
+            "Olympiakos Nicosia FC"
+        ],
+        "omonac_cyp": [
+            "Omonia",
+            "AC Omonia"
+        ],
+        "enosnpfc_cyp": [
+            "Paralimni",
+            "Enosis Neon Paralimni FC"
+        ]
+    },
+    "cze": {
+        "slavpsk_cze": [
+            "Slavia Praha",
+            "SK Slavia Praha"
+        ],
+        "slovliberfc_cze": [
+            "Slovan",
+            "FC Slovan Liberec"
+        ],
+        "sparpac_cze": [
+            "Sparta Praha",
+            "AC Sparta Praha"
+        ],
+        "vikplzfc_cze": [
+            "Viktoria Plzeň",
+            "FC Viktoria Plzeň"
+        ]
+    },
+    "den": {
+        "agf_den": [
+            "AGF",
+            "Aarhus Gymnastikforening"
+        ],
+        "aabk_den": [
+            "Aalborg",
+            "Aalborg BK"
+        ],
+        "bif_den": [
+            "Brøndby",
+            "Brøndby IF"
+        ],
+        "efb_den": [
+            "Esbjerg",
+            "Esbjerg fB"
+        ],
+        "kogehb_den": [
+            "HB Køge",
+            "HB – Køge"
+        ],
+        "hobroik_den": [
+            "Hobro IK",
+            "Hobro Idræts Klub"
+        ],
+        "ach_den": [
+            "Horsens",
+            "AC Horsens"
+        ],
+        "fckob_den": [
+            "København",
+            "FC København"
+        ],
+        "lynbk_den": [
+            "Lyngby",
+            "Lyngby BK"
+        ],
+        "kcmd_den": [
+            "Midtjylland",
+            "FC Midtjylland"
+        ],
+        "fcnj_den": [
+            "Nordsjælland",
+            "FC Nordsjælland"
+        ],
+        "obk_den": [
+            "Odense",
+            "Odense BK"
+        ],
+        "rfc_den": [
+            "Randers",
+            "Randers FC"
+        ],
+        "sif_den": [
+            "Silkeborg",
+            "Silkeborg IF"
+        ],
+        "soe_den": [
+            "SønderjyskE",
+            "SønderjyskE"
+        ],
+        "fcv_den": [
+            "Vestsjælland",
+            "FC Vestsjælland"
+        ],
+        "vff_den": [
+            "Viborg",
+            "Viborg FF"
+        ]
+    },
+    "en": {
+        "arsfc_en": [
+            "Arsenal",
+            "Arsenal FC"
+        ],
+        "avfc_en": [
+            "Aston Villa",
+            "Aston Villa FC"
+        ],
+        "barnfc_en": [
+            "Barnsley",
+            "Barnsley FC"
+        ],
+        "bcfc_en": [
+            "Birmingham",
+            "Birmingham City FC"
+        ],
+        "brfc_en": [
+            "Blackburn",
+            "Blackburn Rovers FC"
+        ],
+        "bpfc_en": [
+            "Blackpool",
+            "Blackpool FC"
+        ],
+        "bwfc_en": [
+            "Bolton",
+            "Bolton Wanderers FC"
+        ],
+        "bournmthafc_en": [
+            "Bournemouth",
+            "AFC Bournemouth"
+        ],
+        "brentfc_en": [
+            "Brentford",
+            "Brentford FC"
+        ],
+        "bhafc_en": [
+            "Brighton and Hove Albion",
+            "Brighton and Hove Albion Football Club"
+        ],
+        "briscfc_en": [
+            "Bristol City",
+            "Bristol City FC"
+        ],
+        "burnfc_en": [
+            "Burnley",
+            "Burnley FC"
+        ],
+        "bafc_en": [
+            "Burton",
+            "Burton Albion FC"
+        ],
+        "cardcfc_en": [
+            "Cardiff",
+            "Cardiff City FC"
+        ],
+        "chathfc_en": [
+            "Charlton",
+            "Charlton Athletic FC"
+        ],
+        "chefc_en": [
+            "Chelsea",
+            "Chelsea FC"
+        ],
+        "covcfc_en": [
+            "Coventry",
+            "Coventry City FC"
+        ],
+        "cpfc_en": [
+            "Crystal Palace",
+            "Crystal Palace FC"
+        ],
+        "dcfc_en": [
+            "Derby",
+            "Derby County FC"
+        ],
+        "doncrfc_en": [
+            "Doncaster",
+            "Doncaster Rovers FC"
+        ],
+        "evfc_en": [
+            "Everton",
+            "Everton FC"
+        ],
+        "fhfc_en": [
+            "Fulham",
+            "Fulham FC"
+        ],
+        "huddtfc_en": [
+            "Huddersfield",
+            "Huddersfield Town FC"
+        ],
+        "hcafc_en": [
+            "Hull City",
+            "Hull City AFC"
+        ],
+        "ipstfc_en": [
+            "Ipswich",
+            "Ipswich Town FC"
+        ],
+        "leeutdafc_en": [
+            "Leeds Utd",
+            "Leeds United AFC"
+        ],
+        "leicfc_en": [
+            "Leicester",
+            "Leicester City FC"
+        ],
+        "livfc_en": [
+            "Liverpool",
+            "Liverpool FC"
+        ],
+        "mcfc_en": [
+            "Man. City",
+            "Manchester City FC"
+        ],
+        "mufc_en": [
+            "Man. United",
+            "Manchester United FC"
+        ],
+        "middfc_en": [
+            "Middlesbrough",
+            "Middlesbrough FC"
+        ],
+        "millfc_en": [
+            "Millwall",
+            "Millwall FC"
+        ],
+        "nufc_en": [
+            "Newcastle Utd",
+            "Newcastle United FC"
+        ],
+        "norcfc_en": [
+            "Norwich",
+            "Norwich City FC"
+        ],
+        "nottffc_en": [
+            "Nottm Forest",
+            "Nottingham Forest FC"
+        ],
+        "petutdfc_en": [
+            "Peterborough",
+            "Peterborough United FC"
+        ],
+        "plymafc_en": [
+            "Plymouth",
+            "Plymouth Argyle FC"
+        ],
+        "portfc_en": [
+            "Portsmouth",
+            "Portsmouth FC"
+        ],
+        "prenefc_en": [
+            "Preston",
+            "Preston North End FC"
+        ],
+        "qprfc_en": [
+            "QPR",
+            "Queens Park Rangers FC"
+        ],
+        "readfc_en": [
+            "Reading",
+            "Reading FC"
+        ],
+        "rotutdfc_en": [
+            "Rotherham",
+            "Rotherham United FC"
+        ],
+        "scutdfc_en": [
+            "Scunthorpe",
+            "Scunthorpe United FC"
+        ],
+        "shefutd_en": [
+            "Sheffield Utd",
+            "Sheffield United FC"
+        ],
+        "sheffwfc_en": [
+            "Sheffield Wed",
+            "Sheffield Wednesday FC"
+        ],
+        "shefw_en": [
+            "Sheffield Wed",
+            "Sheffield Wednesday FC"
+        ],
+        "southfc_en": [
+            "Southampton FC",
+            "Southampton Football Club"
+        ],
+        "scfc_en": [
+            "Stoke City",
+            "Stoke City FC"
+        ],
+        "suafc_en": [
+            "Sunderland",
+            "Sunderland AFC"
+        ],
+        "swacafc_en": [
+            "Swansea",
+            "Swansea City AFC"
+        ],
+        "thfc_en": [
+            "Tottenham",
+            "Tottenham Hotspur FC"
+        ],
+        "watfc_en": [
+            "Watford",
+            "Watford FC"
+        ],
+        "wbafc_en": [
+            "West Bromwich",
+            "West Bromwich Albion FC"
+        ],
+        "whufc_en": [
+            "West Ham",
+            "West Ham United FC"
+        ],
+        "wafc_en": [
+            "Wigan",
+            "Wigan Athletic FC"
+        ],
+        "wwfc_en": [
+            "Wolves",
+            "Wolverhampton Wanderers FC"
+        ],
+        "ytfc_en": [
+            "Yeovil Town",
+            "Yeovil Town FC"
+        ],
+        "mkdfc_en": [
+            "Milton Keynes Dons",
+            "Milton Keynes Dons FC"
+        ]
+    },
+    "fin": {
+        "hjk_fin": [
+            "HJK",
+            "Helsingin Jalkapalloklubi"
+        ]
+    },
+    "fra": {
+        "rcdsa_fra": [
+            "Strasbourg",
+            "RC Strasbourg Alsace"
+        ],
+        "acajac_fra": [
+            "Ajaccio",
+            "AC Ajaccio"
+        ],
+        "amiensc_fra": [
+            "Amiens SC",
+            "Amiens Sporting Club"
+        ],
+        "angsco_fra": [
+            "Angers",
+            "Angers SCO"
+        ],
+        "acaa_fra": [
+            "Arles",
+            "AC Arles-Avignon"
+        ],
+        "ajau_fra": [
+            "Auxerre",
+            "AJ Auxerre"
+        ],
+        "fcgb_fra": [
+            "Bordeaux",
+            "FC Girondins de Bordeaux"
+        ],
+        "bolus_fra": [
+            "Boulogne",
+            "US Boulogne"
+        ],
+        "stbr_fra": [
+            "Brest",
+            "Stade Brestois 29"
+        ],
+        "cabast_fra": [
+            "CA Bastia",
+            "Cercle Athlétique Bastiais"
+        ],
+        "smc_fra": [
+            "Caen",
+            "SM Caen"
+        ],
+        "bchatrx_fra": [
+            "Châteauroux",
+            "La Berrichonne Châteauroux"
+        ],
+        "clerfa_fra": [
+            "Clermont",
+            "Clermont Foot Auvergne"
+        ],
+        "dijfco_fra": [
+            "Dijon",
+            "Dijon FCO"
+        ],
+        "evitgfc_fra": [
+            "Evian TG",
+            "Evian Thonon Gaillard FC"
+        ],
+        "fcistrop_fra": [
+            "FC Istres",
+            "FC Istres Ouest Provence"
+        ],
+        "gfcoaj_fra": [
+            "GFCO Ajaccio",
+            "Gazélec FC Olympique Ajaccio"
+        ],
+        "grefoot_fra": [
+            "Grenoble",
+            "Grenoble Foot 38"
+        ],
+        "guing_fra": [
+            "Guingamp",
+            "En Avant de Guingamp"
+        ],
+        "havrac_fra": [
+            "Havre",
+            "Havre AC"
+        ],
+        "stlavmfc_fra": [
+            "Lavallois",
+            "Stade Lavallois Mayenne FC"
+        ],
+        "lemanuc_fra": [
+            "Le Mans",
+            "Le Mans UC 72"
+        ],
+        "rcl_fra": [
+            "Lens",
+            "RC Lens"
+        ],
+        "losc_fra": [
+            "Lille",
+            "LOSC Lille Métropole"
+        ],
+        "fcl_fra": [
+            "Lorient",
+            "FC Lorient"
+        ],
+        "luzap_fra": [
+            "Luzenac AP",
+            "Luzenac Ariège Pyrénées"
+        ],
+        "olly_fra": [
+            "Lyon",
+            "Olympique Lyonnais"
+        ],
+        "olma_fra": [
+            "Marseille",
+            "Olympique de Marseille"
+        ],
+        "fcmetz_fra": [
+            "Metz",
+            "FC Metz"
+        ],
+        "asmofc_fra": [
+            "Monaco",
+            "AS Monaco FC"
+        ],
+        "mhsc_fra": [
+            "Montpellier",
+            "Montpellier Hérault SC"
+        ],
+        "asnl_fra": [
+            "Nancy",
+            "AS Nancy-Lorraine"
+        ],
+        "nantfc_fra": [
+            "Nantes",
+            "FC Nantes"
+        ],
+        "ogcn_fra": [
+            "Nice",
+            "OGC Nice"
+        ],
+        "nimolyfc_fra": [
+            "Nimes",
+            "Nîmes Olympique FC"
+        ],
+        "chniofc_fra": [
+            "Niort",
+            "Chamois Niortais FC"
+        ],
+        "nimesoly_fra": [
+            "Nîmes",
+            "Nîmes Olympique"
+        ],
+        "psgfc_fra": [
+            "PSG",
+            "Paris Saint-Germain FC"
+        ],
+        "streim_fra": [
+            "Reims",
+            "Stade de Reims"
+        ],
+        "srfc_fra": [
+            "Rennes",
+            "Stade Rennais FC"
+        ],
+        "bastsc_fra": [
+            "SC Bastia",
+            "Sporting Club de Bastia"
+        ],
+        "cssedard_fra": [
+            "Sedan",
+            "CS Sedan Ardennes"
+        ],
+        "fcsm_fra": [
+            "Sochaux",
+            "FC Sochaux-Montbéliard"
+        ],
+        "asse_fra": [
+            "St-Etienne",
+            "AS Saint-Etienne"
+        ],
+        "tfc_fra": [
+            "Toulouse",
+            "Toulouse FC"
+        ],
+        "tourfc_fra": [
+            "Tours",
+            "Tours FC"
+        ],
+        "estrofc_fra": [
+            "Troyes AC",
+            "ES Troyes AC"
+        ],
+        "uscl_fra": [
+            "US Créteil",
+            "US Créteil-Lusitanos"
+        ],
+        "usorlelf_fra": [
+            "US Orléans",
+            "US Orléans Loiret Football"
+        ],
+        "vafc_fra": [
+            "Valenciennes",
+            "Valenciennes FC"
+        ],
+        "vannoc_fra": [
+            "Vannes",
+            "Vannes OC"
+        ],
+        "rsfc93_fra": [
+            "Red Star",
+            "Red Star FC"
+        ],
+        "fcbp_fra": [
+            "Bourg Peronnas",
+            "FC Bourg-Péronnas"
+        ],
+        "parisfc_fra": [
+            "Paris FC",
+            "Paris FC"
+        ]
+    },
+    "ger": {
+        "alemaach_ger": [
+            "Aachen",
+            "Alemannia Aachen"
+        ],
+        "vfraalen_ger": [
+            "Aalen",
+            "VfR 1921 Aalen"
+        ],
+        "armbdsc_ger": [
+            "Arminia",
+            "DSC Arminia Bielefeld"
+        ],
+        "fcaugs_ger": [
+            "Augsburg",
+            "FC Augsburg"
+        ],
+        "fcbmfc_ger": [
+            "Bayern",
+            "FC Bayern München"
+        ],
+        "bochvfl_ger": [
+            "Bochum",
+            "VfL Bochum 1848"
+        ],
+        "svdarm1898_ger": [
+            "Darmstadt",
+            "SV Darmstadt 1898"
+        ],
+        "bord_ger": [
+            "Dortmund",
+            "Borussia Dortmund"
+        ],
+        "dyndresg_ger": [
+            "Dresden",
+            "SG Dynamo Dresden"
+        ],
+        "msvduisb_ger": [
+            "Duisburg",
+            "MSV Duisburg"
+        ],
+        "einfr_ger": [
+            "Eintracht",
+            "Eintracht Frankfurt"
+        ],
+        "btsvein_ger": [
+            "Eintracht Braunschweig",
+            "BTSV Eintracht Braunschweig"
+        ],
+        "energcfc_ger": [
+            "Energie",
+            "FC Energie Cottbus"
+        ],
+        "fcerzgaue_ger": [
+            "Erzgebirge",
+            "FC Erzgebirge Aue"
+        ],
+        "fortdus1895_ger": [
+            "Fortuna Dusseldorf",
+            "Düsseldorfer TuS Fortuna 1895"
+        ],
+        "fsvfrank_ger": [
+            "Frankfurt",
+            "FSV Frankfurt"
+        ],
+        "freisc_ger": [
+            "Freiburg",
+            "SC Freiburg"
+        ],
+        "spvgggf_ger": [
+            "Greuther Fürth",
+            "SpVgg Greuther Fürth"
+        ],
+        "hamsv_ger": [
+            "Hamburg",
+            "Hamburger SV"
+        ],
+        "han96_ger": [
+            "Hannover",
+            "Hannover 96"
+        ],
+        "hansarost_ger": [
+            "Hansa Rostock",
+            "F.C. Hansa Rostock e.V."
+        ],
+        "1fcheid1846_ger": [
+            "Heidenheim",
+            "1. FC Heidenheim 1846"
+        ],
+        "herbcs_ger": [
+            "Hertha",
+            "Hertha BSC Berlin"
+        ],
+        "hoftsg_ger": [
+            "Hoffenheim",
+            "TSG 1899 Hoffenheim"
+        ],
+        "fcingold04_ger": [
+            "Ingolstadt",
+            "FC Ingolstadt 04"
+        ],
+        "kaifc_ger": [
+            "Kaiserslautern",
+            "1. FC Kaiserslautern"
+        ],
+        "karsc_ger": [
+            "Karlsruher",
+            "Karlsruher SC"
+        ],
+        "kolfc_ger": [
+            "Köln",
+            "1. FC Köln"
+        ],
+        "b04l_ger": [
+            "Leverkusen",
+            "Bayer 04 Leverkusen"
+        ],
+        "mai05fsv_ger": [
+            "Mainz",
+            "1. FSV Mainz 05"
+        ],
+        "borm_ger": [
+            "Mönchengladbach",
+            "VfL Borussia Mönchengladbach"
+        ],
+        "tsvmunch1860_ger": [
+            "München 1860",
+            "TSV 1860 München"
+        ],
+        "nurnfc_ger": [
+            "Nürnberg",
+            "1. FC Nürnberg"
+        ],
+        "scrwoberh1904_ger": [
+            "Oberhausen",
+            "SC Rot-Weiß Oberhausen 1904"
+        ],
+        "vflosn_ger": [
+            "Osnabrück",
+            "VfL Osnabrück"
+        ],
+        "scpad07_ger": [
+            "Paderborn",
+            "SC Paderborn 07"
+        ],
+        "rbleipzev_ger": [
+            "RB Leipzig",
+            "RasenBallsport Leipzig e.V."
+        ],
+        "jahnregssv_ger": [
+            "Regensburg",
+            "SSV Jahn Regensburg"
+        ],
+        "sv1916sandhaus_ger": [
+            "Sandhausen",
+            "SV 1916 Sandhausen"
+        ],
+        "sha04fc_ger": [
+            "Schalke",
+            "FC Schalke 04"
+        ],
+        "spafc_ger": [
+            "St Pauli",
+            "FC St. Pauli"
+        ],
+        "stuvfb_ger": [
+            "Stuttgart",
+            "VfB Stuttgart"
+        ],
+        "fcberuni_ger": [
+            "Union Berlin",
+            "1. FC Union Berlin"
+        ],
+        "werbsv_ger": [
+            "Werder",
+            "SV Werder Bremen"
+        ],
+        "wolfvfl_ger": [
+            "Wolfsburg",
+            "VfL Wolfsburg"
+        ],
+        "wkfc_ger": [
+            "Würzburger Kickers",
+            "FC Würzburger Kickers e.V."
+        ]
+    },
+    "gre": {
+        "aekfc_gre": [
+            "AEK",
+            "AEK Athens FC"
+        ],
+        "gsappsm_gre": [
+            "Apollon Smyrnis",
+            "GS Apollon Smyrnis"
+        ],
+        "aristfc_gre": [
+            "Aris",
+            "Aris Thessaloniki FC"
+        ],
+        "atrfc_gre": [
+            "Atromitos",
+            "Atromitos FC"
+        ],
+        "doxdrgs_gre": [
+            "Doxa Drama",
+            "G.S. Doxa Drama"
+        ],
+        "ergfc_gre": [
+            "Ergotelis",
+            "Ergotelis FC"
+        ],
+        "pasgiafc_gre": [
+            "Giannina",
+            "PAS Giannina FC"
+        ],
+        "irakfc_gre": [
+            "Iraklis",
+            "Iraklis FC"
+        ],
+        "kallfc_gre": [
+            "Kallonis",
+            "Kalloni Lekanopedio FC"
+        ],
+        "kavfc_gre": [
+            "Kavala",
+            "FC Kavala"
+        ],
+        "kerfc_gre": [
+            "Kerkyra",
+            "Kerkyra FC"
+        ],
+        "larfc_gre": [
+            "Larissa",
+            "Larissa FC"
+        ],
+        "levfc_gre": [
+            "Levadiakos",
+            "Levadiakos FC"
+        ],
+        "ofifc_gre": [
+            "OFI",
+            "OFI Crete FC"
+        ],
+        "olyvfc_gre": [
+            "Olymp. Volou",
+            "Olympiakos Volou FC"
+        ],
+        "olyfc_gre": [
+            "Olympiacos",
+            "Olympiacos FC"
+        ],
+        "paenikivol_gre": [
+            "Niki Volos",
+            "PAE Niki Volou"
+        ],
+        "paokfc_gre": [
+            "PAOK",
+            "PAOK FC"
+        ],
+        "panafc_gre": [
+            "Panathinaikos",
+            "Panathinaikos FC"
+        ],
+        "panetgfs_gre": [
+            "Panetolikos",
+            "Panetolikos G.F.S."
+        ],
+        "panigss_gre": [
+            "Panionios",
+            "Panionios GSS"
+        ],
+        "pansfc_gre": [
+            "Panserraikos",
+            "Panserraikos FC"
+        ],
+        "pantfc_gre": [
+            "Panthrakikos",
+            "Panthrakikos FC"
+        ],
+        "aoplatch_gre": [
+            "Platanias",
+            "AO Platania Chanion"
+        ],
+        "astetfc_gre": [
+            "Tripolis",
+            "Asteras Tripolis FC"
+        ],
+        "verofc_gre": [
+            "Veria",
+            "Veria FC"
+        ],
+        "skoxfc_gre": [
+            "Xanthi",
+            "Skoda Xanthi FC"
+        ]
+    },
+    "hun": {
+        "debvsc_hun": [
+            "Debreceni",
+            "Debreceni VSC"
+        ],
+        "gyoetofc_hun": [
+            "Győr",
+            "Győri ETO FC"
+        ]
+    },
+    "int": {
+        "alb_int": [
+            "Albania",
+            "Albania"
+        ],
+        "alg_int": [
+            "Algeria",
+            "Algeria"
+        ],
+        "andor_int": [
+            "Andorra",
+            "Andorra"
+        ],
+        "arg_int": [
+            "Argentina",
+            "Argentina"
+        ],
+        "arm_int": [
+            "Armenia",
+            "Armenia"
+        ],
+        "aus_int": [
+            "Australia",
+            "Australia"
+        ],
+        "aut_int": [
+            "Austria",
+            "Austria"
+        ],
+        "aze_int": [
+            "Azerbaijan",
+            "Azerbaijan"
+        ],
+        "brus_int": [
+            "Belarus",
+            "Belarus"
+        ],
+        "bel_int": [
+            "Belgium",
+            "Belgium"
+        ],
+        "bos_int": [
+            "Bosnia",
+            "Bosnia"
+        ],
+        "bra_int": [
+            "Brazil",
+            "Brazil"
+        ],
+        "bulg_int": [
+            "Bulgaria",
+            "Bulgaria"
+        ],
+        "cam_int": [
+            "Cameroon",
+            "Cameroon"
+        ],
+        "chil_int": [
+            "Chile",
+            "Chile"
+        ],
+        "colomb_int": [
+            "Colombia",
+            "Colombia"
+        ],
+        "costric_int": [
+            "Costa Rica",
+            "Costa Rica"
+        ],
+        "cro_int": [
+            "Croatia",
+            "Croatia"
+        ],
+        "cyp_int": [
+            "Cyprus",
+            "Cyprus"
+        ],
+        "cze_int": [
+            "Czech Republic",
+            "Czech Republic"
+        ],
+        "ivoc_int": [
+            "Côte d'Ivoire",
+            "Côte d'Ivoire"
+        ],
+        "den_int": [
+            "Denmark",
+            "Denmark"
+        ],
+        "ecuad_int": [
+            "Ecuador",
+            "Ecuador"
+        ],
+        "eng_int": [
+            "England",
+            "England"
+        ],
+        "est_int": [
+            "Estonia",
+            "Estonia"
+        ],
+        "faris_int": [
+            "Faroe Islands",
+            "Faroe Islands"
+        ],
+        "fin_int": [
+            "Finland",
+            "Finland"
+        ],
+        "fra_int": [
+            "France",
+            "France"
+        ],
+        "geo_int": [
+            "Georgia",
+            "Georgia"
+        ],
+        "ger_int": [
+            "Germany",
+            "Germany"
+        ],
+        "gha_int": [
+            "Ghana",
+            "Ghana"
+        ],
+        "gib_int": [
+            "Gibraltar",
+            "Gibraltar"
+        ],
+        "gre_int": [
+            "Greece",
+            "Greece"
+        ],
+        "hond_int": [
+            "Honduras",
+            "Honduras"
+        ],
+        "hun_int": [
+            "Hungary",
+            "Hungary"
+        ],
+        "ice_int": [
+            "Iceland",
+            "Iceland"
+        ],
+        "iran_int": [
+            "Iran",
+            "Iran"
+        ],
+        "irer_int": [
+            "Ireland Republic",
+            "Ireland Republic"
+        ],
+        "isr_int": [
+            "Israel",
+            "Israel"
+        ],
+        "ita_int": [
+            "Italy",
+            "Italy"
+        ],
+        "jap_int": [
+            "Japan",
+            "Japan"
+        ],
+        "kaz_int": [
+            "Kazakhstan",
+            "Kazakhstan"
+        ],
+        "lat_int": [
+            "Latvia",
+            "Latvia"
+        ],
+        "lie_int": [
+            "Liechtenstein",
+            "Liechtenstein"
+        ],
+        "lit_int": [
+            "Lithuania",
+            "Lithuania"
+        ],
+        "lux_int": [
+            "Luxembourg",
+            "Luxembourg"
+        ],
+        "makfyr_int": [
+            "Makedonia FYR",
+            "Makedonia FYR"
+        ],
+        "mal_int": [
+            "Malta",
+            "Malta"
+        ],
+        "mex_int": [
+            "Mexico",
+            "Mexico"
+        ],
+        "mol_int": [
+            "Moldova",
+            "Moldova"
+        ],
+        "mont_int": [
+            "Montenegro",
+            "Montenegro"
+        ],
+        "ned_int": [
+            "Netherlands",
+            "Netherlands"
+        ],
+        "nzea_int": [
+            "New Zealand",
+            "New Zealand"
+        ],
+        "nig_int": [
+            "Nigeria",
+            "Nigeria"
+        ],
+        "kordpr_int": [
+            "North Korea",
+            "Korea DPR"
+        ],
+        "nire_int": [
+            "Northern Ireland",
+            "Northern Ireland"
+        ],
+        "nor_int": [
+            "Norway",
+            "Norway"
+        ],
+        "par_int": [
+            "Paraguay",
+            "Paraguay"
+        ],
+        "pol_int": [
+            "Poland",
+            "Poland"
+        ],
+        "por_int": [
+            "Portugal",
+            "Portugal"
+        ],
+        "rom_int": [
+            "Romania",
+            "Romania"
+        ],
+        "rus_int": [
+            "Russia",
+            "Russia"
+        ],
+        "smar_int": [
+            "San Marino",
+            "San Marino"
+        ],
+        "sco_int": [
+            "Scotland",
+            "Scotland"
+        ],
+        "serb_int": [
+            "Serbia",
+            "Serbia"
+        ],
+        "svk_int": [
+            "Slovakia",
+            "Slovakia"
+        ],
+        "svn_int": [
+            "Slovenia",
+            "Slovenia"
+        ],
+        "sar_int": [
+            "South Africa",
+            "South Africa"
+        ],
+        "korr_int": [
+            "South Korea",
+            "Korea Republic"
+        ],
+        "spa_int": [
+            "Spain",
+            "Spain"
+        ],
+        "swe_int": [
+            "Sweden",
+            "Sweden"
+        ],
+        "swi_int": [
+            "Switzerland",
+            "Switzerland"
+        ],
+        "tur_int": [
+            "Turkey",
+            "Turkey"
+        ],
+        "usa_int": [
+            "USA",
+            "USA"
+        ],
+        "ukr_int": [
+            "Ukraine",
+            "Ukraine"
+        ],
+        "uru_int": [
+            "Uruguay",
+            "Uruguay"
+        ],
+        "wal_int": [
+            "Wales",
+            "Wales"
+        ],
+        "ecu_int": [
+            "Ecuador",
+            "Ecuador"
+        ],
+        "bol_int": [
+            "Bolivia",
+            "Bolivia"
+        ],
+        "jam_int": [
+            "Jamaica",
+            "Jamaica"
+        ],
+        "pry_int": [
+            "Paraguay",
+            "Paraguay"
+        ],
+        "ven_int": [
+            "Venezuela",
+            "Venezuela"
+        ],
+        "per_int": [
+            "Peru",
+            "Peru"
+        ],
+        "ksv_int": [
+            "Kosovo",
+            "Kosovo"
+        ]
+    },
+    "ire": {
+        "shamrofc_ire": [
+            "Shamrock Rovers",
+            "Shamrock Rovers Football Club"
+        ]
+    },
+    "isr": {
+        "haptafc_isr": [
+            "Hapoel TA",
+            "Hapoel Tel Aviv FC"
+        ],
+        "machfc_isr": [
+            "Maccabi",
+            "Maccabi Haifa FC"
+        ],
+        "mactafc_isr": [
+            "Maccabi TA",
+            "Maccabi Tel Aviv FC"
+        ]
+    },
+    "ita": {
+        "acm_ita": [
+            "AC Milan",
+            "AC Milan"
+        ],
+        "romas_ita": [
+            "AS Roma",
+            "AS Roma"
+        ],
+        "ucalblef_ita": [
+            "AlbinoLeffe",
+            "UC AlbinoLeffe"
+        ],
+        "ascca1898_ita": [
+            "Ascoli",
+            "Ascoli Calcio 1898"
+        ],
+        "atabc_ita": [
+            "Atalanta",
+            "Atalanta BC"
+        ],
+        "asavel1912_ita": [
+            "Avellino",
+            "AS Avellino 1912"
+        ],
+        "barias_ita": [
+            "Bari",
+            "AS Bari"
+        ],
+        "bolfc_ita": [
+            "Bologna",
+            "Bologna FC"
+        ],
+        "bresca_ita": [
+            "Brescia",
+            "Brescia Calcio"
+        ],
+        "caglca_ita": [
+            "Cagliari",
+            "Cagliari Calcio"
+        ],
+        "carpifc1909_ita": [
+            "Carpi",
+            "Carpi FC 1909"
+        ],
+        "cataca_ita": [
+            "Catania",
+            "Calcio Catania"
+        ],
+        "ceseac_ita": [
+            "Cesena",
+            "AC Cesena"
+        ],
+        "chivac_ita": [
+            "Chievo",
+            "AC Chievo Verona"
+        ],
+        "ascitta_ita": [
+            "Cittadella",
+            "AS Cittadella"
+        ],
+        "fccrot_ita": [
+            "Crotone",
+            "FC Crotone"
+        ],
+        "empfc_ita": [
+            "Empoli",
+            "Empoli FC"
+        ],
+        "fioacf_ita": [
+            "Fiorentina",
+            "ACF Fiorentina"
+        ],
+        "froca_ita": [
+            "Frosinone",
+            "Frosinone Calcio"
+        ],
+        "gencfc_ita": [
+            "Genoa",
+            "Genoa CFC"
+        ],
+        "usgrofc_ita": [
+            "Grosseto",
+            "US Grosseto FC"
+        ],
+        "gubb1910as_ita": [
+            "Gubbio",
+            "AS Gubbio 1910"
+        ],
+        "hellverfc_ita": [
+            "Hellas Verona",
+            "Hellas Verona FC"
+        ],
+        "intmfc_ita": [
+            "Inter",
+            "FC Internazionale Milano"
+        ],
+        "juvestabss_ita": [
+            "Juve Stabia",
+            "SS Juve Stabia"
+        ],
+        "juvfc_ita": [
+            "Juventus",
+            "Juventus Football Club"
+        ],
+        "uslatinc_ita": [
+            "Latina",
+            "US Latina Calcio"
+        ],
+        "lazss_ita": [
+            "Lazio",
+            "S.S. Lazio"
+        ],
+        "lecus_ita": [
+            "Lecce",
+            "US Lecce"
+        ],
+        "livcaas_ita": [
+            "Livorno",
+            "AS Livorno Calcio"
+        ],
+        "modfc_ita": [
+            "Modena",
+            "Modena FC"
+        ],
+        "napsss_ita": [
+            "Napoli",
+            "SSC Napoli"
+        ],
+        "noceasg_ita": [
+            "Nocerina",
+            "ASG Nocerina"
+        ],
+        "novaca_ita": [
+            "Novara",
+            "Novara Calcio"
+        ],
+        "capadov_ita": [
+            "Padova",
+            "Calcio Padova"
+        ],
+        "palus_ita": [
+            "Palermo",
+            "US Città di Palermo"
+        ],
+        "parfc_ita": [
+            "Parma",
+            "Parma FC"
+        ],
+        "acperc_ita": [
+            "Perugia",
+            "AC Perugia Calcio "
+        ],
+        "delpes1936_ita": [
+            "Pescara",
+            "Delfino Pescara 1936"
+        ],
+        "piaca_ita": [
+            "Piacenza",
+            "Piacenza Calcio"
+        ],
+        "caposu_ita": [
+            "Portogruaro",
+            "Calcio Portogruaro Summaga"
+        ],
+        "proverc1892fc_ita": [
+            "Pro Vercelli",
+            "FC Pro Vercelli 1892"
+        ],
+        "regca_ita": [
+            "Reggina",
+            "Reggina Calcio"
+        ],
+        "sampuc_ita": [
+            "Sampdoria",
+            "UC Sampdoria"
+        ],
+        "ussasca_ita": [
+            "Sassuolo",
+            "US Sassuolo Calcio"
+        ],
+        "sieac_ita": [
+            "Siena",
+            "AC Siena"
+        ],
+        "spezcalc_ita": [
+            "Spezia",
+            "ASD Spezia Calcio 2008"
+        ],
+        "terncalc_ita": [
+            "Ternana",
+            "Ternana Calcio"
+        ],
+        "torfc_ita": [
+            "Torino",
+            "Torino FC"
+        ],
+        "asdtrapc_ita": [
+            "Trapani",
+            "ASD Trapani Calcio"
+        ],
+        "ustrieca_ita": [
+            "Triestina",
+            "US Triestina Calcio"
+        ],
+        "udinca_ita": [
+            "Udinese",
+            "Udinese Calcio"
+        ],
+        "asvares1910_ita": [
+            "Varese",
+            "AS Varese 1910"
+        ],
+        "vicca_ita": [
+            "Vicenza",
+            "Vicenza Calcio"
+        ],
+        "virtent_ita": [
+            "Entella",
+            "Virtus Entella"
+        ],
+        "virtlanc1924ss_ita": [
+            "Virtus Lanciano",
+            "SS Virtus Lanciano 1924"
+        ],
+        "ccsrl_ita": [
+            "Calcio Como",
+            "Calcio Como S.r.l"
+        ],
+        "ussal1919srl_ita": [
+            "Salernitana",
+            "US Salernitana 1919 S.r.l."
+        ]
+    },
+    "kaz": {
+        "aktfc_kaz": [
+            "FC Aktobe",
+            "FC Aktobe"
+        ],
+        "shakhfc_kaz": [
+            "Shakhter Karagandy",
+            "FC Shakhter Karagandy"
+        ],
+        "fca_kaz": [
+            "FC Astana",
+            "FC Astana"
+        ]
+    },
+    "lat": {
+        "ventfk_lat": [
+            "Ventspils",
+            "FK Ventspils"
+        ]
+    },
+    "mol": {
+        "shertfc_mol": [
+            "Sheriff",
+            "FC Sheriff Tiraspol"
+        ]
+    },
+    "ned": {
+        "agovv_ned": [
+            "AGOVV",
+            "AGOVV Apeldoorn"
+        ],
+        "azal_ned": [
+            "AZ Alkmaar",
+            "AZ Alkmaar"
+        ],
+        "rksvachi29_ned": [
+            "Achilles '29",
+            "RKSV Achilles 1929"
+        ],
+        "afca_ned": [
+            "Ajax",
+            "AFC Ajax"
+        ],
+        "alcitfc_ned": [
+            "Almere City",
+            "Almere City FC"
+        ],
+        "nac_ned": [
+            "Breda",
+            "NAC Breda"
+        ],
+        "sccamb_ned": [
+            "Cambuur",
+            "SC Cambuur Leeuwarden"
+        ],
+        "gra_ned": [
+            "De Graafschap",
+            "De Graafschap"
+        ],
+        "fcdebo_ned": [
+            "Den Bosch",
+            "FC Den Bosch"
+        ],
+        "adodh_ned": [
+            "Den Haag",
+            "ADO Den Haag"
+        ],
+        "fcdor_ned": [
+            "Dordrecht",
+            "FC Dordrecht"
+        ],
+        "fceind_ned": [
+            "Eindhoven",
+            "FC Eindhoven"
+        ],
+        "fcemm_ned": [
+            "Emmen",
+            "FC Emmen"
+        ],
+        "sce_ned": [
+            "Excelsior",
+            "SBV Excelsior"
+        ],
+        "ossfc_ned": [
+            "FC Oss",
+            "Football Club Oss"
+        ],
+        "fey_ned": [
+            "Feyenoord",
+            "Feyenoord"
+        ],
+        "fortsitt_ned": [
+            "Fortuna",
+            "Fortuna Sittard"
+        ],
+        "goahea_ned": [
+            "Go Ahead Eagles",
+            "Go Ahead Eagles"
+        ],
+        "fcgr_ned": [
+            "Groningen",
+            "FC Groningen"
+        ],
+        "sche_ned": [
+            "Heerenveen",
+            "SC Heerenveen"
+        ],
+        "helspo_ned": [
+            "Helmond Sport",
+            "Helmond Sport"
+        ],
+        "ha_ned": [
+            "Heracles",
+            "Heracles Almelo"
+        ],
+        "afcaj_ned": [
+            "Jong Ajax",
+            "Jong AFC Ajax"
+        ],
+        "psvj_ned": [
+            "Jong PSV",
+            "Jong PSV Eindhoven"
+        ],
+        "fctj_ned": [
+            "Jong Twente",
+            "Jong FC Twente"
+        ],
+        "mvv_ned": [
+            "MVV",
+            "MVV Maastricht"
+        ],
+        "nec_ned": [
+            "NEC",
+            "NEC Nijmegen"
+        ],
+        "psv_ned": [
+            "PSV",
+            "PSV Eindhoven"
+        ],
+        "rbc_ned": [
+            "RBC",
+            "RBC Roosendaal"
+        ],
+        "rgc_ned": [
+            "Roda",
+            "Roda JC"
+        ],
+        "sparo_ned": [
+            "Sparta",
+            "Sparta Rotterdam"
+        ],
+        "sctelstar_ned": [
+            "Telstar",
+            "SC Telstar"
+        ],
+        "fct_ned": [
+            "Twente",
+            "FC Twente"
+        ],
+        "fcu_ned": [
+            "Utrecht",
+            "FC Utrecht"
+        ],
+        "fcuj_ned": [
+            "JongUtrecht",
+            "Jong FC Utrecht"
+        ],
+        "bvveen_ned": [
+            "Veendam",
+            "BV Veendam 1894"
+        ],
+        "vvv_ned": [
+            "Venlo",
+            "VVV Venlo"
+        ],
+        "bvv_ned": [
+            "Vitesse",
+            "BV Vitesse"
+        ],
+        "fcvolndm_ned": [
+            "Volendam",
+            "FC Volendam"
+        ],
+        "waarkc_ned": [
+            "Waalwijk",
+            "RKC Waalwijk"
+        ],
+        "wii_ned": [
+            "Willem II",
+            "Willem II"
+        ],
+        "fczwo_ned": [
+            "Zwolle",
+            "PEC Zwolle"
+        ]
+    },
+    "nor": {
+        "rosbk_nor": [
+            "Rosenborg",
+            "Rosenborg BK"
+        ],
+        "tromsoil_nor": [
+            "Tromso",
+            "Tromsø Idrettslag"
+        ],
+        "moldfk_nor": [
+            "Molde",
+            "Molde FK"
+        ]
+    },
+    "pol": {
+        "lechpkks_pol": [
+            "Lech Poznań",
+            "KKS Lech Poznań"
+        ],
+        "legwarskp_pol": [
+            "Legia Warszawa",
+            "KP Legia Warszawa"
+        ],
+        "wiskrask_pol": [
+            "Wisla Krakow",
+            "Wisła Kraków SK"
+        ]
+    },
+    "por": {
+        "acaco_por": [
+            "Académica",
+            "A. Académica de Coimbra"
+        ],
+        "aroucafc_por": [
+            "Arouca",
+            "FC Arouca"
+        ],
+        "beimsc_por": [
+            "Beira-Mar",
+            "SC Beira-Mar"
+        ],
+        "belcf_por": [
+            "Belenenses",
+            "CF Os Belenenses"
+        ],
+        "benfsl_por": [
+            "Benfica",
+            "SL Benfica"
+        ],
+        "brasc_por": [
+            "Braga",
+            "SC Braga"
+        ],
+        "gdestp_por": [
+            "Estoril",
+            "GD Estoril Praia"
+        ],
+        "feircd_por": [
+            "Feirense",
+            "CD Feirense"
+        ],
+        "gvfc_por": [
+            "Gil Vicente",
+            "Gil Vicente FC"
+        ],
+        "vitsc_por": [
+            "Guimarães",
+            "Vitória Guimarães"
+        ],
+        "leiud_por": [
+            "Leiria",
+            "UD Leiria"
+        ],
+        "leixsc_por": [
+            "Leixões",
+            "Leixões SC"
+        ],
+        "marimf_por": [
+            "Marítimo",
+            "Marítimo da Madeira Futebol"
+        ],
+        "morefc_por": [
+            "Moreirense",
+            "Moreirense FC"
+        ],
+        "naccd_por": [
+            "Nacional",
+            "CD Nacional"
+        ],
+        "nav1ma_por": [
+            "Naval 1° Maio",
+            "A. Naval 1° Maio"
+        ],
+        "olhasc_por": [
+            "Olhanense",
+            "SC Olhanense"
+        ],
+        "pacfefc_por": [
+            "Paços de Ferreira",
+            "FC Paços de Ferreira"
+        ],
+        "fcp_por": [
+            "Penafiel",
+            "FC Penafiel"
+        ],
+        "bfc_por": [
+            "Boavista",
+            "Boavista FC"
+        ],
+        "portsc_por": [
+            "Portimonense",
+            "Portimonense SC"
+        ],
+        "portfc_por": [
+            "Porto",
+            "FC Porto"
+        ],
+        "rioavfc_por": [
+            "Rio Ave",
+            "Rio Ave FC"
+        ],
+        "vitfc_por": [
+            "Setúbal",
+            "Vitória Setúbal"
+        ],
+        "sporcp_por": [
+            "Sporting",
+            "Sporting Clube de Portugal"
+        ],
+        "cfu_por": [
+            "U. Madeira",
+            "CF União da Madeira"
+        ],
+        "cdt_por": [
+            "Tondela",
+            "CD Tondela"
+        ],
+        "gdch_por": [
+            "Chaves",
+            "GD Chaves"
+        ],
+        "cdf_por": [
+            "Feirense",
+            "CD Feirense"
+        ]
+    },
+    "rom": {
+        "astrofc_rom": [
+            "Astra",
+            "FC Astra Ploiesti"
+        ],
+        "brasfc_rom": [
+            "Brasov",
+            "FC Brasov"
+        ],
+        "clujcfr_rom": [
+            "CFR Cluj",
+            "CFR 1907 Cluj"
+        ],
+        "ceahpnfc_rom": [
+            "Ceahlaul",
+            "FC Ceahlaul Piatra Neamt"
+        ],
+        "concordcs_rom": [
+            "Concordia",
+            "CS Concordia Chiajna"
+        ],
+        "dinbfc_rom": [
+            "Dinamo Bucureşti",
+            "FC Dinamo 1948 Bucureşti"
+        ],
+        "gazmmas_rom": [
+            "Gaz Metan",
+            "CS Gaz Metan Mediaş"
+        ],
+        "glorbcf_rom": [
+            "Gloria Bistriţa",
+            "ACF Gloria 1922 Bistriţa"
+        ],
+        "intcafc_rom": [
+            "Internaţional Curtea",
+            "FC Internaţional Curtea de Argeş"
+        ],
+        "mionvcs_rom": [
+            "Mioveni",
+            "CS Mioveni"
+        ],
+        "otegfc_rom": [
+            "Oţelul Galaţi",
+            "FC Oţelul Galaţi"
+        ],
+        "panltjcs_rom": [
+            "Pandurii",
+            "CS Pandurii Lignitul Târgu Jiu"
+        ],
+        "petrofc_rom": [
+            "Petrolul",
+            "FC Petrolul Ploieşti"
+        ],
+        "polifc_rom": [
+            "Poli Iaşi",
+            "FC Politehnica Iaşi"
+        ],
+        "rapbfc_rom": [
+            "Rapid Bucureşti",
+            "FC Rapid Bucureşti"
+        ],
+        "sporsbfc_rom": [
+            "Sportul",
+            "FC Sportul Studentesc Bucuresti"
+        ],
+        "stebfc_rom": [
+            "Steaua",
+            "FC Steaua Bucureşti"
+        ],
+        "timfc_rom": [
+            "Timişoara",
+            "FC Timişoara"
+        ],
+        "tarmfcm_rom": [
+            "Târgu",
+            "FCM Târgu Mureş"
+        ],
+        "uniraifc_rom": [
+            "Unirea Alba Iulia",
+            "FC Unirea Alba Iulia"
+        ],
+        "uniurfc_rom": [
+            "Unirea Urziceni",
+            "FC Unirea Urziceni"
+        ],
+        "univclfc_rom": [
+            "Univ Cluj",
+            "FC Universitatea Cluj"
+        ],
+        "univcrfc_rom": [
+            "Univ Craiova",
+            "FC Universitatea Craiova"
+        ],
+        "vassc_rom": [
+            "Vaslui",
+            "FC Vaslui"
+        ],
+        "vicbfc_rom": [
+            "Victoria",
+            "FC Victoria Brăneşti"
+        ],
+        "vointcsu_rom": [
+            "Voinţa Sibiu",
+            "CSU Voinţa Sibiu"
+        ]
+    },
+    "rus": {
+        "alavfc_rus": [
+            "Alania",
+            "FC Alania Vladikavkaz"
+        ],
+        "amkpfc_rus": [
+            "Amkar",
+            "FC Amkar Perm"
+        ],
+        "anzmfc_rus": [
+            "Anzhi",
+            "FC Anzhi Makhachkala"
+        ],
+        "fcarst_rus": [
+            "Arsenal T",
+            "FC Arsenal Tula"
+        ],
+        "cskampfc_rus": [
+            "CSKA",
+            "PFC CSKA Moskva"
+        ],
+        "dinmfc_rus": [
+            "Dinamo",
+            "FC Dinamo Moskva"
+        ],
+        "fcmords_rus": [
+            "FC Mordovia",
+            "FC Mordovia Saransk"
+        ],
+        "moscfc_rus": [
+            "FC Moscow",
+            "FC Moscow"
+        ],
+        "rostfc_rus": [
+            "FC Rostov",
+            "FC Rostov"
+        ],
+        "fcufa_rus": [
+            "FC Ufa",
+            "FC Ufa"
+        ],
+        "khimfc_rus": [
+            "Khimki",
+            "FC Khimki"
+        ],
+        "krasfc_rus": [
+            "Krasnodar",
+            "FC Krasnodar"
+        ],
+        "krsspfc_rus": [
+            "Krylya Sovetov",
+            "PFC Krylya Sovetov Samara"
+        ],
+        "kubfc_rus": [
+            "Kuban",
+            "FC Kuban Krasnodar"
+        ],
+        "lokmfc_rus": [
+            "Lokomotiv Moscow",
+            "FC Lokomotiv Moskva"
+        ],
+        "luchenfc_rus": [
+            "Luch-Energiya",
+            "FC Luch-Energiya"
+        ],
+        "orefc_rus": [
+            "Orenburg",
+            "FC Orenburg"
+        ],
+        "rubkfc_rus": [
+            "Rubin",
+            "FC Rubin Kazan"
+        ],
+        "satmofc_rus": [
+            "Saturn",
+            "FC Saturn Moskovskaya Oblast"
+        ],
+        "shinfc_rus": [
+            "Shinnik",
+            "FC Shinnik Yaroslavl"
+        ],
+        "sibnfc_rus": [
+            "Sibir",
+            "FC Sibir Novosibirsk"
+        ],
+        "spamfc_rus": [
+            "Spartak",
+            "FC Spartak Moskva"
+        ],
+        "spanpfc_rus": [
+            "Spartak Nalchik",
+            "PFC Spartak Nalchik"
+        ],
+        "tergfc_rus": [
+            "Terek",
+            "FC Terek Grozny"
+        ],
+        "tomskfc_rus": [
+            "Tom Tomsk",
+            "FC Tom Tomsk"
+        ],
+        "fctorpm_rus": [
+            "Torpedo",
+            "FC Torpedo Moskva"
+        ],
+        "uralfc_rus": [
+            "Ural",
+            "FC Ural Ekaterinburg"
+        ],
+        "volgnnfc_rus": [
+            "Volga",
+            "FC Volga Nizhny Novgorod"
+        ],
+        "zenspbfc_rus": [
+            "Zenit",
+            "FC Zenit St. Petersburg"
+        ]
+    },
+    "sco": {
+        "abefc_sco": [
+            "Aberdeen",
+            "Aberdeen FC"
+        ],
+        "celtfc_sco": [
+            "Celtic",
+            "Celtic FC"
+        ],
+        "dundfc_sco": [
+            "Dundee FC",
+            "Dundee FC"
+        ],
+        "dutdfc_sco": [
+            "Dundee United",
+            "Dundee United FC"
+        ],
+        "dafc_sco": [
+            "Dunfermline Athletic",
+            "Dunfermline Athletic FC"
+        ],
+        "falkfc_sco": [
+            "Falkirk",
+            "Falkirk FC"
+        ],
+        "hamacfc_sco": [
+            "Hamilton",
+            "Hamilton Academical FC"
+        ],
+        "heartfc_sco": [
+            "Hearts",
+            "Heart of Midlothian FC"
+        ],
+        "hibefc_sco": [
+            "Hibernian",
+            "Hibernian FC"
+        ],
+        "invctfc_sco": [
+            "Inverness",
+            "Inverness Caledonian Thistle FC"
+        ],
+        "kilmfc_sco": [
+            "Kilmarnock",
+            "Kilmarnock FC"
+        ],
+        "motwfc_sco": [
+            "Motherwell",
+            "Motherwell FC"
+        ],
+        "ptfc_sco": [
+            "Partick Thistle",
+            "Partick Thistle FC"
+        ],
+        "rangfc_sco": [
+            "Rangers",
+            "Rangers FC"
+        ],
+        "rosscfc_sco": [
+            "Ross County",
+            "Ross County FC"
+        ],
+        "stjonfc_sco": [
+            "St Johnstone",
+            "Saint Johnstone FC"
+        ],
+        "stmirfc_sco": [
+            "St Mirren",
+            "Saint Mirren FC"
+        ]
+    },
+    "spa": {
+        "depalsad_spa": [
+            "Alavés",
+            "Deportivo Alavés"
+        ],
+        "albba_spa": [
+            "Albacete",
+            "Albacete Balompié"
+        ],
+        "adalcor_spa": [
+            "Alcorcón",
+            "AD Alcorcón"
+        ],
+        "alcoycd_spa": [
+            "Alcoyano",
+            "Club Deportivo Alcoyano"
+        ],
+        "almud_spa": [
+            "Almería",
+            "UD Almería"
+        ],
+        "athbc_spa": [
+            "Athletic Bilbao",
+            "Athletic Club"
+        ],
+        "athmc_spa": [
+            "Atlético Madrid",
+            "Club Atlético de Madrid"
+        ],
+        "barfc_spa": [
+            "Barcelona",
+            "FC Barcelona"
+        ],
+        "barfc2_spa": [
+            "Barcelona II",
+            "FC Barcelona Atlètic"
+        ],
+        "rbet_spa": [
+            "Betis",
+            "Real Betis"
+        ],
+        "fccart_spa": [
+            "Cartagena",
+            "FC Cartagena"
+        ],
+        "rcceltv_spa": [
+            "Celta Vigo",
+            "Real Club Celta de Vigo"
+        ],
+        "corcf_spa": [
+            "Córdoba",
+            "Córdoba CF"
+        ],
+        "deplaco_spa": [
+            "Deportivo",
+            "RC Deportivo La Coruña"
+        ],
+        "sdeib_spa": [
+            "Eibar",
+            "SD Eibar"
+        ],
+        "elchcf_spa": [
+            "Elche",
+            "Elche CF"
+        ],
+        "esprcd_spa": [
+            "Espanyol",
+            "RCD Espanyol"
+        ],
+        "getcf_spa": [
+            "Getafe",
+            "Getafe CF"
+        ],
+        "cgimntar_spa": [
+            "Gimnàstic",
+            "Club Gimnàstic de Tarragona"
+        ],
+        "girfc_spa": [
+            "Girona",
+            "Girona FC"
+        ],
+        "grncf_spa": [
+            "Granada",
+            "Granada CF"
+        ],
+        "guadcd_spa": [
+            "Guadalajara",
+            "Club Deportivo Guadalajara"
+        ],
+        "hercf_spa": [
+            "Hercules",
+            "Hercules CF"
+        ],
+        "sdhue_spa": [
+            "Huesca",
+            "SD Huesca"
+        ],
+        "udlpalm_spa": [
+            "Las Palmas",
+            "UD Las Palmas"
+        ],
+        "levud_spa": [
+            "Levante",
+            "Levante UD"
+        ],
+        "cdlugo_spa": [
+            "Lugo",
+            "Club Deportivo Lugo"
+        ],
+        "malrcd_spa": [
+            "Mallorca",
+            "RCD Mallorca"
+        ],
+        "cdmira_spa": [
+            "Mirandes",
+            "Club Deportivo Mirandés"
+        ],
+        "rmurcf_spa": [
+            "Murcia",
+            "Real Murcia Club de Fútbol"
+        ],
+        "malcf_spa": [
+            "Málaga",
+            "Málaga CF"
+        ],
+        "numscd_spa": [
+            "Numancia",
+            "CD Numancia de Soria"
+        ],
+        "osaca_spa": [
+            "Osasuna",
+            "CA Osasuna"
+        ],
+        "sdponf_spa": [
+            "Ponferradina",
+            "SD Ponferradina"
+        ],
+        "racrc_spa": [
+            "Racing",
+            "Real Racing Club"
+        ],
+        "rvalm_spa": [
+            "Rayo Vallecano",
+            "Rayo Vallecano de Madrid"
+        ],
+        "rjcf_spa": [
+            "Real Jaén",
+            "Real Jaén CF"
+        ],
+        "reama_spa": [
+            "Real Madrid",
+            "Real Madrid CF"
+        ],
+        "reama2_spa": [
+            "Real Madrid II",
+            "Real Madrid II"
+        ],
+        "reso_spa": [
+            "Real Sociedad",
+            "Real Sociedad de Fútbol"
+        ],
+        "rechu_spa": [
+            "Recreativo",
+            "Recreativo de Huelva"
+        ],
+        "cesabadfc_spa": [
+            "Sabadell",
+            "CE Sabadell Futbol Club"
+        ],
+        "udsalam_spa": [
+            "Salamanca",
+            "UD Salamanca"
+        ],
+        "sevfc_spa": [
+            "Sevilla",
+            "Sevilla FC"
+        ],
+        "spogijo_spa": [
+            "Sporting Gijón",
+            "Real Sporting de Gijón"
+        ],
+        "tencd_spa": [
+            "Tenerife",
+            "CD Tenerife"
+        ],
+        "valfc_spa": [
+            "Valencia",
+            "Valencia CF"
+        ],
+        "rvallcf_spa": [
+            "Valladolid",
+            "Real Valladolid Club de Fútbol"
+        ],
+        "vilfc_spa": [
+            "Villarreal",
+            "Villarreal CF"
+        ],
+        "vilfc2_spa": [
+            "Villarreal II",
+            "Villarreal CF II"
+        ],
+        "xercd_spa": [
+            "Xerez",
+            "Xerez CD"
+        ],
+        "zara_spa": [
+            "Zaragoza",
+            "Real Zaragoza"
+        ],
+        "cdlegsad_spa": [
+            "Leganés",
+            "Club Deportivo Leganés SAD"
+        ],
+        "uellagost_spa": [
+            "Llagostera",
+            "Unió Esportiva Llagostera"
+        ],
+        "athbc2_spa": [
+            "Athletic Bilbao II",
+            "Athletic Bilbao Club II"
+        ],
+        "ro_spa": [
+            "Real Oviedo",
+            "Real Oviedo"
+        ],
+        "cadcf_spa": [
+            "Cádiz",
+            "Cádiz Club de Fútbol"
+        ],
+        "ucamcf_spa": [
+            "UCAM Murcia",
+            "UCAM Murcia CF"
+        ],
+        "redecf_spa": [
+            "Reus Deportiu",
+            "Club de Futbol Reus Deportiu"
+        ],
+        "sevfc2_spa": [
+            "Sevilla II",
+            "Sevilla II FC"
+        ]
+    },
+    "srb": {
+        "partbfc_srb": [
+            "Partizan",
+            "FK Partizan"
+        ]
+    },
+    "svk": {
+        "slobsk_svk": [
+            "Slovan",
+            "ŠK Slovan Bratislava"
+        ],
+        "zilmsk_svk": [
+            "Žilina",
+            "MŠK Žilina"
+        ]
+    },
+    "svn": {
+        "marnk_svn": [
+            "Maribor",
+            "NK Maribor"
+        ]
+    },
+    "swe": {
+        "aik_swe": [
+            "AIK",
+            "AIK Solna"
+        ],
+        "brom_swe": [
+            "Brommapojkarna",
+            "Brommapojkarna"
+        ],
+        "djif_swe": [
+            "Djurgården",
+            "Djurgårdens IF FF"
+        ],
+        "ife_swe": [
+            "Elfsborg",
+            "IF Elfsborg"
+        ],
+        "gais_swe": [
+            "GAIS",
+            "GAIS Göteborg"
+        ],
+        "gif_swe": [
+            "Gefle",
+            "Gefle IF"
+        ],
+        "ifkg_swe": [
+            "Göteborg",
+            "IFK Göteborg"
+        ],
+        "hbk_swe": [
+            "Halmstad",
+            "Halmstads BK"
+        ],
+        "hif_swe": [
+            "Helsingborg",
+            "Helsingborgs IF"
+        ],
+        "bkh_swe": [
+            "Häcken",
+            "BK Häcken"
+        ],
+        "kff_swe": [
+            "Kalmar",
+            "Kalmar FF"
+        ],
+        "mff_swe": [
+            "Malmö",
+            "Malmö FF"
+        ],
+        "maif_swe": [
+            "Mjällby",
+            "Mjällby AIF"
+        ],
+        "ifknork_swe": [
+            "Norrköping",
+            "IFK Norrköping"
+        ],
+        "sundgif_swe": [
+            "Sundsvall ",
+            "GIF Sundsvall "
+        ],
+        "syrfc_swe": [
+            "Syrianska",
+            "Syrianska FC"
+        ],
+        "tff_swe": [
+            "Trelleborg",
+            "Trelleborgs FF"
+        ],
+        "aff_swe": [
+            "Åtvidaberg",
+            "Åtvidabergs FF"
+        ],
+        "atviff_swe": [
+            "Åtvidabergs",
+            "Åtvidabergs FF"
+        ],
+        "osk_swe": [
+            "Örebro",
+            "Örebro SK"
+        ]
+    },
+    "swi": {
+        "basfc_swi": [
+            "FC Basel",
+            "FC Basel"
+        ],
+        "zurfc_swi": [
+            "FC Zürich",
+            "FC Zürich"
+        ],
+        "gcz_swi": [
+            "Grasshopper",
+            "Grasshopper Club Zürich"
+        ],
+        "luasp_swi": [
+            "Lausanne",
+            "FC Lausanne-Sport"
+        ],
+        "stgalfc1879_swi": [
+            "St. Gallen",
+            "FC St. Gallen 1879"
+        ],
+        "thunfc1898_swi": [
+            "Thun",
+            "FC Thun 1898"
+        ],
+        "ybbsc_swi": [
+            "Young Boys",
+            "BSC Young Boys"
+        ],
+        "sionfc_swi": [
+            "Sion",
+            "FC Sion"
+        ]
+    },
+    "turk": {
+        "akhbelgvs_turk": [
+            "Akhisar Belediyespor",
+            "Akhisar Belediyespor GS"
+        ],
+        "ankmke_turk": [
+            "Ankaragücü",
+            "MKE Ankaragücü"
+        ],
+        "anksas_turk": [
+            "Ankaraspor",
+            "Ankaraspor AŞ"
+        ],
+        "antsp_turk": [
+            "Antalyaspor",
+            "Antalyaspor"
+        ],
+        "besjk_turk": [
+            "Beşiktaş",
+            "Beşiktaş JK"
+        ],
+        "bucas_turk": [
+            "Bucaspor",
+            "Bucaspor"
+        ],
+        "burss_turk": [
+            "Bursaspor",
+            "Bursaspor"
+        ],
+        "denis_turk": [
+            "Denizlispor",
+            "Denizlispor"
+        ],
+        "diyas_turk": [
+            "Diyarbakirspor",
+            "Diyarbakirspor"
+        ],
+        "sbelaziku_turk": [
+            "Elazığspor",
+            "Elazığspor"
+        ],
+        "esks_turk": [
+            "Eskisehirspor",
+            "Eskisehirspor"
+        ],
+        "fenersk_turk": [
+            "Fenerbahçe",
+            "Fenerbahçe SK"
+        ],
+        "galaas_turk": [
+            "Galatasaray",
+            "Galatasaray AŞ"
+        ],
+        "gazis_turk": [
+            "Gaziantepspor",
+            "Gaziantepspor"
+        ],
+        "gencsk_turk": [
+            "Gençlerbirliği",
+            "Gençlerbirliği SK"
+        ],
+        "istbbsk_turk": [
+            "Istanbul BB",
+            "Istanbul BB SK"
+        ],
+        "kaka_turk": [
+            "Karabükspor",
+            "Kardemir Karabükspor"
+        ],
+        "kasisk_turk": [
+            "Kasimpasa",
+            "Kasimpasa SK"
+        ],
+        "kaysercspor_turk": [
+            "Kayseri Erciyesspor",
+            "Kayseri Erciyesspor"
+        ],
+        "kayss_turk": [
+            "Kayserispor",
+            "Kayserispor"
+        ],
+        "konys_turk": [
+            "Konyaspor",
+            "Konyaspor"
+        ],
+        "manis_turk": [
+            "Manisaspor",
+            "Manisaspor"
+        ],
+        "merssk_turk": [
+            "Mersin İdmanyurdu",
+            "Mersin İdmanyurdu SK"
+        ],
+        "ordspor_turk": [
+            "Orduspor",
+            "Orduspor"
+        ],
+        "caykrizes_turk": [
+            "Rizespor",
+            "Çaykur Rizespor"
+        ],
+        "samssk_turk": [
+            "Samsunspor",
+            "Samsunspor Kulübü"
+        ],
+        "sivas_turk": [
+            "Sivasspor",
+            "Sivasspor"
+        ],
+        "trabsas_turk": [
+            "Trabzonspor",
+            "Trabzonspor AŞ"
+        ],
+        "balikesir_turk": [
+            "Balikesirspor",
+            "Balıkesirspor Kulübü"
+        ],
+        "ibfk_turk": [
+            "Başakşehir",
+            "İstanbul Başakşehir FK"
+        ],
+        "osmsfk_turk": [
+            "Osmanlıspor",
+            "Osmanlıspor FK"
+        ],
+        "alanspor_turk": [
+            "Alanyaspor",
+            "Alanyaspor"
+        ],
+        "adanspor_turk": [
+            "Adanaspor",
+            "Adanaspor AŞ"
+        ]
+    },
+    "u23_int": {
+        "brus_u23_int": [
+            "Belarus",
+            "Belarus U23"
+        ],
+        "bra_u23_int": [
+            "Brazil",
+            "Brazil U23"
+        ],
+        "egy_u23_int": [
+            "Egypt",
+            "Egypt U23"
+        ],
+        "gab_u23_int": [
+            "Gabon",
+            "Gabon 23"
+        ],
+        "gb_u23_int": [
+            "Great Britain",
+            "Great Britain U23"
+        ],
+        "hond_u23_int": [
+            "Honduras",
+            "Honduras U23"
+        ],
+        "jap_u23_int": [
+            "Japan",
+            "Japan U23"
+        ],
+        "mex_u23_int": [
+            "Mexico",
+            "Mexico U23"
+        ],
+        "mor_u23_int": [
+            "Morocco",
+            "Morocco U23"
+        ],
+        "nz_u23_int": [
+            "New Zealand",
+            "New Zealand U23"
+        ],
+        "sen_u23_int": [
+            "Senegal",
+            "Senegal U23"
+        ],
+        "korr_u23_int": [
+            "South Korea",
+            "South Korea U23"
+        ],
+        "spa_u23_int": [
+            "Spain",
+            "Spain U23"
+        ],
+        "swi_u23_int": [
+            "Switzerland",
+            "Switzerland U23"
+        ],
+        "uae_u23_int": [
+            "UAE",
+            "United Arab Emirates U23"
+        ],
+        "uru_u23_int": [
+            "Uruguay",
+            "Uruguay U23"
+        ]
+    },
+    "ukr": {
+        "arskfc_ukr": [
+            "Arsenal Kyiv",
+            "FC Arsenal Kyiv"
+        ],
+        "chofc_ukr": [
+            "Chornomorets Odesa",
+            "FC Chornomorets Odesa"
+        ],
+        "dnid_ukr": [
+            "Dnipro",
+            "FC Dnipro Dnipropetrovsk"
+        ],
+        "dynk_ukr": [
+            "Dynamo Kyiv",
+            "FC Dynamo Kyiv"
+        ],
+        "fchover_ukr": [
+            "Hoverla-Zakarpattia",
+            "FC Hoverla Uzhhorod"
+        ],
+        "illmfc_ukr": [
+            "Illychivets",
+            "FC Illychivets Mariupil"
+        ],
+        "karlfc_ukr": [
+            "Karpaty",
+            "FC Karpaty Lviv"
+        ],
+        "kharfc_ukr": [
+            "Kharkiv",
+            "FC Kharkiv"
+        ],
+        "kbkrfc_ukr": [
+            "Kryvbas",
+            "FC Kryvbas Kryvyi Rih"
+        ],
+        "lvivfk_ukr": [
+            "Lviv",
+            "FC Lviv"
+        ],
+        "metkfc_ukr": [
+            "Metalist",
+            "FC Metalist Kharkiv"
+        ],
+        "metdfc_ukr": [
+            "Metalurh Donetsk",
+            "FC Metalurh Donetsk"
+        ],
+        "obokfc_ukr": [
+            "Obolon",
+            "FC Obolon Kyiv"
+        ],
+        "pfcolex_ukr": [
+            "Oleksandria",
+            "PFC Oleksandria"
+        ],
+        "fcoldon_ukr": [
+            "Olimpik Donetsk",
+            "FC Olimpik Donetsk"
+        ],
+        "sevpfc_ukr": [
+            "Sevastopol",
+            "PFC Sevastopol"
+        ],
+        "shadfc_ukr": [
+            "Shakhtar Donetsk",
+            "FC Shakhtar Donetsk"
+        ],
+        "stadnefc_ukr": [
+            "FC Stal'",
+            "FC Stal' Dniprodzerzhynsk"
+        ],
+        "tavssc_ukr": [
+            "Tavriya",
+            "SC Tavriya Simferopol"
+        ],
+        "vollsc_ukr": [
+            "Volyn",
+            "SC Volyn Lutsk"
+        ],
+        "vorpfc_ukr": [
+            "Vorskla",
+            "FC Vorskla Poltava"
+        ],
+        "zakufc_ukr": [
+            "Zakarpattya",
+            "FC Zakarpattya Uzhhorod"
+        ],
+        "metzfc_ukr": [
+            "Zaporizhya",
+            "FC Metalurh Zaporizhya"
+        ],
+        "zkfc_ukr": [
+            "Zirka",
+            "FC Zirka Kirovohrad"
+        ],
+        "zorlfc_ukr": [
+            "Zorya",
+            "FC Zorya Luhansk"
+        ]
+    },
+    "wal": {
+        "tnsfc_wal": [
+            "TNS",
+            "The New Saints FC"
+        ]
+    }
+}

@@ -116,59 +116,81 @@
                             {{ row.equipeVisiteur }}
                         </td>
                         <td>{{ row.statusMatch }}</td>
-                        <td colspan="5">
+                        <td colspan="4">
+
                             <form action="" method="post">
-                                {% if row.cot1Pronostic is defined and row.cot1Pronostic %}
-                                    <input class="cote" type="text" name="cote1_{{ row.id }}"
-                                           value="{{ row.cot1Pronostic }}"/>
+                                <table class="table-matchs">
+                                <tr>
+                                    <td>
+                                        {% if row.cot1Pronostic is defined and row.cot1Pronostic %}
+                                            <input class="cote" type="text" name="cote1_{{ row.id }}"
+                                                   value="{{ row.cot1Pronostic }}"/>
 
-                                {% else %}
-                                    <input class="cote" type="text" name="cote1_{{ row.id }}"/>
-                                {% endif %}
+                                        {% else %}
+                                            <input class="cote" type="text" name="cote1_{{ row.id }}"/>
+                                        {% endif %}
+                                    </td>
+                                    <td>
 
-                                {% if row.coteNPronistic is defined and row.coteNPronistic %}
-                                    <input class="cote" type="text" name="coten_{{ row.id }}"
-                                           value="{{ row.coteNPronistic }}"/>
-                                {% else %}
-                                    <input class="cote" type="text" name="coten_{{ row.id }}"/>
-                                {% endif %}
+                                        {% if row.coteNPronistic is defined and row.coteNPronistic %}
+                                            <input class="cote" type="text" name="coten_{{ row.id }}"
+                                                   value="{{ row.coteNPronistic }}"/>
+                                        {% else %}
+                                            <input class="cote" type="text" name="coten_{{ row.id }}"/>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if row.cote2Pronostic is defined and  row.cote2Pronostic %}
 
-                                {% if row.cote2Pronostic is defined and  row.cote2Pronostic %}
+                                            <input class="cote" type="text" name="cote2_{{ row.id }}"
+                                                   value="{{ row.cote2Pronostic }}"/>
 
-                                    <input class="cote" type="text" name="cote2_{{ row.id }}"
-                                           value="{{ row.cote2Pronostic }}"/>
+                                        {% else %}
+                                            <input class="cote" type="text" name="cote2_{{ row.id }}"/>
+                                        {% endif %}
+                                    </td>
 
-                                {% else %}
-                                    <input class="cote" type="text" name="cote2_{{ row.id }}"/>
-                                {% endif %}
+                                </tr>
+                                <tr>
+                                    <td>
+                                        {# Matert prono#}
+                                        {% if row.masterProno1 is defined and row.masterProno1 == true %}
+                                            {{ 'Cote1' }} <input type="checkbox" name="c_host_{{ row.id }}" checked="true"/> 1
+                                        {% else %}
+                                            {{ 'Cote1' }} <input type="checkbox" name="c_host_{{ row.id }}"/> 1
 
-                                {# Matert prono#}
-                                {% if row.masterProno1 is defined and row.masterProno1 == true %}
-                                    <input type="checkbox" name="c_host_{{ row.id }}" checked="true"/> 1
-                                {% else %}
-                                    <input type="checkbox" name="c_host_{{ row.id }}"/> 1
+                                        {% endif %}
+                                    </td>
+                                        <td>
+                                            {% if row.masterPronoN is defined and row.masterPronoN == true %}
+                                                <input type="checkbox" name="c_neutre_{{ row.id }}" checked="true"/> N
 
-                                {% endif %}
+                                            {% else %}
+                                                <input type="checkbox" name="c_neutre_{{ row.id }}"/> N
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if row.masterProno2 is defined and row.masterProno2 == true %}
+                                                <input type="checkbox" name="guest_{{ row.id }}" checked="true"/> 2
+                                            {% else %}
+                                                <input type="checkbox" name="c_guest_{{ row.id }}"/> 2
+                                            {% endif %}
+                                            <input type="hidden" name="identifiant" value="{{ row.id }}"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">{% if droitAdmin.ajout is defined and droitAdmin.ajout == true or droitAdmin.modification is defined and droitAdmin.modification == true %}
+                                                <input id="send-prono" type="submit" value="{{ 'Valider' }}"/>
+                                            {% endif %}</td>
+                                    </tr>
+                                </table>
 
-                                {% if row.masterPronoN is defined and row.masterPronoN == true %}
-                                    <input type="checkbox" name="c_neutre_{{ row.id }}" checked="true"/> N
-
-                                {% else %}
-                                    <input type="checkbox" name="c_neutre_{{ row.id }}"/> N
-                                {% endif %}
-
-                                {% if row.masterProno2 is defined and row.masterProno2 == true %}
-                                    <input type="checkbox" name="guest_{{ row.id }}" checked="true"/> 2
-                                {% else %}
-                                    <input type="checkbox" name="c_guest_{{ row.id }}"/> 2
-                                {% endif %}
-                                <input type="hidden" name="identifiant" value="{{ row.id }}"/>
-                                {% if droitAdmin.ajout is defined and droitAdmin.ajout == true or droitAdmin.modification is defined and droitAdmin.modification == true %}
-                                        <input type="submit" value="{{ 'send' }}"/>
-                                {% endif %}
                             </form>
 
                             {#<a href="#">{{ 'Enregister'|trans }}</a>#}
+                        </td>
+                        <td>
+                            <a href="{{ path('modifier_admin_match', {'id': row.id }) }}"><span class="glyphicon glyphicon-pencil orange" aria-hidden="true"></span></a>
                         </td>
 
                     </tr>

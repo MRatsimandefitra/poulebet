@@ -27,11 +27,24 @@ class Championat
      * @ORM\Column(name="nomChampionat", type="string", length=255)
      */
     private $nomChampionat;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="fullNameChampionat", type="string", length=255, nullable=true)
+     */
+    private $fullNameChampionat;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="typeChampionat", type="string", length=255, nullable=true)
+     */
+    private $typeChampionat;
 
     /**
     * @ORM\OneToMany(targetEntity="Api\DBBundle\Entity\Matchs", mappedBy="championnat")
     */
     private $matchs;
+
     
     /**
      * Get id
@@ -106,5 +119,53 @@ class Championat
     public function getMatchs()
     {
         return $this->matchs;
+    }
+
+    /**
+     * Set typeChampionat
+     *
+     * @param string $typeChampionat
+     *
+     * @return Championat
+     */
+    public function setTypeChampionat($typeChampionat)
+    {
+        $this->typeChampionat = $typeChampionat;
+
+        return $this;
+    }
+
+    /**
+     * Get typeChampionat
+     *
+     * @return string
+     */
+    public function getTypeChampionat()
+    {
+        return $this->typeChampionat;
+    }
+
+    /**
+     * Set fullNameChampionat
+     *
+     * @param string $fullNameChampionat
+     *
+     * @return Championat
+     */
+    public function setFullNameChampionat($fullNameChampionat)
+    {
+        $this->fullNameChampionat = $fullNameChampionat;
+
+        return $this;
+    }
+
+    /**
+     * Get fullNameChampionat
+     *
+     * @return string
+     */
+    public function getFullNameChampionat()
+    {
+        return $this->fullNameChampionat;
     }
 }

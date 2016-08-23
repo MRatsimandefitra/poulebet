@@ -27,8 +27,25 @@ class Championat
      * @ORM\Column(name="nomChampionat", type="string", length=255)
      */
     private $nomChampionat;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="fullNameChampionat", type="string", length=255)
+     */
+    private $fullNameChampionat;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="typeChampionat", type="string", length=255)
+     */
+    private $typeChampionat;
 
+    /**
+    * @ORM\OneToMany(targetEntity="Api\DBBundle\Entity\Matchs", mappedBy="championnat")
+    */
+    private $matchs;
 
+    
     /**
      * Get id
      *
@@ -61,5 +78,70 @@ class Championat
     public function getNomChampionat()
     {
         return $this->nomChampionat;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->matchs = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add match
+     *
+     * @param \Api\DBBundle\Entity\Matchs $match
+     *
+     * @return Championat
+     */
+    public function addMatch(\Api\DBBundle\Entity\Matchs $match)
+    {
+        $this->matchs[] = $match;
+
+        return $this;
+    }
+
+    /**
+     * Remove match
+     *
+     * @param \Api\DBBundle\Entity\Matchs $match
+     */
+    public function removeMatch(\Api\DBBundle\Entity\Matchs $match)
+    {
+        $this->matchs->removeElement($match);
+    }
+
+    /**
+     * Get matchs
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMatchs()
+    {
+        return $this->matchs;
+    }
+
+    /**
+     * Set typeChampionat
+     *
+     * @param string $typeChampionat
+     *
+     * @return Championat
+     */
+    public function setTypeChampionat($typeChampionat)
+    {
+        $this->typeChampionat = $typeChampionat;
+
+        return $this;
+    }
+
+    /**
+     * Get typeChampionat
+     *
+     * @return string
+     */
+    public function getTypeChampionat()
+    {
+        return $this->typeChampionat;
     }
 }
