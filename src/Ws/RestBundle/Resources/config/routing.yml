@@ -1,17 +1,16 @@
 ws_rest_homepage:
     path:     /
     defaults: { _controller: WsRestBundle:Default:index }
-
-ws_rest_inscription:
+    
+ws_rest_subscription:
     path:     /inscription
     defaults: { _controller: WsRestBundle:Inscription:postUserFromAndroid }
     methods: POST
-
+    
 ws_rest_get_profil:
     path:     /profil
     defaults: { _controller: WsRestBundle:Inscription:getProfilUtilisateur }
     methods: GET
-
 ws_rest_post_profil:
     path:     /profil/update
     defaults: { _controller: WsRestBundle:Inscription:postProfilUtilisateur }
@@ -20,12 +19,6 @@ ws_rest_authentication_post:
     path:     /authentication
     defaults: { _controller: WsRestBundle:Authentication:authentication }
     methods: POST
-    
-ws_rest_inscription_test:
-    path:     /inscription/{username}/{email}/{password}
-    defaults: { _controller: WsRestBundle:Inscription:postUtilisateur }
-    methods: GET
-    
 ws_rest_forgotten_password:
     path:     /forgotten_password/{email}
     defaults: { _controller: WsRestBundle:Authentication:forgottenPassword }
@@ -34,7 +27,6 @@ ws_rest_forgotten_password_post:
     path:     /forgotten_password
     defaults: { _controller: WsRestBundle:Authentication:forgottenPassword }
     methods: POST
-    
 ws_rest_appyone_data:
     path:     /data
     defaults: { _controller: WsRestBundle:AppyOne:getData }

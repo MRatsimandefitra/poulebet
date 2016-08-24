@@ -48,11 +48,12 @@ class PronosticController extends ApiRestController
             'championnat'=>null
         ));
     }
-    public function getMatchsByChampionnatAction($idChampionnat){
+    public function getMatchsByChampionnatAction(Request $request){
+        $idChampionnat = $request->get("idChampionnat");
         $championnat = $this->getEm()->getRepository(self::ENTITY_CHAMPIONNAT)->find($idChampionnat);
         $matchs = $this->getEm()->getRepository(self::ENTITY_MATCHS)->findByChampionat($championnat);
         return new JsonResponse(array(
-            'match'=>$matchs
+            'match'=>count($matchs)
         ));
     }
 

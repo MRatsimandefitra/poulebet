@@ -9,6 +9,6 @@ ws_rest_getChampionnat:
     methods: POST
     
 ws_rest_getMatch:
-    path:     /getMatchsByChampionnat/{idChampionnat}
+    path:     /getMatchsByChampionnat
     defaults: { _controller: WsRestBundle:Pronostic:getMatchsByChampionnat }
-    methods: GET
+    methods: POST
