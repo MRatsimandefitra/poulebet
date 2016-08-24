@@ -78,6 +78,5 @@ class ChampionatController extends ApiController
      */
     public function getListChampionatByCountryAction($pays){
 
-        $this->getRepo(self::ENTITY_CHAMPIONAT)
     }
 }
