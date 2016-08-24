@@ -76,7 +76,7 @@ class ChampionatController extends ApiController
      * LISTE DES CHAMPIONNAT PAR PAYS SELECTIONNER
      */
     public function getListChampionatByCountryAction($pays){
-
+        $this->getRepo(self::ENTITY_CHAMPIONAT)->getChampionatParPays();
 
     }
 }
