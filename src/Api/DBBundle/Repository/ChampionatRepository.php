@@ -10,4 +10,7 @@ namespace Api\DBBundle\Repository;
  */
 class ChampionatRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getChampionatParPays(){
+
+    }
 }

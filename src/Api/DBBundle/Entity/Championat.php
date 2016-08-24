@@ -13,6 +13,12 @@ use Doctrine\ORM\Mapping as ORM;
 class Championat
 {
     /**
+     * @ORM\ManyToMany(targetEntity="TeamsPays", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $teamsPays;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -44,6 +50,18 @@ class Championat
     * @ORM\OneToMany(targetEntity="Api\DBBundle\Entity\Matchs", mappedBy="championnat")
     */
     private $matchs;
+    /**
+     * @var \Date
+     *
+     * @ORM\Column(name="dateDebutChampionat", type="date", nullable=true)
+     */
+    private $dateDebutChampionat;
+    /**
+     * @var \Date
+     *
+     * @ORM\Column(name="dateFinaleChampionat", type="date", nullable=true)
+     */
+    private $dateFinaleChampionat;
 
     
     /**
@@ -167,5 +185,88 @@ class Championat
     public function getFullNameChampionat()
     {
         return $this->fullNameChampionat;
+    }
+
+    /**
+     * Set dateDebutChampionat
+     *
+     * @param \DateTime $dateDebutChampionat
+     *
+     * @return Championat
+     */
+    public function setDateDebutChampionat($dateDebutChampionat)
+    {
+        $this->dateDebutChampionat = $dateDebutChampionat;
+
+        return $this;
+    }
+
+    /**
+     * Get dateDebutChampionat
+     *
+     * @return \DateTime
+     */
+    public function getDateDebutChampionat()
+    {
+        return $this->dateDebutChampionat;
+    }
+
+    /**
+     * Set dateFinaleChampionat
+     *
+     * @param \DateTime $dateFinaleChampionat
+     *
+     * @return Championat
+     */
+    public function setDateFinaleChampionat($dateFinaleChampionat)
+    {
+        $this->dateFinaleChampionat = $dateFinaleChampionat;
+
+        return $this;
+    }
+
+    /**
+     * Get dateFinaleChampionat
+     *
+     * @return \DateTime
+     */
+    public function getDateFinaleChampionat()
+    {
+        return $this->dateFinaleChampionat;
+    }
+
+
+    /**
+     * Add teamsPay
+     *
+     * @param \Api\DBBundle\Entity\TeamsPays $teamsPay
+     *
+     * @return Championat
+     */
+    public function addTeamsPay(\Api\DBBundle\Entity\TeamsPays $teamsPay)
+    {
+        $this->teamsPays[] = $teamsPay;
+
+        return $this;
+    }
+
+    /**
+     * Remove teamsPay
+     *
+     * @param \Api\DBBundle\Entity\TeamsPays $teamsPay
+     */
+    public function removeTeamsPay(\Api\DBBundle\Entity\TeamsPays $teamsPay)
+    {
+        $this->teamsPays->removeElement($teamsPay);
+    }
+
+    /**
+     * Get teamsPays
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTeamsPays()
+    {
+        return $this->teamsPays;
     }
 }

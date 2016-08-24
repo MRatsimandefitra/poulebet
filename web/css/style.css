@@ -237,3 +237,10 @@ table.table-matchs tr {
 div.grey{
     padding: 15px;
 }
+div.carre{
+    width: 15px;
+    height: 15px;
+}
+.green{
+    background-color: #75c75f;
+}

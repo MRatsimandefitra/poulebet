@@ -286,8 +286,10 @@ class MatchController extends ApiController
 
     public function editChampionatAction(Request $request, $id){
         $championat = $this->getRepoFormId(self::ENTITY_CHAMPIONAT, $id);
+
         $form = $this->formPost(self::FORM_CHAMPIONAT, $championat);
         $form->handleRequest($request);
+
         if($form->isValid()){
             $this->insert($championat, array('success' => 'success' , 'error' => 'error'));
             return $this->redirectToRoute('list_championat');

@@ -41,6 +41,10 @@
     <table name="championat" schema="" catalog="poulebet" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="nomChampionat" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="typeChampionat" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="fullNameChampionat" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="dateDebutChampionat" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
+      <column name="dateFinaleChampionat" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
       <primary-key name="PRIMARY" columns="id"/>
       <exported-key name="FK_A2E2F23F8E5873AB" table="match_individuel" schema="" catalog="poulebet" columns="championat_id"/>
       <exported-key name="FK_6B1E60418E5873AB" table="matchs" schema="" catalog="poulebet" columns="championat_id"/>
@@ -220,16 +224,22 @@
       <column name="master_prono_1" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
       <column name="master_prono_n" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
       <column name="master_prono_2" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
+      <column name="teams_domicile_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="teams_visiteur_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="FK_6B1E60418D7E0F" columns="teams_visiteur_id" ref-table="teams" ref-schema="" ref-catalog="poulebet" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
       <foreign-key name="FK_6B1E604183AF5C05" columns="lotofoot7_id" ref-table="loto_foot7" ref-schema="" ref-catalog="poulebet" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
       <foreign-key name="FK_6B1E60418E5873AB" columns="championat_id" ref-table="championat" ref-schema="" ref-catalog="poulebet" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
       <foreign-key name="FK_6B1E6041A6A714B7" columns="lotofoot15_id" ref-table="loto_foot15" ref-schema="" ref-catalog="poulebet" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
       <foreign-key name="FK_6B1E6041D11E3C7" columns="concours_id" ref-table="concours" ref-schema="" ref-catalog="poulebet" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="FK_6B1E6041EA8E124F" columns="teams_domicile_id" ref-table="teams" ref-schema="" ref-catalog="poulebet" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
       <index name="UNIQ_6B1E6041BF396750" unique="true" columns="id"/>
       <index name="IDX_6B1E604183AF5C05" unique="false" columns="lotofoot7_id"/>
+      <index name="IDX_6B1E60418D7E0F" unique="false" columns="teams_visiteur_id"/>
       <index name="IDX_6B1E60418E5873AB" unique="false" columns="championat_id"/>
       <index name="IDX_6B1E6041A6A714B7" unique="false" columns="lotofoot15_id"/>
       <index name="IDX_6B1E6041D11E3C7" unique="false" columns="concours_id"/>
+      <index name="IDX_6B1E6041EA8E124F" unique="false" columns="teams_domicile_id"/>
     </table>
     <table name="mention" schema="" catalog="poulebet" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -340,13 +350,29 @@
       <column name="adresse" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="id"/>
     </table>
+    <table name="teams" schema="" catalog="poulebet" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="teams_pays_id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="nomClub" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="idNameClub" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="fullNameClub" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="codePays" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
+      <column name="logo" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="FK_96C22258E2B0EF0" columns="teams_pays_id" ref-table="teams_pays" ref-schema="" ref-catalog="poulebet" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <exported-key name="FK_6B1E60418D7E0F" table="matchs" schema="" catalog="poulebet" columns="teams_visiteur_id"/>
+      <exported-key name="FK_6B1E6041EA8E124F" table="matchs" schema="" catalog="poulebet" columns="teams_domicile_id"/>
+      <index name="IDX_96C22258E2B0EF0" unique="false" columns="teams_pays_id"/>
+    </table>
     <table name="teams_pays" schema="" catalog="poulebet" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="codePays" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
       <column name="name" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
       <column name="fullName" sqlType="VARCHAR" precision="255" scale="0" nullable="false" jdbcType="12"/>
       <column name="codeNumericPays" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="logo" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="id"/>
+      <exported-key name="FK_96C22258E2B0EF0" table="teams" schema="" catalog="poulebet" columns="teams_pays_id"/>
       <index name="UNIQ_DED2C0B831E6BDC0" unique="true" columns="codePays"/>
     </table>
     <table name="template_mail" schema="" catalog="poulebet" type="TABLE">

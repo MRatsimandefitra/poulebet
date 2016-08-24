@@ -2,7 +2,11 @@ ws_rest_championat_matchs:
     path:     /get-with-matchs
     defaults: { _controller: WsRestBundle:Championat:getChampionatWithMatch }
     methods: GET
-ws_rest_championat_matchs:
-    path:     /get-with-matchs
-    defaults: { _controller: WsRestBundle:Championat:getChampionatWithMatch }
+ws_rest_list_championat_with_match_valide:
+    path:     /get-championat-matchs
+    defaults: { _controller: WsRestBundle:Championat:getChampionatWithNationalMatch }
     methods: GET
+ws_rest_list_championat_by_country:
+    path:     /get-championat-by-country
+    defaults: { _controller: WsRestBundle:Championat:getListChampionatByCountry }
+    methods: POST
