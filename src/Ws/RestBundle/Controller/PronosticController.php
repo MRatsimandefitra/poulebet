@@ -12,6 +12,7 @@ class PronosticController extends ApiRestController
     const ENTITY_UTILISATEUR = 'ApiDBBundle:Utilisateur';
     const ENTITY_CHAMPIONNAT = 'ApiDBBundle:Championat';
     const ENTITY_MATCHS = 'ApiDBBundle:Matchs';
+
     
     public function getUtilisateurAchatPromoAction()
     {
@@ -54,6 +55,7 @@ class PronosticController extends ApiRestController
             'match'=>$matchs
         ));
     }
+
 
 
 }

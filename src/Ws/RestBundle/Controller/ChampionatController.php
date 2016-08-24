@@ -48,5 +48,6 @@ class ChampionatController extends ApiController
 
     public function getChampionatWithNationalMatch(){
         $this->getRepo(self::ENTITY_CHAMPIONAT);
+
     }
 }
