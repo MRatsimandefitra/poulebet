@@ -20,3 +20,6 @@
 composer.lock
 var/cache/
 /.svn
+/web/app_dev.php
+/web/config.php
+/web/.htaccess

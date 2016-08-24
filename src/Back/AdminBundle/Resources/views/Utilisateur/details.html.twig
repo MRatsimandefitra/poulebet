@@ -58,15 +58,6 @@
                 <td>{{ 'Date de naissance'|trans }}</td>
                 <td>{{ entity.dateNaissance|date('d-m-Y') }}</td>
             </tr>
-
-            <tr>
-                <td>{{ 'Date prono'|trans }}</td>
-                <td>{{ entity.dateProno|date('d-m-Y') }}</td>
-            </tr>
-            <tr>
-                <td>{{ 'Validité prono'|trans }}</td>
-                <td>{{ entity.validiteProno|date('d-m-Y') }}</td>
-            </tr>
             <tr>
                 <td>{{ 'Adresse 1'|trans }}</td>
                 <td> {{ entity.adresse1 }} </td>
@@ -78,6 +69,12 @@
             <tr>
                 <td>{{ 'Adresse 3'|trans }}</td>
                 <td> {{ entity.adresse3 }} </td>
+            </tr>
+            <tr>
+                <td>{{ 'Ville'|trans }}</td>
+                <td>
+                    {{ entity.ville }}
+                </td>
             </tr>
             <tr>
                 <td>{{ 'Pays'|trans }}</td>

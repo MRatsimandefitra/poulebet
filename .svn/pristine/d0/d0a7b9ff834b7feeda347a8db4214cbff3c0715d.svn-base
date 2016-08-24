@@ -1,3 +1,0 @@
-api_theme_homepage:
-    path:     /
-    defaults: { _controller: ApiThemeBundle:Default:index }

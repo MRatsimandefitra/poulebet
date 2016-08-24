@@ -1,4 +1,0 @@
-ws_rest_inscription:
-    path:     /
-    defaults: { _controller: WsRestBundle:Pronostic:getUtilisateurAchatPromo }
-    methods: GET

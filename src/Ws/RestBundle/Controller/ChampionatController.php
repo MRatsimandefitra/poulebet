@@ -4,7 +4,6 @@ namespace Ws\RestBundle\Controller;
 
 use Api\CommonBundle\Controller\ApiController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ChampionatController extends ApiController
@@ -77,6 +76,7 @@ class ChampionatController extends ApiController
      * LISTE DES CHAMPIONNAT PAR PAYS SELECTIONNER
      */
     public function getListChampionatByCountryAction($pays){
+
 
     }
 }

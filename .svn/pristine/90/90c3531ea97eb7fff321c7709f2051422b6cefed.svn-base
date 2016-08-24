@@ -1,3 +1,0 @@
-index_admin_match:
-    path:     /
-    defaults: { _controller: BackAdminBundle:Match:index }
