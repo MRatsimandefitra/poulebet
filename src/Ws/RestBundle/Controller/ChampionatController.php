@@ -46,8 +46,37 @@ class ChampionatController extends ApiController
         return  new JsonResponse($result);
     }
 
-    public function getChampionatWithNationalMatch(){
-        $this->getRepo(self::ENTITY_CHAMPIONAT);
+    /**
+     * LISTE DES CHAMPIONATS VALIDE RELIER A UN MATCH
+     * @return JsonResponse
+     */
+    public function getChampionatWithNationalMatchAction(){
+        $mathsWithNational = $this->getRepo(self::ENTITY_MATCHS)->findChampionatWitwMatchValide();
+
+        $result = array();
+        if($mathsWithNational){
+
+            foreach($mathsWithNational as $k => $vDataChampionat){
+                    $result[$k] = array(
+                        'idChampionat' => $vDataChampionat->getChampionat()->getNomchampionat(),
+                        'fullNameChampionat' => $vDataChampionat->getChampionat()->getFullNameChampionat()
+                    );
+            }
+            $result['code_error'] = 0;
+            $result['message'] = 'Success';
+        }
+        if(!$mathsWithNational){
+            $result['code_error'] = 4;
+            $result['message'] = "Aucun championat n'a été trouvé";
+        }
+        return new JsonResponse($result);
+    }
+
+    /**
+     * LISTE DES CHAMPIONNAT PAR PAYS SELECTIONNER
+     */
+    public function getListChampionatByCountryAction($pays){
+        $this->getRepo(self::ENTITY_CHAMPIONAT)->getChampionatParPays();
 
     }
 }

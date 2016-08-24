@@ -2,8 +2,11 @@
 
 namespace Api\DBBundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -26,6 +29,13 @@ class ChampionatType extends AbstractType
                     'nat' => 'national',
                     'reg' => 'regional'
                 )
+            ))
+            ->add('dateDebutChampionat', DateType::class)
+            ->add('dateFinaleChampionat', DateType::class)
+            ->add('teamsPays', EntityType::class, array(
+                'class' => 'ApiDBBundle:TeamsPays',
+                'choice_label' => 'fullName',
+                'multiple' => true
             ))
         ;
     }

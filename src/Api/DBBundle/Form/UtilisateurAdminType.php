@@ -49,6 +49,8 @@ class UtilisateurAdminType extends AbstractType
                 // To do:
             //->add('cheminPhoto', FileType::class, array())
             ->add('achatProno', CheckboxType::class, array('required' => false))
+            ->add('dateProno', DateType::class, array())
+            ->add('validiteProno', DateType::class, array())
             ->add('adresse1', TextType::class, array('required' =>false))
             ->add('adresse2', TextType::class, array('required' =>false))
             ->add('adresse3', TextType::class, array('required' =>false))

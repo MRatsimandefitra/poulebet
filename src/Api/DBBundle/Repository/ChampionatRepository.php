@@ -10,4 +10,12 @@ namespace Api\DBBundle\Repository;
  */
 class ChampionatRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getChampionatParPays($pays){
+        $dql= "SELECT ch, tp from ApiDBBundle:Championat ch
+               LEFT JOIN ch.teamsPays tp
+                WHERE tp.fullNameChampionat LIKE %:pays%";
+        $query = $this->getEntityManager()->createQuery($dql);
+        $query->setParameter('pays', $pays);
+        return $query->getResult();
+    }
 }
