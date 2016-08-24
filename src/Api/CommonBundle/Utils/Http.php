@@ -26,6 +26,7 @@ class Http {
         $this->headers = array('Content-type: application/json');
         curl_setopt($this->ch, CURLOPT_HTTPHEADER, $this->headers);
         curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, 1 );
+        curl_setopt($this->ch, CURLOPT_SSL_VERIFYPEER, false);
         $this->doPost();
     }
     public function setUrl($url){
@@ -48,6 +49,11 @@ class Http {
     }
     
     public function execute(){
-        return curl_exec ($this->ch);
+        $result = curl_exec ($this->ch);
+        if (curl_errno($this->ch))
+        {
+            echo 'GCM error: ' . curl_error($this->ch);
+        }
+        return $result;
     }
 }

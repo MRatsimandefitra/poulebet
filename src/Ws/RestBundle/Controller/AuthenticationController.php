@@ -25,7 +25,7 @@ class AuthenticationController extends ApiRestController{
             $gcm_device_token=$request->get("gcm_device_token");
             $device = $this->getEm()->getRepository(self::ENTITY_DEVICE)->findByToken($gcm_device_token);
             if($user){
-                if(!$device || $device->getUtilisateur()->getId() != $user['id']){
+                if(!$device){
                     $device = new Device();
                     $device->setToken($gcm_device_token);
                     $userEntity = $this->getEm()->getRepository(self::ENTITY_UTILISATEUR)->find($user['id']);

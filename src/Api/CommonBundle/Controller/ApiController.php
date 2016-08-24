@@ -268,11 +268,11 @@ class ApiController extends Controller
         // chargement des paramètres de gcm
         $apikey = $this->getParameter("apikey");
         $gcm_url_android = $this->getParameter("gcm_url_android");
-        $header = 'Authorization: key='. $apikey;
-        $http->setHeaders($header);
+        $header = 'Authorization: key='.$apikey;
         $http->setUrl($gcm_url_android);
+        $http->setHeaders($header);
         $http->setRawPostData(json_encode($data));
-        $http->execute();
+        $response = $http->execute();
         return true;
     }
 }

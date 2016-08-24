@@ -1,13 +1,21 @@
 index_admin_match:
     path:     /
     defaults: { _controller: BackAdminBundle:Match:index }
+modifier_admin_match:
+    path:     /edit/{id}
+    defaults: { _controller: BackAdminBundle:Match:editMatchs }
 add_loto_foot:
     path:     /lotofoot/add
     defaults: { _controller: BackAdminBundle:Match:addLotofoot }
 list_loto_foot:
     path:     /lotofoot
     defaults: { _controller: BackAdminBundle:Match:listLotofoot }
-
+list_championat:
+    path:     /championat
+    defaults: { _controller: BackAdminBundle:Match:listChampionat }
+edit_championat:
+    path:     /championat/edit/{id}
+    defaults: { _controller: BackAdminBundle:Match:editChampionat }
 edit_loto_foot:
     path:     /lotofoot/{idLotoFoot}/edit/{id}
     defaults: { _controller: BackAdminBundle:Match:editLotofoot }

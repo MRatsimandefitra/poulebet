@@ -214,3 +214,26 @@ tr.selected{
     background-color: #8c9ac7;
     color: #FFF;
 }
+table.table-matchs{
+    width: 100%;
+}
+table.table-matchs td {
+    padding: 5px;
+}
+table.table-matchs tr {
+    padding: 5px;
+}
+#send-prono{
+    border:none;
+    outline:none;
+    background:none;
+    cursor:pointer;
+    color:#0000EE;
+    padding:0;
+    text-decoration:underline;
+    font-family:inherit;
+    font-size:inherit;
+}
+div.grey{
+    padding: 15px;
+}

@@ -1,0 +1,8 @@
+ws_rest_championat_matchs:
+    path:     /get-with-matchs
+    defaults: { _controller: WsRestBundle:Championat:getChampionatWithMatch }
+    methods: GET
+ws_rest_championat_matchs:
+    path:     /get-with-matchs
+    defaults: { _controller: WsRestBundle:Championat:getChampionatWithMatch }
+    methods: GET

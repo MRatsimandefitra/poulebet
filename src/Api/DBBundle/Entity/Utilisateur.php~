@@ -140,20 +140,6 @@ class Utilisateur
     private $achatProno;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="dateProno", type="datetime", nullable=true)
-     */
-    private $dateProno;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="validiteProno", type="datetime", nullable=true)
-     */
-    private $validiteProno;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="adresse1", type="string", length=255, nullable=true)
@@ -194,8 +180,11 @@ class Utilisateur
      * @ORM\Column(name="fax", type="string", length=15, nullable=true)
      */
     private $fax;
-
-
+    
+    /**
+    * @ORM\OneToMany(targetEntity="Api\DBBundle\Entity\Device", mappedBy="utilisateur")
+    */
+    private $devices;
     /**
      * Get id
      *
@@ -590,53 +579,6 @@ class Utilisateur
         return $this->achatProno;
     }
 
-    /**
-     * Set dateProno
-     *
-     * @param \DateTime $dateProno
-     *
-     * @return Utilisateur
-     */
-    public function setDateProno($dateProno)
-    {
-        $this->dateProno = $dateProno;
-
-        return $this;
-    }
-
-    /**
-     * Get dateProno
-     *
-     * @return \DateTime
-     */
-    public function getDateProno()
-    {
-        return $this->dateProno;
-    }
-
-    /**
-     * Set validiteProno
-     *
-     * @param \DateTime $validiteProno
-     *
-     * @return Utilisateur
-     */
-    public function setValiditeProno($validiteProno)
-    {
-        $this->validiteProno = $validiteProno;
-
-        return $this;
-    }
-
-    /**
-     * Get validiteProno
-     *
-     * @return \DateTime
-     */
-    public function getValiditeProno()
-    {
-        return $this->validiteProno;
-    }
 
     /**
      * Set adresse1
@@ -804,5 +746,51 @@ class Utilisateur
     public function getVille()
     {
         return $this->ville;
+    }
+    public function __toString() {
+        return $this->nom ." ".$this->prenom;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->devices = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    
+
+    /**
+     * Add device
+     *
+     * @param \Api\DBBundle\Entity\Device $device
+     *
+     * @return Utilisateur
+     */
+    public function addDevice(\Api\DBBundle\Entity\Device $device)
+    {
+        $this->devices[] = $device;
+
+        return $this;
+    }
+
+    /**
+     * Remove device
+     *
+     * @param \Api\DBBundle\Entity\Device $device
+     */
+    public function removeDevice(\Api\DBBundle\Entity\Device $device)
+    {
+        $this->devices->removeElement($device);
+    }
+
+    /**
+     * Get devices
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDevices()
+    {
+        return $this->devices;
     }
 }
