@@ -50,16 +50,46 @@ class UtilisateurRepository extends \Doctrine\ORM\EntityRepository
         
     }
 
-    public function getAllUtilisateurs($champ, $tri){
+    public function getAllUtilisateurs($champ, $tri, $criteria = array()){
 
+        $request = "";
+        $addAnd = false;
+        if(isset($criteria['criteria_username'])){
+            $filter = $criteria['criteria_username'];
+            $request = $request." WHERE u.username LIKE '%$filter%'" ;
+            $addAnd = true;
+        }
+        if(isset($criteria['criteria_email'])){
+            if($addAnd){
+                $request = $request." AND ";
+            }
+            else{
+                $request = $request." WHERE ";
+            }
+            $filter = $criteria['criteria_email'];
+            $request = $request." u.email LIKE '%$filter%' " ;
+        }
+        if(isset($criteria['criteria_score_total'])){
+            if($addAnd){
+                $request = $request." AND";
+            }
+            $filter = $criteria['criteria_score_total'];
+            $request = $request." AND WHERE u.mvtPoints = '$filter' " ;
+        }
+
+     
+        
         if($tri and $champ){
-            $dql = "SELECT u from ApiDBBundle:Utilisateur u
-                ORDER by u.email ASC ";
+            $dql = "SELECT u from ApiDBBundle:Utilisateur u" .
+                    $request.
+                    " ORDER by u.email ASC ";
             $query = $this->getEntityManager()->createQuery($dql);
             //$query->setParameters( array('tri' => $tri, 'champ' => $champ) );
             return $query->getResult();
         }
-        $dql = "SELECT u from ApiDBBundle:Utilisateur u";
+        $dql = "SELECT u from ApiDBBundle:Utilisateur u"
+                . " $request";
+        
         $query = $this->getEntityManager()->createQuery($dql);
         return $query->getResult();
     }

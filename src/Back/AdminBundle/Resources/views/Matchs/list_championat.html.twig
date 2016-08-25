@@ -36,7 +36,15 @@
                     <td>
                         {{ row.typeChampionat }}
                     </td>
-                   
+                    <<<<<<< HEAD
+                    <td>
+                        {% if row.season is defined and row.season %}
+                            {{ row.season }}
+                        {% endif %}
+                    </td>
+                    =======
+
+                    >>>>>>> 27fe97e41ea818c3b643f023826a602b0026ab09
                     <td>
                         {{ row.dateDebutChampionat|date('d-m-Y') }}
                     </td>
@@ -54,6 +62,7 @@
                         </div>
                             {% endif %}
                     </td>
+                    <td></td>
                     <td>
                         {% if droitAdmin.modification is defined and droitAdmin.modification %}
                             <a href="{{ path('edit_championat', {'id': row.id }) }}">

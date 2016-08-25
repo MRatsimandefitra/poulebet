@@ -244,3 +244,12 @@ div.carre{
 .green{
     background-color: #75c75f;
 }
+#search-utilisateur div{
+    display: inline-block; 
+}
+
+div.header-push {
+    /*border: 1px solid #c4c4c3;*/
+    /*background-color: #f2f2f2;*/
+    padding: 25px;
+}

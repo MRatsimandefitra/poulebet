@@ -75,9 +75,11 @@ class GoalApiCommand extends ContainerAwareCommand
              * Equipe
              */
             $mEquipeDomicile = $vItems['teams']['hosts']['id'];
+            $mFullEquipeDomicile = $vItems['teams']['hosts']['fullname'];
             $teamsDomicile = $em->getRepository(self::ENTITY_TEAMS)->findOneBy(array('idNameClub' => $mEquipeDomicile));
-            $mEquipeVisiteur = $vItems['teams']['guests']['id'];
 
+            $mEquipeVisiteur = $vItems['teams']['guests']['id'];
+            $mFullEquipeVisiteur = $vItems['teams']['guests']['fullname'];
             $teamsVisiteur = $em->getRepository(self::ENTITY_TEAMS)->findOneBy(array('idNameClub' => $mEquipeVisiteur));
             /**
              * Score
@@ -123,8 +125,8 @@ class GoalApiCommand extends ContainerAwareCommand
             $match->setScore($mScore);
             $match->setResultatDomicile($resultatDomicile);
             $match->setResultatVisiteur($resultatVisiteur);
-            $match->setEquipeDomicile($mEquipeDomicile);
-            $match->setEquipeVisiteur($mEquipeVisiteur);
+            $match->setEquipeDomicile($mFullEquipeDomicile);
+            $match->setEquipeVisiteur($mFullEquipeVisiteur);
             $match->setTeamsDomicile($teamsDomicile);
             $match->setTeamsVisiteur($teamsVisiteur);
             $match->setTempsEcoules($tempEcoule);
@@ -143,7 +145,8 @@ class GoalApiCommand extends ContainerAwareCommand
     private function getJson()
     {
         $jsonFile = $this->getContainer()->get('kernel')->getRootDir() . '/../web/json/matches.json';
-        $content = file_get_contents($jsonFile);
+        $url = "http://api.xmlscores.com/matches/?f=json&c[]=eng_pl&c[]=rus_pl&e=1&open=3770d7505de574df4b7d45d88b80027a";
+        $content = file_get_contents($url);
         $arrayJson = json_decode($content, true);
         return $arrayJson;
 

@@ -1,8 +1,15 @@
- - get match with championat:
-/_ws/rest/championat/get-with-matchs
 
-- Listes des championat valide:
-/_ws/rest/championat/get-championat-matchs
+1 - Ws, récupérer la liste des championnats qui ont des matchs
+/_ws/rest/championat/get-championat-with-maths
 
- - Liste des championat by country
-/_ws/rest/championat /get-championat-by-country
+2 - Ws, récupérer la liste des matchs pour le championnat sélectionné.(tri décroissant).
+championat: string
+/_ws/rest/championat/get-list-match-by-championat
+
+3 - Ws, récupérer la liste des paysqui ont des championnats nationaux avec des matchs
+GET
+/_ws/rest/championat/get-list-pays-with-championat-matchs
+
+4 - Ws récupérer la liste des championnats nationaux pour le pays sélectionné
+POST - pays : string
+/_ws/rest/championat/get-list-championat-by-pays

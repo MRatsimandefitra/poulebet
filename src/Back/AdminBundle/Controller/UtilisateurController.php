@@ -26,20 +26,35 @@ class UtilisateurController extends ApiController
     {
         //var_dump($request->request); die;
         $tri = $request->get('tri');
+        $nbpage = 10; 
+        $criteria = array();
+        if($request->get('nbpage')){
+            $nbpage = $request->get('nbpage');
+        }
+        if($request->get('criteria_username')!=null){
+            $criteria["criteria_username"]= $request->get('criteria_username');
+        }
+        if($request->get('criteria_email')){
+            $criteria["criteria_email"]= $request->get('criteria_email');
+        }
+        if($request->get('criteria_score_total')){
+            $criteria["criteria_score_total"]= $request->get('criteria_score_total');
+        }
         $droit = $this->getRepo(self::ENTITY_DROIT)->findOneByFonctionnalite('Utilisateurs');
         $currentDroitAdmin = $this->getRepo(self::ENTITY_DROIT_ADMIN)->findOneBy(array('admin' => $this->getUser(), 'droit' => $droit ));
         $champ = $request->get('champ');
-        $utilisateur = $this->getRepo(self::ENTITY_UTILISATEUR)->getAllUtilisateurs($champ, $tri);
+        $utilisateur = $this->getRepo(self::ENTITY_UTILISATEUR)->getAllUtilisateurs($champ, $tri,$criteria);
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $utilisateur, /* query NOT result */
             $request->query->getInt('page', 1)/*page number*/,
-            10/*limit per page*/
+            $nbpage/*limit per page*/
         );
         return $this->render('BackAdminBundle:Utilisateur:index.html.twig', array(
             'entities' => $utilisateur,
             'currentAdmin' => $currentDroitAdmin,
-            'pagination' => $pagination
+            'pagination' => $pagination,
+           
         ));
     }
 

@@ -21,7 +21,11 @@
 /web/bundles/
 composer.lock
 var/cache/
+<<<<<<< .mine
 /.svn
 /web/app_dev.php
 /web/config.php
 /web/.htaccess
+=======
+
+>>>>>>> .r34265

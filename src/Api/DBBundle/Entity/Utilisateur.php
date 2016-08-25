@@ -185,6 +185,14 @@ class Utilisateur
     * @ORM\OneToMany(targetEntity="Api\DBBundle\Entity\Device", mappedBy="utilisateur")
     */
     private $devices;
+    
+    /**
+    * @ORM\OneToMany(targetEntity="Api\DBBundle\Entity\MvtPoint", mappedBy="utilisateur")
+    */
+    private $mvtPoints;
+    
+    private $soldePoint;
+    
     /**
      * Get id
      *
@@ -792,5 +800,46 @@ class Utilisateur
     public function getDevices()
     {
         return $this->devices;
+    }
+
+    /**
+     * Add mvtPoint
+     *
+     * @param \Api\DBBundle\Entity\MvtPoint $mvtPoint
+     *
+     * @return Utilisateur
+     */
+    public function addMvtPoint(\Api\DBBundle\Entity\MvtPoint $mvtPoint)
+    {
+        $this->mvtPoints[] = $mvtPoint;
+
+        return $this;
+    }
+
+    /**
+     * Remove mvtPoint
+     *
+     * @param \Api\DBBundle\Entity\MvtPoint $mvtPoint
+     */
+    public function removeMvtPoint(\Api\DBBundle\Entity\MvtPoint $mvtPoint)
+    {
+        $this->mvtPoints->removeElement($mvtPoint);
+    }
+
+    /**
+     * Get mvtPoints
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMvtPoints()
+    {
+        return $this->mvtPoints;
+    }
+    
+    public function getSoldePoint(){
+        
+    }
+    public function setSoldePoint($value){
+        $this->soldePoint = $value;
     }
 }

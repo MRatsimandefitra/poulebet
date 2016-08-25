@@ -27,24 +27,35 @@
                         {{ flash_message }}
                     </div>
                 {% endfor %}
-                <div class="search">
-                    <label class="white" for="">
-                        Afficher
-                    </label>
+                <div id="search-utilisateur">
+                    <div class="col-lg-3">
+                        <label class="white" for="">
+                            Afficher
+                        </label>
 
-                    <form id="nbpage" method="get" action="{{ path('index_admin_utilisateur') }}" >
-                        <select class="nbaffiche" onchange="onSelectChange(this.value);" >
-                            <option value="0">10</option>
-                            <option value="0">20</option>
-                            <option value="0">30</option>
-                        </select>
-                    </form>
+                        <form id="nbpage" method="get" action="{{ path('index_admin_utilisateur') }}" >
+                            <select class="nbaffiche" name="nbpage" onchange="onSelectChange(this.value);">
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="30">30</option>
+                            </select>
+                        </form>
 
-                    <label class="white" for="">
-                        Entrees
-                    </label>
-                    <div class="count">
-                        {{ 'Total' }} : {{ pagination.getTotalItemCount }}
+                        <label class="white" for="">
+                            Entrees
+                        </label>
+                        <label>
+                            {{ 'Total' }} : {{ pagination.getTotalItemCount }}
+                        </label>    
+
+                      
+                    </div>
+                    <div class="col-lg-9">
+                        <form id="form_criteria" method="post" action="{{ path('index_admin_utilisateur') }}">
+                            <input type="text" name ="criteria_username" placeholder="{{'Username'|trans}}">
+                            <input type="text" name ="criteria_email" placeholder="{{'Email'|trans}}">
+                            <input type="submit" value="Rechercher">
+                        </form> 
                     </div>
                 </div>
                 <table class="table-user">
@@ -81,16 +92,6 @@
                 </div>
 
             </td>
-            <td>{{ 'Nombre de pronos'|trans }}
-                <div class="tri">
-                    <a href="{{ path('index_admin_utilisateur',{'tri': 'asc'}) }}">
-                        <img class="tri" id="up" src="{{ asset('images/up.png') }}" width="16" height="16" alt=""/>
-                    </a>
-                    <a href="{{ path('index_admin_utilisateur',{'tri': 'desc'}) }}">
-                        <img class="tri" id="up" src="{{ asset('images/down.png') }}" width="16" height="16" alt=""/>
-                    </a>
-                </div>
-            </td>
             <td>{{ 'Score total'|trans }}
                 <div class="tri">
                     <a href="{{ path('index_admin_utilisateur',{'tri': 'asc'}) }}">
@@ -106,7 +107,7 @@
             {#{% endif %}#}
             </thead>
             <tbody>
-            {% for row in entities %}
+            {% for row in pagination %}
                 <tr>
                     <td>
                         {{ row.username }}
@@ -122,10 +123,7 @@
                         {% endif %}
                     </td>
                     <td>
-                        ---
-                    </td>
-                    <td>
-                        ---
+                        {{ row.mvtPoints | last}}
                     </td>
                     {#{% if is_granted('ROLE_SUPER_ADMIN') %}#}
                     <td>
@@ -161,24 +159,23 @@
             <td>{{ 'Nom d\' Utilisateur'|trans }}</td>
                     <td>{{ 'E-mail'|trans }}</td>
                     <td>{{ 'Pays'|trans }}</td>
-                    <td>{{ 'Nombre de pronos'|trans }}</td>
                     <td>{{ 'Score total'|trans }}</td>
                     {#{% if is_granted('ROLE_SUPER_ADMIN') %}#}
                     <td>{{ 'Actions'|trans }}</td>
                     {#{% endif %}#}
                     </thead>
                 </table>
-                <div class="search">
+                
                     {#<label class="white" for="">
                         Afficher
         
                         Entrees
                     </label>#}
 
-                    <div class="navigation">
-                        {{ knp_pagination_render(pagination) }}
-                    </div>
-                </div>
+                    
+                {{ knp_pagination_render(pagination) }}
+                    
+                
             </div>
         {% else %}
             {{ "Vous n\'avez pas l\'autorisation pour cette page"|trans }}
