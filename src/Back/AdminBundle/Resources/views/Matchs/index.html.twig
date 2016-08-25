@@ -81,6 +81,9 @@
                         {{ 'Score'|trans }}
                     </th>
                     <th>
+                        {{ 'Season'|trans }}
+                    </th>
+                    <th>
                         {{ 'Visiteur'|trans }}
                     </th>
                     <th>
@@ -110,6 +113,7 @@
                             {{ row.equipeDomicile }}
                         </td>
                         <td>{{ row.score }}</td>
+                        <td>{{ row.season }}</td>
                         <td>
                             <div class="flag flag-{{ row.equipeVisiteur|lower|slice(0, 2) }}"
                                  alt="{{ row.equipeVisiteur }}"></div>

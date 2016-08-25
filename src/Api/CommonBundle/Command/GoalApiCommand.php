@@ -53,17 +53,21 @@ class GoalApiCommand extends ContainerAwareCommand
             $titleChamionat = $vItems['details']['contest']['competition']['title'];
 
             $championat = $em->getRepository(self::ENTITY_MATCH)->findChampionat($titleChamionat);
+            //season
+            $season = $vItems['details']['contest']['season'];
 
             if(!$championat){
                 $output->writeln("new championat -> set championat in databse");
                 $championat = new Championat();
-                $championat->setNomChampionat($titleChamionat);
-                $em->persist($championat);
-                $em->flush();
+
             }else{
                 $output->writeln("This championat exist -> no action");
                 $championat = $championat[0];
             }
+            $championat->setNomChampionat($titleChamionat);
+            $championat->setSeason($season);
+            $em->persist($championat);
+            $em->flush();
 
             $mId = $vItems['id'];
             $mDate = \DateTime::createFromFormat('Y-m-d h:i', date('Y-m-d h:i', $vItems['timestamp_starts']));
@@ -71,8 +75,10 @@ class GoalApiCommand extends ContainerAwareCommand
              * Equipe
              */
             $mEquipeDomicile = $vItems['teams']['hosts']['id'];
+            $teamsDomicile = $em->getRepository(self::ENTITY_TEAMS)->findOneBy(array('idNameClub' => $mEquipeDomicile));
+            $mEquipeVisiteur = $vItems['teams']['guests']['id'];
 
-            $mEquipeVisiteur = $vItems['teams']['guests']['fullname'];
+            $teamsVisiteur = $em->getRepository(self::ENTITY_TEAMS)->findOneBy(array('idNameClub' => $mEquipeVisiteur));
             /**
              * Score
              */
@@ -101,6 +107,7 @@ class GoalApiCommand extends ContainerAwareCommand
                 }
             }
 
+
             $match = $em->getRepository(self::ENTITY_MATCH)->findMatchById($mId);
             if(!$match){
                 $output->writeln("This is new match withd id (create) : ".$mId);
@@ -118,8 +125,11 @@ class GoalApiCommand extends ContainerAwareCommand
             $match->setResultatVisiteur($resultatVisiteur);
             $match->setEquipeDomicile($mEquipeDomicile);
             $match->setEquipeVisiteur($mEquipeVisiteur);
+            $match->setTeamsDomicile($teamsDomicile);
+            $match->setTeamsVisiteur($teamsVisiteur);
             $match->setTempsEcoules($tempEcoule);
             $match->setChampionat($championat);
+            $match->setSeason($season);
             //$this->insert($match, array('success' => 'success' , 'error' => 'error'));
             $em->persist($match);
             $em->flush();

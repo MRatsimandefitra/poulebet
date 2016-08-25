@@ -45,6 +45,12 @@ class Championat
      * @ORM\Column(name="typeChampionat", type="string", length=255, nullable=true)
      */
     private $typeChampionat;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="season", type="string", length=255, nullable=true)
+     */
+    private $season;
 
     /**
     * @ORM\OneToMany(targetEntity="Api\DBBundle\Entity\Matchs", mappedBy="championnat")
@@ -268,5 +274,29 @@ class Championat
     public function getTeamsPays()
     {
         return $this->teamsPays;
+    }
+
+    /**
+     * Set season
+     *
+     * @param string $season
+     *
+     * @return Championat
+     */
+    public function setSeason($season)
+    {
+        $this->season = $season;
+
+        return $this;
+    }
+
+    /**
+     * Get season
+     *
+     * @return string
+     */
+    public function getSeason()
+    {
+        return $this->season;
     }
 }

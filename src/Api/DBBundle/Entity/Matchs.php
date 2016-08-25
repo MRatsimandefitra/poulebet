@@ -188,6 +188,12 @@ class Matchs
      * @ORM\Column(name="cote2Concours", type="float", nullable=true)
      */
     private $cote2Concours;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="season", type="string", length=50, nullable=true)
+     */
+    private $season;
 
 
 
@@ -839,5 +845,29 @@ class Matchs
     public function getTeamsVisiteur()
     {
         return $this->teamsVisiteur;
+    }
+
+    /**
+     * Set season
+     *
+     * @param string $season
+     *
+     * @return Matchs
+     */
+    public function setSeason($season)
+    {
+        $this->season = $season;
+
+        return $this;
+    }
+
+    /**
+     * Get season
+     *
+     * @return string
+     */
+    public function getSeason()
+    {
+        return $this->season;
     }
 }
