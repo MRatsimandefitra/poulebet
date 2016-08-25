@@ -1,0 +1,20 @@
+ws_rest_mentions:
+    path:     /all
+    defaults: { _controller: WsRestBundle:Mention:getAllMention }
+    methods: GET
+ws_rest_mentions_legale:
+    path:     /legales
+    defaults: { _controller: WsRestBundle:Mention:getMentionLegale }
+    methods: GET
+ws_rest_mentions_cgu:
+    path:     /cgu
+    defaults: { _controller: WsRestBundle:Mention:getMentionCGU}
+    methods: GET
+ws_rest_mentions_cgps:
+    path:     /cgps
+    defaults: { _controller: WsRestBundle:Mention:getMentionCGPS }
+    methods: GET
+ws_rest_mentions_cgv:
+    path:     /cgv
+    defaults: { _controller: WsRestBundle:Mention:getMentionCGV }
+    methods: GET

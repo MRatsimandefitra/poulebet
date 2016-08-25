@@ -1,0 +1,31 @@
+index_administrator:
+    path:     /
+    defaults: { _controller: BackAdminBundle:Administrator:index }
+
+edit_administrator_profile:
+    path:     /edit/{id}
+    defaults: { _controller: BackAdminBundle:Administrator:editAdministratorProfil }
+add_new_administrator:
+    path:     /add
+    defaults: { _controller: BackAdminBundle:Administrator:addAdministrator }
+delete_administrator:
+    path:     /delete/{id}
+    defaults: { _controller: BackAdminBundle:Administrator:deleteAdministrator }
+
+add_roles_administrator:
+    path:     /roles/add
+    defaults: { _controller: BackAdminBundle:Administrator:addRoles }
+
+list_roles_administrator:
+    path:     /roles/list/{idAdmin}
+    defaults: { _controller: BackAdminBundle:Administrator:listRoles }
+
+edit_roles_administrator_droit:
+    path:     /roles/list/{idAdmin}/droit/{idDroitAdmin}
+    defaults: { _controller: BackAdminBundle:Administrator:editDroitRolesAdmin }
+edit_roles_admin_droit:
+    path:     /roles/edit/{id}
+    defaults: { _controller: BackAdminBundle:Administrator:editDroitAdmin }
+edit_validate_administrator:
+    path: /validate/{id}
+    defaults: { _controller: BackAdminBundle:Administrator:validerCompte }

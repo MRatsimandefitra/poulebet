@@ -1,0 +1,14 @@
+ws_rest_inscription:
+    path:     /
+    defaults: { _controller: WsRestBundle:Pronostic:getUtilisateurAchatPromo }
+    methods: GET
+    
+ws_rest_getChampionnat:
+    path:     /getChampionnat
+    defaults: { _controller: WsRestBundle:Pronostic:getChampionnat }
+    methods: POST
+    
+ws_rest_getMatch:
+    path:     /getMatchsByChampionnat
+    defaults: { _controller: WsRestBundle:Pronostic:getMatchsByChampionnat }
+    methods: POST

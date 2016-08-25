@@ -1,0 +1,3 @@
+add_admin_mention:
+    path:     /
+    defaults: { _controller: BackAdminBundle:Mention:addMention }

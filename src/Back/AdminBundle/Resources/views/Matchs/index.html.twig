@@ -1,0 +1,211 @@
+{% extends 'BackAdminBundle::layout.html.twig' %}
+{% block title %} {{ parent() }} {% endblock %}
+{% block ariane %} {{ parent() }} {% endblock %}
+
+{% block page %}
+
+    <div class="box-header-response">
+        {{ 'Listes des Matchs du jour'|trans }}
+        {% include '@BackAdmin/Matchs/sous_menu.html.twig' %}
+    </div>
+    <br/><br/>
+    {% if droitAdmin.lecture is defined and droitAdmin.lecture %}
+    <div class="col-lg-12">
+        <div class="col-lg-1">
+
+        </div>
+        <div class="col-lg-10">
+            <div class="search-match">
+                <form action="" method="get">
+
+                    {% if searchValue.date_match is defined %}
+                        {{ "Date"|trans }} : <input type="text" name="date_match" id="datepic"
+                                                    value="{{ searchValue.date_match }}"/>
+                    {% else %}
+                        {{ "Date"|trans }} : <input type="text" name="date_match" id="datepic"/>
+                    {% endif %}
+
+                    {% if searchValue.time_match is defined %}
+                        {{ 'Heure'|trans }}: <input type="text" name="time_match" id="timepic" value="{{ searchValue.time_match }}"/>
+                    {% else %}
+                        {{ 'Heure'|trans }}: <input type="text" name="time_match" id="timepic"/>
+                    {% endif %}
+
+                    {{ 'Championat'|trans }}:
+                    <select class="championat" name="championat_match" id="">
+
+                        {#{{ searchValue.championat_match }}#}
+                        {% if searchValue.championat_match is defined %}
+                            <option value="{{ searchValue.championat_match }}">{{ searchValue.championat_match }}</option>
+                        {% else %}
+                            <option value=""></option>
+                            {% for rowchampinat in championat %}
+                                <option value="{{ rowchampinat.nomchampionat }}">{{ rowchampinat.nomchampionat }}</option>
+                            {% endfor %}
+                        {% endif %}
+                    </select>
+
+                    {{ 'Pays'|trans }}:
+                    <select class="pays" name="pays_match" id="">
+
+                        {% if searchValue.pays is defined %}
+                            <option value="{{ searchValue.pays }}">{{ searchValue.pays }}</option>
+                        {% else %}
+                            <option value=""></option>
+                            {% for rowCountry in country %}
+                                <option value="{{ rowCountry.iso }}"> {{ rowCountry.name }}  </option>
+                            {% endfor %}
+                        {% endif %}
+                    </select>
+                    <input type="submit" value="{{ 'Mettre à Jour'|trans }}"/>
+                </form>
+            </div>
+        </div>
+        <div class="col-lg-1">
+
+        </div>
+
+        <br/>
+
+        <div class="col-lg-12">
+            <div class="header-table">
+                {#{{ 'Nombre de match'|trans }} : {{ totalMatch }}#}
+            </div>
+            <table class="table-list">
+                <tr>
+                    <th>{{ 'Date'|trans }}</th>
+                    <th>
+                        {{ 'Domicile'|trans }}
+                    </th>
+                    <th>
+                        {{ 'Score'|trans }}
+                    </th>
+                    <th>
+                        {{ 'Season'|trans }}
+                    </th>
+                    <th>
+                        {{ 'Visiteur'|trans }}
+                    </th>
+                    <th>
+                        {{ 'Cote 1'|trans }}
+                    </th>
+                    <th>
+                        {{ 'Cote N'|trans }}
+                    </th>
+                    <th>
+                        {{ 'Cote 2'|trans }}
+                    </th>
+                    <th>
+                        {{ 'Status'|trans }}
+                    </th>
+                    <th>{{ 'Master prono' }}</th>
+                    <th>
+                        {{ 'Actions'|trans }}
+                    </th>
+                </tr>
+                {% for row in matchs %}
+
+                    <tr>
+                        <td>{{ row.dateMatch|date('d/m/Y  - h:i') }}</td>
+                        <td>
+                            <div class="flag flag-{{ row.equipeDomicile|lower|slice(0, 2) }}"
+                                 alt="{{ row.equipeDomicile }}"></div>
+                            {{ row.equipeDomicile }}
+                        </td>
+                        <td>{{ row.score }}</td>
+                        <td>{{ row.season }}</td>
+                        <td>
+                            <div class="flag flag-{{ row.equipeVisiteur|lower|slice(0, 2) }}"
+                                 alt="{{ row.equipeVisiteur }}"></div>
+                            {{ row.equipeVisiteur }}
+                        </td>
+                        <td>{{ row.statusMatch }}</td>
+                        <td colspan="4">
+
+                            <form action="" method="post">
+                                <table class="table-matchs">
+                                <tr>
+                                    <td>
+                                        {% if row.cot1Pronostic is defined and row.cot1Pronostic %}
+                                            <input class="cote" type="text" name="cote1_{{ row.id }}"
+                                                   value="{{ row.cot1Pronostic }}"/>
+
+                                        {% else %}
+                                            <input class="cote" type="text" name="cote1_{{ row.id }}"/>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+
+                                        {% if row.coteNPronistic is defined and row.coteNPronistic %}
+                                            <input class="cote" type="text" name="coten_{{ row.id }}"
+                                                   value="{{ row.coteNPronistic }}"/>
+                                        {% else %}
+                                            <input class="cote" type="text" name="coten_{{ row.id }}"/>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if row.cote2Pronostic is defined and  row.cote2Pronostic %}
+
+                                            <input class="cote" type="text" name="cote2_{{ row.id }}"
+                                                   value="{{ row.cote2Pronostic }}"/>
+
+                                        {% else %}
+                                            <input class="cote" type="text" name="cote2_{{ row.id }}"/>
+                                        {% endif %}
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td>
+                                        {# Matert prono#}
+                                        {% if row.masterProno1 is defined and row.masterProno1 == true %}
+                                            {{ 'Cote1' }} <input type="checkbox" name="c_host_{{ row.id }}" checked="true"/> 1
+                                        {% else %}
+                                            {{ 'Cote1' }} <input type="checkbox" name="c_host_{{ row.id }}"/> 1
+
+                                        {% endif %}
+                                    </td>
+                                        <td>
+                                            {% if row.masterPronoN is defined and row.masterPronoN == true %}
+                                                <input type="checkbox" name="c_neutre_{{ row.id }}" checked="true"/> N
+
+                                            {% else %}
+                                                <input type="checkbox" name="c_neutre_{{ row.id }}"/> N
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if row.masterProno2 is defined and row.masterProno2 == true %}
+                                                <input type="checkbox" name="guest_{{ row.id }}" checked="true"/> 2
+                                            {% else %}
+                                                <input type="checkbox" name="c_guest_{{ row.id }}"/> 2
+                                            {% endif %}
+                                            <input type="hidden" name="identifiant" value="{{ row.id }}"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">{% if droitAdmin.ajout is defined and droitAdmin.ajout == true or droitAdmin.modification is defined and droitAdmin.modification == true %}
+                                                <input id="send-prono" type="submit" value="{{ 'Valider' }}"/>
+                                            {% endif %}</td>
+                                    </tr>
+                                </table>
+
+                            </form>
+
+                            {#<a href="#">{{ 'Enregister'|trans }}</a>#}
+                        </td>
+                        <td>
+                            <a href="{{ path('modifier_admin_match', {'id': row.id }) }}"><span class="glyphicon glyphicon-pencil orange" aria-hidden="true"></span></a>
+                        </td>
+
+                    </tr>
+
+
+                {% endfor %}
+            </table>
+            <div class="space"></div>
+        </div>
+    </div>
+        {% else %}
+                {{ 'vous n\' avez pas le droit de lecture sur un match ' }}
+            {% endif %}
+{% endblock %}

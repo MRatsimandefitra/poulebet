@@ -1,0 +1,3 @@
+add_notification:
+    path:     /
+    defaults: { _controller: BackAdminBundle:Notification:notify }

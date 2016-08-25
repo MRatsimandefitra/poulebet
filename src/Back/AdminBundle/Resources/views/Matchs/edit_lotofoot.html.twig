@@ -1,0 +1,55 @@
+{% extends 'BackAdminBundle::layout.html.twig' %}
+{% block title %} {{ parent() }} {% endblock %}
+{% block ariane %} {{ parent() }} {% endblock %}
+
+{% block page %}
+
+    <div class="box-header-response">
+        {{ 'Listes des Matchs du jour'|trans }}
+        {% include '@BackAdmin/Matchs/sous_menu.html.twig' %}
+    </div>
+
+    <div class="col-lg-12">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6">
+            <form action="" method="post">
+                <table>
+                    <tr>
+                        <td>{{ 'Numéro'|trans }}</td>
+                        <td>
+                            <input type="number" name="numero" required="true" value="{{ currentLotoFoot.numero }}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{ 'Loto Foot'|trans }}</td>
+                        <td>
+                            <select name="lotofoot" id="" required="true">
+                                {% if idLotoFoot == 7 %}
+                                    <option value="lf7">LotoFoot7</option>
+                                    <option value="lf15">LotoFoot15</option>
+                                {% endif %}
+                                {% if idLotoFoot == 15 %}
+                                    <option value="lf15">LotoFoot15</option>
+                                    <option value="lf7">LotoFoot7</option>
+                                {% endif %}
+
+                            </select>
+                        </td>
+                    <tr>
+                        <td>{{ 'Fin de validation'|trans }}</td>
+                        <td>
+                            <input type="text" name="finvalidation" id="datepic" required="true" value="{{ currentLotoFoot.numero }}" />
+                        </td>
+                    </tr>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <input type="submit" value="{{ 'Enregistrer' }}"/>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <div class="col-lg-3"></div>
+    </div>
+{% endblock %}

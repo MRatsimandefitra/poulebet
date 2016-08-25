@@ -1,0 +1,18 @@
+services:
+#    api_common.example:
+#        class: Api\CommonBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]
+    twig.extension.output:
+        class: Api\CommonBundle\Twig\OutputExtension
+        arguments: ["@service_container"]
+        tags:
+            - { name: twig.extension }
+    mail.manager:
+        class: Api\CommonBundle\Utils\Mailer
+        arguments: ["@service_container"]
+    http:
+        class: Api\CommonBundle\Utils\Http
+        arguments: ["@service_container"]
+    roles.manager:
+        class: Api\CommonBundle\Utils\Roles
+        arguments: ["@service_container"]

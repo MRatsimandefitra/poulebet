@@ -1,0 +1,149 @@
+{% extends 'BackAdminBundle::layout.html.twig' %}
+{% block title %} {{ parent() }} {% endblock %}
+{% block ariane %} {{ parent() }} {% endblock %}
+
+{% block page %}
+    {#<div class="box-header-response">
+        {{ 'Listes des administrateurs'|trans }}
+    </div>#}
+    <div class="col-lg-12">
+        <div class="box-header-response">
+            {{ 'Listes des administrateurs'|trans }} :
+            <div class="link">
+                {#{% if is_granted('ROLE_SUPER_ADMIN') %}#}
+                <a href="{{ path('index_administrator') }}">{{ 'Listes Administrateur'|trans }}</a>
+                {#{% endif %}#}
+            </div>
+            <div class="clear">
+
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="box-response">
+        {#{{ form(form) }}#}
+        <form action="{#{{ path('edit_roles_admin_droit', {'id': id}) }}#}" method="post">
+            <div class="user-admin">
+                <table class="table">
+                    <tr>
+                        <td>{{ 'ID'|trans }}</td>
+                        <td>{{ 'Login'|trans }}</td>
+                        <td>{{ 'Email'|trans }}</td>
+                        <td>{{ 'Nom'|trans }}</td>
+                        <td>
+                            {{ 'Prenom'|trans }}
+                        </td>
+                        <td>
+                            {{ 'Selection'|trans }}
+                        </td>
+                        {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        <td>
+                            {{ 'Super Admin'|trans }}
+
+                        </td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ admin.id }}
+                        </td>
+                        <td>
+                            {{ admin.username }}
+                        </td>
+                        <td>
+                            {{ admin.email }}
+                        </td>
+                        <td>
+                            {{ admin.nom }}
+                        </td>
+                        <td>
+                            {{ admin.prenom }}
+                        </td>
+                        <td>
+                            <input type="checkbox" name="" id="selection"/>
+                        </td>
+                        {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        <td>
+                            {% if admin.isSuperAdmin %}
+                                <input type="checkbox" name="is_super_admin" checked="true"/>
+                            {% else %}
+                                <input type="checkbox" name="is_super_admin"/>
+                            {% endif %}
+
+                        </td>
+                        {% endif %}
+                    </tr>
+                </table>
+            </div>
+
+            <table class="table table-edit-role">
+                <tr>
+                    <td>{{ 'Fonctionalité'|trans }}</td>
+                    <td><label id="lecture" for="">{{ 'Lecture'|trans }}</label></td>
+                    <td><label id="ajout" for="">{{ 'Ajout'|trans }}</label></td>
+                    <td><label id="modification" for="">{{ 'Modification'|trans }}</label></td>
+                    <td><label id="suppression" for="">{{ 'Suppression'|trans }}</label></td>
+                    {#<td>
+                        {{ 'Actions'|trans }}
+                    </td>#}
+                </tr>
+
+                {% for row in droitAdminData %}
+                    {#  {{ row.id }}  - Lecture : {{ row.lecture }}<br/>
+                      {{ row.id }} -  Modification {{ row.modification }}<br/>#}
+                    {# {% if row.lecture == 1 %}
+                         {{ row.id }}  - isdefined <br/>
+                     {% endif %}#}
+                    <tr class="{{ row.droit.fonctionnalite }}">
+                        <td>
+                            <input type="text" disabled="true" value="{{ row.droit.fonctionnalite }}"/>
+                        </td>
+                        <td class="lecture">
+                            {% if row.lecture is defined and row.lecture == 1 %}
+                                <input type="checkbox" name="lecture_{{ row.droit.id }}" checked="true"/>
+                            {% else %}
+                                <input type="checkbox" name="lecture_{{ row.droit.id }}"/>
+                            {% endif %}
+                            {#{{ form_widget(form.lecture) }}#}
+                        </td>
+                        <td class="ajout">
+                            {% if row.ajout == true %}
+                                <input type="checkbox" name="ajout_{{ row.droit.id }}" checked="true"/>
+                            {% else %}
+                                <input type="checkbox" name="ajout_{{ row.droit.id }}"/>
+                            {% endif %}
+                            {#<input type="checkbox" name="ajout_{{ row.id }}"/>#}
+                            {#{{ form_widget(form.ajout) }}#}
+                        </td>
+                        <td class="modification">
+                            {% if row.modification == true %}
+                                <input type="checkbox" name="modification_{{ row.droit.id }}" checked="true"/>
+                            {% else %}
+                                <input type="checkbox" name="modification_{{ row.droit.id }}"/>
+                            {% endif %}
+                            {#<input type="checkbox" name="modification_{{ row.id }}"/>#}
+                            {#{{ form_widget(form.modification) }}#}
+
+                        </td>
+                        <td class="suppression">
+                            {% if row.suppression == true %}
+                                <input type="checkbox" name="suppression_{{ row.droit.id }}" checked="true"/>
+                            {% else %}
+                                <input type="checkbox" name="suppression_{{ row.droit.id }}"/>
+                            {% endif %}
+                            {#<input type="checkbox" name="suppression_{{ row.id }}"/>#}
+                            {#{{ form_widget(form.suppression) }}#}
+                        </td>
+
+                        {#<td>
+
+                        </td>#}
+                    </tr>
+
+                {% endfor %}
+            </table>
+            <input class ="btn btn-primary"type="submit" value="Enregistrer">
+        </form>
+    </div>
+    </div>
+{% endblock %}

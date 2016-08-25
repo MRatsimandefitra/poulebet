@@ -1,0 +1,96 @@
+<?php
+
+namespace Api\DBBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * LotoFoot15
+ *
+ * @ORM\Table(name="loto_foot15")
+ * @ORM\Entity(repositoryClass="Api\DBBundle\Repository\LotoFoot15Repository")
+ */
+class LotoFoot15
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="numero", type="integer")
+     */
+    private $numero;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="finValidation", type="datetime")
+     */
+    private $finValidation;
+
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set numero
+     *
+     * @param integer $numero
+     *
+     * @return LotoFoot15
+     */
+    public function setNumero($numero)
+    {
+        $this->numero = $numero;
+
+        return $this;
+    }
+
+    /**
+     * Get numero
+     *
+     * @return int
+     */
+    public function getNumero()
+    {
+        return $this->numero;
+    }
+
+    /**
+     * Set finValidation
+     *
+     * @param \DateTime $finValidation
+     *
+     * @return LotoFoot15
+     */
+    public function setFinValidation($finValidation)
+    {
+        $this->finValidation = $finValidation;
+
+        return $this;
+    }
+
+    /**
+     * Get finValidation
+     *
+     * @return \DateTime
+     */
+    public function getFinValidation()
+    {
+        return $this->finValidation;
+    }
+}

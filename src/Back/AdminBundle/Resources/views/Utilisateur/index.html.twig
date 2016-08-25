@@ -1,0 +1,187 @@
+{% extends 'BackAdminBundle::layout.html.twig' %}
+{% block title %} {{ parent() }} {% endblock %}
+{% block ariane %} {{ parent() }} {% endblock %}
+
+{% block page %}
+    <div class="col-lg-12">
+        <div class="box-header-response">
+            {{ 'Listes des Membres'|trans }}
+            <div class="link">
+                {#{% if is_granted('ROLE_SUPER_ADMIN') %}#}
+                {# <a href="{{ path('index_administrator') }}">{{ 'Gestion administrateur'|trans }}</a> |#}
+                {#{% endif %}#}
+                {% if currentAdmin.lecture == true %}
+                    <a href="{{ path('export_csv_utilisateur') }}">{{ 'Export csv'|trans }}</a>
+                {% endif %}
+            </div>
+            <div class="clear">
+
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        {% if currentAdmin.lecture == true %}
+            <div class="box-response">
+                {% for flash_message in app.session.flashBag.get('notice') %}
+                    <div class="flash-notice">
+                        {{ flash_message }}
+                    </div>
+                {% endfor %}
+                <div class="search">
+                    <label class="white" for="">
+                        Afficher
+                    </label>
+
+                    <form id="nbpage" method="get" action="{{ path('index_admin_utilisateur') }}" >
+                        <select class="nbaffiche" onchange="onSelectChange(this.value);" >
+                            <option value="0">10</option>
+                            <option value="0">20</option>
+                            <option value="0">30</option>
+                        </select>
+                    </form>
+
+                    <label class="white" for="">
+                        Entrees
+                    </label>
+                    <div class="count">
+                        {{ 'Total' }} : {{ pagination.getTotalItemCount }}
+                    </div>
+                </div>
+                <table class="table-user">
+                    <thead>
+                    <td>{{ 'Nom d\' Utilisateur'|trans }}
+                <div class="tri">
+                    <a href="{{ path('index_admin_utilisateur',{'tri': 'asc', 'champ': 'username'}) }}">
+                        <img class="tri" id="up" src="{{ asset('images/up.png') }}" width="16" height="16" alt=""/>
+                    </a>
+                    <a href="{{ path('index_admin_utilisateur',{'tri': 'desc'}) }}">
+                        <img class="tri" id="up" src="{{ asset('images/down.png') }}" width="16" height="16" alt=""/>
+                    </a>
+                </div>
+
+            </td>
+            <td>{{ 'E-mail'|trans }}
+                <div class="tri">
+                    <a href="{{ path('index_admin_utilisateur',{'tri': 'asc', 'champ': 'email'}) }}">
+                        <img class="tri" id="up" src="{{ asset('images/up.png') }}" width="16" height="16" alt=""/>
+                    </a>
+                    <a href="{{ path('index_admin_utilisateur',{'tri': 'desc'}) }}">
+                        <img class="tri" id="up" src="{{ asset('images/down.png') }}" width="16" height="16" alt=""/>
+                    </a>
+                </div>
+            </td>
+            <td>{{ 'Pays'|trans }}
+                <div class="tri">
+                    <a href="{{ path('index_admin_utilisateur',{'tri': 'asc'}) }}">
+                        <img class="tri" id="up" src="{{ asset('images/up.png') }}" width="16" height="16" alt=""/>
+                    </a>
+                    <a href="{{ path('index_admin_utilisateur',{'tri': 'desc'}) }}">
+                        <img class="tri" id="up" src="{{ asset('images/down.png') }}" width="16" height="16" alt=""/>
+                    </a>
+                </div>
+
+            </td>
+            <td>{{ 'Nombre de pronos'|trans }}
+                <div class="tri">
+                    <a href="{{ path('index_admin_utilisateur',{'tri': 'asc'}) }}">
+                        <img class="tri" id="up" src="{{ asset('images/up.png') }}" width="16" height="16" alt=""/>
+                    </a>
+                    <a href="{{ path('index_admin_utilisateur',{'tri': 'desc'}) }}">
+                        <img class="tri" id="up" src="{{ asset('images/down.png') }}" width="16" height="16" alt=""/>
+                    </a>
+                </div>
+            </td>
+            <td>{{ 'Score total'|trans }}
+                <div class="tri">
+                    <a href="{{ path('index_admin_utilisateur',{'tri': 'asc'}) }}">
+                        <img class="tri" id="up" src="{{ asset('images/up.png') }}" width="16" height="16" alt=""/>
+                    </a>
+                    <a href="{{ path('index_admin_utilisateur',{'tri': 'desc'}) }}">
+                        <img class="tri" id="up" src="{{ asset('images/down.png') }}" width="16" height="16" alt=""/>
+                    </a>
+                </div>
+            </td>
+            {#{% if is_granted('ROLE_SUPER_ADMIN') %}#}
+            <td>{{ 'Actions'|trans }}</td>
+            {#{% endif %}#}
+            </thead>
+            <tbody>
+            {% for row in entities %}
+                <tr>
+                    <td>
+                        {{ row.username }}
+                    </td>
+                    <td>
+                        {{ row.email }}
+                    </td>
+                    <td>
+                        {% if row.pays is not null %}
+                            {{ row.pays }}
+                        {% else %}
+                            ---
+                        {% endif %}
+                    </td>
+                    <td>
+                        ---
+                    </td>
+                    <td>
+                        ---
+                    </td>
+                    {#{% if is_granted('ROLE_SUPER_ADMIN') %}#}
+                    <td>
+                        {% if currentAdmin.modification is defined %}
+                            {% if currentAdmin.modification == true %}
+                                <a href="{{ path('update_admin_utilisateur', {'id': row.id }) }}"> {{ 'Update'|trans }}</a> |
+                            {% endif %}
+                        {% endif %}
+
+                        {% if currentAdmin.suppression is defined %}
+                            {% if currentAdmin.suppression == true %}
+                                <a id="supprimer-utilisateur" href="{{ path('remove_admin_utilisateur', {'id': row.id }) }}"> {{ 'Delete'|trans }}</a> |
+                            {% endif %}
+                        {% endif %}
+
+                        {% if currentAdmin.lecture is defined %}
+                            {% if currentAdmin.lecture == true %}
+                                  <a href="{{ path('details_admin_utilisateur', {'id': row.id }) }}"> {{ 'Details'|trans }}</a> |
+                            {% endif %}
+                        {% endif %}
+                        {% if currentAdmin.lecture is defined %}
+                            {% if currentAdmin.lecture == true %}
+                                <a href="{{ path('mvtCredit_utilisateur', {'id': row.id }) }}"> {{ 'Crédit'|trans }}</a>
+                            {% endif %}    
+                        {% endif %}    
+                    </td>
+                    {#{% endif %}#}
+
+                </tr>
+            {% endfor %}
+            </tbody>
+            <thead>
+            <td>{{ 'Nom d\' Utilisateur'|trans }}</td>
+                    <td>{{ 'E-mail'|trans }}</td>
+                    <td>{{ 'Pays'|trans }}</td>
+                    <td>{{ 'Nombre de pronos'|trans }}</td>
+                    <td>{{ 'Score total'|trans }}</td>
+                    {#{% if is_granted('ROLE_SUPER_ADMIN') %}#}
+                    <td>{{ 'Actions'|trans }}</td>
+                    {#{% endif %}#}
+                    </thead>
+                </table>
+                <div class="search">
+                    {#<label class="white" for="">
+                        Afficher
+        
+                        Entrees
+                    </label>#}
+
+                    <div class="navigation">
+                        {{ knp_pagination_render(pagination) }}
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            {{ "Vous n\'avez pas l\'autorisation pour cette page"|trans }}
+        {% endif %}
+    </div>
+{% endblock %}
