@@ -48,20 +48,7 @@ class PronosticController extends ApiRestController
             'championnat'=>null
         ));
     }
-    public function getMatchsByChampionnatAction(Request $request){
-        $idChampionnat = $request->get("idChampionnat");
-        $championnat = $this->getEm()->getRepository(self::ENTITY_CHAMPIONNAT)->findOneByNomChampionat($idChampionnat);
-        if(!$championnat){
-            return new JsonResponse(array(
-                'success'=>false,
-                'message'=>'Ce championnat non existant'
-            ));
-        }
-        $matchs = $this->getEm()->getRepository(self::ENTITY_MATCHS)->findMatchsByChampionnat($championnat->getNomChampionat());
-        return new JsonResponse(array(
-            'matchs'=>$matchs
-        ));
-    }
+}
 
 
 

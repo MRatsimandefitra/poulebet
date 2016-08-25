@@ -49,6 +49,17 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         $query = $this->getEntityManager()->createQuery($dql);
         return $query->getResult();
     }
+    function findMatchsByChampionnat($title){
+        
+        $dql = "SELECT m,ch FROM ApiDBBundle:Matchs m"
+                . " INNER JOIN m.championat ch"
+                . " WHERE ch.nomChampionat = :title"
+                . " ORDER BY m.dateMatch desc"
+                ;
+        $query = $this->getEntityManager()->createQuery($dql);
+        $query->setParameter("title", $title);
+        return $query->getArrayResult();
+    }
 
     function findMatchsByChampionnat($title){
         

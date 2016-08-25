@@ -12,13 +12,10 @@ DirectoryIndex app_dev.php
 # when compiling LESS/Sass/CoffeScript assets.
 # Options FollowSymlinks
 
-<<<<<<< HEAD
+
 # Disabling MultiViews prevents unwanted negotiation, e.g. "/app_dev" should not resolve
 # to the front controller "/app_dev.php" but be rewritten to "/app_dev.php/app_dev".
-=======
-# Disabling MultiViews prevents unwanted negotiation, e.g. "/app" should not resolve
-# to the front controller "/app.php" but be rewritten to "/app.php/app".
->>>>>>> 27fe97e41ea818c3b643f023826a602b0026ab09
+
 <IfModule mod_negotiation.c>
     Options -MultiViews
 </IfModule>
