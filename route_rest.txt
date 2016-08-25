@@ -1,0 +1,8 @@
+ - get match with championat:
+/_ws/rest/championat/get-with-matchs
+
+- Listes des championat valide:
+/_ws/rest/championat/get-championat-matchs
+
+ - Liste des championat by country
+/_ws/rest/championat /get-championat-by-country

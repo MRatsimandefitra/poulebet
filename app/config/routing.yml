@@ -1,0 +1,34 @@
+NelmioApiDocBundle:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /api/doc
+back_authentication:
+    resource: "@BackAuthenticationBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+back_signup:
+    resource: "@BackSignupBundle/Resources/config/routing.yml"
+    prefix:   /signup
+
+ws_rest:
+    resource: "@WsRestBundle/Resources/config/routing.yml"
+    prefix:   /_ws/rest
+
+api_common:
+    resource: "@ApiCommonBundle/Resources/config/routing.yml"
+    prefix:   /api/common
+
+api_theme:
+    resource: "@ApiThemeBundle/Resources/config/routing.yml"
+    prefix:   /api/theme
+
+api_db:
+    resource: "@ApiDBBundle/Resources/config/routing.yml"
+    prefix:   /api/db
+
+back_admin:
+    resource: "@BackAdminBundle/Resources/config/routing.yml"
+    prefix:   /admin
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
