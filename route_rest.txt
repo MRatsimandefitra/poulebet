@@ -6,3 +6,9 @@
 
  - Liste des championat by country
 /_ws/rest/championat /get-championat-by-country
+
+1 - Ws, récupérer la liste des championnats qui ont des matchs
+/_ws/rest/championat/get-championat-with-maths
+
+2 - Ws, récupérer la liste des matchs pour le championnat sélectionné.(tri décroissant).
+/_ws/rest/championat/get-list-match-by-championat

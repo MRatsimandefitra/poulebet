@@ -5,6 +5,7 @@ namespace Ws\RestBundle\Controller;
 use Api\CommonBundle\Controller\ApiController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 class ChampionatController extends ApiController
 {
@@ -78,5 +79,83 @@ class ChampionatController extends ApiController
     public function getListChampionatByCountryAction($pays){
         $this->getRepo(self::ENTITY_CHAMPIONAT)->getChampionatParPays();
 
+    }
+
+    /**
+     * Ws, récupérer la liste des championnats qui ont des matchs
+     */
+    public function getListeChampionatWithMatchAction()
+    {
+        $data = $this->getRepo(self::ENTITY_MATCHS)->getListChampionatWithMatch();
+        $result = array();
+        if ($data) {
+            foreach ($data as $k => $vData) {
+                $result['list_championat'][] = array(
+                    'nomChampionat' => $vData->getChampionat()->getNomChampionat(),
+                    'fullNameChampionat' => $vData->getChampionat()->getFullNameChampionat(),
+                    'season' => $vData->getChampionat()->getSeason()
+                );
+            }
+            $result['code_error'] = 0;
+            $result['message'] = 'success';
+        } else {
+            $result['code_error'] = 4;
+            $result['message'] = "Aucun resultat n'a été trouvé";
+        }
+        return new JsonResponse($result);
+    }
+
+    /**
+     * Ws, récupérer la liste des matchs pour le championnat sélectionné.(tri décroissant).
+     *
+     */
+    public function getListeMatchsBySelectedChampionatAction(Request $request)
+    {
+        $championat = $request->request->get('championat');
+
+        $data = $this->getRepo(self::ENTITY_MATCHS)->getListeMatchsBySelectedChampionat($championat);
+
+        $result = array();
+        if ($data) {
+            foreach ($data as $vData) {
+                $result['championat'] = $vData->getChampionat()->getFullNameChampionat();
+                $result['list_match'][] = array(
+                    'id' => $vData->getId(),
+                    'dateMatch' =>  $vData->getDateMatch(),
+                    'equipeDomicile' => $vData->getEquipeDomicile(),
+                    'equipeVisiteur' => $vData->getEquipeVisiteur(),
+                    /*'logoDomicile' => $vData->getTeamsDomicile()->getLogo(),
+                    'logoVisiteur' => $vData->getTeamsVisiteur()->getLogo(),*/
+                    'score' => $vData->getScore(),
+                    'status' => $vData->getStatusMatch(),
+                    'cote_pronostic' => array(
+                        '1' => $vData->getCot1Pronostic(),
+                        'n' => $vData->getCoteNPronistic(),
+                        '2' => $vData->getCote2Pronostic()
+                    ),
+                    'tempsEcoules' => $vData->getTempsEcoules(),
+                    'master_prono' => array(
+                        '1' => $vData->getMasterProno1(),
+                        'n' => $vData->getMasterPronoN(),
+                        '2' => $vData->getMasterProno2()
+                    )
+
+                );
+
+            }
+            $result['code_error'] = 0;
+            $result['message'] = 'success';
+        } else {
+            $result['code_error'] = 4;
+            $result['message'] = 'Aucun resultat n\'a été trouvé';
+        }
+        return new JsonResponse($result);
+    }
+
+    /**
+     * Ws, récupérer la liste des paysqui ont des championnats nationaux avec des matchs
+     */
+    public function getListePaysWithChampionatWithMatchsAction(){
+        $this->getRepo(self::ENTITY_MATCHS);
     }
 }

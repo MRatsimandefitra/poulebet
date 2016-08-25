@@ -10,3 +10,11 @@ ws_rest_list_championat_by_country:
     path:     /get-championat-by-country
     defaults: { _controller: WsRestBundle:Championat:getListChampionatByCountry }
     methods: POST
+ws_rest_list_championat_with_matchs:
+    path:     /get-championat-with-maths
+    defaults: { _controller: WsRestBundle:Championat:getListeChampionatWithMatch }
+    methods: GET
+ws_rest_list_match_by_championat:
+    path:     /get-list-match-by-championat
+    defaults: { _controller: WsRestBundle:Championat:getListeMatchsBySelectedChampionat }
+    methods: POST

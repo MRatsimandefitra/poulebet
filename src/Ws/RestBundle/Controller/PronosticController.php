@@ -51,5 +51,3 @@ class PronosticController extends ApiRestController
 }
 
 
-
-}

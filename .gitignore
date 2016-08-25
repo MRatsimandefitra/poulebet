@@ -12,7 +12,7 @@
 /var/sessions/*
 !var/sessions/.gitkeep
 !var/SymfonyRequirements.php
-!.idea/*
+.idea/*
 .svn/
 /vendor/
 .idea/
@@ -21,4 +21,4 @@
 /web/bundles/
 composer.lock
 var/cache/
-/.svn
+
