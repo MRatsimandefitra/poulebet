@@ -10,13 +10,21 @@ use Symfony\Component\Debug\Debug;
 
 // This check prevents access to debug front controllers that are deployed by accident to production servers.
 // Feel free to remove this, extend it, or make something more sophisticated.
+<<<<<<< HEAD
 if (isset($_SERVER['HTTP_CLIENT_IP'])
+=======
+/*if (isset($_SERVER['HTTP_CLIENT_IP'])
+>>>>>>> 27fe97e41ea818c3b643f023826a602b0026ab09
     || isset($_SERVER['HTTP_X_FORWARDED_FOR'])
     || !(in_array(@$_SERVER['REMOTE_ADDR'], ['127.0.0.1', '192.168.0.185','10.2.25.232', '10.2.30.228','10.2.35.230','fe80::1', '::1']) || php_sapi_name() === 'cli-server')
 ) {
     header('HTTP/1.0 403 Forbidden');
     exit('You are not allowed to access this file. Check '.basename(__FILE__).' for more information.');
+<<<<<<< HEAD
 }
+=======
+}*/
+>>>>>>> 27fe97e41ea818c3b643f023826a602b0026ab09
 
 /**
  * @var Composer\Autoload\ClassLoader $loader
