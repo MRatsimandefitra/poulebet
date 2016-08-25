@@ -75,9 +75,11 @@ class GoalApiCommand extends ContainerAwareCommand
              * Equipe
              */
             $mEquipeDomicile = $vItems['teams']['hosts']['id'];
+            $mFullEquipeDomicile = $vItems['teams']['hosts']['fullname'];
             $teamsDomicile = $em->getRepository(self::ENTITY_TEAMS)->findOneBy(array('idNameClub' => $mEquipeDomicile));
-            $mEquipeVisiteur = $vItems['teams']['guests']['id'];
 
+            $mEquipeVisiteur = $vItems['teams']['guests']['id'];
+            $mFullEquipeVisiteur = $vItems['teams']['guests']['fullname'];
             $teamsVisiteur = $em->getRepository(self::ENTITY_TEAMS)->findOneBy(array('idNameClub' => $mEquipeVisiteur));
             /**
              * Score
@@ -123,8 +125,8 @@ class GoalApiCommand extends ContainerAwareCommand
             $match->setScore($mScore);
             $match->setResultatDomicile($resultatDomicile);
             $match->setResultatVisiteur($resultatVisiteur);
-            $match->setEquipeDomicile($mEquipeDomicile);
-            $match->setEquipeVisiteur($mEquipeVisiteur);
+            $match->setEquipeDomicile($mFullEquipeDomicile);
+            $match->setEquipeVisiteur($mFullEquipeVisiteur);
             $match->setTeamsDomicile($teamsDomicile);
             $match->setTeamsVisiteur($teamsVisiteur);
             $match->setTempsEcoules($tempEcoule);

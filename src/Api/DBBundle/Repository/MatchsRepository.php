@@ -95,7 +95,33 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
     /**
      * Ws, récupérer la liste des pays qui ont des championnats nationaux avec des matchs
      */
-    function getListePaysWithChampionatWithMatchs($pays){
-        $dql ="SELECT ";
+    function getListePaysWithChampionatWithMatchs()
+    {
+        $dql = "SELECT m, ch, td, tv from ApiDBBundle:Matchs m
+               LEFT JOIN  m.championat ch
+               LEFT JOIN  m.teamsVisiteur tv
+               LEFT JOIN m.teamsDomicile td
+               LEFT JOIN td.teamsPays tpd
+               LEFT JOIN tv.teamsPays tpv
+               GROUP BY tpd.name ";
+        $query = $this->getEntityManager()->createQuery($dql);
+        //$query->setParameter('pays', $pays);
+        return $query->getResult();
+    }
+
+    /**
+     * Ws récupérer la liste des championnats nationaux pour le pays sélectionné
+     */
+    function findListeChampionatNationauxByPays($pays)
+    {
+        $dql = "SELECT ch, tp from ApiDBBundle:Championat ch
+                LEFT JOIN ch.teamsPays tp
+                WHERE CURRENT_DATE() BETWEEN ch.dateDebutChampionat and ch.dateFinaleChampionat
+                AND tp.name LIKE :pays
+                OR tp.fullName LIKE :pays";
+        $query = $this->getEntityManager()->createQuery($dql);
+        $query->setParameter('pays', $pays);
+        return $query->getResult();
+
     }
 }

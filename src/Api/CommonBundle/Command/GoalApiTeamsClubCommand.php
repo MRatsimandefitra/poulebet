@@ -38,6 +38,9 @@ class GoalApiTeamsClubCommand extends ContainerAwareCommand
                 $i = $i + 1;
 
                 foreach($vData as $kk =>$vvData){
+                    if ($k == 'en') {
+                        $k = 'eng';
+                    }
                     $teamsPays = $this->getRepo(self::ENTTTY_TEAMS_PAYS)->findOneBy(array('codePays' => $k.'_int'));
                     $teams = $this->getRepo(self::ENTTTY_TEAMS)->findOneBy(array('idNameClub' => $kk));
 
