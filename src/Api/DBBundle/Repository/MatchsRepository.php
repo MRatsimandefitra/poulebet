@@ -103,7 +103,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
                LEFT JOIN m.teamsDomicile td
                LEFT JOIN td.teamsPays tpd
                LEFT JOIN tv.teamsPays tpv
-               GROUP BY tpd.name ";
+               ";
         $query = $this->getEntityManager()->createQuery($dql);
         //$query->setParameter('pays', $pays);
         return $query->getResult();
@@ -123,5 +123,14 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         $query->setParameter('pays', $pays);
         return $query->getResult();
 
+    }
+
+    function getDataPaysChampionat(){
+        $dql = "SELECT ch from ApiDBBundle:Championat ch
+                LEFT JOIN ch.teamsPays tp
+                WHERE CURRENT_DATE() BETWEEN ch.dateDebutChampionat and ch.dateFinaleChampionat
+                ";
+        $query = $this->getEntityManager()->createQuery($dql);
+        return $query->getResult();
     }
 }

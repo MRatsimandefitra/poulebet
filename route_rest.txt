@@ -1,5 +1,6 @@
 
 1 - Ws, récupérer la liste des championnats qui ont des matchs
+GET
 /_ws/rest/championat/get-championat-with-maths
 
 2 - Ws, récupérer la liste des matchs pour le championnat sélectionné.(tri décroissant).
