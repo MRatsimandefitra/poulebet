@@ -52,7 +52,7 @@
                         <table class="table-user">
                             <thead>
                             <td>
-                                {{'Tout'|trans}}
+                                <a id="check_all">Tout sélectionner</a>&nbsp;|&nbsp;<a id="uncheck_all">Déselectionner</a> 
                             </td>
                             <td>
                                 {{'Username'|trans}}
@@ -64,7 +64,7 @@
                             <tbody>
                                 {% for row in pagination%}
                                     <tr>
-                                        <td><input type="checkbox" name = "users[]" value="{{row.id}}"></td>
+                                        <td><input class="checking_users" type="checkbox" name = "users[]" value="{{row.id}}"></td>
                                         <td>{{ row.username }}</td>
                                         <td>{{ row.email }}</td>
                                     </tr>
