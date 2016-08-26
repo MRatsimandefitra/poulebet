@@ -40,12 +40,14 @@ class AdministratorController extends ApiController
 
                 }
             }
-            $currentDroitAdmin = $this->getRepo(self::ENTITY_DROIT_ADMIN)->findDroitAdminByUserConnected($this->getUser());
+            #1$currentDroitAdmin = $this->getRepo(self::ENTITY_DROIT_ADMIN)->findDroitAdminByUserConnected($this->getUser());
+            $wsRoles = $this->get('roles.manager');
+            $currentDroitAdmin = $wsRoles->getDroitAdmin('Administrator');
         }
         $administrator = $this->getAllRepo(self::ENTITY_ADMIN);
         return $this->render('BackAdminBundle:Administrator:index.html.twig', array(
             'entities' => $administrator,
-            'currentAdmin' => (!$currentDroitAdmin)? array() : $currentDroitAdmin[0]
+            'currentAdmin' => $currentDroitAdmin[0]
         ));
     }
 

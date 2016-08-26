@@ -26,3 +26,8 @@ ws_rest_list_championat_by_pays:
     path:     /get-list-championat-by-pays
     defaults: { _controller: WsRestBundle:Championat:getListChampionatBySelectedPays }
     methods: POST
+
+ws_rest_list_pays_with_championat_with_match:
+    path:     /get-list-pays-with-championat-with-matchs
+    defaults: { _controller: WsRestBundle:Championat:findListPaysWithChampionatWithMatchs }
+    methods: GET

@@ -97,9 +97,13 @@ class ChampionatController extends ApiController
                 );
             }
             $result['code_error'] = 0;
+            $result['success'] = true;
+            $result['error'] = false;
             $result['message'] = 'success';
         } else {
             $result['code_error'] = 4;
+            $result['success'] = false;
+            $result['error'] = true;
             $result['message'] = "Aucun resultat n'a été trouvé";
         }
         return new JsonResponse($result);
@@ -140,9 +144,13 @@ class ChampionatController extends ApiController
 
             }
             $result['code_error'] = 0;
+            $result['success'] = true;
+            $result['error'] = false;
             $result['message'] = 'success';
         } else {
             $result['code_error'] = 4;
+            $result['success'] = false;
+            $result['error'] = true;
             $result['message'] = 'Aucun resultat n\'a été trouvé';
         }
         return new JsonResponse($result);
@@ -153,15 +161,18 @@ class ChampionatController extends ApiController
      */
     public function getListePaysWithChampionatWithMatchsAction()
     {
+
         $data = $this->getRepo(self::ENTITY_MATCHS)->getListePaysWithChampionatWithMatchs();
         $result = array();
         if ($data) {
+
             foreach ($data as $vData) {
-                $result['pays'][] = array(
-                    'nom' => $vData->getTeamsVisiteur()->getTeamsPays()->getName()
-                );
+                var_dump($vData);
+                die;
             }
             $result['code_erreur'] = 0;
+            $result['success'] = true;
+            $result['error'] = false;
             $result['message'] = "Success";
         } else {
             $result['code_erreur'] = 4;
@@ -189,14 +200,44 @@ class ChampionatController extends ApiController
                 //var_dump(); die;
             }
             $result['code_error'] = 0;
-            $result['message'] = "";
+            $result['message'] = "sucess";
+            $result['success'] = true;
+            $result['error'] = false;
         } else {
 
             $result['code_error'] = 4;
+            $result['success'] = false;
+            $result['error'] = true;
             $result['message'] = "Aucun donné n'a été trouvé";
         }
 
         return new JsonResponse($result);
 
+    }
+
+
+    public function findListPaysWithChampionatWithMatchsAction()
+    {
+        $data = $this->getRepo(self::ENTITY_CHAMPIONAT)->findListPaysWithChampionatWithMatchs();
+        $result = array();
+        if ($data) {
+            foreach ($data as $k => $vData) {
+                $result[] = array(
+                    'pays' => $vData->getTeamsPays()[0]->getName(),
+                    'championat' => $vData->getFullNameChampionat()
+                );
+            }
+            $result['code_error'] = 0;
+            $result['success'] = true;
+            $result['error'] = false;
+            $result['message'] = "Success";
+        } else {
+            $result['code_error'] = 4;
+            $result['success'] = false;
+            $result['error'] = true;
+            $result['message'] = "Aucun résultat n'a été trouvé";
+        }
+
+        return new JsonResponse($result);
     }
 }

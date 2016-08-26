@@ -18,4 +18,14 @@ class ChampionatRepository extends \Doctrine\ORM\EntityRepository
         $query->setParameter('pays', $pays);
         return $query->getResult();
     }
+
+    public function findListPaysWithChampionatWithMatchs()
+    {
+        $dql = "SELECT ch, tp from ApiDBBundle:Championat ch
+                LEFT JOIN ch.teamsPays tp
+                WHERE CURRENT_DATE() BETWEEN ch.dateDebutChampionat and ch.dateFinaleChampionat";
+        $query = $this->getEntityManager()->createQuery($dql);
+        return $query->getResult();
+
+    }
 }
