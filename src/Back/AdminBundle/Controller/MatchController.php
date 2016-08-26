@@ -436,7 +436,7 @@ class MatchController extends ApiController
             if(count($arrayData) > 7){
                 echo("<script>alert('Nombre de match > 7');</script>"); 
             }
-            if(count($arrayData) == 7){
+            if(count($arrayData) <= 7){
 
                 foreach($idarray as $vId){
 
@@ -513,5 +513,28 @@ class MatchController extends ApiController
     private function getDroitAdmin($droit){
         $droitAdmin = $this->getRepo(self::ENTITY_DROIT_ADMIN)->findBy(array('admin' => $this->getUser(), 'droit' => $this->getRepo(self::ENTITY_DROIT)->findOneBy(array('fonctionnalite' => $droit))));
         return $droitAdmin;
+    }
+    
+    public function removeMatchInLotoFootAction(Request $request,$idLotoFoot,$lotoId,$id){
+        
+        $match = $this->getRepoFormId(self::ENTITY_MATCH, $id);
+        if($idLotoFoot == 7){
+            $lotoFoot = $this->getRepoFormId(self::ENTITY_LOTOFOOT7, $lotoId);
+            $lotoFoot->removeMatch($match);
+            $match->setLotoFoot7(null);
+        }
+        if($idLotoFoot == 15){
+            $lotoFoot = $this->getRepoFormId(self::ENTITY_LOTOFOOT15, $lotoId);
+            $lotoFoot->removeMatch($match);
+            $match->setLotoFoot15(null);
+        }
+        $this->getEm()->persist($match);
+        $this->getEm()->persist($lotoFoot);
+        $this->getEm()->flush();
+        //echo(count($lotoFoot->getMatchs()));die();
+        return $this->redirectToRoute("add_match_loto_foot", array(
+           "idLotoFoot" => $idLotoFoot,
+            "id"=>$lotoId
+        ));
     }
 }

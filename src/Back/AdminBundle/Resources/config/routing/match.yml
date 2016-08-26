@@ -25,3 +25,6 @@ remove_loto_foot:
 add_match_loto_foot:
     path:     /lotofoot/{idLotoFoot}/add-match/{id}
     defaults: { _controller: BackAdminBundle:Match:addMatchInLotoFoot }
+remove_match_loto_foot:
+    path:     /lotofoot/{idLotoFoot}/{lotoId}/remove-match/{id}
+    defaults: { _controller: BackAdminBundle:Match:removeMatchInLotoFoot }

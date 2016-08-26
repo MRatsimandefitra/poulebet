@@ -34,7 +34,11 @@ class LotoFoot7
      * @ORM\Column(name="finValidation", type="datetime")
      */
     private $finValidation;
-
+    
+    /**
+    * @ORM\OneToMany(targetEntity="Api\DBBundle\Entity\Matchs", mappedBy="lotoFoot7", cascade={"persist", "remove"})
+    */
+    private $matchs;
 
     /**
      * Get id
@@ -92,5 +96,46 @@ class LotoFoot7
     public function getFinValidation()
     {
         return $this->finValidation;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->matchs = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add match
+     *
+     * @param \Api\DBBundle\Entity\Matchs $match
+     *
+     * @return LotoFoot7
+     */
+    public function addMatch(\Api\DBBundle\Entity\Matchs $match)
+    {
+        $this->matchs[] = $match;
+
+        return $this;
+    }
+
+    /**
+     * Remove match
+     *
+     * @param \Api\DBBundle\Entity\Matchs $match
+     */
+    public function removeMatch(\Api\DBBundle\Entity\Matchs $match)
+    {
+        $this->matchs->removeElement($match);
+    }
+
+    /**
+     * Get matchs
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMatchs()
+    {
+        return $this->matchs;
     }
 }
