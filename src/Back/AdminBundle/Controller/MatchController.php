@@ -434,7 +434,7 @@ class MatchController extends ApiController
                 //  die('erreur < 7');
             }
             if(count($arrayData) > 7){
-                die('erreur > 7');
+                echo("<script>alert('Nombre de match > 7');</script>"); 
             }
             if(count($arrayData) == 7){
 

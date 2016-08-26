@@ -30,7 +30,9 @@ class NotificationController extends ApiController {
         $users_id = $request->get('users');
         $nbpage = 10; 
         $criteria = array();
-        
+        if($request->get('nbpage')){
+            $nbpage = $request->get('nbpage');
+        }
         if($request->get('criteria_username')!=null){
             $criteria["criteria_username"]= $request->get('criteria_username');
         }

@@ -4,7 +4,7 @@
 
 {% block page %}
     <div class="box-header-response">
-        {{ 'Listes des administrateurs'|trans }}
+        {{ 'Liste des administrateurs'|trans }}
         <div class="link">
 
         </div>
@@ -30,7 +30,7 @@
                                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                                     </span>
                 {% if currentAdmin.ajout == true or is_granted('ROLE_SUPER_ADMIN') %}
-                <a href="{{ path('add_new_administrator') }}">{{ "Ajouter administrator"|trans }}</a>
+                <a href="{{ path('add_new_administrator') }}">{{ "Ajouter un administrateur"|trans }}</a>
                 {% endif %}
             </div>
         </div>

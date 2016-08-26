@@ -11,6 +11,12 @@ $(document).ready(function(){
         }
         return true;
     });
+    $('#check_all').click(function(){
+         $('input:checkbox').not(this).prop('checked', "checked");
+    });
+    $('#uncheck_all').click(function(){
+        $("input.checking_users").removeAttr("checked");
+    });
 
 
 
