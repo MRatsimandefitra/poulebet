@@ -131,7 +131,7 @@
                 {% if idLotoFoot == 7 %}
                     {% if rowMatchs.lotoFoot7 is not null and rowMatchs.lotoFoot7 %}
                         <input class="selection_match" type="checkbox" name="select_{{ rowMatchs.id }}" checked="true"/>
-                        <a onclick="supprimer('Etes vous sur de vouloir supprimer ce match ?')" href="#">
+                        <a onclick="supprimer('Etes vous sur de vouloir supprimer ce match ?')" href="{{ path('remove_match_loto_foot',{'idLotoFoot': idLotoFoot, 'lotoId':entity.id, 'id':rowMatchs.id} ) }}">
                             <span class="glyphicon glyphicon-remove-circle red" aria-hidden="true"></span>
                         </a>
 

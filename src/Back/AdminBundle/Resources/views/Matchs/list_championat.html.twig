@@ -36,15 +36,12 @@
                     <td>
                         {{ row.typeChampionat }}
                     </td>
-                    <<<<<<< HEAD
                     <td>
                         {% if row.season is defined and row.season %}
                             {{ row.season }}
                         {% endif %}
                     </td>
-                    =======
-
-                    >>>>>>> 27fe97e41ea818c3b643f023826a602b0026ab09
+                   
                     <td>
                         {{ row.dateDebutChampionat|date('d-m-Y') }}
                     </td>
@@ -57,9 +54,6 @@
                         {% set dateFinaleChampionat = row.dateFinaleChampionat|date('Y-m-d') %}
 
                         {% if dateDebutChampionat <= today and dateFinaleChampionat >= today %}
-                        <div class="carre green">
-
-                        </div>
                             {% endif %}
                     </td>
                     <td></td>

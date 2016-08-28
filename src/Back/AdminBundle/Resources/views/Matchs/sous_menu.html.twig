@@ -1,11 +1,5 @@
 <div class="link">
     {% if droitAdmin.lecture is defined and droitAdmin.lecture %}
-    <span class="glyphicon glyphicon-plus green" aria-hidden="true"></span>
-    {% endif %}
-    {% if droitAdmin.ajout is defined and droitAdmin.ajout %}
-    <a href="{{ path('add_loto_foot') }}">{{ 'Ajout Loto Foot'|trans }}</a>&nbsp; | &nbsp;
-    {% endif %}
-    {% if droitAdmin.lecture is defined and droitAdmin.lecture %}
     <span class="glyphicon glyphicon-th-list violet" aria-hidden="true"></span>
     <a href="{{ path('list_loto_foot') }}">{{ 'Liste Loto Foot'|trans }}</a>
     {% endif %}

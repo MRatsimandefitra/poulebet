@@ -5,11 +5,21 @@
 {% block page %}
 
     <div class="box-header-response">
-        {{ 'Listes des Matchs du jour'|trans }}
-        {% include '@BackAdmin/Matchs/sous_menu.html.twig' %}
+        {{ 'Liste des lotos foot'|trans }}
+        <div class="link">
+            {% if droitAdmin.lecture is defined and droitAdmin.lecture %}
+                <span class="glyphicon glyphicon-th-list violet" aria-hidden="true"></span>
+                <a href="{{ path('list_championat') }}">{{ 'Liste des championats'|trans }}</a>
+            {% endif %}
+        </div>
     </div>
-
     <div class="col-lg-12">
+        {% if droitAdmin.lecture is defined and droitAdmin.lecture %}
+        <span class="glyphicon glyphicon-plus green" aria-hidden="true"></span>
+        {% endif %}
+        {% if droitAdmin.ajout is defined and droitAdmin.ajout %}
+            <a href="{{ path('add_loto_foot') }}">{{ 'Ajout Loto Foot'|trans }}</a>&nbsp;  &nbsp;
+        {% endif %}
         <div class="list">
             <table>
                 <tr>
