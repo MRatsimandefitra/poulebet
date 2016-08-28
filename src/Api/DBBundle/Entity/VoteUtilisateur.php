@@ -13,8 +13,13 @@ use Doctrine\ORM\Mapping as ORM;
 class VoteUtilisateur
 {
     /**
+     * @ORM\ManyToOne(targetEntity="Matchs", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $matchs;
+    /**
      * @ORM\ManyToOne(targetEntity="matchIndividuel", cascade={"persist"})
-     * @ORM\JoinColumn(name="matchindividuel_id")
+     * @ORM\JoinColumn(name="matchindividuel_id", nullable=true)
      */
     private $matchIndividuel;
 
@@ -152,5 +157,29 @@ class VoteUtilisateur
     public function getUtilisateur()
     {
         return $this->utilisateur;
+    }
+
+    /**
+     * Set matchs
+     *
+     * @param \Api\DBBundle\Entity\Matchs $matchs
+     *
+     * @return VoteUtilisateur
+     */
+    public function setMatchs(\Api\DBBundle\Entity\Matchs $matchs = null)
+    {
+        $this->matchs = $matchs;
+
+        return $this;
+    }
+
+    /**
+     * Get matchs
+     *
+     * @return \Api\DBBundle\Entity\Matchs
+     */
+    public function getMatchs()
+    {
+        return $this->matchs;
     }
 }

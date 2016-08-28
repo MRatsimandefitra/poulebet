@@ -16,6 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Matchs
 {
+
     /**
      * @ORM\ManyToOne(targetEntity="Teams", cascade={"persist"})
      */
