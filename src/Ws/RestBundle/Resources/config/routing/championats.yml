@@ -1,0 +1,24 @@
+ws_rest_list_match_by_championat:
+    path:     /get-list-match-by-championat
+    defaults: { _controller: WsRestBundle:Championats:getListeMatchsBySelectedChampionat }
+    methods: GET
+ws_rest_list_championat_with_matchs:
+    path:     /get-championat-with-maths
+    defaults: { _controller: WsRestBundle:Championats:getListeChampionatWithMatch }
+    methods: POST #argument: championat (string) ex: wc_
+ws_rest_list_pays_with_championat_matchs:
+    path:     /get-list-pays-with-championat-matchs
+    defaults: { _controller: WsRestBundle:Championats:getListePaysWithChampionatWithMatch }
+    methods: GET
+ws_rest_list_championat_with_match:
+    path:     /get-list-championat-with-matchs
+    defaults: { _controller: WsRestBundle:Championats:getListeChampionatWithMatchByPays }
+    methods: POST
+ws_rest_list_match_by_championat:
+    path:     /get-list-championat-with-matchs
+    defaults: { _controller: WsRestBundle:Championats:getListeChampionatWithMatchByPays }
+    methods: POST
+ws_rest_list_pays_and_championat:
+    path:     /get-list-pays-and-championat
+    defaults: { _controller: WsRestBundle:Championats:getListePaysWithChampionatAvecMatchs }
+    methods: GET

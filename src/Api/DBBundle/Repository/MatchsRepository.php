@@ -124,4 +124,49 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         return $query->getResult();
 
     }
+
+
+    /**
+     * By pays
+     * @return array
+     */
+    public function getListePaysWithChampionatWithMatch()
+    {
+        $dql = "SELECT m from ApiDBBundle:Matchs m
+                LEFT JOIN m.championat ch
+                LEFT JOIN ch.teamsPays ";
+        $query = $this->getEntityManager()->createQuery($dql);
+        return $query->getResult();
+    }
+
+    function getListeChampionatWithMatchByPays($pays)
+    {
+        $dql = "SELECT m from ApiDBBundle:Matchs m
+                LEFT JOIN m.championat ch
+                LEFT JOIN ch.teamsPays tp
+                WHERE tp.name LIKE :pays";
+        $query = $this->getEntityManager()->createQuery($dql);
+        $query->setParameter('pays', $pays);
+        return $query->getResult();
+    }
+
+    function getListeMatchByChampionat($championat)
+    {
+        $dql = "SELECT m from ApiDBBundle:Matchs m
+                LEFT JOIN m.championat ch
+                LEFT JOIN ch.teamsPays tp
+                WHERE ch.nomChampionat LIKE :championat";
+        $query = $this->getEntityManager()->createQuery($dql);
+        $query->setParameter('championat', $championat);
+        return $query->getResult();
+    }
+
+    function getMatchLiveScore()
+    {
+        $dql = "SELECT m from ApiDBBundle:Matchs m
+                WHERE m.statusMatch LIKE :status ";
+        $query = $this->getEntityManager()->createQuery($dql);
+        $query->setParameter('status', 'active');
+        return $query->getResult();
+    }
 }
