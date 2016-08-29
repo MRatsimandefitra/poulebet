@@ -106,7 +106,7 @@
                               <img class ="fanion" src="{{ asset('images/Flag-foot/'~row.teamsDomicile.idNameClub~'.png')}}" alt=""/>
                           </div>
 
-                            {{ row.equipeDomicile }}
+                            {{ row.teamsDomicile.fullNameClub }}
                         </td>
                         <td>{{ row.score }}</td>
                         <td>{{ row.season }}</td>
@@ -114,7 +114,7 @@
                             <div >
                               <img class ="fanion" src="{{ asset('images/Flag-foot/'~row.teamsVisiteur.idNameClub~'.png')}}" alt=""/>
                             </div>
-                            {{ row.equipeVisiteur }}
+                            {{ row.teamsVisiteur.fullNameClub }}
                         </td>
                         <td>{{ row.statusMatch }}</td>
                         <td>

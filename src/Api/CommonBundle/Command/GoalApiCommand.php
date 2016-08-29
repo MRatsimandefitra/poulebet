@@ -118,6 +118,7 @@ class GoalApiCommand extends ContainerAwareCommand
             }else{
                 $output->writeln("This is new match exist (update): ".$mId);
                 $match = $match[0];
+              //  var_dump($match); die;
             }
             $match->setStatusMatch($mStatus);
             $match->setCheminLogoDomicile($vItems['teams']['hosts']['id']);
@@ -133,7 +134,7 @@ class GoalApiCommand extends ContainerAwareCommand
             $match->setTempsEcoules($tempEcoule);
             $match->setChampionat($championat);
             $match->setSeason($season);
-            //$this->insert($match, array('success' => 'success' , 'error' => 'error'));
+           // $this->insert($match, array('success' => 'success' , 'error' => 'error'));
             $em->persist($match);
             $em->flush();
 
