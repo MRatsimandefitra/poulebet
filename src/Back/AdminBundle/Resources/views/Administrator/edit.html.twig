@@ -8,7 +8,7 @@
     </div>#}
     <div class="col-lg-12">
         <div class="box-header-response">
-            {{ 'Listes des administrateurs'|trans }} :
+            {{ 'Liste des administrateurs'|trans }} :
             <div class="link">
                 {#{% if is_granted('ROLE_SUPER_ADMIN') %}#}
                 <a href="{{ path('index_administrator') }}">{{ 'Listes Administrateur'|trans }}</a>
@@ -33,9 +33,7 @@
                         <td>
                             {{ 'Prenom'|trans }}
                         </td>
-                        <td>
-                            {{ 'Selection'|trans }}
-                        </td>
+      
                         {% if is_granted('ROLE_SUPER_ADMIN') %}
                         <td>
                             {{ 'Super Admin'|trans }}
@@ -59,9 +57,7 @@
                         <td>
                             {{ admin.prenom }}
                         </td>
-                        <td>
-                            <input type="checkbox" name="" id="selection"/>
-                        </td>
+       
                         {% if is_granted('ROLE_SUPER_ADMIN') %}
                         <td>
                             {% if admin.isSuperAdmin %}
@@ -75,10 +71,10 @@
                     </tr>
                 </table>
             </div>
-
+            <div><a id="check_all_role">Tout sélectionner</a>&nbsp;|&nbsp;<a id="uncheck_all_role">Déselectionner</a></div>        
             <table class="table table-edit-role">
                 <tr>
-                    <td>{{ 'Fonctionalité'|trans }}</td>
+                    <td>{{ 'Fonctionalité'|trans }}  </td>
                     <td><label id="lecture" for="">{{ 'Lecture'|trans }}</label></td>
                     <td><label id="ajout" for="">{{ 'Ajout'|trans }}</label></td>
                     <td><label id="modification" for="">{{ 'Modification'|trans }}</label></td>
@@ -100,26 +96,26 @@
                         </td>
                         <td class="lecture">
                             {% if row.lecture is defined and row.lecture == 1 %}
-                                <input type="checkbox" name="lecture_{{ row.droit.id }}" checked="true"/>
+                                <input class ="checking_role" type="checkbox" name="lecture_{{ row.droit.id }}" checked="true"/>
                             {% else %}
-                                <input type="checkbox" name="lecture_{{ row.droit.id }}"/>
+                                <input class ="checking_role" type="checkbox" name="lecture_{{ row.droit.id }}"/>
                             {% endif %}
                             {#{{ form_widget(form.lecture) }}#}
                         </td>
                         <td class="ajout">
                             {% if row.ajout == true %}
-                                <input type="checkbox" name="ajout_{{ row.droit.id }}" checked="true"/>
+                                <input  class ="checking_role" type="checkbox" name="ajout_{{ row.droit.id }}" checked="true"/>
                             {% else %}
-                                <input type="checkbox" name="ajout_{{ row.droit.id }}"/>
+                                <input class ="checking_role" type="checkbox" name="ajout_{{ row.droit.id }}"/>
                             {% endif %}
                             {#<input type="checkbox" name="ajout_{{ row.id }}"/>#}
                             {#{{ form_widget(form.ajout) }}#}
                         </td>
                         <td class="modification">
                             {% if row.modification == true %}
-                                <input type="checkbox" name="modification_{{ row.droit.id }}" checked="true"/>
+                                <input class ="checking_role" type="checkbox" name="modification_{{ row.droit.id }}" checked="true"/>
                             {% else %}
-                                <input type="checkbox" name="modification_{{ row.droit.id }}"/>
+                                <input class ="checking_role" type="checkbox" name="modification_{{ row.droit.id }}"/>
                             {% endif %}
                             {#<input type="checkbox" name="modification_{{ row.id }}"/>#}
                             {#{{ form_widget(form.modification) }}#}
@@ -127,9 +123,9 @@
                         </td>
                         <td class="suppression">
                             {% if row.suppression == true %}
-                                <input type="checkbox" name="suppression_{{ row.droit.id }}" checked="true"/>
+                                <input class ="checking_role" type="checkbox" name="suppression_{{ row.droit.id }}" checked="true"/>
                             {% else %}
-                                <input type="checkbox" name="suppression_{{ row.droit.id }}"/>
+                                <input class ="checking_role" type="checkbox" name="suppression_{{ row.droit.id }}"/>
                             {% endif %}
                             {#<input type="checkbox" name="suppression_{{ row.id }}"/>#}
                             {#{{ form_widget(form.suppression) }}#}

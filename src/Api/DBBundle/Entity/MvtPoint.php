@@ -242,4 +242,8 @@ class MvtPoint
     {
         return $this->voteUtilisateur;
     }
+    
+    public function __toString() {
+        return "".$this->getSoldePoint();
+    }
 }

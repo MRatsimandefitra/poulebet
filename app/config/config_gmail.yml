@@ -1,4 +1,0 @@
-swiftmailer:
-    transport: gmail
-    username:  dev.ywoume@gmail.com
-    password:  tsilaina150

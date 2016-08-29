@@ -1,16 +1,68 @@
 
 1 - Ws, récupérer la liste des championnats qui ont des matchs
-GET
+- GET : No parameters
 /_ws/rest/championat/get-championat-with-maths
 
 2 - Ws, récupérer la liste des matchs pour le championnat sélectionné.(tri décroissant).
 championat: string
+ - dplb => championat eng_pl
 /_ws/rest/championat/get-list-match-by-championat
-
-3 - Ws, récupérer la liste des paysqui ont des championnats nationaux avec des matchs
+3 - Ws, récupérer la liste des pays qui ont des championnats nationaux avec des matchs
 GET
 /_ws/rest/championat/get-list-pays-with-championat-matchs
 
 4 - Ws récupérer la liste des championnats nationaux pour le pays sélectionné
 POST - pays : string
 /_ws/rest/championat/get-list-championat-by-pays
+
+
+
+
+/*  foreach ($data as $k => $vData) {
+               foreach($vData->getChampionat()->getTeamsPays() as $kk => $vvData){
+
+                   if($ancienName != $vvData->getName() ){
+                       $name[] = $vvData->getName();
+                       $data1 = $this->getRepo(self::ENTITY_CHAMPIONAT)->findChampionatWithMatchByPays($vvData->getName());
+
+                       // solution
+                       $result['list_pays']['pays'][] =
+                            /*'pays'  =>*/ /*$vvData->getName()*/ array(
+                                $vvData->getName() => array(
+                                    'list_championat' => array(
+                                            'nomChampionat' => '',
+                                            'fullName' => ''
+                                    )
+                                )
+
+                       );
+                      // var_dump($data1[1]->getChampionat()->getNomChampionat()); die;
+                       foreach($data1 as $vData1){
+
+                       }
+                   }
+                   $ancienName = $vvData->getName();
+               }
+             //   $result['championat'][] = $vData->getChampionat()->getTeamsPays()[0]->getName();
+            }
+            $ancienNameChampionat = "";
+            foreach($name as $vName){
+                $data = $this->getRepo(self::ENTITY_CHAMPIONAT)->findChampionatWithMatchByPays($vName);
+
+                foreach($data as $vData){
+                    if($ancienNameChampionat != $vData->getChampionat()->getNomChampionat()){
+                        $nameChampionat[] = $vData->getChampionat()->getNomChampionat();
+                  //      $result['pays'][][] = $vData->getChampionat()->getNomChampionat();
+                    }
+                    $ancienNameChampionat =  $vData->getChampionat()->getNomChampionat();
+
+                }
+            }
+
+            foreach($nameChampionat as $vNameChampionat){
+                $data = $this->getRepo(self::ENTITY_CHAMPIONAT)->findMatchsByChampionat($vNameChampionat);
+              //  var_dump($data); die;
+                foreach($data as $vData){
+               //     var_dump($vData);
+                }
+            }*/

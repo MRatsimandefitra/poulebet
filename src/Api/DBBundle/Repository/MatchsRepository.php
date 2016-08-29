@@ -103,7 +103,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
                LEFT JOIN m.teamsDomicile td
                LEFT JOIN td.teamsPays tpd
                LEFT JOIN tv.teamsPays tpv
-               ";
+               GROUP BY tpd.name ";
         $query = $this->getEntityManager()->createQuery($dql);
         //$query->setParameter('pays', $pays);
         return $query->getResult();
@@ -125,12 +125,48 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
 
     }
 
-    function getDataPaysChampionat(){
-        $dql = "SELECT ch from ApiDBBundle:Championat ch
-                LEFT JOIN ch.teamsPays tp
-                WHERE CURRENT_DATE() BETWEEN ch.dateDebutChampionat and ch.dateFinaleChampionat
-                ";
+
+    /**
+     * By pays
+     * @return array
+     */
+    public function getListePaysWithChampionatWithMatch()
+    {
+        $dql = "SELECT m from ApiDBBundle:Matchs m
+                LEFT JOIN m.championat ch
+                LEFT JOIN ch.teamsPays ";
         $query = $this->getEntityManager()->createQuery($dql);
+        return $query->getResult();
+    }
+
+    function getListeChampionatWithMatchByPays($pays)
+    {
+        $dql = "SELECT m from ApiDBBundle:Matchs m
+                LEFT JOIN m.championat ch
+                LEFT JOIN ch.teamsPays tp
+                WHERE tp.name LIKE :pays";
+        $query = $this->getEntityManager()->createQuery($dql);
+        $query->setParameter('pays', $pays);
+        return $query->getResult();
+    }
+
+    function getListeMatchByChampionat($championat)
+    {
+        $dql = "SELECT m from ApiDBBundle:Matchs m
+                LEFT JOIN m.championat ch
+                LEFT JOIN ch.teamsPays tp
+                WHERE ch.nomChampionat LIKE :championat";
+        $query = $this->getEntityManager()->createQuery($dql);
+        $query->setParameter('championat', $championat);
+        return $query->getResult();
+    }
+
+    function getMatchLiveScore()
+    {
+        $dql = "SELECT m from ApiDBBundle:Matchs m
+                WHERE m.statusMatch LIKE :status ";
+        $query = $this->getEntityManager()->createQuery($dql);
+        $query->setParameter('status', 'active');
         return $query->getResult();
     }
 }

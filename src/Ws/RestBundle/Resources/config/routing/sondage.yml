@@ -1,0 +1,4 @@
+ws_rest_sondage_par_utilisateur:
+    path:     /
+    defaults: { _controller: WsRestBundle:Sondage:getVoteUsers }
+    methods: POST

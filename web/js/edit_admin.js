@@ -12,7 +12,12 @@ $(document).ready(function(){
            });
        }
    });
-
+   $('#check_all_role').click(function(){
+       $("input.checking_role").prop("checked",true);
+   });
+   $('#uncheck_all_role').click(function(){
+       $("input.checking_role").removeAttr("checked");
+   });
     $('label#lecture').click(function(){
         if($('table.table-edit-role td.lecture input[type=checkbox]').is(':checked')){
             $('table.table-edit-role td.lecture input[type=checkbox]').each(function(){
