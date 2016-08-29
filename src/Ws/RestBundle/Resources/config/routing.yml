@@ -46,3 +46,6 @@ route_prefix_ws_rest_pronostic:
 route_prefix_ws_rest_live_score:
     resource: "@WsRestBundle/Resources/config/routing/livescore.yml"
     prefix:   /live-score
+route_prefix_ws_rest_sondage:
+    resource: "@WsRestBundle/Resources/config/routing/sondage.yml"
+    prefix:   /sondage

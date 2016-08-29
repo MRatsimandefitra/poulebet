@@ -14,7 +14,7 @@ class SondageController extends ApiController
     const ENTITY_MATCHS = 'ApiDBBundle:Matchs';
     const ENTITY_VOTE = 'ApiDBBundle:VoteUtilisateur';
 
-    public function getVoteUsersAction(Request $request)
+    public function insertVoteUsersAction(Request $request)
     {
         $token = $request->request->get('token');
         $isVote = $request->request->get('isvote');
@@ -36,6 +36,10 @@ class SondageController extends ApiController
 
         }
 
+
+    }
+
+    public function updateVoteUsersAction(Request $request){
 
     }
 

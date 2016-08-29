@@ -44,8 +44,9 @@ class ChampionatsController extends ApiController
      * Ws, récupérer la liste des matchs pour le championnat sélectionné.(tri décroissant).
      *
      */
-    public function getListeMatchsBySelectedChampionatAction(Request $request)
+    public function postListeMatchsBySelectedChampionatAction(Request $request)
     {
+
         $championat = $request->request->get('championat');
 
         $data = $this->getRepo(self::ENTITY_MATCHS)->getListeMatchsBySelectedChampionat($championat);
@@ -231,7 +232,7 @@ class ChampionatsController extends ApiController
             $result['message'] = 'Aucun resultat n\'a été trouvé';
         }
 
-        $result = $json;
+        $result['data'] = $json;
         return new JsonResponse($result);
     }
 }

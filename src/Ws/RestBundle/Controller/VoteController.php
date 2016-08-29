@@ -20,28 +20,29 @@ class VoteController extends ApiController
      * @param Request $request
      * @return JsonResponse
      */
-    public function insertVoteAction(Request $request){
+    public function insertVoteAction(Request $request)
+    {
         $vote = $request->request->get('vote');
         $result = array();
         $idUtilisateur = $request->request->get('idUtilisateur');
         $utilisateur = $this->getRepo(self::ENTITY_UTILISATEUR)->find($idUtilisateur);
         $voteUtilisateurData = $this->getRepo(self::ENTITY_VOTE)->findOneBy(array('utilisateur' => $utilisateur));
         $vote = $vote + $voteUtilisateurData->getVote();
-        if(!$voteUtilisateurData){
+        if (!$voteUtilisateurData) {
             $voteUtilisateurData = new VoteUtilisateur();
             $result['code_error'] = 0;
             $result['success'] = true;
             $result['error'] = false;
             $result['message'] = "Success";
 
-        }else{
+        } else {
             $result['code_error'] = 4;
             $result['success'] = false;
             $result['error'] = true;
             $result['message'] = "Aucune donné n'a été trouvé";
         }
-            $voteUtilisateurData->setVote($vote);
-            $this->insert($voteUtilisateurData, array('success' => 'success' , 'error' => 'error'));
+        $voteUtilisateurData->setVote($vote);
+        $this->insert($voteUtilisateurData, array('success' => 'success', 'error' => 'error'));
 
         return new JsonResponse($result);
 
@@ -51,21 +52,22 @@ class VoteController extends ApiController
      * Ws, récupérer les votes des utilisateurs
      *
      */
-    public function getVoteUtilisateurAction(Request $request){
+    public function getVoteUtilisateurAction(Request $request)
+    {
         $idUtilisateur = $request->request->get('utilisateur');
 
         $utilisateur = $this->getRepoFormId(self::ENTITY_UTILISATEUR, $idUtilisateur);
         $data = $this->getRepo(self::ENTITY_VOTE)->findOneBy(array('utilisateur' => $utilisateur));
         $result = array();
-        if($data){
-            foreach($data as $vData){
+        if ($data) {
+            foreach ($data as $vData) {
 
             }
             $result['code_error'] = 0;
             $result['success'] = true;
             $result['error'] = false;
             $result['message'] = "Aucune donné n'a été trouvé";
-        }else{
+        } else {
             $result['code_error'] = 4;
             $result['success'] = false;
             $result['error'] = true;

@@ -100,8 +100,9 @@
                     <tr>
                         <td>{{ row.dateMatch|date('d/m/Y  - h:i') }}</td>
                         <td>
-                            <div class="flag flag-{{ row.equipeDomicile|lower|slice(0, 2) }}"
-                                 alt="{{ row.equipeDomicile }}"></div>
+                          {#  <div class="flag flag-{{ row.equipeDomicile|lower|slice(0, 2) }}"
+                                 alt="{{ row.equipeDomicile }}"></div>#}
+                            <img src="{{ asset('images/Flag-foot/' ) }}" alt=""/>
                             {{ row.equipeDomicile }}
                         </td>
                         <td>{{ row.score }}</td>
