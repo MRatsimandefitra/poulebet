@@ -1,0 +1,8 @@
+ws_rest_sondage_insert_vote_utilisateur:
+    path:     /insert/vote
+    defaults: { _controller: WsRestBundle:Sondage:insertVoteUsers }
+    methods: POST
+ws_rest_sondage_update_vote_utilisateur:
+    path:     /update/vote
+    defaults: { _controller: WsRestBundle:Sondage:updateVoteUsers }
+    methods: POST

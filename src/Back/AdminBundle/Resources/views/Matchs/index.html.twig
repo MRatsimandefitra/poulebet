@@ -100,15 +100,19 @@
                     <tr>
                         <td>{{ row.dateMatch|date('d/m/Y  - h:i') }}</td>
                         <td>
-                            <div class="flag flag-{{ row.equipeDomicile|lower|slice(0, 2) }}"
-                                 alt="{{ row.equipeDomicile }}"></div>
+                          {#  <div class="flag flag-{{ row.equipeDomicile|lower|slice(0, 2) }}"
+                                 alt="{{ row.equipeDomicile }}"></div>#}
+                          <div >
+                              <img class ="fanion" src="{{ asset('images/Flag-foot/'~row.teamsDomicile.idNameClub~'.png')}}" alt=""/>
+                          </div>
                             {{ row.equipeDomicile }}
                         </td>
                         <td>{{ row.score }}</td>
                         <td>{{ row.season }}</td>
                         <td>
-                            <div class="flag flag-{{ row.equipeVisiteur|lower|slice(0, 2) }}"
-                                 alt="{{ row.equipeVisiteur }}"></div>
+                            <div >
+                              <img class ="fanion" src="{{ asset('images/Flag-foot/'~row.teamsVisiteur.idNameClub~'.png')}}" alt=""/>
+                            </div>
                             {{ row.equipeVisiteur }}
                         </td>
                         <td>{{ row.statusMatch }}</td>

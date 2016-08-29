@@ -37,6 +37,15 @@ route_prefix_ws_rest_mention:
 route_prefix_ws_rest_championnat:
     resource: "@WsRestBundle/Resources/config/routing/championat.yml"
     prefix:   /championat
+route_prefix_ws_rest_championnats:
+    resource: "@WsRestBundle/Resources/config/routing/championats.yml"
+    prefix:   /championats
 route_prefix_ws_rest_pronostic:
     resource: "@WsRestBundle/Resources/config/routing/pronostic.yml"
-    prefix:   /
+    prefix:   /pronostic
+route_prefix_ws_rest_live_score:
+    resource: "@WsRestBundle/Resources/config/routing/livescore.yml"
+    prefix:   /live-score
+route_prefix_ws_rest_sondage:
+    resource: "@WsRestBundle/Resources/config/routing/sondage.yml"
+    prefix:   /sondage

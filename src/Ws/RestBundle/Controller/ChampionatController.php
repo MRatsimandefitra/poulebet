@@ -139,7 +139,8 @@ class ChampionatController extends ApiController
                     'master_prono_n' => $vData->getMasterPronoN(),
                     'master_prono_2' => $vData->getMasterProno2(),
                     'tempsEcoules' => $vData->getTempsEcoules(),
-
+                    'live' => ($vData->getStatusMatch() == 'active') ? true : false,
+                    'livetime' => ''
                 );
 
             }
@@ -167,8 +168,8 @@ class ChampionatController extends ApiController
         if ($data) {
 
             foreach ($data as $vData) {
-                var_dump($vData);
-                die;
+                //  var_dump($vData);
+                //    die;
             }
             $result['code_erreur'] = 0;
             $result['success'] = true;
@@ -195,9 +196,7 @@ class ChampionatController extends ApiController
                 $result['pays'][] = $vData->getTeamsPays()[$k]->getName();
                 $result['list_championat'][] = array(
                     'nomChampionat' => $vData->getFullNameChampionat(),
-
                 );
-                //var_dump(); die;
             }
             $result['code_error'] = 0;
             $result['message'] = "sucess";
@@ -219,13 +218,14 @@ class ChampionatController extends ApiController
     public function findListPaysWithChampionatWithMatchsAction()
     {
         $data = $this->getRepo(self::ENTITY_CHAMPIONAT)->findListPaysWithChampionatWithMatchs();
+
         $result = array();
+
         if ($data) {
             foreach ($data as $k => $vData) {
-                $result[] = array(
-                    'pays' => $vData->getTeamsPays()[0]->getName(),
-                    'championat' => $vData->getFullNameChampionat()
-                );
+                if ($vData->getChampionat()->getTeamsPays()[$k]->getName()) {
+                    $result['pays'][] = $vData->getChampionat()->getTeamsPays()[$k]->getName();
+                }
             }
             $result['code_error'] = 0;
             $result['success'] = true;
@@ -239,5 +239,16 @@ class ChampionatController extends ApiController
         }
 
         return new JsonResponse($result);
+    }
+
+    /**
+     *
+     * LIST PAYS
+     */
+    public function findListPaysWithChampionatAction()
+    {
+        $dql = "SELECT ch from ApiDBBundle:Championat ch
+               LEFT JOIN ch.teamsPays tp ";
+
     }
 }
