@@ -152,7 +152,9 @@
                                 <tr>
                                     <td>{{ row.timestamp_starts|date('d/m/Y  - h:i') }}</td>
                                     <td>
-                                        <div class="flag flag-{{ row.teams.hosts.id|slice(0, 2) }}" alt="{{ row.teams.hosts.fullname }}" ></div>
+                                        <div class="flag flag-{{ row.teams.hosts.id|slice(0, 2) }}" alt="{{ row.teams.hosts.fullname }}" >
+                                            <img src="{{ asset('images/Flag-foot/'~row.teamsDomicile~'png')}} ">
+                                        </div>
                                         {{ row.teams.hosts.fullname }}
                                     </td>
                                     <td>{{ row.score }}</td>
