@@ -60,6 +60,7 @@ class ChampionatsController extends ApiController
                     'dateMatch' => $vData->getDateMatch(),
                     'equipeDomicile' => $vData->getEquipeDomicile(),
                     'equipeVisiteur' => $vData->getEquipeVisiteur(),
+
                     'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/'.$vData->getCheminLogoDomicile().'.png',// $vData->getTeamsDomicile()->getLogo(),
                     'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/'.$vData->getCheminLogoVisiteur().'.png',// $vData->getTeamsVisiteur()->getLogo(),
                     'score' => $vData->getScore(),
