@@ -55,10 +55,11 @@
 
                         {% if dateDebutChampionat <= today and dateFinaleChampionat >= today %}
                             {% endif %}#}
-
-                        {% for rowPays in row.teamsPays %}
+                        {% if row.typeChampionat == 'national' %}
+                            {% for rowPays in row.teamsPays %}
                                 {{ rowPays.name }}
-                           {% endfor %}
+                            {% endfor %}
+                        {% endif %}
                     </td>
                     <td>
 
