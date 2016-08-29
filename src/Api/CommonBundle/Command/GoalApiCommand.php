@@ -120,7 +120,8 @@ class GoalApiCommand extends ContainerAwareCommand
                 $match = $match[0];
             }
             $match->setStatusMatch($mStatus);
-            $match->setCheminLogoDomicile('logo');
+            $match->setCheminLogoDomicile($vItems['teams']['hosts']['id']);
+            $match->setCheminLogoVisiteur($vItems['teams']['guests']['id']);
             $match->setDateMatch($mDate);
             $match->setScore($mScore);
             $match->setResultatDomicile($resultatDomicile);

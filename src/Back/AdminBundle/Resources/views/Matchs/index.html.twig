@@ -102,14 +102,19 @@
                         <td>
                           {#  <div class="flag flag-{{ row.equipeDomicile|lower|slice(0, 2) }}"
                                  alt="{{ row.equipeDomicile }}"></div>#}
-                            <img src="{{ asset('images/Flag-foot/' ) }}" alt=""/>
+                            {#{% for rowConstest in row.details.contest.competition %}
+                                {% set idImg = rowContest.id %}
+
+                                {% endfor %}#}
+                            <img src="{{ asset('images/Flag-foot/' ~ row.cheminLogoDomicile ) }}" alt=""/>
                             {{ row.equipeDomicile }}
                         </td>
                         <td>{{ row.score }}</td>
                         <td>{{ row.season }}</td>
                         <td>
-                            <div class="flag flag-{{ row.equipeVisiteur|lower|slice(0, 2) }}"
-                                 alt="{{ row.equipeVisiteur }}"></div>
+                            {#<div class="flag flag-{{ row.equipeVisiteur|lower|slice(0, 2) }}"
+                                 alt="{{ row.equipeVisiteur }}"></div>#}
+                            <img src="{{ asset('images/Flag-foot/' ~ row.cheminLogoVisiteur ~ '.png') }}" alt="" width="20" height="20"/>
                             {{ row.equipeVisiteur }}
                         </td>
                         <td>{{ row.statusMatch }}</td>
