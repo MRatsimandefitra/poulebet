@@ -33,9 +33,9 @@ class Matchs
     private $championat;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Concours", cascade={"persist"})
-     * @ORM\JoinColumn(name="concours_id")
-     */
+     * @ORM\ManyToMany(targetEntity="Concours")
+     * @ORM\JoinTable(name="matchs_concours")
+     **/
     private $concours;
 
     /**
@@ -607,29 +607,7 @@ class Matchs
         return $this->championat;
     }
 
-    /**
-     * Set concours
-     *
-     * @param \Api\DBBundle\Entity\Concours $concours
-     *
-     * @return Matchs
-     */
-    public function setConcours(\Api\DBBundle\Entity\Concours $concours = null)
-    {
-        $this->concours = $concours;
-
-        return $this;
-    }
-
-    /**
-     * Get concours
-     *
-     * @return \Api\DBBundle\Entity\Concours
-     */
-    public function getConcours()
-    {
-        return $this->concours;
-    }
+    
 
     /**
      * Set lotoFoot7
@@ -870,5 +848,46 @@ class Matchs
     public function getSeason()
     {
         return $this->season;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->concours = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add concour
+     *
+     * @param \Api\DBBundle\Entity\Concours $concour
+     *
+     * @return Matchs
+     */
+    public function addConcour(\Api\DBBundle\Entity\Concours $concour)
+    {
+        $this->concours[] = $concour;
+
+        return $this;
+    }
+
+    /**
+     * Remove concour
+     *
+     * @param \Api\DBBundle\Entity\Concours $concour
+     */
+    public function removeConcour(\Api\DBBundle\Entity\Concours $concour)
+    {
+        $this->concours->removeElement($concour);
+    }
+
+    /**
+     * Get concours
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getConcours()
+    {
+        return $this->concours;
     }
 }

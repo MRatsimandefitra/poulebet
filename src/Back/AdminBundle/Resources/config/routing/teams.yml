@@ -1,0 +1,7 @@
+list_teams:
+    path:     /list-teams
+    defaults: { _controller: BackAdminBundle:Teams:listTeams }
+
+export_teams:
+    path:     /export/all-teams
+    defaults: { _controller: BackAdminBundle:Teams:exportTeams }

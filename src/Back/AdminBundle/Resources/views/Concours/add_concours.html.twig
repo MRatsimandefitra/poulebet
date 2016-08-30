@@ -1,0 +1,41 @@
+{% extends 'BackAdminBundle::layout.html.twig' %}
+{% block title %} {{ parent() }} {% endblock %}
+{% block ariane %} {{ parent() }} {% endblock %}
+
+{% block page %}
+    <div class="box-header-response">
+        {{ 'Ajout concours'|trans }}
+    </div>
+    <div class="col-lg-12">
+        <div class="col-lg-8">
+            <form method="post" action="">
+                <div>
+                {{ form_label(form.numero)}}
+                </div>
+                <div>
+                {{ form_widget(form.numero)}}
+                </div>
+                <div>
+                {{ form_label(form.nomConcours)}}
+                </div>
+                <div>
+                {{ form_widget(form.nomConcours)}}
+                 </div>
+                <div>
+                {{ form_label(form.finValidation)}}
+                </div>
+                <div>
+                {{ form_widget(form.finValidation)}}
+                </div>
+    
+                {{ form_rest(form)}}
+                <div>
+                <input class="btn btn-primary "type="submit" value="Ajouter">
+                </div>
+            </form>
+        </div>
+        <div class="col-lg-4"></div>
+    </div>
+    
+{% endblock %}    
+    
