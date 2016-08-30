@@ -1,73 +1,26 @@
 {% extends 'BackAdminBundle::layout.html.twig' %}
 {% block title %} {{ parent() }} {% endblock %}
-{% block ariane %} {{ parent() }} {% endblock %}
+
 
 {% block page %}
 
-    <div class="box-header-response">
+    {#<div class="box-header-response">
         {{ 'Listes des Matchs du jour'|trans }}
         {% include '@BackAdmin/Matchs/sous_menu.html.twig' %}
+    </div>#}
+    <div class="space"></div>
+    <div class="sous-menu-page">
+        {% block ariane %} {{ parent() }} -> ies {% endblock %}
+        {% include '@BackAdmin/Matchs/sous_menu.html.twig' %}
     </div>
-    <br/><br/>
     {% if droitAdmin.lecture is defined and droitAdmin.lecture %}
-        <div class="col-lg-12">
-            <div class="col-lg-1">
-
+        {#<div class="col-lg-12">#}
+            <div class="col-lg-12">
+                    {% include 'BackAdminBundle:Matchs:form_search.html.twig' %}
             </div>
-            <div class="col-lg-10">
-                <div class="search-match">
-                    <form action="" method="get">
-
-                        {% if searchValue.date_match is defined %}
-                            {{ "Date"|trans }} : <input type="text" name="date_match" id="datepic"
-                                                        value="{{ searchValue.date_match }}"/>
-                        {% else %}
-                            {{ "Date"|trans }} : <input type="text" name="date_match" id="datepic"/>
-                        {% endif %}
-
-                        {% if searchValue.time_match is defined %}
-                            {{ 'Heure'|trans }}: <input type="text" name="time_match" id="timepic" value="{{ searchValue.time_match }}"/>
-                        {% else %}
-                            {{ 'Heure'|trans }}: <input type="text" name="time_match" id="timepic"/>
-                        {% endif %}
-
-                        {{ 'Championat'|trans }}:
-                        <select class="championat" name="championat_match" id="">
-
-                            {#{{ searchValue.championat_match }}#}
-                            {% if searchValue.championat_match is defined %}
-                                <option value="{{ searchValue.championat_match }}">{{ searchValue.championat_match }}</option>
-                            {% else %}
-                                <option value=""></option>
-                                {% for rowchampinat in championat %}
-                                    <option value="{{ rowchampinat.nomchampionat }}">{{ rowchampinat.nomchampionat }}</option>
-                                {% endfor %}
-                            {% endif %}
-                        </select>
-
-                        {{ 'Pays'|trans }}:
-                        <select class="pays" name="pays_match" id="">
-
-                            {% if searchValue.pays is defined %}
-                                <option value="{{ searchValue.pays }}">{{ searchValue.pays }}</option>
-                            {% else %}
-                                <option value=""></option>
-                                {% for rowCountry in country %}
-                                    <option value="{{ rowCountry.iso }}"> {{ rowCountry.name }}  </option>
-                                {% endfor %}
-                            {% endif %}
-                        </select>
-                        <input type="submit" value="{{ 'Mettre à Jour'|trans }}"/>
-                    </form>
-                </div>
-            </div>
-            <div class="col-lg-1">
-
-            </div>
-
             <br/>
 
-            <div class="col-lg-12">
+        {#    <div class="col-lg-12">#}
                 {{ form_start(form) }}
                 <div class="col-lg-6">
                     <div class="grey">
@@ -75,11 +28,11 @@
                             <tr>
                                 <td>{{ 'Logo Equipe Domicile' }}</td>
                                 <td>
-                                    {{ form_widget(form.cheminLogoDomicile) }}
+                                    {{ form_widget(form.cheminLogoDomicile,{'required': false}) }}
                                     {#{{ form_errors(form.cheminLogoDomicile) }}#}
                                 </td>
                                 <td>
-                                    <img src="{{ asset('upload/admin/flag/' ~ matchs.cheminLogoDomicile) }}" alt=""/>
+                                    <img src="{{ asset('images/Flag-foot/' ~ matchs.teamsDomicile.idNameClub ~ '.png') }}" alt="" width="25" height="25"/>
                                 </td>
                             </tr>
                             <tr>
@@ -109,11 +62,11 @@
                             <tr>
                                 <td>{{ 'Logo Equipe Domicile' }}</td>
                                 <td>
-                                    {{ form_widget(form.cheminLogoVisiteur) }}
+                                    {{ form_widget(form.cheminLogoVisiteur,{'required': false}) }}
                                     {#{{ form_errors(form.cheminLogoVisiteur) }}#}
                                 </td>
                                 <td>
-                                    <img src="{{ asset('upload/admin/flag/' ~ matchs.cheminLogoVisiteur) }}" alt=""/>
+                                    <img src="{{ asset('images/Flag-foot/' ~ matchs.teamsVisiteur.idNameClub ~ '.png') }}" alt="" width="25" height="25"/>
                                 </td>
                             </tr>
                             <tr>
@@ -216,8 +169,8 @@
                     </div>
                 </div>
                 {{ form_end(form) }}
-            </div>
-        </div>
+            {#</div>#}
+        {#</div>#}
     {% else %}
         {{ 'vous n\' avez pas le droit de lecture sur un match ' }}
     {% endif %}

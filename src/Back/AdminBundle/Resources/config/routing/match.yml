@@ -10,12 +10,6 @@ add_loto_foot:
 list_loto_foot:
     path:     /lotofoot
     defaults: { _controller: BackAdminBundle:Match:listLotofoot }
-list_championat:
-    path:     /championat
-    defaults: { _controller: BackAdminBundle:Match:listChampionat }
-edit_championat:
-    path:     /championat/edit/{id}
-    defaults: { _controller: BackAdminBundle:Match:editChampionat }
 edit_loto_foot:
     path:     /lotofoot/{idLotoFoot}/edit/{id}
     defaults: { _controller: BackAdminBundle:Match:editLotofoot }

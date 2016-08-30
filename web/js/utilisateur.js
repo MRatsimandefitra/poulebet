@@ -23,6 +23,7 @@ $(document).ready(function(){
 });
 function supprimer(msg){
     var response = confirm(msg);
+
     if(!response){
         return false;
     }

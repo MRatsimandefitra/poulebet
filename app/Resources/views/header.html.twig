@@ -1,12 +1,13 @@
 <header>
-    <div class="box-top">
+
         <div class="box-header col-lg-12">
+            <div class="box-top">
             <div class="box-content">
                 <ul class="menu">
-                    <li>
+                    {#<li>
                         <img src="{{ asset('images/home.png') }}" alt=""/>
                         <a href="#">{{ 'Accueil'|trans }}</a>
-                    </li>
+                    </li>#}
                     
                     <li>
                         <img src="{{ asset('images/admin.png') }}" alt=""/>
@@ -22,6 +23,10 @@
                     </li>
                     <li>
                         <img src="{{ asset('images/match.png') }}" alt=""/>
+                        <a href="{{ path('list_championat') }}">{{ "Championnats"|trans }}</a>
+                    </li>
+                    <li>
+                        <img src="{{ asset('images/match.png') }}" alt=""/>
                         <a href="{{ path('index_admin_match') }}">{{ 'Matchs'|trans }}</a>
                     </li>
                     <li>
@@ -29,10 +34,10 @@
                         <a href="{{ path('index_admin_pronostic') }}">{{ 'Master prono'|trans }}</a>
                     </li>
 
-                    <li>
+                   {# <li>
                         <img src="{{ asset('images/statistique.png') }}" alt=""/>
                         <a href="#">{{ "Statistiques"|trans }}</a>
-                    </li>
+                    </li>#}
 
                     <li>
                         <img src="{{ asset('images/classement.png') }}" alt=""/>
@@ -40,7 +45,7 @@
                     </li>
                     <li>
                         <img src="{{ asset('images/lot.png') }}" alt=""/>
-                        <a href="#">{{ 'Lots concouts'|trans }}</a>
+                        <a href="{{ path('list_concours')}}">{{ 'Lots concours'|trans }}</a>
                     </li>
                     <li>
                         <img src="{{ asset('images/param.png') }}" alt=""/>

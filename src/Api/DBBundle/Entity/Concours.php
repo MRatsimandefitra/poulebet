@@ -43,6 +43,13 @@ class Concours
     private $finValidation;
 
 
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Matchs" , cascade={"persist", "remove"})
+     *
+     **/
+    private $matchs;
+    
     /**
      * Get id
      *
@@ -123,5 +130,46 @@ class Concours
     public function getFinValidation()
     {
         return $this->finValidation;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->matchs = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add match
+     *
+     * @param \Api\DBBundle\Entity\Matchs $match
+     *
+     * @return Concours
+     */
+    public function addMatch(\Api\DBBundle\Entity\Matchs $match)
+    {
+        $this->matchs[] = $match;
+
+        return $this;
+    }
+
+    /**
+     * Remove match
+     *
+     * @param \Api\DBBundle\Entity\Matchs $match
+     */
+    public function removeMatch(\Api\DBBundle\Entity\Matchs $match)
+    {
+        $this->matchs->removeElement($match);
+    }
+
+    /**
+     * Get matchs
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMatchs()
+    {
+        return $this->matchs;
     }
 }

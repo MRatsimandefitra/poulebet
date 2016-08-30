@@ -1,0 +1,23 @@
+<br/>
+<div class="col-lg-12">
+    <div class="col-lg-12">
+        <div class="ariane">
+          <span class="span-title">{{ 'Loto Foot'|trans }}</span>
+        </div>
+
+        <div class="link">
+            {% if droitAdmin.lecture is defined and droitAdmin.lecture %}
+                <span class="glyphicon glyphicon-th-list violet" aria-hidden="true"></span>
+                <a href="{{ path('list_loto_foot') }}">{{ 'Liste des loto foot'|trans }}</a>
+            {% endif %}
+            {#{% if droitAdmin.lecture is defined and droitAdmin.lecture %}
+                <span class="glyphicon glyphicon-plus green" aria-hidden="true"></span>
+            {% endif %}#}
+            {% if droitAdmin.ajout is defined and droitAdmin.ajout %}
+                <a href="{{ path('add_loto_foot') }}"><span class="glyphicon glyphicon-plus green" aria-hidden="true"></span>{{ 'Ajout Loto Foot'|trans }}</a>&nbsp;  &nbsp;
+            {% endif %}
+        </div>
+        <div class="space"></div>
+    </div>
+</div>
+<br/>

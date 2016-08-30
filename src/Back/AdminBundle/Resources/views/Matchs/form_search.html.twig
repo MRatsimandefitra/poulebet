@@ -1,0 +1,71 @@
+<div class="col-lg-10">
+    <div class="search-match">
+        <form action="" method="get">
+
+            {% if searchValue.date_match is defined %}
+                {{ "Date"|trans }} : <input type="text" name="date_match" id="datepic"
+                                            value="{{ searchValue.date_match }}"/>
+            {% else %}
+                {{ "Date"|trans }} : <input type="text" name="date_match" id="datepic"/>
+            {% endif %}
+
+            {% if searchValue.time_match is defined %}
+                {{ 'Heure'|trans }}: <input type="text" name="time_match" id="timepic" value="{{ searchValue.time_match }}"/>
+            {% else %}
+                {{ 'Heure'|trans }}: <input type="text" name="time_match" id="timepic"/>
+            {% endif %}
+
+            {{ 'Championnat'|trans }}:
+            <select class="championat" name="championat_match" id="">
+
+                {#{{ searchValue.championat_match }}#}
+                {% if searchValue.championat_match is defined %}
+                    <option value="{{ searchValue.championat_match }}">{{ searchValue.championat_match }}</option>
+                    {% for rowchampinat in championat %}
+
+                        {% if rowchampinat.nomchampionat != searchValue.championat_match %}
+                            <option value="{{ rowchampinat.fullNameChampionat }}">{{ rowchampinat.fullNameChampionat }}</option>
+                        {% endif %}
+
+                    {% endfor %}
+                    <option value=""></option>
+                {% else %}
+                    <option value=""></option>
+                    {% for rowchampinat in championat %}
+
+                        <option value="{{ rowchampinat.fullNameChampionat }}">{{ rowchampinat.fullNameChampionat }}</option>
+
+                    {% endfor %}
+                {% endif %}
+            </select>
+
+            {{ 'Pays'|trans }}:
+            <select class="pays" name="pays_match" id="">
+
+                {% if searchValue.pays_match is defined %}
+                    <option value="{{ searchValue.pays_match }}">{{ searchValue.pays_match }}</option>
+                    <option value=""> </option>
+                    {% for rowCountry in country %}
+
+                        {% if rowCountry.name != searchValue.pays_match %}
+                            <option value="{{ rowCountry.name }}"> {{ rowCountry.fullName }}  </option>
+                        {% endif %}
+                    {% endfor %}
+
+                {% else %}
+                    <option value=""></option>
+                    {% for rowCountry in country %}
+                        <option value="{{ rowCountry.name }}"> {{ rowCountry.fullName }}  </option>
+                    {% endfor %}
+                {% endif %}
+            </select>
+            <input type="submit" class="btn btn-default" value="{{ 'Chercher'|trans }}"/>
+            <a href="{{ path('index_admin_match') }}"> {{ 'Annuler'|trans }}<span class="glyphicon glyphicon-remove red" aria-hidden="true"></span></a>
+        </form>
+    </div>
+</div>
+<div class="col-lg-2">
+    <div class="search-match">
+        <a href="{{ path('update_matchs_from_goal_api') }}" class="btn btn-default"> {{ 'Mettre à jour'|trans }}</a>
+    </div>
+</div>

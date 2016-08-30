@@ -24,6 +24,13 @@ route_prefix_admin_mention:
 route_prefix_admin_notification:
     resource: "@BackAdminBundle/Resources/config/routing/notification.yml"
     prefix:   /notification
+route_prefix_admin_concours:
+    resource: "@BackAdminBundle/Resources/config/routing/concours.yml"
+    prefix:   /concours
 route_prefix_admin_teams:
     resource: "@BackAdminBundle/Resources/config/routing/teams.yml"
     prefix:   /teams
+route_prefix_admin_championat:
+    resource: "@BackAdminBundle/Resources/config/routing/championat.yml"
+    prefix:   /championnats
+

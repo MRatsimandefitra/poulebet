@@ -1,10 +1,18 @@
-<div class="link">
-    {% if droitAdmin.lecture is defined and droitAdmin.lecture %}
-    <span class="glyphicon glyphicon-th-list violet" aria-hidden="true"></span>
-    <a href="{{ path('list_loto_foot') }}">{{ 'Liste Loto Foot'|trans }}</a>
-    {% endif %}
-    {% if droitAdmin.lecture is defined and droitAdmin.lecture %}
-        <span class="glyphicon glyphicon-th-list violet" aria-hidden="true"></span>
-        <a href="{{ path('list_championat') }}">{{ 'Liste des championats'|trans }}</a>
-    {% endif %}
+<div class="col-lg-12">
+    <div class="col-lg-12">
+        <div class="ariane">
+            {#{% block ariane %} {{ parent() }} {% endblock %}#}
+        </div>
+        <div class="link">
+            {% if droitAdmin.lecture is defined and droitAdmin.lecture %}
+                <span class="glyphicon glyphicon-th-list violet" aria-hidden="true"></span>
+                <a href="{{ path('list_loto_foot') }}">{{ 'Liste Loto Foot'|trans }}</a>
+            {% endif %}
+            {% if droitAdmin.lecture is defined and droitAdmin.lecture %}
+                <span class="glyphicon glyphicon-th-list violet" aria-hidden="true"></span>
+                <a href="{{ path('index_admin_match') }}">{{ 'Liste des matchs'|trans }}</a>
+            {% endif %}
+        </div>
+
+    </div>
 </div>

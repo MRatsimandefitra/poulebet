@@ -1,0 +1,18 @@
+list_concours:
+    path:     /
+    defaults: { _controller: BackAdminBundle:Concours:index }
+add_concours:
+    path:     /add_concours
+    defaults: { _controller: BackAdminBundle:Concours:addConcours }
+edit_concours:
+    path:     /edit/{id}
+    defaults: { _controller: BackAdminBundle:Concours:editConcours }
+remove_concours:
+    path:     /remove/{id}
+    defaults: { _controller: BackAdminBundle:Concours:removeConcours }
+add_match_concours:
+    path:     /add-match/{id}
+    defaults: { _controller: BackAdminBundle:Concours:addMatchInConcours }
+remove_match_concours:
+    path:     /{idConcours}/remove-match/{id}
+    defaults: { _controller: BackAdminBundle:Concours:removeMatchInConcours }
