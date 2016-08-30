@@ -2,6 +2,7 @@
 
 namespace Back\AdminBundle\Controller;
 
+use Api\CommonBundle\Command\GoalApiCommand;
 use Api\CommonBundle\Controller\ApiController;
 use Api\DBBundle\Entity\Championat;
 use Api\DBBundle\Entity\LotoFoot15;
@@ -11,6 +12,8 @@ use Api\DBBundle\Entity\matchIndividuel;
 use Api\DBBundle\Entity\Matchs;
 use Back\AdminBundle\Resources\Request\MatchSearch;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -128,8 +131,7 @@ class MatchController extends ApiController
         }
 
         # champinat seul
-        if($request->get('championat_match')){
-
+        if($request->get('championat_match')&& !$request->get('pays_match')){
             $championat = $request->get('championat_match');
             $dql .= " LEFT JOIN m.championat c";
             $where[] = " c.nomChampionat LIKE :championat ";
@@ -137,15 +139,32 @@ class MatchController extends ApiController
             $searchValue['championat_match'] = $championat;
         }
 
-        if($request->get('pays_match')){
+        if($request->get('pays_match') && !$request->get('championat_match')){
             $pays= $request->get('pays_match');
             $dql .= " LEFT JOIN m.championat c
                       LEFT JOIN c.teamsPays tp ";
-            $where[] = " tp.teamsPays.name LIKE :pays or tp.teamsPays LIKE :pays ";
+            $where[] = " tp.name LIKE :pays or tp.name LIKE :pays ";
             $params['pays'] = "%".$pays."%";
             $searchValue['pays_match'] = $pays;
         }
 
+        if($request->get('championat_match') && $request->get('pays_match')){
+            $championat = $request->get('championat_match');
+            $dql .= " LEFT JOIN m.championat c ";
+
+            $pays= $request->get('pays_match');
+            $dql .= " LEFT JOIN c.teamsPays tp";
+
+            $where[] = " c.nomChampionat LIKE :championat ";
+            $where[] = " tp.name LIKE :pays";
+
+            $params['pays'] = "%".$pays."%";
+            $params["championat"] = '%'.$championat.'%';
+
+            $searchValue['championat_match'] = $championat;
+            $searchValue['pays_match'] = $pays;
+
+        }
         if (!empty($where)) {
             $dql .= ' WHERE ' . implode(' AND ', $where);
         }
@@ -158,7 +177,7 @@ class MatchController extends ApiController
             $matchs = $this->get('doctrine.orm.entity_manager')->createQuery($dql)->setParameters($params)->getResult();
         }
         //$this->em()->createQuery($dql)->setParameters($params);
-        //var_dump($dql); die;
+       // var_dump($dql); die;
         $championatData = $this->getAllEntity(self::ENTITY_CHAMPIONAT);
         $country = $this->getAllEntity(self::ENTITY_TEAMS_PAYS);
 
@@ -539,5 +558,14 @@ class MatchController extends ApiController
            "idLotoFoot" => $idLotoFoot,
             "id"=>$lotoId
         ));
+    }
+
+    public function updateFromGoalApiAction(Request $request){
+        $command = new GoalApiCommand();
+        $command->setContainer($this->container);
+        $input = new ArrayInput(array());
+        $output = new NullOutput();
+        $resultCode = $command->run($input, $output);
+       return $this->redirectToRoute('index_admin_match');
     }
 }

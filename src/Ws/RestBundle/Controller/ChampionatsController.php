@@ -143,8 +143,8 @@ class ChampionatsController extends ApiController
 
                 if ($ancienName != $vData->getChampionat()->getNomChampionat()) {
                     $dataName[] = array(
-                       'code' => $vData->getChampionat()->getNomChampionat(),
-                        'fullName' =>$vData->getChampionat()->getFullNameChampionat()
+                       'nomChampionat' => $vData->getChampionat()->getNomChampionat(),
+                        'fullNameChampionat' =>$vData->getChampionat()->getFullNameChampionat()
                     );
                 }
                 $ancienName = $vData->getChampionat()->getNomChampionat();

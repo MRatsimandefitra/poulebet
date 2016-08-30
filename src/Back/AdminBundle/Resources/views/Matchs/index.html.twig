@@ -11,9 +11,9 @@
     <br/><br/>
     {% if droitAdmin.lecture is defined and droitAdmin.lecture %}
     <div class="col-lg-12">
-        <div class="col-lg-1">
+        {#<div class="col-lg-1">
 
-        </div>
+        </div>#}
         <div class="col-lg-10">
             <div class="search-match">
                 <form action="" method="get">
@@ -58,15 +58,16 @@
                     {{ 'Pays'|trans }}:
                     <select class="pays" name="pays_match" id="">
 
-                        {% if searchValue.pays is defined %}
-                            <option value="{{ searchValue.pays }}">{{ searchValue.pays }}</option>
+                        {% if searchValue.pays_match is defined %}
+                            <option value="{{ searchValue.pays_match }}">{{ searchValue.pays_match }}</option>
+                            <option value=""> </option>
                             {% for rowCountry in country %}
 
-                                {% if rowCountry.name != searchValue.pays %}
+                                {% if rowCountry.name != searchValue.pays_match %}
                                     <option value="{{ rowCountry.name }}"> {{ rowCountry.fullName }}  </option>
                                 {% endif %}
                             {% endfor %}
-                            <option value=""> </option>
+
                         {% else %}
                             <option value=""></option>
                             {% for rowCountry in country %}
@@ -74,12 +75,14 @@
                             {% endfor %}
                         {% endif %}
                     </select>
-                    <input type="submit" class="btn btn-default" value="{{ 'Mettre à Jour'|trans }}"/>
+                    <input type="submit" class="btn btn-default" value="{{ 'Chercher'|trans }}"/>
                 </form>
             </div>
         </div>
-        <div class="col-lg-1">
-
+        <div class="col-lg-2">
+            <div class="search-match">
+                <a href="{{ path('update_matchs_from_goal_api') }}" class="btn btn-default"> {{ 'Mettre à jour'|trans }}</a>
+                </div>
         </div>
 
         <br/>

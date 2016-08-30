@@ -28,3 +28,6 @@ add_match_loto_foot:
 remove_match_loto_foot:
     path:     /lotofoot/{idLotoFoot}/{lotoId}/remove-match/{id}
     defaults: { _controller: BackAdminBundle:Match:removeMatchInLotoFoot }
+update_matchs_from_goal_api:
+    path:     /matchs/update-from-goal-api
+    defaults : { _controller: BackAdminBundle:Match:updateFromGoalApi }
