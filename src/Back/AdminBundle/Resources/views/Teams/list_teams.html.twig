@@ -1,0 +1,51 @@
+{% extends 'BackAdminBundle::layout.html.twig' %}
+{% block title %} {{ parent() }} {% endblock %}
+{% block ariane %} {{ parent() }} {% endblock %}
+
+{% block page %}
+    <div class="sous-menu">
+        <a href={{ path('export_teams_nologo') }}>{{ 'Export sans Logo'|trans }}</a> |
+        <a href="?logo=0">{{ 'List sans Logo'|trans }}</a> |
+        <a href="?logo=1">{{ 'List avec Logo'|trans }}</a> |
+    </div>
+    <h1>{{ 'List teams'|trans }}</h1>
+    {% if data and data is defined %}
+        <table>
+            <tr>
+                <td>{{ "ID"|trans }}</td>
+                <td>{{ "ID nom club"|trans }}</td>
+                <td>{{ "ID Name club"|trans }}</td>
+                <td>{{ "Full Name"|trans }}</td>
+                <td>{{ "Code Pays"|trans }}</td>
+                <td>{{ "Logo"|trans }}</td>
+            </tr>
+
+
+        {% for row in data %}
+            <tr>
+                <td>
+                    <img src="{{ asset('images/Flag-foot/' ~ row.idNameClub ~ '.png') }}" alt="" width="25" height=""/>
+                </td>
+                <td>
+                    {{ row.id }}
+                </td>
+                <td>
+                    {{ row.nomClub }}
+                </td>
+                <td>
+                    {{ row.idNameClub }}
+                </td>
+                <td>
+                    {{ row.fullNameClub }}
+
+                </td>
+                <td>
+                    {{ row.codePays }}
+                </td>
+            </tr>
+        {% endfor %}
+        </table>
+    {% else %}
+        {{ 'Aucun club ni pays n\'a été trouvé'|trans }}
+    {% endif  %}
+{% endblock %}

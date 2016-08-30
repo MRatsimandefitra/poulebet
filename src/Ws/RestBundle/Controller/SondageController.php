@@ -6,6 +6,7 @@ use Api\CommonBundle\Controller\ApiController;
 use Api\DBBundle\Entity\VoteUtilisateur;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class SondageController extends ApiController
@@ -27,15 +28,27 @@ class SondageController extends ApiController
             $voteUtilisateur->setUtilisateur($currentUser);
             $voteUtilisateur->setGagnant(false);
             if ($isVote) {
-                $oldVote = $this->getRepo(self::ENTITY_MATCHS);
+                $oldVote = $this->getRepo(self::ENTITY_MATCHS)->find($MatchId);
+                if(!$oldVote){
+                    $oldVote = 0;
+                }
             }
 
             $voteUtilisateur->setVote($oldVote + 1);
+            $this->insert($voteUtilisateur, array('success' => 'success' , 'error' => 'error'));
+            $result['code_error'] = 0;
+            $result['success'] = true;
+            $result['error'] = false;
+            $result['message'] = "Success";
 
         } catch (Exception $e) {
-
+            $result['code_error'] = 2;
+            $result['success'] = false;
+            $result['error'] = true;
+            $result['message'] = "Error";
         }
 
+        return new JsonResponse($result);
 
     }
 

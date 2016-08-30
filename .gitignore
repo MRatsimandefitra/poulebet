@@ -27,3 +27,7 @@ var/cache/
 /web/.htaccess
 
 /app/bootstrap.php.cache
+/src/Api/DBBundle/Entity/*.php~
+/src/Api/DBBundle/Entity/*.php~
+*.php~
+*.php~
