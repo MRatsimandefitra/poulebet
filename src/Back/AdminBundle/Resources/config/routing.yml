@@ -34,3 +34,4 @@ route_prefix_admin_championat:
     resource: "@BackAdminBundle/Resources/config/routing/championat.yml"
     prefix:   /championnats
 
+
