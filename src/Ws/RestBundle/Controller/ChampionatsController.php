@@ -142,7 +142,10 @@ class ChampionatsController extends ApiController
             foreach ($data as $vData) {
 
                 if ($ancienName != $vData->getChampionat()->getNomChampionat()) {
-                    $dataName[] = $vData->getChampionat()->getNomChampionat();
+                    $dataName[] = array(
+                       'code' => $vData->getChampionat()->getNomChampionat(),
+                        'fullName' =>$vData->getChampionat()->getFullNameChampionat()
+                    );
                 }
                 $ancienName = $vData->getChampionat()->getNomChampionat();
             }

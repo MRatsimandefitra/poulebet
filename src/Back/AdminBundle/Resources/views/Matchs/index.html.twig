@@ -37,10 +37,20 @@
                         {#{{ searchValue.championat_match }}#}
                         {% if searchValue.championat_match is defined %}
                             <option value="{{ searchValue.championat_match }}">{{ searchValue.championat_match }}</option>
+                            {% for rowchampinat in championat %}
+
+                                {% if rowchampinat.nomchampionat != searchValue.championat_match %}
+                                    <option value="{{ rowchampinat.nomchampionat }}">{{ rowchampinat.nomchampionat }}</option>
+                                {% endif %}
+
+                            {% endfor %}
+                            <option value=""></option>
                         {% else %}
                             <option value=""></option>
                             {% for rowchampinat in championat %}
+
                                 <option value="{{ rowchampinat.nomchampionat }}">{{ rowchampinat.nomchampionat }}</option>
+
                             {% endfor %}
                         {% endif %}
                     </select>
@@ -50,10 +60,17 @@
 
                         {% if searchValue.pays is defined %}
                             <option value="{{ searchValue.pays }}">{{ searchValue.pays }}</option>
+                            {% for rowCountry in country %}
+
+                                {% if rowCountry.name != searchValue.pays %}
+                                    <option value="{{ rowCountry.name }}"> {{ rowCountry.fullName }}  </option>
+                                {% endif %}
+                            {% endfor %}
+                            <option value=""> </option>
                         {% else %}
                             <option value=""></option>
                             {% for rowCountry in country %}
-                                <option value="{{ rowCountry.iso }}"> {{ rowCountry.name }}  </option>
+                                <option value="{{ rowCountry.name }}"> {{ rowCountry.fullName }}  </option>
                             {% endfor %}
                         {% endif %}
                     </select>

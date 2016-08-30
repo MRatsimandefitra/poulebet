@@ -1,0 +1,602 @@
+Logo,"ID Name club","Nom Club","Nom comlet","Code pays"
+,skks_alb,Skenderbeu,"KF Skënderbeu Korçë",alb
+,strmgsk_aut,"Sturm Graz","SK Sturm Graz",aut
+,ziraik_aze,Zira,"Zirə FK",aze
+,zultwasv_bel,"Zulte Waregem","SV Zulte Waregem",bel
+,mkdfc_en,"Milton Keynes Dons","Milton Keynes Dons FC",eng
+,fifc_bra,Figueirense,"Figueirense Futebol Clube",bra
+,dnemogfc_brus,"Dnepr Mogilev","FC Dnepr Mogilev",brus
+,rijehnk_cro,Rijeka,"HNK Rijeka",cro
+,enosnpfc_cyp,Paralimni,"Enosis Neon Paralimni FC",cyp
+,vikplzfc_cze,"Viktoria Plzeň","FC Viktoria Plzeň",cze
+,vff_den,Viborg,"Viborg FF",den
+,hjk_fin,HJK,"Helsingin Jalkapalloklubi",fin
+,parisfc_fra,"Paris FC","Paris FC",fra
+,armbdsc_ger,Arminia,"DSC Arminia Bielefeld",ger
+,skoxfc_gre,Xanthi,"Skoda Xanthi FC",gre
+,gyoetofc_hun,Győr,"Győri ETO FC",hun
+,mactafc_isr,"Maccabi TA","Maccabi Tel Aviv FC",isr
+,ussal1919srl_ita,Salernitana,"US Salernitana 1919 S.r.l.",ita
+,fca_kaz,"FC Astana","FC Astana",kaz
+,ventfk_lat,Ventspils,"FK Ventspils",lat
+,shertfc_mol,Sheriff,"FC Sheriff Tiraspol",mol
+,fczwo_ned,Zwolle,"PEC Zwolle",ned
+,moldfk_nor,Molde,"Molde FK",nor
+,wiskrask_pol,"Wisla Krakow","Wisła Kraków SK",pol
+,cdf_por,Feirense,"CD Feirense",por
+,vointcsu_rom,"Voinţa Sibiu","CSU Voinţa Sibiu",rom
+,zenspbfc_rus,Zenit,"FC Zenit St. Petersburg",rus
+,stmirfc_sco,"St Mirren","Saint Mirren FC",sco
+,sevfc2_spa,"Sevilla II","Sevilla II FC",spa
+,zilmsk_svk,Žilina,"MŠK Žilina",svk
+,marnk_svn,Maribor,"NK Maribor",svn
+,osk_swe,Örebro,"Örebro SK",swe
+,sionfc_swi,Sion,"FC Sion",swi
+,zorlfc_ukr,Zorya,"FC Zorya Luhansk",ukr
+,tnsfc_wal,TNS,"The New Saints FC",wal
+,auswfc_aut,"Austria Wien","FK Austria Wien",aut
+,rapw_aut,"Rapid Wien","SK Rapid Wien",aut
+,rbsalzfc_aut,Salzburg,"FC Red Bull Salzburg",aut
+,qaraghfk_aze,Qarabağ,"FK Qarabağ Ağdam",aze
+,intbakpak_aze,"Inter Baku","Inter Baki PIK",aze
+,neftbakpfk_aze,Neftchi,"Neftchi PFK",aze
+,gabfk_aze,Gabala,"Gabala FK",aze
+,simzaqpak_aze,Simurq,"Simurq PIK",aze
+,azalpfc_aze,AZAL,"AZAL PFK",aze
+,xlfk_aze,Khazar,"Khazar Lankaran FK",aze
+,sumfk_aze,Sumgayit,"Sumgayit FK",aze
+,bakfk_aze,"FC Baku","FK Baki",aze
+,anpfk_aze,Araz,"Araz-Naxçıvan PFK",aze
+,kapazfk_aze,Kapaz,"Kapaz PFK",aze
+,fkrevan_aze,Revan,"Rəvan FK",aze
+,gentkaa_bel,"AA Gent","KAA Gent",bel
+,andrsc_bel,Anderlecht,"RSC Anderlecht",bel
+,rantwfc_bel,Antwerp,"Royal Antwerp FC",bel
+,kbeershac_bel,Beerschot,"Koninklijke Beerschot AC",bel
+,cbrukv_bel,Brugge,"Club Brugge KV",bel
+,cebruksv_bel,"Cercle Brugge","Cercle Brugge KSV",bel
+,rchasc_bel,Charleroi,"R. Charleroi SC",bel
+,fcdend_bel,Dender,"FC Dender",bel
+,fcmolbruss_bel,"FC Brussels","FC Molenbeek Brussels",bel
+,genkkrc_bel,Genk,"KRC Genk",bel
+,gerbeekfc_bel,"Germinal Beerschot","KFC Germinal Beerschot Antwerpen",bel
+,kskhei_bel,Heist,"KSK Heist",bel
+,eupkas_bel,"KAS Eupen","KAS Eupen",bel
+,kortkv_bel,Kortrijk,"KV Kortrijk",bel
+,kliesk_bel,Lierse,"K. Lierse SK",bel
+,lokovksc_bel,Lokeren,"KSC Lokeren OV",bel
+,lomutd_bel,"Lommel Utd","Lommel United",bel
+,mechkv_bel,Mechelen,"KV Mechelen",bel
+,raecmons_bel,Mons,"RAEC Mons",bel
+,rexcmos_bel,Mouscron,"R. Excelsior Mouscron",bel
+,rmousper_bel,"Mouscron Peruwelz","Royal Mouscron-Péruwelz",bel
+,ohleuvfc_bel,"OH Leuven","FC Oud-Heverlee Leuven",bel
+,kvoos_bel,Oostende,"KV Oostende",bel
+,rbdbor_bel,"RBD Borinage","Royal Boussu Dour Borinage",bel
+,rosksv_bel,Roeselare,"KSV Roeselare",bel
+,rupboofc_bel,"Rupel Boom","Rupel Boom FC",bel
+,strudvv_bel,Sint-Truidense,"K. Sint-Truidense VV",bel
+,standwet_bel,"St. Wetteren","Standaard Wetteren",bel
+,stanlie_bel,Standard,"R. Standard de Liège",bel
+,kvktie_bel,Tienen,"KVK Tienen",bel
+,rfctourn_bel,Tournai,"RFC Tournai",bel
+,afctub_bel,Tubize,"AFC Tubize",bel
+,kvturn_bel,Turnhout,"KV Turnhout",bel
+,csvis_bel,Visé,"CS Visé",bel
+,waasbev_bel,Waasland-Beveren,"KV Red Star Waasland",bel
+,westkvc_bel,Westerlo,"KVC Westerlo",bel
+,cskaspfc_blg,"CSKA Sofia","PFC CSKA Sofia",blg
+,levspfc_blg,"Levski Sofia","PFC Levski Sofia",blg
+,litlovpfc_blg,"Litex Lovech","PFC Litex Lovech",blg
+,ludogorpfc_blg,Ludogorets,"PFC Ludogorets Razgrad",blg
+,cruec_bra,Cruzeiro,"Cruzeiro Esporte Clube",bra
+,flfc_bra,Fluminense,"Fluminense Football Club",bra
+,sccp_bra,Corinthians,"Sport Club Corinthians Paulista",bra
+,spfc_bra,"São Paulo","São Paulo Futebol Clube",bra
+,sci_bra,Internacional,"Sport Club Internacional",bra
+,gfbpa_bra,Grêmio,"Grêmio Foot-Ball Porto Alegrense",bra
+,gec_bra,Goiás,"Goiás Esporte Clube",bra
+,cam_bra,"Atlético Mineiro","Clube Atlético Mineiro",bra
+,scr_bra,"Sport Recife","Sport Club do Recife",bra
+,sfc_bra,Santos,"Santos Futebol Clube",bra
+,sep_bra,Palmeiras,"Sociedade Esportiva Palmeiras",bra
+,cap_bra,"Atlético Paranaense","Clube Atlético Paranaense",bra
+,bfr_bra,Botafogo,"Botafogo de Futebol e Regatas",bra
+,criec_bra,Criciuma,"Criciúma Esporte Clube",bra
+,ecb_bra,Bahia,"Esporte Clube Bahia",bra
+,acf_bra,Chapecoense,"Associação Chapecoense de Futebol",bra
+,cfbc_bra,Coritiba,"Coritiba Foot Ball Club",bra
+,ecv_bra,Vitória,"Esporte Clube Vitória",bra
+,crf_bra,Flamengo,"Clube de Regatas do Flamengo",bra
+,batebfc_brus,"BATE Borisov","FC BATE Borisov",brus
+,dinmfc_brus,"Dinamo Minsk","FC Dinamo Minsk",brus
+,dinzank_cro,"Dinamo Zagreb","NK Dinamo Zagreb",cro
+,hajshnk_cro,"Hajduk Split","HNK Hajduk Split",cro
+,aeklfc_cyp,AEK,"AEK Larnaca FC",cyp
+,aellfc_cyp,AEL,"AEL Limassol FC",cyp
+,aeppfc_cyp,AEP,"AEP Paphos FC",cyp
+,apepkfc_cyp,APEP,"APEP Kyperounda FC",cyp
+,apoelfc_cyp,APOEL,"APOEL FC",cyp
+,apopkpfc_cyp,APOP,"APOP / Kinyras Peyias FC",cyp
+,alkilfc_cyp,Alki,"Alki Larnaca FC",cyp
+,anorffc_cyp,Anorthosis,"Anorthosis Famagusta FC",cyp
+,apollfc_cyp,Apollon,"Apollon Limassol FC",cyp
+,arislfc_cyp,"Aris Limassol","Aris Limassol FC",cyp
+,doxkafc_cyp,Doxa,"Doxa Katokopia FC",cyp
+,ermafc_cyp,Ermis,"Ermis Aradippou FC",cyp
+,ethnafc_cyp,"Ethnikos Achnas","Ethnikos Achnas FC",cyp
+,neasfc_cyp,"Nea Salamis","Nea Salamis FC",cyp
+,olynfc_cyp,Olympiakos,"Olympiakos Nicosia FC",cyp
+,omonac_cyp,Omonia,"AC Omonia",cyp
+,slavpsk_cze,"Slavia Praha","SK Slavia Praha",cze
+,slovliberfc_cze,Slovan,"FC Slovan Liberec",cze
+,sparpac_cze,"Sparta Praha","AC Sparta Praha",cze
+,agf_den,AGF,"Aarhus Gymnastikforening",den
+,aabk_den,Aalborg,"Aalborg BK",den
+,bif_den,Brøndby,"Brøndby IF",den
+,efb_den,Esbjerg,"Esbjerg fB",den
+,kogehb_den,"HB Køge","HB – Køge",den
+,hobroik_den,"Hobro IK","Hobro Idræts Klub",den
+,ach_den,Horsens,"AC Horsens",den
+,fckob_den,København,"FC København",den
+,lynbk_den,Lyngby,"Lyngby BK",den
+,kcmd_den,Midtjylland,"FC Midtjylland",den
+,fcnj_den,Nordsjælland,"FC Nordsjælland",den
+,obk_den,Odense,"Odense BK",den
+,rfc_den,Randers,"Randers FC",den
+,sif_den,Silkeborg,"Silkeborg IF",den
+,soe_den,SønderjyskE,SønderjyskE,den
+,fcv_den,Vestsjælland,"FC Vestsjælland",den
+,barnfc_en,Barnsley,"Barnsley FC",eng
+,bcfc_en,Birmingham,"Birmingham City FC",eng
+,brfc_en,Blackburn,"Blackburn Rovers FC",eng
+,bpfc_en,Blackpool,"Blackpool FC",eng
+,bwfc_en,Bolton,"Bolton Wanderers FC",eng
+,brentfc_en,Brentford,"Brentford FC",eng
+,bhafc_en,"Brighton and Hove Albion","Brighton and Hove Albion Football Club",eng
+,briscfc_en,"Bristol City","Bristol City FC",eng
+,burnfc_en,Burnley,"Burnley FC",eng
+,bafc_en,Burton,"Burton Albion FC",eng
+,cardcfc_en,Cardiff,"Cardiff City FC",eng
+,chathfc_en,Charlton,"Charlton Athletic FC",eng
+,covcfc_en,Coventry,"Coventry City FC",eng
+,dcfc_en,Derby,"Derby County FC",eng
+,doncrfc_en,Doncaster,"Doncaster Rovers FC",eng
+,fhfc_en,Fulham,"Fulham FC",eng
+,huddtfc_en,Huddersfield,"Huddersfield Town FC",eng
+,hcafc_en,"Hull City","Hull City AFC",eng
+,ipstfc_en,Ipswich,"Ipswich Town FC",eng
+,leeutdafc_en,"Leeds Utd","Leeds United AFC",eng
+,middfc_en,Middlesbrough,"Middlesbrough FC",eng
+,millfc_en,Millwall,"Millwall FC",eng
+,nottffc_en,"Nottm Forest","Nottingham Forest FC",eng
+,petutdfc_en,Peterborough,"Peterborough United FC",eng
+,plymafc_en,Plymouth,"Plymouth Argyle FC",eng
+,portfc_en,Portsmouth,"Portsmouth FC",eng
+,prenefc_en,Preston,"Preston North End FC",eng
+,qprfc_en,QPR,"Queens Park Rangers FC",eng
+,readfc_en,Reading,"Reading FC",eng
+,rotutdfc_en,Rotherham,"Rotherham United FC",eng
+,scutdfc_en,Scunthorpe,"Scunthorpe United FC",eng
+,shefutd_en,"Sheffield Utd","Sheffield United FC",eng
+,sheffwfc_en,"Sheffield Wed","Sheffield Wednesday FC",eng
+,shefw_en,"Sheffield Wed","Sheffield Wednesday FC",eng
+,wafc_en,Wigan,"Wigan Athletic FC",eng
+,wwfc_en,Wolves,"Wolverhampton Wanderers FC",eng
+,ytfc_en,"Yeovil Town","Yeovil Town FC",eng
+,rcdsa_fra,Strasbourg,"RC Strasbourg Alsace",fra
+,acajac_fra,Ajaccio,"AC Ajaccio",fra
+,amiensc_fra,"Amiens SC","Amiens Sporting Club",fra
+,angsco_fra,Angers,"Angers SCO",fra
+,acaa_fra,Arles,"AC Arles-Avignon",fra
+,ajau_fra,Auxerre,"AJ Auxerre",fra
+,bolus_fra,Boulogne,"US Boulogne",fra
+,stbr_fra,Brest,"Stade Brestois 29",fra
+,cabast_fra,"CA Bastia","Cercle Athlétique Bastiais",fra
+,bchatrx_fra,Châteauroux,"La Berrichonne Châteauroux",fra
+,clerfa_fra,Clermont,"Clermont Foot Auvergne",fra
+,dijfco_fra,Dijon,"Dijon FCO",fra
+,fcistrop_fra,"FC Istres","FC Istres Ouest Provence",fra
+,gfcoaj_fra,"GFCO Ajaccio","Gazélec FC Olympique Ajaccio",fra
+,grefoot_fra,Grenoble,"Grenoble Foot 38",fra
+,havrac_fra,Havre,"Havre AC",fra
+,stlavmfc_fra,Lavallois,"Stade Lavallois Mayenne FC",fra
+,lemanuc_fra,"Le Mans","Le Mans UC 72",fra
+,luzap_fra,"Luzenac AP","Luzenac Ariège Pyrénées",fra
+,asnl_fra,Nancy,"AS Nancy-Lorraine",fra
+,nimolyfc_fra,Nimes,"Nîmes Olympique FC",fra
+,chniofc_fra,Niort,"Chamois Niortais FC",fra
+,nimesoly_fra,Nîmes,"Nîmes Olympique",fra
+,cssedard_fra,Sedan,"CS Sedan Ardennes",fra
+,fcsm_fra,Sochaux,"FC Sochaux-Montbéliard",fra
+,tourfc_fra,Tours,"Tours FC",fra
+,estrofc_fra,"Troyes AC","ES Troyes AC",fra
+,uscl_fra,"US Créteil","US Créteil-Lusitanos",fra
+,usorlelf_fra,"US Orléans","US Orléans Loiret Football",fra
+,vafc_fra,Valenciennes,"Valenciennes FC",fra
+,vannoc_fra,Vannes,"Vannes OC",fra
+,rsfc93_fra,"Red Star","Red Star FC",fra
+,fcbp_fra,"Bourg Peronnas","FC Bourg-Péronnas",fra
+,alemaach_ger,Aachen,"Alemannia Aachen",ger
+,vfraalen_ger,Aalen,"VfR 1921 Aalen",ger
+,bochvfl_ger,Bochum,"VfL Bochum 1848",ger
+,svdarm1898_ger,Darmstadt,"SV Darmstadt 1898",ger
+,dyndresg_ger,Dresden,"SG Dynamo Dresden",ger
+,msvduisb_ger,Duisburg,"MSV Duisburg",ger
+,btsvein_ger,"Eintracht Braunschweig","BTSV Eintracht Braunschweig",ger
+,energcfc_ger,Energie,"FC Energie Cottbus",ger
+,fcerzgaue_ger,Erzgebirge,"FC Erzgebirge Aue",ger
+,fortdus1895_ger,"Fortuna Dusseldorf","Düsseldorfer TuS Fortuna 1895",ger
+,fsvfrank_ger,Frankfurt,"FSV Frankfurt",ger
+,spvgggf_ger,"Greuther Fürth","SpVgg Greuther Fürth",ger
+,hansarost_ger,"Hansa Rostock","F.C. Hansa Rostock e.V.",ger
+,1fcheid1846_ger,Heidenheim,"1. FC Heidenheim 1846",ger
+,fcingold04_ger,Ingolstadt,"FC Ingolstadt 04",ger
+,kaifc_ger,Kaiserslautern,"1. FC Kaiserslautern",ger
+,karsc_ger,Karlsruher,"Karlsruher SC",ger
+,tsvmunch1860_ger,"München 1860","TSV 1860 München",ger
+,nurnfc_ger,Nürnberg,"1. FC Nürnberg",ger
+,scrwoberh1904_ger,Oberhausen,"SC Rot-Weiß Oberhausen 1904",ger
+,vflosn_ger,Osnabrück,"VfL Osnabrück",ger
+,rbleipzev_ger,"RB Leipzig","RasenBallsport Leipzig e.V.",ger
+,jahnregssv_ger,Regensburg,"SSV Jahn Regensburg",ger
+,sv1916sandhaus_ger,Sandhausen,"SV 1916 Sandhausen",ger
+,spafc_ger,"St Pauli","FC St. Pauli",ger
+,fcberuni_ger,"Union Berlin","1. FC Union Berlin",ger
+,wkfc_ger,"Würzburger Kickers","FC Würzburger Kickers e.V.",ger
+,aekfc_gre,AEK,"AEK Athens FC",gre
+,gsappsm_gre,"Apollon Smyrnis","GS Apollon Smyrnis",gre
+,aristfc_gre,Aris,"Aris Thessaloniki FC",gre
+,atrfc_gre,Atromitos,"Atromitos FC",gre
+,doxdrgs_gre,"Doxa Drama","G.S. Doxa Drama",gre
+,ergfc_gre,Ergotelis,"Ergotelis FC",gre
+,pasgiafc_gre,Giannina,"PAS Giannina FC",gre
+,irakfc_gre,Iraklis,"Iraklis FC",gre
+,kallfc_gre,Kallonis,"Kalloni Lekanopedio FC",gre
+,kavfc_gre,Kavala,"FC Kavala",gre
+,kerfc_gre,Kerkyra,"Kerkyra FC",gre
+,larfc_gre,Larissa,"Larissa FC",gre
+,levfc_gre,Levadiakos,"Levadiakos FC",gre
+,ofifc_gre,OFI,"OFI Crete FC",gre
+,olyvfc_gre,"Olymp. Volou","Olympiakos Volou FC",gre
+,olyfc_gre,Olympiacos,"Olympiacos FC",gre
+,paenikivol_gre,"Niki Volos","PAE Niki Volou",gre
+,paokfc_gre,PAOK,"PAOK FC",gre
+,panafc_gre,Panathinaikos,"Panathinaikos FC",gre
+,panetgfs_gre,Panetolikos,"Panetolikos G.F.S.",gre
+,panigss_gre,Panionios,"Panionios GSS",gre
+,pansfc_gre,Panserraikos,"Panserraikos FC",gre
+,pantfc_gre,Panthrakikos,"Panthrakikos FC",gre
+,aoplatch_gre,Platanias,"AO Platania Chanion",gre
+,astetfc_gre,Tripolis,"Asteras Tripolis FC",gre
+,verofc_gre,Veria,"Veria FC",gre
+,debvsc_hun,Debreceni,"Debreceni VSC",hun
+,kaz_int,Kazakhstan,Kazakhstan,int
+,svk_int,Slovakia,Slovakia,int
+,pry_int,Paraguay,Paraguay,int
+,ksv_int,Kosovo,Kosovo,int
+,shamrofc_ire,"Shamrock Rovers","Shamrock Rovers Football Club",ire
+,haptafc_isr,"Hapoel TA","Hapoel Tel Aviv FC",isr
+,machfc_isr,Maccabi,"Maccabi Haifa FC",isr
+,ucalblef_ita,AlbinoLeffe,"UC AlbinoLeffe",ita
+,ascca1898_ita,Ascoli,"Ascoli Calcio 1898",ita
+,asavel1912_ita,Avellino,"AS Avellino 1912",ita
+,barias_ita,Bari,"AS Bari",ita
+,bolfc_ita,Bologna,"Bologna FC",ita
+,bresca_ita,Brescia,"Brescia Calcio",ita
+,carpifc1909_ita,Carpi,"Carpi FC 1909",ita
+,cataca_ita,Catania,"Calcio Catania",ita
+,ascitta_ita,Cittadella,"AS Cittadella",ita
+,fccrot_ita,Crotone,"FC Crotone",ita
+,froca_ita,Frosinone,"Frosinone Calcio",ita
+,usgrofc_ita,Grosseto,"US Grosseto FC",ita
+,gubb1910as_ita,Gubbio,"AS Gubbio 1910",ita
+,juvestabss_ita,"Juve Stabia","SS Juve Stabia",ita
+,uslatinc_ita,Latina,"US Latina Calcio",ita
+,lecus_ita,Lecce,"US Lecce",ita
+,livcaas_ita,Livorno,"AS Livorno Calcio",ita
+,modfc_ita,Modena,"Modena FC",ita
+,noceasg_ita,Nocerina,"ASG Nocerina",ita
+,novaca_ita,Novara,"Novara Calcio",ita
+,capadov_ita,Padova,"Calcio Padova",ita
+,parfc_ita,Parma,"Parma FC",ita
+,acperc_ita,Perugia,"AC Perugia Calcio ",ita
+,delpes1936_ita,Pescara,"Delfino Pescara 1936",ita
+,piaca_ita,Piacenza,"Piacenza Calcio",ita
+,caposu_ita,Portogruaro,"Calcio Portogruaro Summaga",ita
+,proverc1892fc_ita,"Pro Vercelli","FC Pro Vercelli 1892",ita
+,regca_ita,Reggina,"Reggina Calcio",ita
+,sieac_ita,Siena,"AC Siena",ita
+,spezcalc_ita,Spezia,"ASD Spezia Calcio 2008",ita
+,terncalc_ita,Ternana,"Ternana Calcio",ita
+,asdtrapc_ita,Trapani,"ASD Trapani Calcio",ita
+,ustrieca_ita,Triestina,"US Triestina Calcio",ita
+,asvares1910_ita,Varese,"AS Varese 1910",ita
+,vicca_ita,Vicenza,"Vicenza Calcio",ita
+,virtent_ita,Entella,"Virtus Entella",ita
+,virtlanc1924ss_ita,"Virtus Lanciano","SS Virtus Lanciano 1924",ita
+,ccsrl_ita,"Calcio Como","Calcio Como S.r.l",ita
+,aktfc_kaz,"FC Aktobe","FC Aktobe",kaz
+,shakhfc_kaz,"Shakhter Karagandy","FC Shakhter Karagandy",kaz
+,agovv_ned,AGOVV,"AGOVV Apeldoorn",ned
+,azal_ned,"AZ Alkmaar","AZ Alkmaar",ned
+,rksvachi29_ned,"Achilles '29","RKSV Achilles 1929",ned
+,afca_ned,Ajax,"AFC Ajax",ned
+,alcitfc_ned,"Almere City","Almere City FC",ned
+,nac_ned,Breda,"NAC Breda",ned
+,sccamb_ned,Cambuur,"SC Cambuur Leeuwarden",ned
+,gra_ned,"De Graafschap","De Graafschap",ned
+,fcdebo_ned,"Den Bosch","FC Den Bosch",ned
+,adodh_ned,"Den Haag","ADO Den Haag",ned
+,fcdor_ned,Dordrecht,"FC Dordrecht",ned
+,fceind_ned,Eindhoven,"FC Eindhoven",ned
+,fcemm_ned,Emmen,"FC Emmen",ned
+,sce_ned,Excelsior,"SBV Excelsior",ned
+,ossfc_ned,"FC Oss","Football Club Oss",ned
+,fey_ned,Feyenoord,Feyenoord,ned
+,fortsitt_ned,Fortuna,"Fortuna Sittard",ned
+,goahea_ned,"Go Ahead Eagles","Go Ahead Eagles",ned
+,fcgr_ned,Groningen,"FC Groningen",ned
+,sche_ned,Heerenveen,"SC Heerenveen",ned
+,helspo_ned,"Helmond Sport","Helmond Sport",ned
+,ha_ned,Heracles,"Heracles Almelo",ned
+,afcaj_ned,"Jong Ajax","Jong AFC Ajax",ned
+,psvj_ned,"Jong PSV","Jong PSV Eindhoven",ned
+,fctj_ned,"Jong Twente","Jong FC Twente",ned
+,mvv_ned,MVV,"MVV Maastricht",ned
+,nec_ned,NEC,"NEC Nijmegen",ned
+,psv_ned,PSV,"PSV Eindhoven",ned
+,rbc_ned,RBC,"RBC Roosendaal",ned
+,rgc_ned,Roda,"Roda JC",ned
+,sparo_ned,Sparta,"Sparta Rotterdam",ned
+,sctelstar_ned,Telstar,"SC Telstar",ned
+,fct_ned,Twente,"FC Twente",ned
+,fcu_ned,Utrecht,"FC Utrecht",ned
+,fcuj_ned,JongUtrecht,"Jong FC Utrecht",ned
+,bvveen_ned,Veendam,"BV Veendam 1894",ned
+,vvv_ned,Venlo,"VVV Venlo",ned
+,bvv_ned,Vitesse,"BV Vitesse",ned
+,fcvolndm_ned,Volendam,"FC Volendam",ned
+,waarkc_ned,Waalwijk,"RKC Waalwijk",ned
+,wii_ned,"Willem II","Willem II",ned
+,rosbk_nor,Rosenborg,"Rosenborg BK",nor
+,tromsoil_nor,Tromso,"Tromsø Idrettslag",nor
+,lechpkks_pol,"Lech Poznań","KKS Lech Poznań",pol
+,legwarskp_pol,"Legia Warszawa","KP Legia Warszawa",pol
+,acaco_por,Académica,"A. Académica de Coimbra",por
+,aroucafc_por,Arouca,"FC Arouca",por
+,beimsc_por,Beira-Mar,"SC Beira-Mar",por
+,belcf_por,Belenenses,"CF Os Belenenses",por
+,benfsl_por,Benfica,"SL Benfica",por
+,brasc_por,Braga,"SC Braga",por
+,gdestp_por,Estoril,"GD Estoril Praia",por
+,feircd_por,Feirense,"CD Feirense",por
+,gvfc_por,"Gil Vicente","Gil Vicente FC",por
+,vitsc_por,Guimarães,"Vitória Guimarães",por
+,leiud_por,Leiria,"UD Leiria",por
+,leixsc_por,Leixões,"Leixões SC",por
+,marimf_por,Marítimo,"Marítimo da Madeira Futebol",por
+,morefc_por,Moreirense,"Moreirense FC",por
+,naccd_por,Nacional,"CD Nacional",por
+,nav1ma_por,"Naval 1° Maio","A. Naval 1° Maio",por
+,olhasc_por,Olhanense,"SC Olhanense",por
+,pacfefc_por,"Paços de Ferreira","FC Paços de Ferreira",por
+,fcp_por,Penafiel,"FC Penafiel",por
+,bfc_por,Boavista,"Boavista FC",por
+,portsc_por,Portimonense,"Portimonense SC",por
+,portfc_por,Porto,"FC Porto",por
+,rioavfc_por,"Rio Ave","Rio Ave FC",por
+,vitfc_por,Setúbal,"Vitória Setúbal",por
+,sporcp_por,Sporting,"Sporting Clube de Portugal",por
+,cfu_por,"U. Madeira","CF União da Madeira",por
+,cdt_por,Tondela,"CD Tondela",por
+,gdch_por,Chaves,"GD Chaves",por
+,astrofc_rom,Astra,"FC Astra Ploiesti",rom
+,brasfc_rom,Brasov,"FC Brasov",rom
+,clujcfr_rom,"CFR Cluj","CFR 1907 Cluj",rom
+,ceahpnfc_rom,Ceahlaul,"FC Ceahlaul Piatra Neamt",rom
+,concordcs_rom,Concordia,"CS Concordia Chiajna",rom
+,dinbfc_rom,"Dinamo Bucureşti","FC Dinamo 1948 Bucureşti",rom
+,gazmmas_rom,"Gaz Metan","CS Gaz Metan Mediaş",rom
+,glorbcf_rom,"Gloria Bistriţa","ACF Gloria 1922 Bistriţa",rom
+,intcafc_rom,"Internaţional Curtea","FC Internaţional Curtea de Argeş",rom
+,mionvcs_rom,Mioveni,"CS Mioveni",rom
+,otegfc_rom,"Oţelul Galaţi","FC Oţelul Galaţi",rom
+,panltjcs_rom,Pandurii,"CS Pandurii Lignitul Târgu Jiu",rom
+,petrofc_rom,Petrolul,"FC Petrolul Ploieşti",rom
+,polifc_rom,"Poli Iaşi","FC Politehnica Iaşi",rom
+,rapbfc_rom,"Rapid Bucureşti","FC Rapid Bucureşti",rom
+,sporsbfc_rom,Sportul,"FC Sportul Studentesc Bucuresti",rom
+,stebfc_rom,Steaua,"FC Steaua Bucureşti",rom
+,timfc_rom,Timişoara,"FC Timişoara",rom
+,tarmfcm_rom,Târgu,"FCM Târgu Mureş",rom
+,uniraifc_rom,"Unirea Alba Iulia","FC Unirea Alba Iulia",rom
+,uniurfc_rom,"Unirea Urziceni","FC Unirea Urziceni",rom
+,univclfc_rom,"Univ Cluj","FC Universitatea Cluj",rom
+,univcrfc_rom,"Univ Craiova","FC Universitatea Craiova",rom
+,vassc_rom,Vaslui,"FC Vaslui",rom
+,vicbfc_rom,Victoria,"FC Victoria Brăneşti",rom
+,alavfc_rus,Alania,"FC Alania Vladikavkaz",rus
+,amkpfc_rus,Amkar,"FC Amkar Perm",rus
+,anzmfc_rus,Anzhi,"FC Anzhi Makhachkala",rus
+,fcarst_rus,"Arsenal T","FC Arsenal Tula",rus
+,cskampfc_rus,CSKA,"PFC CSKA Moskva",rus
+,dinmfc_rus,Dinamo,"FC Dinamo Moskva",rus
+,fcmords_rus,"FC Mordovia","FC Mordovia Saransk",rus
+,moscfc_rus,"FC Moscow","FC Moscow",rus
+,rostfc_rus,"FC Rostov","FC Rostov",rus
+,fcufa_rus,"FC Ufa","FC Ufa",rus
+,khimfc_rus,Khimki,"FC Khimki",rus
+,krasfc_rus,Krasnodar,"FC Krasnodar",rus
+,krsspfc_rus,"Krylya Sovetov","PFC Krylya Sovetov Samara",rus
+,kubfc_rus,Kuban,"FC Kuban Krasnodar",rus
+,lokmfc_rus,"Lokomotiv Moscow","FC Lokomotiv Moskva",rus
+,luchenfc_rus,Luch-Energiya,"FC Luch-Energiya",rus
+,orefc_rus,Orenburg,"FC Orenburg",rus
+,rubkfc_rus,Rubin,"FC Rubin Kazan",rus
+,satmofc_rus,Saturn,"FC Saturn Moskovskaya Oblast",rus
+,shinfc_rus,Shinnik,"FC Shinnik Yaroslavl",rus
+,sibnfc_rus,Sibir,"FC Sibir Novosibirsk",rus
+,spamfc_rus,Spartak,"FC Spartak Moskva",rus
+,spanpfc_rus,"Spartak Nalchik","PFC Spartak Nalchik",rus
+,tergfc_rus,Terek,"FC Terek Grozny",rus
+,tomskfc_rus,"Tom Tomsk","FC Tom Tomsk",rus
+,fctorpm_rus,Torpedo,"FC Torpedo Moskva",rus
+,uralfc_rus,Ural,"FC Ural Ekaterinburg",rus
+,volgnnfc_rus,Volga,"FC Volga Nizhny Novgorod",rus
+,abefc_sco,Aberdeen,"Aberdeen FC",sco
+,celtfc_sco,Celtic,"Celtic FC",sco
+,dundfc_sco,"Dundee FC","Dundee FC",sco
+,dutdfc_sco,"Dundee United","Dundee United FC",sco
+,dafc_sco,"Dunfermline Athletic","Dunfermline Athletic FC",sco
+,falkfc_sco,Falkirk,"Falkirk FC",sco
+,hamacfc_sco,Hamilton,"Hamilton Academical FC",sco
+,heartfc_sco,Hearts,"Heart of Midlothian FC",sco
+,hibefc_sco,Hibernian,"Hibernian FC",sco
+,invctfc_sco,Inverness,"Inverness Caledonian Thistle FC",sco
+,kilmfc_sco,Kilmarnock,"Kilmarnock FC",sco
+,motwfc_sco,Motherwell,"Motherwell FC",sco
+,ptfc_sco,"Partick Thistle","Partick Thistle FC",sco
+,rangfc_sco,Rangers,"Rangers FC",sco
+,rosscfc_sco,"Ross County","Ross County FC",sco
+,stjonfc_sco,"St Johnstone","Saint Johnstone FC",sco
+,depalsad_spa,Alavés,"Deportivo Alavés",spa
+,albba_spa,Albacete,"Albacete Balompié",spa
+,adalcor_spa,Alcorcón,"AD Alcorcón",spa
+,alcoycd_spa,Alcoyano,"Club Deportivo Alcoyano",spa
+,barfc2_spa,"Barcelona II","FC Barcelona Atlètic",spa
+,rbet_spa,Betis,"Real Betis",spa
+,fccart_spa,Cartagena,"FC Cartagena",spa
+,cgimntar_spa,Gimnàstic,"Club Gimnàstic de Tarragona",spa
+,girfc_spa,Girona,"Girona FC",spa
+,guadcd_spa,Guadalajara,"Club Deportivo Guadalajara",spa
+,hercf_spa,Hercules,"Hercules CF",spa
+,sdhue_spa,Huesca,"SD Huesca",spa
+,udlpalm_spa,"Las Palmas","UD Las Palmas",spa
+,cdlugo_spa,Lugo,"Club Deportivo Lugo",spa
+,malrcd_spa,Mallorca,"RCD Mallorca",spa
+,cdmira_spa,Mirandes,"Club Deportivo Mirandés",spa
+,rmurcf_spa,Murcia,"Real Murcia Club de Fútbol",spa
+,numscd_spa,Numancia,"CD Numancia de Soria",spa
+,osaca_spa,Osasuna,"CA Osasuna",spa
+,sdponf_spa,Ponferradina,"SD Ponferradina",spa
+,racrc_spa,Racing,"Real Racing Club",spa
+,rjcf_spa,"Real Jaén","Real Jaén CF",spa
+,reama2_spa,"Real Madrid II","Real Madrid II",spa
+,rechu_spa,Recreativo,"Recreativo de Huelva",spa
+,cesabadfc_spa,Sabadell,"CE Sabadell Futbol Club",spa
+,udsalam_spa,Salamanca,"UD Salamanca",spa
+,spogijo_spa,"Sporting Gijón","Real Sporting de Gijón",spa
+,tencd_spa,Tenerife,"CD Tenerife",spa
+,rvallcf_spa,Valladolid,"Real Valladolid Club de Fútbol",spa
+,vilfc2_spa,"Villarreal II","Villarreal CF II",spa
+,xercd_spa,Xerez,"Xerez CD",spa
+,zara_spa,Zaragoza,"Real Zaragoza",spa
+,cdlegsad_spa,Leganés,"Club Deportivo Leganés SAD",spa
+,uellagost_spa,Llagostera,"Unió Esportiva Llagostera",spa
+,athbc2_spa,"Athletic Bilbao II","Athletic Bilbao Club II",spa
+,ro_spa,"Real Oviedo","Real Oviedo",spa
+,cadcf_spa,Cádiz,"Cádiz Club de Fútbol",spa
+,ucamcf_spa,"UCAM Murcia","UCAM Murcia CF",spa
+,redecf_spa,"Reus Deportiu","Club de Futbol Reus Deportiu",spa
+,partbfc_srb,Partizan,"FK Partizan",srb
+,slobsk_svk,Slovan,"ŠK Slovan Bratislava",svk
+,aik_swe,AIK,"AIK Solna",swe
+,brom_swe,Brommapojkarna,Brommapojkarna,swe
+,djif_swe,Djurgården,"Djurgårdens IF FF",swe
+,ife_swe,Elfsborg,"IF Elfsborg",swe
+,gais_swe,GAIS,"GAIS Göteborg",swe
+,gif_swe,Gefle,"Gefle IF",swe
+,ifkg_swe,Göteborg,"IFK Göteborg",swe
+,hbk_swe,Halmstad,"Halmstads BK",swe
+,hif_swe,Helsingborg,"Helsingborgs IF",swe
+,bkh_swe,Häcken,"BK Häcken",swe
+,kff_swe,Kalmar,"Kalmar FF",swe
+,mff_swe,Malmö,"Malmö FF",swe
+,maif_swe,Mjällby,"Mjällby AIF",swe
+,ifknork_swe,Norrköping,"IFK Norrköping",swe
+,sundgif_swe,"Sundsvall ","GIF Sundsvall ",swe
+,syrfc_swe,Syrianska,"Syrianska FC",swe
+,tff_swe,Trelleborg,"Trelleborgs FF",swe
+,aff_swe,Åtvidaberg,"Åtvidabergs FF",swe
+,atviff_swe,Åtvidabergs,"Åtvidabergs FF",swe
+,basfc_swi,"FC Basel","FC Basel",swi
+,zurfc_swi,"FC Zürich","FC Zürich",swi
+,gcz_swi,Grasshopper,"Grasshopper Club Zürich",swi
+,luasp_swi,Lausanne,"FC Lausanne-Sport",swi
+,stgalfc1879_swi,"St. Gallen","FC St. Gallen 1879",swi
+,thunfc1898_swi,Thun,"FC Thun 1898",swi
+,ybbsc_swi,"Young Boys","BSC Young Boys",swi
+,akhbelgvs_turk,"Akhisar Belediyespor","Akhisar Belediyespor GS",turk
+,ankmke_turk,Ankaragücü,"MKE Ankaragücü",turk
+,anksas_turk,Ankaraspor,"Ankaraspor AŞ",turk
+,antsp_turk,Antalyaspor,Antalyaspor,turk
+,besjk_turk,Beşiktaş,"Beşiktaş JK",turk
+,bucas_turk,Bucaspor,Bucaspor,turk
+,burss_turk,Bursaspor,Bursaspor,turk
+,denis_turk,Denizlispor,Denizlispor,turk
+,diyas_turk,Diyarbakirspor,Diyarbakirspor,turk
+,sbelaziku_turk,Elazığspor,Elazığspor,turk
+,esks_turk,Eskisehirspor,Eskisehirspor,turk
+,fenersk_turk,Fenerbahçe,"Fenerbahçe SK",turk
+,galaas_turk,Galatasaray,"Galatasaray AŞ",turk
+,gazis_turk,Gaziantepspor,Gaziantepspor,turk
+,gencsk_turk,Gençlerbirliği,"Gençlerbirliği SK",turk
+,istbbsk_turk,"Istanbul BB","Istanbul BB SK",turk
+,kaka_turk,Karabükspor,"Kardemir Karabükspor",turk
+,kasisk_turk,Kasimpasa,"Kasimpasa SK",turk
+,kaysercspor_turk,"Kayseri Erciyesspor","Kayseri Erciyesspor",turk
+,kayss_turk,Kayserispor,Kayserispor,turk
+,konys_turk,Konyaspor,Konyaspor,turk
+,manis_turk,Manisaspor,Manisaspor,turk
+,merssk_turk,"Mersin İdmanyurdu","Mersin İdmanyurdu SK",turk
+,ordspor_turk,Orduspor,Orduspor,turk
+,caykrizes_turk,Rizespor,"Çaykur Rizespor",turk
+,samssk_turk,Samsunspor,"Samsunspor Kulübü",turk
+,sivas_turk,Sivasspor,Sivasspor,turk
+,trabsas_turk,Trabzonspor,"Trabzonspor AŞ",turk
+,balikesir_turk,Balikesirspor,"Balıkesirspor Kulübü",turk
+,ibfk_turk,Başakşehir,"İstanbul Başakşehir FK",turk
+,osmsfk_turk,Osmanlıspor,"Osmanlıspor FK",turk
+,alanspor_turk,Alanyaspor,Alanyaspor,turk
+,adanspor_turk,Adanaspor,"Adanaspor AŞ",turk
+,brus_u23_int,Belarus,"Belarus U23",u23_int
+,bra_u23_int,Brazil,"Brazil U23",u23_int
+,egy_u23_int,Egypt,"Egypt U23",u23_int
+,gab_u23_int,Gabon,"Gabon 23",u23_int
+,gb_u23_int,"Great Britain","Great Britain U23",u23_int
+,hond_u23_int,Honduras,"Honduras U23",u23_int
+,jap_u23_int,Japan,"Japan U23",u23_int
+,mex_u23_int,Mexico,"Mexico U23",u23_int
+,mor_u23_int,Morocco,"Morocco U23",u23_int
+,nz_u23_int,"New Zealand","New Zealand U23",u23_int
+,sen_u23_int,Senegal,"Senegal U23",u23_int
+,korr_u23_int,"South Korea","South Korea U23",u23_int
+,spa_u23_int,Spain,"Spain U23",u23_int
+,swi_u23_int,Switzerland,"Switzerland U23",u23_int
+,uae_u23_int,UAE,"United Arab Emirates U23",u23_int
+,uru_u23_int,Uruguay,"Uruguay U23",u23_int
+,arskfc_ukr,"Arsenal Kyiv","FC Arsenal Kyiv",ukr
+,chofc_ukr,"Chornomorets Odesa","FC Chornomorets Odesa",ukr
+,dnid_ukr,Dnipro,"FC Dnipro Dnipropetrovsk",ukr
+,dynk_ukr,"Dynamo Kyiv","FC Dynamo Kyiv",ukr
+,fchover_ukr,Hoverla-Zakarpattia,"FC Hoverla Uzhhorod",ukr
+,illmfc_ukr,Illychivets,"FC Illychivets Mariupil",ukr
+,karlfc_ukr,Karpaty,"FC Karpaty Lviv",ukr
+,kharfc_ukr,Kharkiv,"FC Kharkiv",ukr
+,kbkrfc_ukr,Kryvbas,"FC Kryvbas Kryvyi Rih",ukr
+,lvivfk_ukr,Lviv,"FC Lviv",ukr
+,metkfc_ukr,Metalist,"FC Metalist Kharkiv",ukr
+,metdfc_ukr,"Metalurh Donetsk","FC Metalurh Donetsk",ukr
+,obokfc_ukr,Obolon,"FC Obolon Kyiv",ukr
+,pfcolex_ukr,Oleksandria,"PFC Oleksandria",ukr
+,fcoldon_ukr,"Olimpik Donetsk","FC Olimpik Donetsk",ukr
+,sevpfc_ukr,Sevastopol,"PFC Sevastopol",ukr
+,shadfc_ukr,"Shakhtar Donetsk","FC Shakhtar Donetsk",ukr
+,stadnefc_ukr,"FC Stal'","FC Stal' Dniprodzerzhynsk",ukr
+,tavssc_ukr,Tavriya,"SC Tavriya Simferopol",ukr
+,vollsc_ukr,Volyn,"SC Volyn Lutsk",ukr
+,vorpfc_ukr,Vorskla,"FC Vorskla Poltava",ukr
+,zakufc_ukr,Zakarpattya,"FC Zakarpattya Uzhhorod",ukr
+,metzfc_ukr,Zaporizhya,"FC Metalurh Zaporizhya",ukr
+,zkfc_ukr,Zirka,"FC Zirka Kirovohrad",ukr

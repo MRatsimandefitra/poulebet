@@ -28,6 +28,7 @@ class MatchController extends ApiController
     const DROITS = 'Matchs';
     const FORM_MATCHS = 'Api\DBBundle\Form\MatchsType';
     const FORM_CHAMPIONAT = 'Api\DBBundle\Form\ChampionatType';
+    const ENTITY_TEAMS_PAYS = 'ApiDBBundle:TeamsPays';
 
     public function indexAction(Request $request)
     {
@@ -138,7 +139,9 @@ class MatchController extends ApiController
 
         if($request->get('pays_match')){
             $pays= $request->get('pays_match');
-            $where[] = " m.equipeVisiteur LIKE :pays or m.equipeDomicile LIKE :pays ";
+            $dql .= " LEFT JOIN m.championat c
+                      LEFT JOIN c.teamsPays tp ";
+            $where[] = " tp.teamsPays.name LIKE :pays or tp.teamsPays LIKE :pays ";
             $params['pays'] = "%".$pays."%";
             $searchValue['pays_match'] = $pays;
         }
@@ -157,7 +160,7 @@ class MatchController extends ApiController
         //$this->em()->createQuery($dql)->setParameters($params);
         //var_dump($dql); die;
         $championatData = $this->getAllEntity(self::ENTITY_CHAMPIONAT);
-        $country = $this->getAllEntity(self::ENTITY_COUNTRY);
+        $country = $this->getAllEntity(self::ENTITY_TEAMS_PAYS);
 
         $droitAdmin = $this->getDroitAdmin('Matchs');
         return $this->render('BackAdminBundle:Matchs:index.html.twig', array(
