@@ -35,7 +35,8 @@ class ChampionatType extends AbstractType
 
             ))
             ->add('dateDebutChampionat', DateType::class, array(
-               /* 'widget' => 'choice',
+                    /*'data' => \Daye::class'2016-01-01'*/
+                   /* 'widget' => 'choice',
                 // do not render as type="date", to avoid HTML5 date pickers
                 'html5' => false,
                 // add a class that can be selected in JavaScript
@@ -60,6 +61,7 @@ class ChampionatType extends AbstractType
                'empty_data' => null,
                'required' => false
            ))
+            ->add('season', TextType::class, array())
 
         ;
     }
