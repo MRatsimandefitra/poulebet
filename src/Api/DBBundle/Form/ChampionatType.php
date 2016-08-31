@@ -32,11 +32,7 @@ class ChampionatType extends AbstractType
             ))
             ->add('dateDebutChampionat', DateType::class)
             ->add('dateFinaleChampionat', DateType::class)
-            ->add('teamsPays', EntityType::class, array(
-                'class' => 'ApiDBBundle:TeamsPays',
-                'choice_label' => 'fullName',
-                'multiple' => true
-            ))
+            ->add('teamsPays')
         ;
     }
     
