@@ -101,16 +101,20 @@ class ChampionatsController extends ApiController
      */
     public function getListePaysWithChampionatWithMatchAction()
     {
+
         $data = $this->getRepo(self::ENTITY_MATCHS)->getListePaysWithChampionatWithMatch();
         $result = array();
         $dataName = array();
 
         if ($data) {
             foreach ($data as $k => $vData) {
-                foreach ($vData->getChampionat()->getTeamsPays() as $ktp => $vDataTp) {
+               /* foreach ($vData->getChampionat()->getPays() as $ktp => $vDataTp) {
                     if (!in_array($vDataTp->getName(), $dataName)) {
                         $dataName[] = $vDataTp->getName();
                     }
+                }*/
+                if (!in_array($vData->getChampionat()->getPays(), $dataName)) {
+                    $dataName[] = $vData->getChampionat()->getPays();
                 }
 
             }

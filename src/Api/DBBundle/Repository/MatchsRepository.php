@@ -86,16 +86,16 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         if(!$date){
             $dql = "SELECT m from ApiDBBundle:Matchs m
                 LEFT JOIN m.championat ch
-                WHERE ch.nomChampionat LIKE :championat
-                AND m.dateMatch BETWEEN CURRENT_DATE() AND DATE_ADD(CURRENT_DATE(), 7, 'day')
-                ORDER BY ch.fullNameChampionat ASC";
+                WHERE m.dateMatch BETWEEN CURRENT_DATE() AND DATE_ADD(CURRENT_DATE(), 7, 'day')
+                AND ch.nomChampionat LIKE :championat
+                ORDER BY ch.nomChampionat ASC";
         }else{
 
             $dql = "SELECT m from ApiDBBundle:Matchs m
                 LEFT JOIN m.championat ch
                 WHERE  m.dateMatch BETWEEN :datepost AND DATE_ADD(CURRENT_DATE(), 7, 'day')
                 AND ch.nomChampionat LIKE :championat
-                ORDER BY ch.fullNameChampionat ASC";
+                ORDER BY ch.nomChampionat ASC";
         }
 
         $query = $this->getEntityManager()->createQuery($dql);
@@ -112,13 +112,12 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
      */
     function getListePaysWithChampionatWithMatchs()
     {
+
         $dql = "SELECT m, ch, td, tv from ApiDBBundle:Matchs m
                LEFT JOIN  m.championat ch
                LEFT JOIN  m.teamsVisiteur tv
                LEFT JOIN m.teamsDomicile td
-               LEFT JOIN td.teamsPays tpd
-               LEFT JOIN tv.teamsPays tpv
-               GROUP BY tpd.name ";
+               GROUP BY ch.nomChampionat ";
         $query = $this->getEntityManager()->createQuery($dql);
         //$query->setParameter('pays', $pays);
         return $query->getResult();
@@ -149,7 +148,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
     {
         $dql = "SELECT m from ApiDBBundle:Matchs m
                 LEFT JOIN m.championat ch
-                LEFT JOIN ch.teamsPays ";
+                WHERE ch.pays is not null";
         $query = $this->getEntityManager()->createQuery($dql);
         return $query->getResult();
     }
