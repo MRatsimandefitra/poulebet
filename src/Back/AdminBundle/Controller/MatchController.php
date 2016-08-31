@@ -107,7 +107,7 @@ class MatchController extends ApiController
 
         $searchValue = array();
         #datematch
-        if($request->get('date_match') && !$request->get('time_match')){
+        /*if($request->get('date_match') && !$request->get('time_match')){
 
             $dateMatch = $request->get('date_match');
             $where[] = "m.dateMatch BETWEEN :dateStart AND :dateEnd";
@@ -117,10 +117,10 @@ class MatchController extends ApiController
             $params["dateStart"] = $dateStart;
             $params["dateEnd"] = $dateEnd;
             $searchValue['date_match'] = $dateMatch;
-        }
+        }*/
 
         #datematch heure match
-        if($request->get('time_match') && $request->get('date_match')){
+       /* if($request->get('time_match') && $request->get('date_match')){
             $heureMatch = $request->get('time_match');
             $where[] = "m.dateMatch = :heure";
             $heure = $request->get('date_match').' '.$heureMatch;
@@ -128,6 +128,13 @@ class MatchController extends ApiController
             $params["heure"] = $heure;
             $searchValue['date_match'] = $request->get('date_match');
             $searchValue['time_match'] = $heureMatch;
+        }*/
+
+        if($request->get('dateDebut') && !$request->get('dateFinale')){
+
+        }
+        if($request->get('dateDebut') && $request->get('dateFinale')){
+
         }
 
         # champinat seul

@@ -80,6 +80,7 @@
                         {% if droitAdmin.suppression is defined and droitAdmin.suppression %}
                             <a  class="suppression" href="{{ path('remove_championat', {'id': row.id }) }}">
                                 {#<span id="s" class="glyphicon glyphicon-remove red" aria-hidden="true"></span> #}Supprimer
+
                             </a>
                         {% endif %}
                     </td>
