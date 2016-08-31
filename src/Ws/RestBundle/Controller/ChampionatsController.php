@@ -49,7 +49,9 @@ class ChampionatsController extends ApiController
 
         $championat = $request->request->get('championat');
 
-        $data = $this->getRepo(self::ENTITY_MATCHS)->getListeMatchsBySelectedChampionat($championat);
+        $date = $request->request->get('date');
+
+        $data = $this->getRepo(self::ENTITY_MATCHS)->getListeMatchsBySelectedChampionat($championat, $date);
 
         $result = array();
         if ($data) {
@@ -61,8 +63,8 @@ class ChampionatsController extends ApiController
                     'equipeDomicile' => $vData->getEquipeDomicile(),
                     'equipeVisiteur' => $vData->getEquipeVisiteur(),
 
-                    'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/'.$vData->getCheminLogoDomicile().'.png',// $vData->getTeamsDomicile()->getLogo(),
-                    'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/'.$vData->getCheminLogoVisiteur().'.png',// $vData->getTeamsVisiteur()->getLogo(),
+                    'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $vData->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
+                    'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $vData->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
                     'score' => $vData->getScore(),
                     'status' => $vData->getStatusMatch(),
                     'cote_pronostic_1' => $vData->getCot1Pronostic(),
@@ -73,9 +75,13 @@ class ChampionatsController extends ApiController
                     'master_prono_2' => $vData->getMasterProno2(),
                     'tempsEcoules' => $vData->getTempsEcoules(),
                     'live' => ($vData->getStatusMatch() == 'active') ? true : false,
-                    'livetime' => ''
-                );
+                    'livetime' => '',
+                    'current-state' => array(
+                        'period' => '',
+                        'minute' => ''
+                    )
 
+                );
             }
             $result['code_error'] = 0;
             $result['success'] = true;
@@ -95,16 +101,20 @@ class ChampionatsController extends ApiController
      */
     public function getListePaysWithChampionatWithMatchAction()
     {
+
         $data = $this->getRepo(self::ENTITY_MATCHS)->getListePaysWithChampionatWithMatch();
         $result = array();
         $dataName = array();
 
         if ($data) {
             foreach ($data as $k => $vData) {
-                foreach ($vData->getChampionat()->getTeamsPays() as $ktp => $vDataTp) {
+               /* foreach ($vData->getChampionat()->getPays() as $ktp => $vDataTp) {
                     if (!in_array($vDataTp->getName(), $dataName)) {
                         $dataName[] = $vDataTp->getName();
                     }
+                }*/
+                if (!in_array($vData->getChampionat()->getPays(), $dataName)) {
+                    $dataName[] = $vData->getChampionat()->getPays();
                 }
 
             }

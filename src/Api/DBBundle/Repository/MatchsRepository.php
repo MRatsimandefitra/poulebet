@@ -80,15 +80,30 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
      * @param $championat
      * @return array
      */
-    function getListeMatchsBySelectedChampionat($championat)
+    function getListeMatchsBySelectedChampionat($championat, $date = null)
     {
-        $dql = "SELECT m from ApiDBBundle:Matchs m
+        // a verifier
+        if(!$date){
+            $dql = "SELECT m from ApiDBBundle:Matchs m
                 LEFT JOIN m.championat ch
-                WHERE ch.nomChampionat LIKE :championat
-                OR ch.fullNameChampionat LIKE :championat
-                ORDER BY ch.fullNameChampionat ASC";
+                WHERE m.dateMatch BETWEEN CURRENT_DATE() AND DATE_ADD(CURRENT_DATE(), 7, 'day')
+                AND ch.nomChampionat LIKE :championat
+                ORDER BY ch.nomChampionat ASC";
+        }else{
+
+            $dql = "SELECT m from ApiDBBundle:Matchs m
+                LEFT JOIN m.championat ch
+                WHERE  m.dateMatch BETWEEN :datepost AND DATE_ADD(CURRENT_DATE(), 7, 'day')
+                AND ch.nomChampionat LIKE :championat
+                ORDER BY ch.nomChampionat ASC";
+        }
+
         $query = $this->getEntityManager()->createQuery($dql);
         $query->setParameter('championat', $championat);
+        if($date){
+            $query->setParameter('datepost', $date);
+        }
+     //   var_dump($query->getDQL()); die;
         return $query->getResult();
     }
 
@@ -97,13 +112,12 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
      */
     function getListePaysWithChampionatWithMatchs()
     {
+
         $dql = "SELECT m, ch, td, tv from ApiDBBundle:Matchs m
                LEFT JOIN  m.championat ch
                LEFT JOIN  m.teamsVisiteur tv
                LEFT JOIN m.teamsDomicile td
-               LEFT JOIN td.teamsPays tpd
-               LEFT JOIN tv.teamsPays tpv
-               GROUP BY tpd.name ";
+               GROUP BY ch.nomChampionat ";
         $query = $this->getEntityManager()->createQuery($dql);
         //$query->setParameter('pays', $pays);
         return $query->getResult();
@@ -134,7 +148,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
     {
         $dql = "SELECT m from ApiDBBundle:Matchs m
                 LEFT JOIN m.championat ch
-                LEFT JOIN ch.teamsPays ";
+                WHERE ch.pays is not null";
         $query = $this->getEntityManager()->createQuery($dql);
         return $query->getResult();
     }
@@ -143,8 +157,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
     {
         $dql = "SELECT m from ApiDBBundle:Matchs m
                 LEFT JOIN m.championat ch
-                LEFT JOIN ch.teamsPays tp
-                WHERE tp.name LIKE :pays";
+                WHERE ch.pays LIKE :pays";
         $query = $this->getEntityManager()->createQuery($dql);
         $query->setParameter('pays', $pays);
         return $query->getResult();

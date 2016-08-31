@@ -12,12 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Championat
 {
-    
-    /**
-     * @ORM\ManyToMany(targetEntity="TeamsPays", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $teamsPays;
+
 
     /**
      * @var int
@@ -247,41 +242,6 @@ class Championat
         return $this->dateFinaleChampionat;
     }
 
-
-    /**
-     * Add teamsPay
-     *
-     * @param \Api\DBBundle\Entity\TeamsPays $teamsPay
-     *
-     * @return Championat
-     */
-    public function addTeamsPay(\Api\DBBundle\Entity\TeamsPays $teamsPay)
-    {
-        $this->teamsPays[] = $teamsPay;
-
-        return $this;
-    }
-
-    /**
-     * Remove teamsPay
-     *
-     * @param \Api\DBBundle\Entity\TeamsPays $teamsPay
-     */
-    public function removeTeamsPay(\Api\DBBundle\Entity\TeamsPays $teamsPay)
-    {
-        $this->teamsPays->removeElement($teamsPay);
-    }
-
-    /**
-     * Get teamsPays
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getTeamsPays()
-    {
-        return $this->teamsPays;
-    }
-
     /**
      * Set season
      *
@@ -320,29 +280,6 @@ class Championat
         return $this;
     }
 
-    /**
-     * Set teamsPays
-     *
-     * @param \Api\DBBundle\Entity\TeamsPays $teamsPays
-     *
-     * @return Championat
-     */
-    public function setTeamsPays(\Api\DBBundle\Entity\TeamsPays $teamsPays = null)
-    {
-        $this->teamsPays = $teamsPays;
-
-        return $this;
-    }
-
-    /**
-     * Get teamsPays
-     *
-     * @return \Api\DBBundle\Entity\TeamsPays
-     */
-    public function getTeamsPays()
-    {
-        return $this->teamsPays;
-    }
 
     /**
      * Get pays
@@ -354,4 +291,3 @@ class Championat
         return $this->pays;
     }
 }
-

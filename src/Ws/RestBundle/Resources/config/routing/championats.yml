@@ -1,7 +1,7 @@
 ws_rest_list_match_by_championat:
     path:     /get-list-match-by-championat
     defaults: { _controller: WsRestBundle:Championats:postListeMatchsBySelectedChampionat }
-    methods: POST #string => championat =>( pbm)
+    methods: POST #string => championat =>( pbm) | date (optionel)
 ws_rest_list_championat_with_matchs:
     path:     /get-championat-with-maths
     defaults: { _controller: WsRestBundle:Championats:getListeChampionatWithMatch }

@@ -1,8 +1,4 @@
-<div class="col-lg-12">
-    <div class="col-lg-12">
-        <div class="ariane">
-            {{ 'Ajouter un championnat'|trans }}
-        </div>
+
         <div class="link">
             {% if droitAdmin.lecture is defined and droitAdmin.lecture %}
                 <span class="glyphicon glyphicon-plus green" aria-hidden="true"></span>
@@ -13,5 +9,3 @@
                 <a href="{{ path('list_championat') }}">{{ 'Liste des championats'|trans }}</a>
             {% endif %}
         </div>
-    </div>
-</div>
