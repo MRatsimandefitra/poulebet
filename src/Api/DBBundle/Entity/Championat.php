@@ -14,7 +14,8 @@ class Championat
 {
     
     /**
-     * @ORM\ManyToOne(targetEntity="TeamsPays", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="TeamsPays", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
      */
     private $teamsPays;
 
@@ -246,6 +247,41 @@ class Championat
         return $this->dateFinaleChampionat;
     }
 
+
+    /**
+     * Add teamsPay
+     *
+     * @param \Api\DBBundle\Entity\TeamsPays $teamsPay
+     *
+     * @return Championat
+     */
+    public function addTeamsPay(\Api\DBBundle\Entity\TeamsPays $teamsPay)
+    {
+        $this->teamsPays[] = $teamsPay;
+
+        return $this;
+    }
+
+    /**
+     * Remove teamsPay
+     *
+     * @param \Api\DBBundle\Entity\TeamsPays $teamsPay
+     */
+    public function removeTeamsPay(\Api\DBBundle\Entity\TeamsPays $teamsPay)
+    {
+        $this->teamsPays->removeElement($teamsPay);
+    }
+
+    /**
+     * Get teamsPays
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTeamsPays()
+    {
+        return $this->teamsPays;
+    }
+
     /**
      * Set season
      *
@@ -269,8 +305,19 @@ class Championat
     {
         return $this->season;
     }
-    public function __toString() {
-        return "".$this->getFullNameChampionat();
+
+    /**
+     * Set pays
+     *
+     * @param string $pays
+     *
+     * @return Championat
+     */
+    public function setPays($pays)
+    {
+        $this->pays = $pays;
+
+        return $this;
     }
 
     /**
@@ -298,20 +345,6 @@ class Championat
     }
 
     /**
-     * Set pays
-     *
-     * @param string $pays
-     *
-     * @return Championat
-     */
-    public function setPays($pays)
-    {
-        $this->pays = $pays;
-
-        return $this;
-    }
-
-    /**
      * Get pays
      *
      * @return string
@@ -321,3 +354,4 @@ class Championat
         return $this->pays;
     }
 }
+
