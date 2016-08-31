@@ -80,15 +80,27 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
      * @param $championat
      * @return array
      */
-    function getListeMatchsBySelectedChampionat($championat)
+    function getListeMatchsBySelectedChampionat($championat, $date = null)
     {
-        $dql = "SELECT m from ApiDBBundle:Matchs m
+        if(!$date){
+            $dql = "SELECT m from ApiDBBundle:Matchs m
                 LEFT JOIN m.championat ch
                 WHERE ch.nomChampionat LIKE :championat
                 AND m.dateMatch BETWEEN CURRENT_DATE() AND DATE_ADD(CURRENT_DATE(), 7, 'day')
                 ORDER BY ch.fullNameChampionat ASC";
+        }else{
+            $dql = "SELECT m from ApiDBBundle:Matchs m
+                LEFT JOIN m.championat ch
+                WHERE ch.nomChampionat LIKE :championat
+                AND m.dateMatch BETWEEN :datepost AND DATE_ADD(CURRENT_DATE(), 7, 'day')
+                ORDER BY ch.fullNameChampionat ASC";
+        }
+
         $query = $this->getEntityManager()->createQuery($dql);
         $query->setParameter('championat', $championat);
+        if($date){
+            $query->setParameter('datepost', $date);
+        }
         return $query->getResult();
     }
 
