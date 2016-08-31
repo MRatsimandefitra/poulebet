@@ -30,7 +30,7 @@
                             {{ 'Heure'|trans }}: <input type="text" name="time_match" id="timepic" placeholder="{{ 'Heure'|trans }}"/>
                         {% endif %}
 
-                        {{ 'Championat'|trans }}:
+                        {{ 'Championnat'|trans }}:
                         <select class="championat" name="championat_match" id="">
 
                             {#{{ searchValue.championat_match }}#}
@@ -45,7 +45,7 @@
                                 {% endfor %}
                                 <option value=""></option>
                             {% else %}
-                                <option value="" disabled selected>{{ 'Choisir championat' }}</option>
+                                <option value="" disabled selected>{{ 'Choisir championnat' }}</option>
                                 {% for rowchampinat in championat %}
 
                                     <option value="{{ rowchampinat.fullNameChampionat }}">{{ rowchampinat.fullNameChampionat }}</option>
@@ -102,6 +102,9 @@
                             {{ 'Season'|trans }}
                         </th>
                         <th>
+                            {{ 'Championnat'|trans }}
+                        </th>
+                        <th>
                             {{ 'Visiteur'|trans }}
                         </th>
                         <th>
@@ -128,6 +131,7 @@
                             </td>
                             <td>{{ row.score }}</td>
                             <td>{{ row.season }}</td>
+                            <td>{{ row.championat.fullNameChampionat }}</td>
                             <td>
                                 <div >
                                     <img class ="fanion" src="{{ asset('images/Flag-foot/'~row.teamsVisiteur.idNameClub~'.png')}}" alt=""/>

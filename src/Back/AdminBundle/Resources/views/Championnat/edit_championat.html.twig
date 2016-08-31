@@ -1,75 +1,84 @@
 {% extends 'BackAdminBundle::layout.html.twig' %}
 {% block title %} {{ parent() }} {% endblock %}
-{% block ariane %} {{ parent() }} {% endblock %}
+
 
 {% block page %}
 
-    <div class="box-header-response">
-        {{ 'Listes des Matchs du jour'|trans }}
-        {% include '@BackAdmin/Championnat/sous_menu.html.twig' %}
+    <div class="sous-menu-page">
+        <div class="col-lg-12">
+            <div class="col-lg-12">
+                <div class="ariane">
+                    {% block ariane %} {{ parent() }} -> {{ 'Ajouter un championnat'|trans }}  {% endblock %}
+
+                </div>
+                {% include '@BackAdmin/Championnat/sous_menu.html.twig' %}
+            </div>
+        </div>
     </div>
 
     <div class="col-lg-12">
-        <div class="list">
-            {{ form_start(form) }}
-            <table>
+        <div class="col-lg-12">
+            <div class="list">
+                {{ form_start(form) }}
+                <table>
 
-                <tr>
-                    <td>{{ 'Nom championat' }}</td>
-                    <td>
-                        {{ form_widget(form.nomChampionat) }}
-                    </td>
-                </tr>
-                <tr>
-                    <td>{{ 'Full name championat' }}</td>
-                    <td>
-                        {{ form_widget(form.fullNameChampionat) }}
+                    <tr>
+                        <td>{{ 'Nom championat (ID)' }}</td>
+                        <td>
+                            {{ form_widget(form.nomChampionat) }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{ 'Nom complet du championat' }}</td>
+                        <td>
+                            {{ form_widget(form.fullNameChampionat) }}
 
-                    </td>
-                </tr>
-                <tr>
-                    <td>{{ 'Type de championat' }}</td>
-                    <td>
-                        {{ form_widget(form.typeChampionat) }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{ 'Type de championat' }}</td>
+                        <td>
+                            {{ form_widget(form.typeChampionat) }}
 
-                    </td>
-                </tr>
-                <tr>
-                    <td>{{ 'Type de championat' }}</td>
-                    <td>
-                        {{ championat.season }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{ 'Saison championat' }}</td>
+                        <td>
+                            {{ form_widget(form.season) }}
 
-                    </td>
-                </tr>
-                <tr>
+                        </td>
+                    </tr>
+                    <tr>
 
-                <td>{{ 'Date début championat' }}</td>
-                    <td>
-                        {{ form_widget(form.dateDebutChampionat) }}
+                        <td>{{ 'Date de début valide du championat' }}</td>
+                        <td>
+                            {{ form_widget(form.dateDebutChampionat) }}
 
-                    </td>
-                </tr>
-                <tr>
-                    <td>{{ 'Date Fianle championat' }}</td>
-                    <td>
-                        {{ form_widget(form.dateFinaleChampionat) }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{ 'Date finale valide du championat' }}</td>
+                        <td>
+                            {{ form_widget(form.dateFinaleChampionat) }}
 
-                    </td>
-                </tr>
-                <tr>
-                    <td>{{ 'Date Fianle championat' }}</td>
-                    <td>
-                        {{ form_widget(form.pays) }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{ 'Pays' }}</td>
+                        <td>
+                            {{ form_widget(form.pays) }}
 
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <input type="submit" value="{{ 'Modifier' }}"/>
-                    </td>
-                </tr>
-            </table>
-            {{ form_end(form) }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <input type="submit" value="{{ 'Ajouter' }}"/>
+                        </td>
+                    </tr>
+                </table>
+                {{ form_end(form) }}
+            </div>
         </div>
     </div>
 {% endblock %}
