@@ -12,11 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Championat
 {
-    
-    /**
-     * @ORM\ManyToOne(targetEntity="TeamsPays", cascade={"persist"})
-     */
-    private $teamsPays;
 
     /**
      * @var int
@@ -273,29 +268,6 @@ class Championat
         return "".$this->getFullNameChampionat();
     }
 
-    /**
-     * Set teamsPays
-     *
-     * @param \Api\DBBundle\Entity\TeamsPays $teamsPays
-     *
-     * @return Championat
-     */
-    public function setTeamsPays(\Api\DBBundle\Entity\TeamsPays $teamsPays = null)
-    {
-        $this->teamsPays = $teamsPays;
-
-        return $this;
-    }
-
-    /**
-     * Get teamsPays
-     *
-     * @return \Api\DBBundle\Entity\TeamsPays
-     */
-    public function getTeamsPays()
-    {
-        return $this->teamsPays;
-    }
 
     /**
      * Set pays

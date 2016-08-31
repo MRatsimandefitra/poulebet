@@ -61,8 +61,8 @@ class ChampionatsController extends ApiController
                     'equipeDomicile' => $vData->getEquipeDomicile(),
                     'equipeVisiteur' => $vData->getEquipeVisiteur(),
 
-                    'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/'.$vData->getCheminLogoDomicile().'.png',// $vData->getTeamsDomicile()->getLogo(),
-                    'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/'.$vData->getCheminLogoVisiteur().'.png',// $vData->getTeamsVisiteur()->getLogo(),
+                    'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $vData->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
+                    'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $vData->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
                     'score' => $vData->getScore(),
                     'status' => $vData->getStatusMatch(),
                     'cote_pronostic_1' => $vData->getCot1Pronostic(),
@@ -73,9 +73,13 @@ class ChampionatsController extends ApiController
                     'master_prono_2' => $vData->getMasterProno2(),
                     'tempsEcoules' => $vData->getTempsEcoules(),
                     'live' => ($vData->getStatusMatch() == 'active') ? true : false,
-                    'livetime' => ''
-                );
+                    'livetime' => '',
+                    'current-state' => array(
+                        'period' => '',
+                        'minute' => ''
+                    )
 
+                );
             }
             $result['code_error'] = 0;
             $result['success'] = true;

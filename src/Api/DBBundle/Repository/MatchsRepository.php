@@ -85,7 +85,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         $dql = "SELECT m from ApiDBBundle:Matchs m
                 LEFT JOIN m.championat ch
                 WHERE ch.nomChampionat LIKE :championat
-                OR ch.fullNameChampionat LIKE :championat
+                AND m.dateMatch BETWEEN CURRENT_DATE() AND DATE_ADD(CURRENT_DATE(), 7, 'day')
                 ORDER BY ch.fullNameChampionat ASC";
         $query = $this->getEntityManager()->createQuery($dql);
         $query->setParameter('championat', $championat);

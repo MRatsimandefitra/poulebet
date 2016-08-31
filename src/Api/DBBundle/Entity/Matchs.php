@@ -195,6 +195,18 @@ class Matchs
      * @ORM\Column(name="season", type="string", length=50, nullable=true)
      */
     private $season;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="period", type="string", length=50, nullable=true)
+     */
+    private $period;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="minute", type="string", length=50, nullable=true)
+     */
+    private $minute;
 
 
 
@@ -889,5 +901,53 @@ class Matchs
     public function getConcours()
     {
         return $this->concours;
+    }
+
+    /**
+     * Set period
+     *
+     * @param string $period
+     *
+     * @return Matchs
+     */
+    public function setPeriod($period)
+    {
+        $this->period = $period;
+
+        return $this;
+    }
+
+    /**
+     * Get period
+     *
+     * @return string
+     */
+    public function getPeriod()
+    {
+        return $this->period;
+    }
+
+    /**
+     * Set minute
+     *
+     * @param string $minute
+     *
+     * @return Matchs
+     */
+    public function setMinute($minute)
+    {
+        $this->minute = $minute;
+
+        return $this;
+    }
+
+    /**
+     * Get minute
+     *
+     * @return string
+     */
+    public function getMinute()
+    {
+        return $this->minute;
     }
 }
