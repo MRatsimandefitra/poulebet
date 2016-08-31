@@ -1,5 +1,5 @@
 $(document).ready(function(){
-
+   
    $('#selection').click(function(){
        if($('#selection').is(':checked')){
            $("input[type=checkbox]").each(function(){
@@ -22,6 +22,13 @@ $(document).ready(function(){
        });
        $("#deselectAll").prop("name","deselectAll");
        $("#deselectAll").attr("value","true");
+   });
+   $('.checking_role').click(function(){
+       var nb = $(".checking_role:checked").length;
+       if (nb === 0){
+            $("#deselectAll").prop("name","deselectAll");
+           $("#deselectAll").attr("value","true");
+       }
    });
     $('label#lecture').click(function(){
         if($('table.table-edit-role td.lecture input[type=checkbox]').is(':checked')){
