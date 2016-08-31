@@ -242,32 +242,6 @@ class Championat
         return $this->dateFinaleChampionat;
     }
 
-
-    /**
-     * Add teamsPay
-     *
-     * @param \Api\DBBundle\Entity\TeamsPays $teamsPay
-     *
-     * @return Championat
-     */
-    public function addTeamsPay(\Api\DBBundle\Entity\TeamsPays $teamsPay)
-    {
-        $this->teamsPays[] = $teamsPay;
-
-        return $this;
-    }
-
-    /**
-     * Remove teamsPay
-     *
-     * @param \Api\DBBundle\Entity\TeamsPays $teamsPay
-     */
-    public function removeTeamsPay(\Api\DBBundle\Entity\TeamsPays $teamsPay)
-    {
-        $this->teamsPays->removeElement($teamsPay);
-    }
-
-
     /**
      * Set season
      *
