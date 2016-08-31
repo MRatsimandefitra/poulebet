@@ -17,20 +17,23 @@
                 <div class="search-match">
                     <form action="" method="get">
 
-                        {% if searchValue.date_match is defined %}
+                       {# {% if searchValue.date_match is defined %}
                             {{ "Date"|trans }} : <input type="text" name="date_match" id="datepic"
-                                                        value="{{ searchValue.date_match }}" placeholder="{{ 'Date'|trans }}"/>
+                                                        value="(searchValue.date_match): {{ searchValue.date_match }} ?  " placeholder="{{ 'Date'|trans }}"  />
                         {% else %}
                             {{ "Date"|trans }} : <input type="text" name="date_match" id="datepic" placeholder="{{ 'Date'|trans }}"/>
-                        {% endif %}
+                        {% endif %}#}
+                            {{ "Date Début"|trans }} :   <input class="datepic" type="text" name="dateDebut"/>
 
-                        {% if searchValue.time_match is defined %}
+                            {{ "Date Finale"|trans }} : <input class="datepic" type="text" name="dateDebut"/>
+
+
+                       {# {% if searchValue.time_match is defined %}
                             {{ 'Heure'|trans }}: <input type="text" name="time_match" id="timepic" value="{{ searchValue.time_match }}" placeholder="{{ 'Heure'|trans }}"/>
                         {% else %}
                             {{ 'Heure'|trans }}: <input type="text" name="time_match" id="timepic" placeholder="{{ 'Heure'|trans }}"/>
-                        {% endif %}
+                        {% endif %}#}
 
-                        {{ 'Championnat'|trans }}:
                         <select class="championat" name="championat_match" id="">
 
                             {#{{ searchValue.championat_match }}#}
@@ -54,7 +57,6 @@
                             {% endif %}
                         </select>
 
-                        {{ 'Pays'|trans }}:
                         <select class="pays" name="pays_match" id="">
 
                             {% if searchValue.pays_match is defined %}

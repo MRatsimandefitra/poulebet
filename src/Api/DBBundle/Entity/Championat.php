@@ -12,6 +12,12 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Championat
 {
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="TeamsPays", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $teamsPays;
 
 
     /**
@@ -243,6 +249,40 @@ class Championat
     }
 
     /**
+     * Add teamsPay
+     *
+     * @param \Api\DBBundle\Entity\TeamsPays $teamsPay
+     *
+     * @return Championat
+     */
+    public function addTeamsPay(\Api\DBBundle\Entity\TeamsPays $teamsPay)
+    {
+        $this->teamsPays[] = $teamsPay;
+
+        return $this;
+    }
+
+    /**
+     * Remove teamsPay
+     *
+     * @param \Api\DBBundle\Entity\TeamsPays $teamsPay
+     */
+    public function removeTeamsPay(\Api\DBBundle\Entity\TeamsPays $teamsPay)
+    {
+        $this->teamsPays->removeElement($teamsPay);
+    }
+
+    /**
+     * Get teamsPays
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTeamsPays()
+    {
+        return $this->teamsPays;
+    }
+
+    /**
      * Set season
      *
      * @param string $season
@@ -291,3 +331,4 @@ class Championat
         return $this->pays;
     }
 }
+

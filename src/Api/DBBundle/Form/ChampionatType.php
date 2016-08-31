@@ -61,6 +61,7 @@ class ChampionatType extends AbstractType
                'empty_data' => null,
                'required' => false
            ))
+
             ->add('season', TextType::class, array())
 
         ;
