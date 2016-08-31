@@ -1,4 +1,4 @@
-{% extends 'BackAdminBundle::layout.html.twig' %}
+{% extends 'BackAdminBundle::layout_match.html.twig' %}
 {% block title %} {{ parent() }} {% endblock %}
 {% block ariane %} {{ parent() }} {% endblock %}
 
@@ -86,12 +86,12 @@
             <option value="{{ searchValue.pays_match }}">{{ searchValue.pays_match }}</option>
             <option value=""></option>
             {% for rowPays in pays %}
-                <option value="{{ rowPays.name }}">{{ rowPays.name }}</option>
+                <option value="{{ rowPays.pays }}">{{ rowPays.pays }}</option>
             {% endfor %}
         {% else %}
             <option value=""></option>
             {% for rowPays in pays %}
-                <option value="{{ rowPays.name }}">{{ rowPays.name }}</option>
+                <option value="{{ rowPays.pays }}">{{ rowPays.pays }}</option>
             {% endfor %}
         {% endif %}
     </select>

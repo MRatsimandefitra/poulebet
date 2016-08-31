@@ -4,12 +4,12 @@
 
 {% block page %}
 
-    <div class="box-header-response">
-        {{ 'Listes des Matchs du jour'|trans }}
+    <div class="sous-menu-page">
         {% include '@BackAdmin/Championnat/sous_menu.html.twig' %}
     </div>
 
     <div class="col-lg-12">
+        <div class="col-lg-12">
         <div class="list">
            <table>
                <tr>
@@ -21,7 +21,7 @@
                    <td>{{ "Date début" }}</td>
                    <td>{{ "Date Finale " }}</td>
                    <td>{{ "Pays" }}</td>
-                   <td>{{ "Status" }}</td>
+                   {#<td>{{ "Status" }}</td>#}
                    <td>{{ "Actions" }}</td>
                </tr>
                {% for row in entities %}
@@ -55,13 +55,14 @@
 
                         {% if dateDebutChampionat <= today and dateFinaleChampionat >= today %}
                             {% endif %}#}
-                        {% if row.typeChampionat == 'national' %}
-                                {{ row.teamsPays }}
+                        {% if row.typeChampionat == 'National' %}
+                            {{ row.pays }}
+
                         {% endif %}
                     </td>
-                    <td>
+                  {#  <td>
 
-                    </td>
+                    </td>#}
                     <td>
                         {% if droitAdmin.modification is defined and droitAdmin.modification %}
                             <a href="{{ path('edit_championat', {'id': row.id }) }}">
@@ -79,6 +80,7 @@
 
                 {% endfor %}
            </table>
+        </div>
         </div>
     </div>
 {% endblock %}

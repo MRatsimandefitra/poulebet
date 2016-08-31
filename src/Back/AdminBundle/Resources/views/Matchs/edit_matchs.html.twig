@@ -1,4 +1,4 @@
-{% extends 'BackAdminBundle::layout.html.twig' %}
+{% extends 'BackAdminBundle::layout_match.html.twig' %}
 {% block title %} {{ parent() }} {% endblock %}
 
 
@@ -10,166 +10,176 @@
     </div>#}
     <div class="space"></div>
     <div class="sous-menu-page">
-        {% block ariane %} {{ parent() }} -> ies {% endblock %}
-        {% include '@BackAdmin/Matchs/sous_menu.html.twig' %}
+        <div class="col-lg-12">
+            <div class="col-lg-12">
+                <div class="ariane">
+                    {#{% block ariane %} {{ parent() }} {% endblock %}#}
+                    {% block ariane %} {{ parent() }} -> Edit {% endblock %}
+                </div>
+
+                {% include '@BackAdmin/Matchs/sous_menu.html.twig' %}
+            </div>
+        </div>
     </div>
     {% if droitAdmin.lecture is defined and droitAdmin.lecture %}
         {#<div class="col-lg-12">#}
-            <div class="col-lg-12">
-                    {% include 'BackAdminBundle:Matchs:form_search.html.twig' %}
-            </div>
-            <br/>
+        <div class="col-lg-12">
+            {% include 'BackAdminBundle:Matchs:form_search.html.twig' %}
+        </div>
+        <br/>
 
         {#    <div class="col-lg-12">#}
-                {{ form_start(form) }}
-                <div class="col-lg-6">
-                    <div class="grey">
-                        <table>
-                            <tr>
-                                <td>{{ 'Logo Equipe Domicile' }}</td>
-                                <td>
-                                    {{ form_widget(form.cheminLogoDomicile,{'required': false}) }}
-                                    {#{{ form_errors(form.cheminLogoDomicile) }}#}
-                                </td>
-                                <td>
-                                    <img src="{{ asset('images/Flag-foot/' ~ matchs.teamsDomicile.idNameClub ~ '.png') }}" alt="" width="25" height="25"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>{{ 'Equipe Domicile' }}</td>
-                                <td colspan="2">
-                                    {{ form_widget(form.equipeDomicile) }}
-                                    {{ form_errors(form.equipeDomicile) }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    {{ 'Résultat domicile ' }}
-                                </td>
-                                <td colspan="2">
-                                    {{ form_widget(form.resultatDomicile) }}
-                                    {{ form_errors(form.resultatDomicile) }}
-                                </td>
-                            </tr>
-                        </table>
+        {{ form_start(form) }}
+        <div class="col-lg-6">
+            <div class="grey">
+                <table>
+                    <tr>
+                        <td>{{ 'Logo Equipe Domicile' }}</td>
+                        <td>
+                            {{ form_widget(form.cheminLogoDomicile,{'required': false}) }}
+                            {#{{ form_errors(form.cheminLogoDomicile) }}#}
+                        </td>
+                        <td>
+                            <img src="{{ asset('images/Flag-foot/' ~ matchs.teamsDomicile.idNameClub ~ '.png') }}"
+                                 alt="" width="25" height="25"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{ 'Equipe Domicile' }}</td>
+                        <td colspan="2">
+                            {{ form_widget(form.equipeDomicile) }}
+                            {{ form_errors(form.equipeDomicile) }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ 'Résultat domicile ' }}
+                        </td>
+                        <td colspan="2">
+                            {{ form_widget(form.resultatDomicile) }}
+                            {{ form_errors(form.resultatDomicile) }}
+                        </td>
+                    </tr>
+                </table>
 
 
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="grey">
-                        <table>
-                            <tr>
-                                <td>{{ 'Logo Equipe Domicile' }}</td>
-                                <td>
-                                    {{ form_widget(form.cheminLogoVisiteur,{'required': false}) }}
-                                    {#{{ form_errors(form.cheminLogoVisiteur) }}#}
-                                </td>
-                                <td>
-                                    <img src="{{ asset('images/Flag-foot/' ~ matchs.teamsVisiteur.idNameClub ~ '.png') }}" alt="" width="25" height="25"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>{{ 'Equipe Domicile' }}</td>
-                                <td colspan="2">
-                                    {{ form_widget(form.equipeVisiteur) }}
-                                    {{ form_errors(form.equipeVisiteur) }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    {{ 'Résultat domicile ' }}
-                                </td>
-                                <td colspan="2">
-                                    {{ form_widget(form.resultatVisiteur) }}
-                                    {{ form_errors(form.resultatVisiteur) }}
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="col-lg-12">
-                    <div class="grey">
-                        <table>
-                            <tr>
-                                <td>
-                                    {{ 'Date Matchs' }}
-                                </td>
-                                <td colspan="3">
-                                    {{ form_widget(form.dateMatch) }}
-                                    {{ form_errors(form.dateMatch) }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    {{ 'Score' }}
-                                </td>
-                                <td colspan="3"colspan="3">
-                                    {{ form_widget(form.score) }}
-                                    {{ form_errors(form.score) }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    {{ 'Temp ecoulé ' }}
-                                </td>
-                                <td colspan="3">
-                                    {{ form_widget(form.tempsEcoules, {'attr': {'enable': false}}) }}
-                                    {{ form_errors(form.tempsEcoules) }}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    {{ 'Pronostic' }}
-                                </td>
-                                <td>
-                                   {{ '1' }} {{ form_widget(form.cot1Pronostic) }}
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="grey">
+                <table>
+                    <tr>
+                        <td>{{ 'Logo Equipe Domicile' }}</td>
+                        <td>
+                            {{ form_widget(form.cheminLogoVisiteur,{'required': false}) }}
+                            {#{{ form_errors(form.cheminLogoVisiteur) }}#}
+                        </td>
+                        <td>
+                            <img src="{{ asset('images/Flag-foot/' ~ matchs.teamsVisiteur.idNameClub ~ '.png') }}"
+                                 alt="" width="25" height="25"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{{ 'Equipe Domicile' }}</td>
+                        <td colspan="2">
+                            {{ form_widget(form.equipeVisiteur) }}
+                            {{ form_errors(form.equipeVisiteur) }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ 'Résultat domicile ' }}
+                        </td>
+                        <td colspan="2">
+                            {{ form_widget(form.resultatVisiteur) }}
+                            {{ form_errors(form.resultatVisiteur) }}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="grey">
+                <table>
+                    <tr>
+                        <td>
+                            {{ 'Date Matchs' }}
+                        </td>
+                        <td colspan="3">
+                            {{ form_widget(form.dateMatch) }}
+                            {{ form_errors(form.dateMatch) }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ 'Score' }}
+                        </td>
+                        <td colspan="3" colspan="3">
+                            {{ form_widget(form.score) }}
+                            {{ form_errors(form.score) }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ 'Temp ecoulé ' }}
+                        </td>
+                        <td colspan="3">
+                            {{ form_widget(form.tempsEcoules, {'attr': {'enable': false}}) }}
+                            {{ form_errors(form.tempsEcoules) }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ 'Pronostic' }}
+                        </td>
+                        <td>
+                            {{ '1' }} {{ form_widget(form.cot1Pronostic) }}
 
-                                </td>
-                                <td>
-                                    {{ 'N' }} {{ form_widget(form.coteNPronistic) }}
+                        </td>
+                        <td>
+                            {{ 'N' }} {{ form_widget(form.coteNPronistic) }}
 
-                                </td>
-                                <td>
-                                    {{ '2' }} {{ form_widget(form.cote2Pronostic) }}
-                                </td>
-                            </tr>
+                        </td>
+                        <td>
+                            {{ '2' }} {{ form_widget(form.cote2Pronostic) }}
+                        </td>
+                    </tr>
 
-                            <tr>
-                                <td>
-                                    {{ 'Resultat Domicile' }}
-                                </td>
-                                <td>
-                                    {{ '1' }} {{ form_widget(form.masterProno1) }}
+                    <tr>
+                        <td>
+                            {{ 'Resultat Domicile' }}
+                        </td>
+                        <td>
+                            {{ '1' }} {{ form_widget(form.masterProno1) }}
 
-                                </td>
-                                <td>
-                                    {{ 'N' }} {{ form_widget(form.masterPronoN) }}
+                        </td>
+                        <td>
+                            {{ 'N' }} {{ form_widget(form.masterPronoN) }}
 
-                                </td>
-                                <td>
-                                    {{ '2' }} {{ form_widget(form.masterProno2) }}
-                                </td>
-                            </tr>
-                           {# <tr>
-                                <td>
-                                    {{ 'Résultat visiteur' }}
-                                </td>
-                                <td colspan="3">
-                                    &#123;&#35;{{ form_widget(form.resultatVisiteur) }}
-                                    {{ form_errors(form.resultatVisiteur) }}&#35;&#125;
-                                </td>
-                            </tr>#}
-                            <td colspan="5">
+                        </td>
+                        <td>
+                            {{ '2' }} {{ form_widget(form.masterProno2) }}
+                        </td>
+                    </tr>
+                    {# <tr>
+                         <td>
+                             {{ 'Résultat visiteur' }}
+                         </td>
+                         <td colspan="3">
+                             &#123;&#35;{{ form_widget(form.resultatVisiteur) }}
+                             {{ form_errors(form.resultatVisiteur) }}&#35;&#125;
+                         </td>
+                     </tr>#}
+                    <td colspan="5">
 
-                                <input type="submit" value="{{ 'Modifier' }}"/>
-                            </td>
+                        <input type="submit" value="{{ 'Modifier' }}"/>
+                    </td>
 
-                        </table>
-                    </div>
-                </div>
-                {{ form_end(form) }}
-            {#</div>#}
+                </table>
+            </div>
+        </div>
+        {{ form_end(form) }}
+        {#</div>#}
         {#</div>#}
     {% else %}
         {{ 'vous n\' avez pas le droit de lecture sur un match ' }}

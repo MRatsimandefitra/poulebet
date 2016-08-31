@@ -68,7 +68,12 @@ class Championat
      * @ORM\Column(name="dateFinaleChampionat", type="date", nullable=true)
      */
     private $dateFinaleChampionat;
-
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="pays", type="string", length=255, nullable=true)
+     */
+    private $pays;
     
     /**
      * Get id
@@ -290,5 +295,29 @@ class Championat
     public function getTeamsPays()
     {
         return $this->teamsPays;
+    }
+
+    /**
+     * Set pays
+     *
+     * @param string $pays
+     *
+     * @return Championat
+     */
+    public function setPays($pays)
+    {
+        $this->pays = $pays;
+
+        return $this;
+    }
+
+    /**
+     * Get pays
+     *
+     * @return string
+     */
+    public function getPays()
+    {
+        return $this->pays;
     }
 }

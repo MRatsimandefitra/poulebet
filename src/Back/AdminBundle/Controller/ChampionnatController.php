@@ -6,6 +6,8 @@ use Api\CommonBundle\Controller\ApiController;
 use Api\DBBundle\Entity\Championat;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Intl\Intl;
+use Symfony\Component\Intl\Locale;
 
 class ChampionnatController extends ApiController
 {
@@ -31,7 +33,8 @@ class ChampionnatController extends ApiController
 
         $form = $this->formPost(self::FORM_CHAMPIONAT, $championat);
         $form->handleRequest($request);
-
+        $countries = Intl::getRegionBundle()->getCountryName(strtoupper($form['pays']->getData()));
+        $championat->setPays($countries);
         if($form->isValid()){
             $this->insert($championat, array('success' => 'success' , 'error' => 'error'));
             return $this->redirectToRoute('list_championat');
@@ -50,6 +53,14 @@ class ChampionnatController extends ApiController
 
         $form = $this->formPost(self::FORM_CHAMPIONAT, $championat);
         $form->handleRequest($request);
+        /*$dateDebut = $form['dateDebutChampionat']->getData();
+        $dateD = new \Date($dateDebut);
+        $dateFinale = $form['dateFinaleChampionat']->getData();
+        $dateF = new \DateTime($dateDebut);
+        $championat->setDateDebutChampionat($dateD);
+        $championat->setDateFinaleChampionat($dateF);*/
+        $countries = Intl::getRegionBundle()->getCountryName(strtoupper($form['pays']->getData()));
+        $championat->setPays($countries);
 
         if($form->isValid()){
             $this->insert($championat, array('success' => 'success' , 'error' => 'error'));
