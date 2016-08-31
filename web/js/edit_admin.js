@@ -14,9 +14,14 @@ $(document).ready(function(){
    });
    $('#check_all_role').click(function(){
        $("input.checking_role").prop("checked",true);
+       $("#deselectAll").removeAttr("name");
    });
    $('#uncheck_all_role').click(function(){
-       $("input.checking_role").prop("checked",false);
+       $("input.checking_role").each(function(){
+           $(this).prop("checked",false);
+       });
+       $("#deselectAll").prop("name","deselectAll");
+       $("#deselectAll").attr("value","true");
    });
     $('label#lecture').click(function(){
         if($('table.table-edit-role td.lecture input[type=checkbox]').is(':checked')){

@@ -222,8 +222,20 @@ class AdministratorController extends ApiController
         }
 
         // if params from form exist
-        if ($params) {
-
+        if($request->get("deselectAll") == "true"){
+            foreach ($droit as $vDroit) {
+                // var_dump($vDroit); die;
+                $adminDroit = $this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_DROIT_ADMIN)->findOneBy(array('droit' => $vDroit, 'admin' => $this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_ADMIN)->find($id)));
+                $adminDroit->setAjout(false);
+                $adminDroit->setModification(false);
+                $adminDroit->setLecture(false);
+                $adminDroit->setSuppression(false);
+                // $this->get('doctrine.orm.entity_manager')->persist($adminDroit);
+                $this->get('doctrine.orm.entity_manager')->flush();
+            }
+        }
+        else if($params){
+           
             foreach ($droit as $vDroit) {
                 // var_dump($vDroit); die;
                 $adminDroit = $this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_DROIT_ADMIN)->findOneBy(array('droit' => $vDroit, 'admin' => $this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_ADMIN)->find($id)));
@@ -256,9 +268,8 @@ class AdministratorController extends ApiController
         print_r($array);
         echo "</pre>";
         die;*/
-
             foreach ($array as $kA => $vA) {
-
+                
                 $droitE = $this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_DROIT)->find($vA['id']);
                 //var_dump($droitE);
                 $dAdminEntity = $this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_DROIT_ADMIN)->findOneBy(array('droit' => $droitE, 'admin' => $this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_ADMIN)->find($id)));
@@ -290,18 +301,9 @@ class AdministratorController extends ApiController
                 $this->get('doctrine.orm.entity_manager')->flush();
 
             }
-        }else{
-            foreach ($droit as $vDroit) {
-                // var_dump($vDroit); die;
-                $adminDroit = $this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_DROIT_ADMIN)->findOneBy(array('droit' => $vDroit, 'admin' => $this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_ADMIN)->find($id)));
-                $adminDroit->setAjout(false);
-                $adminDroit->setModification(false);
-                $adminDroit->setLecture(false);
-                $adminDroit->setSuppression(false);
-                // $this->get('doctrine.orm.entity_manager')->persist($adminDroit);
-                $this->get('doctrine.orm.entity_manager')->flush();
-            }
         }
+        
+        
 
         $droitAdminData = $this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_DROIT_ADMIN)->findBy(
                 array('admin' => $this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_ADMIN)->find($id)),

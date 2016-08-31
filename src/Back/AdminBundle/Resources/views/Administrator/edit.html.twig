@@ -71,7 +71,7 @@
                     </tr>
                 </table>
             </div>
-            <div><a id="check_all_role">Tout sélectionner</a>&nbsp;|&nbsp;<a id="uncheck_all_role">Déselectionner</a></div>        
+                    <div><a id="check_all_role">Tout sélectionner</a>&nbsp;|&nbsp;<a id="uncheck_all_role">Déselectionner</a><input type="hidden" id ="deselectAll"></div>        
             <table class="table table-edit-role">
                 <tr>
                     <td>{{ 'Fonctionalité'|trans }}  </td>
@@ -93,6 +93,7 @@
                     <tr class="{{ row.droit.fonctionnalite }}">
                         <td>
                             <input type="text" disabled="true" value="{{ row.droit.fonctionnalite }}"/>
+           
                         </td>
                         <td class="lecture">
                             {% if row.lecture is defined and row.lecture == 1 %}
