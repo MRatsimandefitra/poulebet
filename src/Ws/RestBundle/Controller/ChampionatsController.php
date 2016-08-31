@@ -48,9 +48,10 @@ class ChampionatsController extends ApiController
     {
 
         $championat = $request->request->get('championat');
+
         $date = $request->request->get('date');
 
-        $data = $this->getRepo(self::ENTITY_MATCHS)->getListeMatchsBySelectedChampionat($championat);
+        $data = $this->getRepo(self::ENTITY_MATCHS)->getListeMatchsBySelectedChampionat($championat, $date);
 
         $result = array();
         if ($data) {

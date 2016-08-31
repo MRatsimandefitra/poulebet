@@ -82,6 +82,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
      */
     function getListeMatchsBySelectedChampionat($championat, $date = null)
     {
+        // a verifier
         if(!$date){
             $dql = "SELECT m from ApiDBBundle:Matchs m
                 LEFT JOIN m.championat ch
@@ -89,10 +90,11 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
                 AND m.dateMatch BETWEEN CURRENT_DATE() AND DATE_ADD(CURRENT_DATE(), 7, 'day')
                 ORDER BY ch.fullNameChampionat ASC";
         }else{
+
             $dql = "SELECT m from ApiDBBundle:Matchs m
                 LEFT JOIN m.championat ch
-                WHERE ch.nomChampionat LIKE :championat
-                AND m.dateMatch BETWEEN :datepost AND DATE_ADD(CURRENT_DATE(), 7, 'day')
+                WHERE  m.dateMatch BETWEEN :datepost AND DATE_ADD(CURRENT_DATE(), 7, 'day')
+                AND ch.nomChampionat LIKE :championat
                 ORDER BY ch.fullNameChampionat ASC";
         }
 
@@ -101,6 +103,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         if($date){
             $query->setParameter('datepost', $date);
         }
+     //   var_dump($query->getDQL()); die;
         return $query->getResult();
     }
 
