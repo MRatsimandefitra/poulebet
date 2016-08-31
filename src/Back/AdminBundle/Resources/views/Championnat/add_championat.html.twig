@@ -4,24 +4,24 @@
 
 {% block page %}
 
-    <div class="box-header-response">
-        {{ 'Ajouter un championnat'|trans }}
+    <div class="sous-menu-page">
         {% include '@BackAdmin/Championnat/sous_menu.html.twig' %}
     </div>
 
     <div class="col-lg-12">
+        <div class="col-lg-12">
         <div class="list">
             {{ form_start(form) }}
             <table>
 
                 <tr>
-                    <td>{{ 'Nom championat' }}</td>
+                    <td>{{ 'Nom championat (ID)' }}</td>
                     <td>
                         {{ form_widget(form.nomChampionat) }}
                     </td>
                 </tr>
                 <tr>
-                    <td>{{ 'Full name championat' }}</td>
+                    <td>{{ 'Nom complet du championat' }}</td>
                     <td>
                         {{ form_widget(form.fullNameChampionat) }}
 
@@ -35,7 +35,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>{{ 'Type de championat' }}</td>
+                    <td>{{ 'Saison championat' }}</td>
                     <td>
                         {{ championat.season }}
 
@@ -43,33 +43,34 @@
                 </tr>
                 <tr>
 
-                    <td>{{ 'Date début championat' }}</td>
+                    <td>{{ 'Date de début valide du championat' }}</td>
                     <td>
                         {{ form_widget(form.dateDebutChampionat) }}
 
                     </td>
                 </tr>
                 <tr>
-                    <td>{{ 'Date Fianle championat' }}</td>
+                    <td>{{ 'Date finale valide du championat' }}</td>
                     <td>
-                        {{ form_widget(form.dateFinaleChampionat) }}
+                        {{ form_widget(form.dateFinaleChampionat)  }}
 
                     </td>
                 </tr>
                 <tr>
-                    <td>{{ 'Date Fianle championat' }}</td>
+                    <td>{{ 'Pays' }}</td>
                     <td>
-                        {{ form_widget(form.teamsPays) }}
+                        {{ form_widget(form.pays) }}
 
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <input type="submit" value="{{ 'Modifier' }}"/>
+                        <input type="submit" value="{{ 'Ajouter' }}"/>
                     </td>
                 </tr>
             </table>
             {{ form_end(form) }}
+        </div>
         </div>
     </div>
 {% endblock %}

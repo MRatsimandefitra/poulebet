@@ -25,7 +25,7 @@ class ConcoursController extends ApiController {
     const ENTITY_DROIT_ADMIN = 'ApiDBBundle:DroitAdmin';
     const ENTITY_DROIT = 'ApiDBBundle:Droit';
     const ENTITY_CHAMPIONAT = 'ApiDBBundle:Championat';
-    const ENTITY_COUNTRY = 'ApiDBBundle:Country';
+    const ENTITY_TEAMS_PAYS = 'ApiDBBundle:TeamsPays';
     const ENTITY_MATCH = 'ApiDBBundle:Matchs';
     
     const FORM_CONCOURS = 'Api\DBBundle\Form\ConcoursType';
@@ -83,10 +83,12 @@ class ConcoursController extends ApiController {
 
         $concours = $this->getRepoFormId(self::ENTITY_CONCOURS, $id);
         $championat = $this->getAllEntity(self::ENTITY_CHAMPIONAT);
-        $pays = $this->getAllEntity(self::ENTITY_COUNTRY);
+        $pays = $this->getAllEntity(self::ENTITY_TEAMS_PAYS);
 
-        $dql ="SELECT m, c from ApiDBBundle:Matchs m
-              LEFT JOIN m.concours c "
+        $dql ="SELECT m, conc from ApiDBBundle:Matchs m
+              LEFT JOIN m.concours conc 
+              LEFT JOIN m.championat c 
+              LEFT JOIN c.teamsPays tp"
               ;
         $where = array();
         $params = array();
@@ -106,18 +108,17 @@ class ConcoursController extends ApiController {
         # champinat seul
         if($request->get('championat_match')){
 
-            $championat = $request->get('championat_match');
-            $dql .= " LEFT JOIN m.championat c";
-            $where[] = " c.nomChampionat LIKE :championat ";
-            $params["championat"] = '%'.$championat.'%';
-            $searchValue['championat_match'] = $championat;
+            $cp = $request->get('championat_match');
+            $where[] = " c.fullNameChampionat LIKE :championat ";
+            $params["championat"] = '%'.$cp.'%';
+            $searchValue['championat_match'] = $cp;
         }
 
         if($request->get('pays_match')){
-            $pays= $request->get('pays_match');
-            $where[] = " m.equipeVisiteur LIKE :pays or m.equipeDomicile LIKE :pays ";
-            $params['pays'] = "%".$pays."%";
-            $searchValue['pays_match'] = $pays;
+            $p= $request->get('pays_match');
+            $where[] = " tp.name LIKE :pays ";
+            $params['pays'] = "%".$p."%";
+            $searchValue['pays_match'] = $p;
         }
         if (!empty($where)) {
             $dql .= ' WHERE ' . implode(' AND ', $where);

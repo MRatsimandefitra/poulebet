@@ -155,6 +155,7 @@ class GoalApiCommand extends ContainerAwareCommand
         }
 
         $url = "http://api.xmlscores.com/matches/?c[]=" . implode('&c[]=', $nameChampionat) . "&f=json&open=3770d7505de574df4b7d45d88b80027a";
+
 //        $url = "http://api.xmlscores.com/matches/?f=json&c[]=eng_pl&c[]=rus_pl&e=1&open=3770d7505de574df4b7d45d88b80027a";
         $content = file_get_contents($url);
 

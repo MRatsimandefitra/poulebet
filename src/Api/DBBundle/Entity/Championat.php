@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Championat
 {
+    
     /**
      * @ORM\ManyToMany(targetEntity="TeamsPays", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true)
@@ -68,7 +69,12 @@ class Championat
      * @ORM\Column(name="dateFinaleChampionat", type="date", nullable=true)
      */
     private $dateFinaleChampionat;
-
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="pays", type="string", length=255, nullable=true)
+     */
+    private $pays;
     
     /**
      * Get id
@@ -298,5 +304,29 @@ class Championat
     public function getSeason()
     {
         return $this->season;
+    }
+
+    /**
+     * Set pays
+     *
+     * @param string $pays
+     *
+     * @return Championat
+     */
+    public function setPays($pays)
+    {
+        $this->pays = $pays;
+
+        return $this;
+    }
+
+    /**
+     * Get pays
+     *
+     * @return string
+     */
+    public function getPays()
+    {
+        return $this->pays;
     }
 }

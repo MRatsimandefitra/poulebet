@@ -141,9 +141,8 @@ class MatchController extends ApiController
 
         if($request->get('pays_match') && !$request->get('championat_match')){
             $pays= $request->get('pays_match');
-            $dql .= " LEFT JOIN m.championat c
-                      LEFT JOIN c.teamsPays tp ";
-            $where[] = " tp.name LIKE :pays or tp.name LIKE :pays ";
+            $dql .= " LEFT JOIN m.championat c";
+            $where[] = " c.pays LIKE :pays ";
             $params['pays'] = "%".$pays."%";
             $searchValue['pays_match'] = $pays;
         }
@@ -153,10 +152,10 @@ class MatchController extends ApiController
             $dql .= " LEFT JOIN m.championat c ";
 
             $pays= $request->get('pays_match');
-            $dql .= " LEFT JOIN c.teamsPays tp";
+            /*$dql .= " LEFT JOIN c.teamsPays tp";*/
 
-            $where[] = " c.nomChampionat LIKE :championat ";
-            $where[] = " tp.name LIKE :pays";
+            $where[] = " c.fullNameChampionat LIKE :championat ";
+            $where[] = " c.pays LIKE :pays";
 
             $params['pays'] = "%".$pays."%";
             $params["championat"] = '%'.$championat.'%';
@@ -179,7 +178,7 @@ class MatchController extends ApiController
         //$this->em()->createQuery($dql)->setParameters($params);
         //var_dump($dql); die;
         $championatData = $this->getAllEntity(self::ENTITY_CHAMPIONAT);
-        $country = $this->getAllEntity(self::ENTITY_TEAMS_PAYS);
+        $country = $this->getAllEntity(self::ENTITY_CHAMPIONAT);
 
         $droitAdmin = $this->getDroitAdmin('Matchs');
         return $this->render('BackAdminBundle:Matchs:index.html.twig', array(
@@ -381,7 +380,10 @@ class MatchController extends ApiController
             $lotoFoot = $this->getRepoFormId(self::ENTITY_LOTOFOOT15, $id);
         }
         $championat = $this->getAllEntity(self::ENTITY_CHAMPIONAT);
-        $pays = $this->getAllEntity(self::ENTITY_COUNTRY);
+        $dql ="SELECT ch from ApiDBBundle:Championat ch where ch.pays is not NULL";
+        $query = $this->get('doctrine.orm.entity_manager')->createQuery($dql);
+        /*$pays = $this->getAllEntity(self::ENTITY_CHAMPIONAT);*/
+        $pays  = $query->getResult();
 
         $dql ="SELECT m, lf7, lf15 from ApiDBBundle:Matchs m
               LEFT JOIN m.lotoFoot7 lf7
@@ -413,8 +415,8 @@ class MatchController extends ApiController
 
         if($request->get('pays_match')){
             $pays= $request->get('pays_match');
-            $dql .= " LEFT JOIN m.teamsDomicile tp  ";
-            $where[] = " m.equipeVisiteur LIKE :pays or m.equipeDomicile LIKE :pays ";
+            $dql .= " LEFT JOIN m.championat c  ";
+            $where[] = " c.pays LIKE :pays ";
             $params['pays'] = "%".$pays."%";
             $searchValue['pays_match'] = $pays;
         }

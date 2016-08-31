@@ -172,6 +172,7 @@ class AdministratorController extends ApiController
     public function editDroitAdminAction(Request $request, $id)
     {
 
+
         $droit = $this->getAllRepo(self::ENTITY_DROIT);
         $user = $this->getUser();
 
@@ -284,6 +285,17 @@ class AdministratorController extends ApiController
                 $this->get('doctrine.orm.entity_manager')->persist($dAdminEntity);
                 $this->get('doctrine.orm.entity_manager')->flush();
 
+            }
+        }else{
+            foreach ($droit as $vDroit) {
+                // var_dump($vDroit); die;
+                $adminDroit = $this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_DROIT_ADMIN)->findOneBy(array('droit' => $vDroit, 'admin' => $this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_ADMIN)->find($id)));
+                $adminDroit->setAjout(false);
+                $adminDroit->setModification(false);
+                $adminDroit->setLecture(false);
+                $adminDroit->setSuppression(false);
+                // $this->get('doctrine.orm.entity_manager')->persist($adminDroit);
+                $this->get('doctrine.orm.entity_manager')->flush();
             }
         }
 

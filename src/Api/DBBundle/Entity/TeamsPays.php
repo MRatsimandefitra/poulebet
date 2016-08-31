@@ -185,4 +185,7 @@ class TeamsPays
     {
         return $this->logo;
     }
+    public function __toString() {
+        return "".$this->getFullName();
+    }
 }

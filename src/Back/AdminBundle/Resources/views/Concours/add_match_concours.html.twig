@@ -54,12 +54,12 @@
         {% if searchValue is defined and searchValue is not empty and searchValue.championat_match is defined %}
             <option value="{{ searchValue.championat_match }}">{{ searchValue.championat_match }}</option>
             {% for rowChampionat  in championat %}
-                <option value="{{ rowChampionat.nomChampionat }}">{{ rowChampionat.nomChampionat }}</option>
+                <option value="{{ rowChampionat.fullNameChampionat }}">{{ rowChampionat.fullNameChampionat }}</option>
             {% endfor %}
         {% else %}
             <option value=""></option>
             {% for rowChampionat  in championat %}
-                <option value="{{ rowChampionat.nomChampionat }}">{{ rowChampionat.nomChampionat }}</option>
+                <option value="{{ rowChampionat.fullNameChampionat }}">{{ rowChampionat.fullNameChampionat }}</option>
             {% endfor %}
 
         {% endif %}
@@ -106,7 +106,7 @@
             {% if row_selected == 1 %}
                 <tr class="selected">
                     <td>
-                        <a onclick="supprimer('Etes vous sur de vouloir supprimer ce match ?')" href="{{ path('remove_match_concours',{'idConcours':entity.id, 'id':rowMatchs.id} ) }}">
+                        <a onclick="return supprimer('Etes vous sur de vouloir supprimer ce match ?')" href="{{ path('remove_match_concours',{'idConcours':entity.id, 'id':rowMatchs.id} ) }}">
                             <span class="glyphicon glyphicon-remove-circle red" aria-hidden="true"></span>
                         </a>
                     </td>        
