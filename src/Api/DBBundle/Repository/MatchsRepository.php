@@ -157,8 +157,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
     {
         $dql = "SELECT m from ApiDBBundle:Matchs m
                 LEFT JOIN m.championat ch
-                LEFT JOIN ch.teamsPays tp
-                WHERE tp.name LIKE :pays";
+                WHERE ch.pays LIKE :pays";
         $query = $this->getEntityManager()->createQuery($dql);
         $query->setParameter('pays', $pays);
         return $query->getResult();
