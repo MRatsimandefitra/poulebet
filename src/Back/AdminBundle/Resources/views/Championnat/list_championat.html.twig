@@ -66,12 +66,12 @@
                     <td>
                         {% if droitAdmin.modification is defined and droitAdmin.modification %}
                             <a href="{{ path('edit_championat', {'id': row.id }) }}">
-                                <span class="glyphicon glyphicon-pencil orange" aria-hidden="true"></span>
+                                {{ 'Modifier' |trans }} |
                             </a>
                         {% endif %}
                         {% if droitAdmin.suppression is defined and droitAdmin.suppression %}
                             <a  class="suppression" href="{{ path('remove_championat', {'id': row.id }) }}">
-                                <span id="s" class="glyphicon glyphicon-remove red" aria-hidden="true"></span>
+                                {{ 'Supprimer' |trans }}
                             </a>
                         {% endif %}
                     </td>

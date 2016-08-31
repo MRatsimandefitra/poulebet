@@ -88,7 +88,7 @@ class ConcoursController extends ApiController {
         $dql ="SELECT m, conc from ApiDBBundle:Matchs m
               LEFT JOIN m.concours conc 
               LEFT JOIN m.championat c 
-              LEFT JOIN c.teamsPays tp"
+              "
               ;
         $where = array();
         $params = array();
@@ -116,7 +116,7 @@ class ConcoursController extends ApiController {
 
         if($request->get('pays_match')){
             $p= $request->get('pays_match');
-            $where[] = " tp.name LIKE :pays ";
+            $where[] = " c.pays LIKE :pays ";
             $params['pays'] = "%".$p."%";
             $searchValue['pays_match'] = $p;
         }
