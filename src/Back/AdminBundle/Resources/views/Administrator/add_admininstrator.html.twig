@@ -10,6 +10,12 @@
         </div>
     </div>
     <div class="box-response">
+    {% for flashMessage in app.session.flashbag.get('error') %}
+            <div class="alert alert-danger fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Erreur:</strong> {{ flashMessage }}
+            </div>
+        {% endfor %}
         <div class="edit-profil-admin">
             {{ form_start(form) }}
             <div>
@@ -33,7 +39,7 @@
                 {{ form_widget(form.prenom) }}
             </div>
 
-            <input type="submit" value="{{ 'UPDATE'|trans }}"/>
+            <input class ="btn btn-primary"type="submit" value="{{ 'Enregistrer'|trans }}"/>
             {{ form_end(form) }}
         </div>
 

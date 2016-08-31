@@ -20,7 +20,7 @@ class DroitAdmin
      */
     private $droit;
     /**
-     * @ORM\ManyToOne(targetEntity="Admin", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Admin", cascade={"persist","remove"})
      * @ORM\JoinColumn(name="admin_id")
      */
     private $admin;

@@ -100,8 +100,12 @@ class AdministratorController extends ApiController
 
             $mailer->addParams('body',$text);
             $mailer->send();
-
-            $this->insert($administrator, array('success' => 'success', 'error' => 'error'));
+         
+            $redirect = $this->insert($administrator, array('success' => 'success', 'error' => 'error'));
+            if(!$redirect){
+                return $this->redirectToRoute("add_new_administrator");
+            }
+            
             return $this->redirectToRoute('index_administrator');
         }
         return $this->render('BackAdminBundle:Administrator:add_admininstrator.html.twig', array(

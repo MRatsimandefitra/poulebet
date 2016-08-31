@@ -48,6 +48,11 @@ class Admin extends BaseUser
 
 
     /**
+     * @ORM\OneToMany(targetEntity="DroitAdmin", mappedBy="admin", cascade={"persist","remove"})
+     *
+     */
+    protected $droitAdmin;
+    /**
      * Set prenom
      *
      * @param string $prenom
@@ -117,5 +122,39 @@ class Admin extends BaseUser
     public function getIsSuperAdmin()
     {
         return $this->isSuperAdmin;
+    }
+
+    /**
+     * Add droitAdmin
+     *
+     * @param \Api\DBBundle\Entity\DroitAdmin $droitAdmin
+     *
+     * @return Admin
+     */
+    public function addDroitAdmin(\Api\DBBundle\Entity\DroitAdmin $droitAdmin)
+    {
+        $this->droitAdmin[] = $droitAdmin;
+
+        return $this;
+    }
+
+    /**
+     * Remove droitAdmin
+     *
+     * @param \Api\DBBundle\Entity\DroitAdmin $droitAdmin
+     */
+    public function removeDroitAdmin(\Api\DBBundle\Entity\DroitAdmin $droitAdmin)
+    {
+        $this->droitAdmin->removeElement($droitAdmin);
+    }
+
+    /**
+     * Get droitAdmin
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDroitAdmin()
+    {
+        return $this->droitAdmin;
     }
 }

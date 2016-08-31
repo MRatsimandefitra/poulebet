@@ -74,8 +74,8 @@ class ApiController extends Controller
             $this->getEm()->flush();
             //$this->addFlash("success", $this->get('translator')->trans($msg['success']));
             return true;
-        } catch (Exception $e) {
-            $this->addFlash("error", $this->get('translator')->trans($msg['error']));
+        } catch (\Doctrine\DBAL\Exception\UniqueConstraintViolationException $e) {
+            $this->addFlash("error", "Ce compte existe déjà");
             return false;
         }
 
