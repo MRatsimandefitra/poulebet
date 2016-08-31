@@ -178,8 +178,10 @@ class MatchController extends ApiController
         //$this->em()->createQuery($dql)->setParameters($params);
         //var_dump($dql); die;
         $championatData = $this->getAllEntity(self::ENTITY_CHAMPIONAT);
-        $country = $this->getAllEntity(self::ENTITY_CHAMPIONAT);
-
+//        $country = $this->getAllEntity(self::ENTITY_CHAMPIONAT);
+        $dql = "SELECT ch From ApiDBBundle:championat ch where ch.pays  is not null ";
+        $query = $this->get('doctrine.orm.entity_manager')->createQuery($dql);
+        $country = $query->getResult();
         $droitAdmin = $this->getDroitAdmin('Matchs');
         return $this->render('BackAdminBundle:Matchs:index.html.twig', array(
             'matchs' => $matchs,
