@@ -122,7 +122,7 @@
                         </td>
                         <td>
                             {% if droitAdmin.suppression is defined and droitAdmin.suppression %}
-                                <a href="{{ path('remove_admin_pronostic', {'id': row.id }) }}"
+                                <a class="supprimer" href="{{ path('remove_admin_pronostic', {'id': row.id }) }}"
                                    onclick="supprimer('Etes vous sur de vouloir supprimer ce pronostic ?');"> <span
                                             class="glyphicon glyphicon-remove red"
                                             aria-hidden="true"></span> {{ 'Suppression Master prono'|trans }}

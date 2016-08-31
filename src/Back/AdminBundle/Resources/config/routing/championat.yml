@@ -1,0 +1,12 @@
+list_championat:
+    path:     /
+    defaults: { _controller: BackAdminBundle:Championnat:listChampionat }
+edit_championat:
+    path:     /edit/{id}
+    defaults: { _controller: BackAdminBundle:Championnat:editChampionat }
+add_championat:
+    path:     /add
+    defaults: { _controller: BackAdminBundle:Championnat:addChampionat }
+remove_championat:
+    path:     /remove/{id}
+    defaults: { _controller: BackAdminBundle:Championnat:removeChampionat}

@@ -22,7 +22,7 @@ class MatchController extends ApiController
 {
     const FORM_MATCH_SEARCH = 'Api\DBBundle\Form\MatchSearchType';
     const ENTITY_CHAMPIONAT = 'ApiDBBundle:Championat';
-    const ENTITY_COUNTRY = 'ApiDBBundle:Country';
+    const ENTITY_COUNTRY = 'ApiDBBundle:TeamsPays';
     const ENTITY_MATCH = 'ApiDBBundle:Matchs';
     const ENTITY_LOTOFOOT7 = 'ApiDBBundle:LotoFoot7';
     const ENTITY_LOTOFOOT15 = 'ApiDBBundle:LotoFoot15';
@@ -134,7 +134,7 @@ class MatchController extends ApiController
         if($request->get('championat_match')&& !$request->get('pays_match')){
             $championat = $request->get('championat_match');
             $dql .= " LEFT JOIN m.championat c";
-            $where[] = " c.nomChampionat LIKE :championat ";
+            $where[] = " c.fullNameChampionat LIKE :championat ";
             $params["championat"] = '%'.$championat.'%';
             $searchValue['championat_match'] = $championat;
         }
@@ -177,7 +177,7 @@ class MatchController extends ApiController
             $matchs = $this->get('doctrine.orm.entity_manager')->createQuery($dql)->setParameters($params)->getResult();
         }
         //$this->em()->createQuery($dql)->setParameters($params);
-       // var_dump($dql); die;
+        //var_dump($dql); die;
         $championatData = $this->getAllEntity(self::ENTITY_CHAMPIONAT);
         $country = $this->getAllEntity(self::ENTITY_TEAMS_PAYS);
 
@@ -201,26 +201,25 @@ class MatchController extends ApiController
 
 
     public function editMatchsAction(Request $request, $id){
-        //die('okok');
-        // et cirrent matchs
         $currentMatchs = $this->getRepoFormId(self::ENTITY_MATCH, $id);
-       // var_dump($currentMatchs); die;
         $form = $this->formPost(self::FORM_MATCHS, $currentMatchs);
 
         $form->handleRequest($request);
         if($form->isValid()){
 
-            $dir = $this->get('kernel')->getRootDir().'/../web/upload/admin/flag/';
+            $dir = $this->get('kernel')->getRootDir().'/../web/images/Flag-foot/';
             $logoDomicile = $currentMatchs->getCheminLogoDomicile();
             $logoVisiteur = $currentMatchs->getCheminLogoVisiteur();
-
-            $logoDomicileName = uniqid().'.'.$logoDomicile->guessExtension();
-            $logoVisiteurName = uniqid().'.'.$logoVisiteur->guessExtension();
-            $logoDomicile->move($dir, $logoDomicileName);
-            $logoVisiteur->move($dir, $logoVisiteurName);
-
-            $currentMatchs->setCheminLogoDomicile($logoDomicileName);
-            $currentMatchs->setCheminLogoVisiteur($logoVisiteurName);
+            if($currentMatchs->getCheminLogoDomicile()){
+                $logoDomicileName = $currentMatchs->getTeamsDomicile()->getIdNameClub().'.'.$logoDomicile->guessExtension();
+                $logoDomicile->move($dir, $logoDomicileName);
+                $currentMatchs->setCheminLogoDomicile($logoDomicileName);
+            }
+            if($currentMatchs->getCheminLogoVisiteur()){
+                $logoVisiteurName = $currentMatchs->getTeamsVisiteur()->getIdNameClub().'.'.$logoVisiteur->guessExtension();
+                $logoVisiteur->move($dir, $logoVisiteurName);
+                $currentMatchs->setCheminLogoVisiteur($logoVisiteurName);
+            }
             $this->insert($currentMatchs, array('success' => 'success' , 'error' => 'error'));
 
         }
@@ -273,13 +272,13 @@ class MatchController extends ApiController
 
                 $lotofoot15->setFinValidation(new \DateTime($finValidation));
                 $this->insert($lotofoot15, array('success' => 'success' , 'error' => 'error'));
+                return $this->redirectToRoute('list_loto_foot');
             }
         }
 
 
-
         return $this->render('BackAdminBundle:Matchs:add_loto_foot.html.twig', array(
-
+            'droitAdmin' => $this->get('roles.manager')->getDroitAdmin('Matchs')[0]
         ));
     }
 
@@ -287,7 +286,7 @@ class MatchController extends ApiController
 
         $lotoFoot7 = $this->getAllEntity(self::ENTITY_LOTOFOOT7);
         $lotoFoot15 = $this->getAllEntity(self::ENTITY_LOTOFOOT15);
-        $droitAdmin = $this->getDroitAdmin('Matchs');
+        $droitAdmin = $this->get('roles.manager')->getDroitAdmin('Matchs');
         return $this->render('BackAdminBundle:Matchs:list_lotofoot.html.twig', array(
                 'lotoFoot7' => $lotoFoot7,
                 'lotoFoot15' => $lotoFoot15,
@@ -351,11 +350,14 @@ class MatchController extends ApiController
 
                 $lotofoot15->setFinValidation(new \DateTime($finValidation));
                 $this->insert($lotofoot15, array('success' => 'success' , 'error' => 'error'));
+                return $this->redirectToRoute('list_loto_foot');
             }
         }
         return $this->render('BackAdminBundle:Matchs:edit_lotofoot.html.twig', array(
                 'currentLotoFoot' => $currentLotoFoot,
-                'idLotoFoot' => $idLotoFoot
+                'idLotoFoot' => $idLotoFoot,
+                'id' => $id,
+                'droitAdmin' => $this->get('roles.manager')->getDroitAdmin('Matchs')[0]
         ));
     }
 
@@ -372,8 +374,6 @@ class MatchController extends ApiController
     }
 
     public function addMatchInLotoFootAction(Request $request,$id, $idLotoFoot){
-
-
         if($idLotoFoot == 7){
             $lotoFoot = $this->getRepoFormId(self::ENTITY_LOTOFOOT7, $id);
         }
@@ -406,13 +406,14 @@ class MatchController extends ApiController
 
             $championat = $request->get('championat_match');
             $dql .= " LEFT JOIN m.championat c";
-            $where[] = " c.nomChampionat LIKE :championat ";
+            $where[] = " c.fullNameChampionat LIKE :championat ";
             $params["championat"] = '%'.$championat.'%';
             $searchValue['championat_match'] = $championat;
         }
 
         if($request->get('pays_match')){
             $pays= $request->get('pays_match');
+            $dql .= " LEFT JOIN m.teamsDomicile tp  ";
             $where[] = " m.equipeVisiteur LIKE :pays or m.equipeDomicile LIKE :pays ";
             $params['pays'] = "%".$pays."%";
             $searchValue['pays_match'] = $pays;
@@ -424,7 +425,6 @@ class MatchController extends ApiController
         if(empty($params)){
             $matchs = $this->get('doctrine.orm.entity_manager')->createQuery($dql)->getResult();
         }else{
-
             $matchs = $this->get('doctrine.orm.entity_manager')->createQuery($dql)->setParameters($params)->getResult();
         }
         //var_dump($matchs); die;
@@ -527,7 +527,8 @@ class MatchController extends ApiController
             'matchs' => $matchs,
             'searchValue' => $searchValue,
             'nbMatchs7' => $nbMatchs7,
-            'nbMatchs15' => $nbMatchs15
+            'nbMatchs15' => $nbMatchs15,
+            'droitAdmin' => $this->get('roles.manager')->getDroitAdmin('Matchs')[0]
         ));
 
 
