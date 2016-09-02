@@ -21,10 +21,6 @@
             {{ form_widget(form.email) }}
         </div>
         <div>
-            <label for="">{{ "Password"|trans }}</label>
-            {{ form_widget(form.password) }}
-        </div>
-        <div>
             <label for="">{{ "Nom"|trans }}</label>
             {{ form_widget(form.nom) }}
         </div>
@@ -33,7 +29,7 @@
             {{ form_widget(form.prenom) }}
         </div>
 
-          <input type="submit" value="{{ 'UPDATE'|trans }}"/>
+          <input class="btn btn-primary "type="submit" value="{{ 'Enregistrer'|trans }}"/>
         {{ form_end(form) }}
     </div>
 

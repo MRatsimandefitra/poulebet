@@ -22,7 +22,7 @@ class AdminType extends AbstractType
         $builder
             ->add('username', TextType::class, array())
             ->add('email', EmailType::class, array())
-            ->add('password', PasswordType::class, array())
+            //->add('password', PasswordType::class, array())
             //->add('roles')
             //->add('salt')
             //->add('isEnable')

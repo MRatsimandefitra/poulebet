@@ -61,8 +61,8 @@ class AdministratorController extends ApiController
         $form = $this->formPost(self::FORM_ADMIN, $currentAdmin);
         $form->handleRequest($request);
         if($form->isValid()){
-            $password = $encoder->encodePassword($form->get('password')->getData(), $currentAdmin->getSalt());
-            $currentAdmin->setPassword($password);
+            /*$password = $encoder->encodePassword($form->get('password')->getData(), $currentAdmin->getSalt());
+            $currentAdmin->setPassword($password);*/
 
             $this->insert($currentAdmin, array('success' => 'success' , 'error' => 'error'));
             return $this->redirectToRoute('index_administrator');
@@ -233,7 +233,9 @@ class AdministratorController extends ApiController
                 $adminDroit->setSuppression(false);
                 // $this->get('doctrine.orm.entity_manager')->persist($adminDroit);
                 $this->get('doctrine.orm.entity_manager')->flush();
+                
             }
+            return $this->redirectToRoute('index_administrator');
         }
         else if($params){
 
@@ -302,6 +304,7 @@ class AdministratorController extends ApiController
                 $this->get('doctrine.orm.entity_manager')->flush();
 
             }
+            return $this->redirectToRoute('index_administrator');
         }
         
         
