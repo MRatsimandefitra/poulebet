@@ -408,7 +408,7 @@ class MatchController extends ApiController
         $dql ="SELECT ch from ApiDBBundle:Championat ch where ch.pays is not NULL";
         $query = $this->get('doctrine.orm.entity_manager')->createQuery($dql);
         /*$pays = $this->getAllEntity(self::ENTITY_CHAMPIONAT);*/
-        $pays  = $query->getResult();
+        $country  = $query->getResult();
 
         $dql ="SELECT m, lf7, lf15 from ApiDBBundle:Matchs m
               LEFT JOIN m.lotoFoot7 lf7
@@ -429,7 +429,7 @@ class MatchController extends ApiController
         }
 
         # champinat seul
-        if($request->get('championat_match')){
+        if($request->get('championat_match') && !$request->get('pays_match')){
 
             $championat = $request->get('championat_match');
             $dql .= " LEFT JOIN m.championat c";
@@ -438,12 +438,22 @@ class MatchController extends ApiController
             $searchValue['championat_match'] = $championat;
         }
 
-        if($request->get('pays_match')){
+        if($request->get('pays_match') && !$request->get('championat_match')){
             $pays= $request->get('pays_match');
             $dql .= " LEFT JOIN m.championat c  ";
             $where[] = " c.pays LIKE :pays ";
             $params['pays'] = "%".$pays."%";
             $searchValue['pays_match'] = $pays;
+        }
+        if($request->get('pays_match') && $request->get('championat_match')){
+            $pays= $request->get('pays_match');
+            $championat = $request->get('championat_match');
+            $dql .= " LEFT JOIN m.championat c  ";
+            $where[] = " c.pays LIKE :pays AND c.fullNameChampionat LIKE :championat";
+            $params['pays'] = "%".$pays."%";
+            $params["championat"] = '%'.$championat.'%';
+            $searchValue['pays_match'] = $pays;
+            $searchValue['championat_match'] = $championat;
         }
         if (!empty($where)) {
             $dql .= ' WHERE ' . implode(' AND ', $where);
@@ -545,12 +555,14 @@ class MatchController extends ApiController
 
             $nbMatchs15 = $i;
         }
-
+        $champi = $this->getRepo(self::ENTITY_CHAMPIONAT)->findAll();
         return $this->render('BackAdminBundle:Matchs:add_lotofoot.html.twig', array(
             'entity' => $lotoFoot,
             'idLotoFoot' => $idLotoFoot,
             'championat' => $championat,
-            'pays' => $pays,
+            'champi' => $champi,
+            'country' => $country,
+            'pays' => $country,
             'matchs' => $matchs,
             'searchValue' => $searchValue,
             'nbMatchs7' => $nbMatchs7,
