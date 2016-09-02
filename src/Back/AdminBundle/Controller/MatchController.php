@@ -33,6 +33,9 @@ class MatchController extends ApiController
     const FORM_CHAMPIONAT = 'Api\DBBundle\Form\ChampionatType';
     const ENTITY_TEAMS_PAYS = 'ApiDBBundle:TeamsPays';
 
+    const ENTITY_LOTOFOOT = 'ApiDBBundle:LotoFoot';
+    const FORM_LOTOFOOT = 'Api\DBBundle\Form\LotoFootType';
+
     public function indexAction(Request $request)
     {
         if($request->request->get('identifiant')){
@@ -289,6 +292,7 @@ class MatchController extends ApiController
                 $date = new \DateTime($finValidation);
                 $lotofoot7->setFinValidation($date);
                 $this->insert($lotofoot7, array('success' => 'success' , 'error' => 'error'));
+                return $this->redirectToRoute('list_loto_foot');
             }
             if($lotofoot == 'lf15'){
                 $lotofoot15 = new LotoFoot15();
@@ -367,6 +371,7 @@ class MatchController extends ApiController
                 $date = new \DateTime($finValidation);
                 $lotofoot7->setFinValidation($date);
                 $this->insert($lotofoot7, array('success' => 'success' , 'error' => 'error'));
+                return $this->redirectToRoute('list_loto_foot');
             }
             if($lotofoot == 'lf15'){
                 $lotofoot15 = $this->getRepoFormId(self::ENTITY_LOTOFOOT15, $id);
