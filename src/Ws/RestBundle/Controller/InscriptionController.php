@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints\DateTime;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
+
 class InscriptionController extends ApiRestController
 {
     const ENTITY_UTILISATEUR = 'ApiDBBundle:Utilisateur';
@@ -21,6 +22,19 @@ class InscriptionController extends ApiRestController
     const ENTITY_DROIT_ADMIN = '';
     const ENTITY_DROIT = 'ApiDBBundle:';
 
+    /**
+     * @ApiDoc(
+     *      description="Inscription utilisateur ws via android ",
+     *      parameters = {
+     *          {"name"="username", "dataType"="string", "required" = true, "description" = "data of username"},
+     *          {"name"="prenom", "dataType"="string", "required" = true, "description" = "data of prenom"},
+     *          {"name"="email", "dataType"="string", "required" = true, "description" = "Data of email"},
+     *          {"name"="password", "dataType"="string", "required" = true, "description" = "data of password"},
+     *      }
+     * )
+     * @param Request $request
+     * @return JsonResponse
+     */
      public function postUserFromAndroidAction(Request $request)
      {
          $username = $request->get('username');
@@ -92,6 +106,13 @@ class InscriptionController extends ApiRestController
      }
 
 
+    /**
+     * @ApiDoc(
+     *      description= " Details profil utilisateur ws mobile")
+     * )
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function getProfilUtilisateurAction(Request $request)
     {
 
@@ -129,6 +150,16 @@ class InscriptionController extends ApiRestController
         return new JsonResponse($response);
     }
 
+    /**
+     * @ApiDoc(
+     *      description = " recevoir les informations ws du profil utilisateur",
+     *      requirements = {
+     *              {"name"="username", "dataType"="string", "required"=true, "description"="username de l'utilisateur"}
+     *      }
+     * )
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function postProfilUtilisateurAction(Request $request)
     {
         $username = $request->get('username');

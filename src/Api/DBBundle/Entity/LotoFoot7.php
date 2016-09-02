@@ -36,7 +36,7 @@ class LotoFoot7
     private $finValidation;
     
     /**
-    * @ORM\OneToMany(targetEntity="Api\DBBundle\Entity\Matchs", mappedBy="lotoFoot7", cascade={"persist", "remove"})
+    * @ORM\OneToMany(targetEntity="Api\DBBundle\Entity\Matchs", mappedBy="lotoFoot7", cascade={"persist"})
     */
     private $matchs;
 

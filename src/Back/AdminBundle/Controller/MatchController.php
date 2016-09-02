@@ -397,7 +397,15 @@ class MatchController extends ApiController
         return $this->redirectToRoute('list_loto_foot');
     }
 
-    public function addMatchInLotoFootAction(Request $request,$id, $idLotoFoot){
+    /**
+     *
+     * Ajouter des matchs dans un loto foot
+     * @param Request $request
+     * @param $id
+     * @param $idLotoFoot
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function addMatchInLotoFootAction(Request $request,$idLotoFoot, $id ){
         if($idLotoFoot == 7){
             $lotoFoot = $this->getRepoFormId(self::ENTITY_LOTOFOOT7, $id);
         }
@@ -405,10 +413,12 @@ class MatchController extends ApiController
             $lotoFoot = $this->getRepoFormId(self::ENTITY_LOTOFOOT15, $id);
         }
         $championat = $this->getAllEntity(self::ENTITY_CHAMPIONAT);
-        $dql ="SELECT ch from ApiDBBundle:Championat ch where ch.pays is not NULL";
-        $query = $this->get('doctrine.orm.entity_manager')->createQuery($dql);
-        /*$pays = $this->getAllEntity(self::ENTITY_CHAMPIONAT);*/
+
+        $dqlC ="SELECT ch from ApiDBBundle:Championat ch where ch.pays is not NULL";
+        $query = $this->get('doctrine.orm.entity_manager')->createQuery($dqlC);
         $country  = $query->getResult();
+        /*$pays = $this->getAllEntity(self::ENTITY_CHAMPIONAT);*/
+
 
         $dql ="SELECT m, lf7, lf15 from ApiDBBundle:Matchs m
               LEFT JOIN m.lotoFoot7 lf7
@@ -418,11 +428,11 @@ class MatchController extends ApiController
         $searchValue = array();
 
         if($request->get('date_match')){
+
             $dateMatch = $request->get('date_match');
-            $where[] = "m.dateMatch BETWEEN :dateStart AND :dateEnd";
+            $where[] = " m.dateMatch BETWEEN :dateStart AND :dateEnd ";
             $dateStart = $dateMatch.' 00:00:00';
             $dateEnd = $dateMatch. ' 23:59:59';
-
             $params["dateStart"] = $dateStart;
             $params["dateEnd"] = $dateEnd;
             $searchValue['date_match'] = $dateMatch;
@@ -455,6 +465,7 @@ class MatchController extends ApiController
             $searchValue['pays_match'] = $pays;
             $searchValue['championat_match'] = $championat;
         }
+
         if (!empty($where)) {
             $dql .= ' WHERE ' . implode(' AND ', $where);
         }
@@ -467,8 +478,9 @@ class MatchController extends ApiController
         //var_dump($matchs); die;
         if($request->get('idMatch')){
             $idMatch = $request->get('idMatch');
-            $match = $this->getRepoFormId(self::ENTITY_MATCH, $idMatch);
+            $matchs = $this->getRepoFormId(self::ENTITY_MATCH, $idMatch);
         }
+        /*var_dump()*/
        /* if($request->get('idLotoFoot')){
             $idLotoFoot = $request->get('idLotoFoot');
         }*/
@@ -491,25 +503,28 @@ class MatchController extends ApiController
 
             if(count($arrayData) < 7){
                 //  die('erreur < 7');
+                echo("<script>alert('Erreur : Nombre de match Inférieur à <  7');</script>");
             }
             if(count($arrayData) > 7){
-                echo("<script>alert('Nombre de match > 7');</script>"); 
+                echo("<script>alert('Erreur : Nombre de match >  superieur à 7');</script>");
             }
             if(count($arrayData) <= 7){
+                if($idarray){
+                    foreach($idarray as $vId){
 
-                foreach($idarray as $vId){
+                        $matchsEntity = $this->getRepoFormId(self::ENTITY_MATCH, $vId);
+                        $matchsEntity->setLotoFoot7(null);
+                        $this->get('doctrine.orm.entity_manager')->persist($matchsEntity);
+                        $this->get('doctrine.orm.entity_manager')->flush();
+                    }
+                    foreach($idarray as $vId){
+                        $matchsEntity = $this->getRepoFormId(self::ENTITY_MATCH, $vId);
+                        $matchsEntity->setLotoFoot7($lotoFoot);
+                        $this->get('doctrine.orm.entity_manager')->persist($matchsEntity);
+                        $this->get('doctrine.orm.entity_manager')->flush();
+                    }
+                }
 
-                    $matchsEntity = $this->getRepoFormId(self::ENTITY_MATCH, $vId);
-                    $matchsEntity->setLotoFoot7(null);
-                    $this->get('doctrine.orm.entity_manager')->persist($matchsEntity);
-                    $this->get('doctrine.orm.entity_manager')->flush();
-                }
-                foreach($idarray as $vId){
-                    $matchsEntity = $this->getRepoFormId(self::ENTITY_MATCH, $vId);
-                    $matchsEntity->setLotoFoot7($lotoFoot);
-                    $this->get('doctrine.orm.entity_manager')->persist($matchsEntity);
-                    $this->get('doctrine.orm.entity_manager')->flush();
-                }
 
             }
         }
@@ -522,17 +537,20 @@ class MatchController extends ApiController
                     $this->get('doctrine.orm.entity_manager')->persist($matchsEntity);
                     $this->get('doctrine.orm.entity_manager')->flush();
                 }
-                foreach($idarray as $vId){
+                if($idarray){
+                    foreach($idarray as $vId){
 
-                    $matchsEntity = $this->getRepoFormId(self::ENTITY_MATCH, $vId);
-                    $matchsEntity->setLotoFoot15($lotoFoot);
-                    $this->get('doctrine.orm.entity_manager')->persist($matchsEntity);
-                    $this->get('doctrine.orm.entity_manager')->flush();
+                        $matchsEntity = $this->getRepoFormId(self::ENTITY_MATCH, $vId);
+                        $matchsEntity->setLotoFoot15($lotoFoot);
+                        $this->get('doctrine.orm.entity_manager')->persist($matchsEntity);
+                        $this->get('doctrine.orm.entity_manager')->flush();
+                    }
                 }
-
             }
         }
+
         $nbMatchs7 = null;
+
         if($idLotoFoot == 7){
             $matchsCount = $this->getAllEntity(self::ENTITY_MATCH);
             $i = 0;
@@ -572,6 +590,8 @@ class MatchController extends ApiController
 
 
     }
+
+
     private function getDroitAdmin($droit){
         $droitAdmin = $this->getRepo(self::ENTITY_DROIT_ADMIN)->findBy(array('admin' => $this->getUser(), 'droit' => $this->getRepo(self::ENTITY_DROIT)->findOneBy(array('fonctionnalite' => $droit))));
         return $droitAdmin;

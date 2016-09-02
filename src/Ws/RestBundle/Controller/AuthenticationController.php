@@ -9,12 +9,23 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints\DateTime;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class AuthenticationController extends ApiRestController{
     const ENTITY_UTILISATEUR = 'ApiDBBundle:Utilisateur';
     const ENTITY_DEVICE = 'ApiDBBundle:Device';
-    
-    
+
+    /**
+     * @ApiDoc(
+     *      description = "Authentification via ws mobile",
+     *      requirements = {
+     *          {"name"="email", "dataType" = "string", "required" = true, "description" = " Email de l'utilisateur associé au compte poulebet"},
+     *          {"name"="password", "dataType" = "string", "required" = true, "description" = " Mot de passe de l'utilisateur associé au compte poulebet"}
+     *      }
+     * )
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function authenticationAction(Request $request){
         if($request->get('email') && $request->get('password')){
             $email = $request->get('email');
@@ -67,6 +78,17 @@ class AuthenticationController extends ApiRestController{
         );
                
     }
+
+    /**
+     * @ApiDoc(
+     *      description = "Ws pour mot de passe Utilisateur oublié ",
+     *      requirements = {
+     *          {"name"="email" , "dataType":"string", "required" = true, "description" = "Email de l'utilisateur ayant un mot de passe oublié" }
+     *      }
+     * )
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function forgottenPasswordAction(Request $request){
         $email = $request->get('email');
         $res = $this->getEm()->getRepository(self::ENTITY_UTILISATEUR)->findByEmail($email);

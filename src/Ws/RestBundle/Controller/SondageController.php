@@ -8,13 +8,25 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 class SondageController extends ApiController
 {
     const ENTITY_UTILISATEUR = 'ApiDBBundle:Utilisateur';
     const ENTITY_MATCHS = 'ApiDBBundle:Matchs';
     const ENTITY_VOTE = 'ApiDBBundle:VoteUtilisateur';
 
+    /**
+     * @ApiDoc(
+     *      description  = "insertion vote utilisateurs ",
+     *      parameters = {
+     *          { "name" = "token", "dataType" = "string", "required" = true, "desccription" = "token" },
+     *          { "name" = "isvote", "dataType" = "boolean", "required" = true, "desccription" = "isvote" },
+     *          { "name" = "mathId", "dataType" = "integer", "required" = true, "desccription" = "ID of Matchs" },
+     *      }
+     * )
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function insertVoteUsersAction(Request $request)
     {
         $token = $request->request->get('token');
@@ -52,6 +64,12 @@ class SondageController extends ApiController
 
     }
 
+    /**
+     * @ApiDoc(
+     *      description = "Mise à jour vite utilisateur"
+     * )
+     * @param Request $request
+     */
     public function updateVoteUsersAction(Request $request){
 
     }

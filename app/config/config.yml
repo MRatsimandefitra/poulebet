@@ -87,4 +87,3 @@ fos_user:
     registration:
         form:
             type: Back\AuthenticationBundle\Form\RegistrationType
-
