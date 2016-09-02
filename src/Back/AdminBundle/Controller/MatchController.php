@@ -131,10 +131,26 @@ class MatchController extends ApiController
         }*/
 
         if($request->get('dateDebut') && !$request->get('dateFinale')){
+            //Todo:: datedebit
+            $dateDebut  = $request->get('dateDebut').' 00:00:00';
+            $dateFinaleSearch = $request->get('dateDebut'). ' 23:59:59';
+
+            $where[] = " m.dateMatch BETWEEN :dateDebut AND :dateFinaleSearch ";
+            $params['dateDebut'] = $dateDebut;
+            $params['dateFinaleSearch'] = $dateFinaleSearch;
+            $searchValue['dateDebut'] = $request->get('dateDebut');
 
         }
-        if($request->get('dateDebut') && $request->get('dateFinale')){
 
+        if($request->get('dateDebut') && $request->get('dateFinale')){
+            $dateDebut  = $request->get('dateDebut').' 00:00:00';
+            $dateFinaleSearch = $request->get('dateFinale'). ' 23:59:59';
+
+            $where[] = " m.dateMatch BETWEEN :dateDebut AND :dateFinale ";
+            $params['dateDebut'] = $dateDebut;
+            $params['dateFinale'] = $dateFinaleSearch;
+            $searchValue['dateDebut'] = $request->get('dateDebut');
+            $searchValue['dateFinale'] = $request->get('dateFinale');
         }
 
         # champinat seul
@@ -179,15 +195,15 @@ class MatchController extends ApiController
 
             $matchs = $this->get('doctrine.orm.entity_manager')->createQuery($dql)->getResult();
         }else{
-
             $matchs = $this->get('doctrine.orm.entity_manager')->createQuery($dql)->setParameters($params)->getResult();
         }
+
         //$this->em()->createQuery($dql)->setParameters($params);
-        //var_dump($dql); die;
+       // var_dump($dql); die;
         $championatData = $this->getAllEntity(self::ENTITY_CHAMPIONAT);
 //        $country = $this->getAllEntity(self::ENTITY_CHAMPIONAT);
-        $dql = "SELECT ch From ApiDBBundle:championat ch where ch.pays  is not null ";
-        $query = $this->get('doctrine.orm.entity_manager')->createQuery($dql);
+        $dqli = "SELECT ch From ApiDBBundle:championat ch where ch.pays  is not null ";
+        $query = $this->get('doctrine.orm.entity_manager')->createQuery($dqli);
         $country = $query->getResult();
         $droitAdmin = $this->getDroitAdmin('Matchs');
         return $this->render('BackAdminBundle:Matchs:index.html.twig', array(

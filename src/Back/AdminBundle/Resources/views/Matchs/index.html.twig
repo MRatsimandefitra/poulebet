@@ -17,22 +17,32 @@
                 <div class="search-match">
                     <form action="" method="get">
 
-                       {# {% if searchValue.date_match is defined %}
-                            {{ "Date"|trans }} : <input type="text" name="date_match" id="datepic"
-                                                        value="(searchValue.date_match): {{ searchValue.date_match }} ?  " placeholder="{{ 'Date'|trans }}"  />
+                        {# {% if searchValue.date_match is defined %}
+                             {{ "Date"|trans }} : <input type="text" name="date_match" id="datepic"
+                                                         value="(searchValue.date_match): {{ searchValue.date_match }} ?  " placeholder="{{ 'Date'|trans }}"  />
+                         {% else %}
+                             {{ "Date"|trans }} : <input type="text" name="date_match" id="datepic" placeholder="{{ 'Date'|trans }}"/>
+                         {% endif %}#}
+                        {% if searchValue.dateDebut is defined %}
+                            {{ "Date Début"|trans }} :   <input class="datepic" type="text" name="dateDebut"
+                                                                value="{{ searchValue.dateDebut }}"/>
                         {% else %}
-                            {{ "Date"|trans }} : <input type="text" name="date_match" id="datepic" placeholder="{{ 'Date'|trans }}"/>
-                        {% endif %}#}
                             {{ "Date Début"|trans }} :   <input class="datepic" type="text" name="dateDebut"/>
+                        {% endif %}
 
-                            {{ "Date Finale"|trans }} : <input class="datepic" type="text" name="dateFinale"/>
-
-
-                       {# {% if searchValue.time_match is defined %}
-                            {{ 'Heure'|trans }}: <input type="text" name="time_match" id="timepic" value="{{ searchValue.time_match }}" placeholder="{{ 'Heure'|trans }}"/>
+                        {% if searchValue.dateFinale is defined %}
+                            {{ "Date Finale"|trans }} : <input class="datepic" type="text" name=""
+                                                               value="{{ searchValue.dateFinale }}"/>
                         {% else %}
-                            {{ 'Heure'|trans }}: <input type="text" name="time_match" id="timepic" placeholder="{{ 'Heure'|trans }}"/>
-                        {% endif %}#}
+                            {{ "Date Finale"|trans }} : <input class="datepic" type="text" name="dateFinale"/>
+                        {% endif %}
+
+
+                        {# {% if searchValue.time_match is defined %}
+                             {{ 'Heure'|trans }}: <input type="text" name="time_match" id="timepic" value="{{ searchValue.time_match }}" placeholder="{{ 'Heure'|trans }}"/>
+                         {% else %}
+                             {{ 'Heure'|trans }}: <input type="text" name="time_match" id="timepic" placeholder="{{ 'Heure'|trans }}"/>
+                         {% endif %}#}
 
                         <select class="championat" name="championat_match" id="">
 
@@ -76,12 +86,15 @@
                             {% endif %}
                         </select>
                         <input type="submit" class="btn btn-default" value="{{ 'Chercher'|trans }}"/>
+                        <a href="{{ path('index_admin_match') }}">{{ 'Annuler Filtre' }}<span class="glyphicon glyphicon-remove red" aria-hidden="true"></span></a>
+
                     </form>
                 </div>
             </div>
             <div class="col-lg-2">
                 <div class="search-match">
-                    <a class="btn btn-default" href="{{ path('update_matchs_from_goal_api') }}" {#class="btn btn-default"#}> {{ 'Flux GOALAPI'|trans }}</a>
+                    <a class="btn btn-default"
+                       href="{{ path('update_matchs_from_goal_api') }}" {#class="btn btn-default"#}> {{ 'Flux GOALAPI'|trans }}</a>
                 </div>
             </div>
 
@@ -125,8 +138,10 @@
                             <td>
                                 {#  <div class="flag flag-{{ row.equipeDomicile|lower|slice(0, 2) }}"
                                        alt="{{ row.equipeDomicile }}"></div>#}
-                                <div >
-                                    <img class ="fanion" src="{{ asset('images/Flag-foot/'~row.teamsDomicile.idNameClub~'.png')}}" alt=""/>
+                                <div>
+                                    <img class="fanion"
+                                         src="{{ asset('images/Flag-foot/'~row.teamsDomicile.idNameClub~'.png') }}"
+                                         alt=""/>
                                 </div>
 
                                 {{ row.teamsDomicile.fullNameClub }}
@@ -135,20 +150,23 @@
                             <td>{{ row.season }}</td>
                             <td>{{ row.championat.fullNameChampionat }}</td>
                             <td>
-                                <div >
-                                    <img class ="fanion" src="{{ asset('images/Flag-foot/'~row.teamsVisiteur.idNameClub~'.png')}}" alt=""/>
+                                <div>
+                                    <img class="fanion"
+                                         src="{{ asset('images/Flag-foot/'~row.teamsVisiteur.idNameClub~'.png') }}"
+                                         alt=""/>
                                 </div>
                                 {{ row.teamsVisiteur.fullNameClub }}
                             </td>
                             <td>{{ row.statusMatch }}</td>
                             <td>
 
-                                <form method ="post" action="">
+                                <form method="post" action="">
                                     <table class="table-matchs">
                                         <tr>
                                             <td>
                                                 {% if row.masterProno1 is defined and row.masterProno1 == true %}
-                                                    {{ 'Cote1' }} <input type="checkbox" name="c_host_{{ row.id }}" checked="true"/> 1
+                                                    {{ 'Cote1' }} <input type="checkbox" name="c_host_{{ row.id }}"
+                                                                         checked="true"/> 1
                                                 {% else %}
                                                     {{ 'Cote1' }} <input type="checkbox" name="c_host_{{ row.id }}"/> 1
 
@@ -163,7 +181,8 @@
                                             </td>
                                             <td>
                                                 {% if row.masterPronoN is defined and row.masterPronoN == true %}
-                                                    <input type="checkbox" name="c_neutre_{{ row.id }}" checked="true"/> N
+                                                    <input type="checkbox" name="c_neutre_{{ row.id }}"
+                                                           checked="true"/> N
 
                                                 {% else %}
                                                     <input type="checkbox" name="c_neutre_{{ row.id }}"/> N
@@ -207,7 +226,8 @@
                                 {#<a href="#">{{ 'Enregister'|trans }}</a>#}
                             </td>
                             <td>
-                                <a href="{{ path('modifier_admin_match', {'id': row.id }) }}"><span class="glyphicon glyphicon-pencil orange" aria-hidden="true"></span></a>
+                                <a href="{{ path('modifier_admin_match', {'id': row.id }) }}"><span
+                                            class="glyphicon glyphicon-pencil orange" aria-hidden="true"></span></a>
                             </td>
                         </tr>
 
