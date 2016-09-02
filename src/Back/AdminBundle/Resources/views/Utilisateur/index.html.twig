@@ -54,7 +54,7 @@
                         <form id="form_criteria" method="post" action="{{ path('index_admin_utilisateur') }}">
                             <input type="text" name ="criteria_username" placeholder="{{'Username'|trans}}">
                             <input type="text" name ="criteria_email" placeholder="{{'Email'|trans}}">
-                            <input type="submit" value="Rechercher">
+                            <input type="submit" value="Rechercher" class="btn btn-default">
                         </form> 
                     </div>
                 </div>
@@ -129,19 +129,19 @@
                     <td>
                         {% if currentAdmin.modification is defined %}
                             {% if currentAdmin.modification == true %}
-                                <a href="{{ path('update_admin_utilisateur', {'id': row.id }) }}"> {{ 'Update'|trans }}</a> |
+                                <a href="{{ path('update_admin_utilisateur', {'id': row.id }) }}"> {{ 'Modifier'|trans }}</a> |
                             {% endif %}
                         {% endif %}
 
                         {% if currentAdmin.suppression is defined %}
                             {% if currentAdmin.suppression == true %}
-                                <a id="supprimer-utilisateur" href="{{ path('remove_admin_utilisateur', {'id': row.id }) }}"> {{ 'Delete'|trans }}</a> |
+                                <a id="supprimer-utilisateur" href="{{ path('remove_admin_utilisateur', {'id': row.id }) }}"> {{ 'Supprimer'|trans }}</a> |
                             {% endif %}
                         {% endif %}
 
                         {% if currentAdmin.lecture is defined %}
                             {% if currentAdmin.lecture == true %}
-                                  <a href="{{ path('details_admin_utilisateur', {'id': row.id }) }}"> {{ 'Details'|trans }}</a> |
+                                  <a href="{{ path('details_admin_utilisateur', {'id': row.id }) }}"> {{ 'Détails'|trans }}</a> |
                             {% endif %}
                         {% endif %}
                         {% if currentAdmin.lecture is defined %}

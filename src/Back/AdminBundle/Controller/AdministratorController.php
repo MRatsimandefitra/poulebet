@@ -82,8 +82,8 @@ class AdministratorController extends ApiController
 
         $form = $this->formPost(self::FORM_ADMIN, $administrator);
         $form->handleRequest($request);
-        if($form->isValid()){
-            $password = $encoder->encodePassword($form->get('password')->getData(), $administrator->getSalt());
+        if($form->isValid() && $request->get('password')){
+            $password = $encoder->encodePassword($request->get('password'), $administrator->getSalt());
             $administrator->setPassword($password);
             $administrator->setEnabled(true);
 
