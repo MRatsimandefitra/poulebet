@@ -13,14 +13,7 @@ class MentionController extends ApiController
 {
     const ENTITY_MENTION = 'ApiDBBundle:Mention';
 
-    /**
-     * This method is used to get all of mention in poulebet
-     * You can have Mention Legales, CGV, CGPS, CGU data
-     *
-     * @ApiDoc(
-     *  description="Description of all mentions in poulebet",
-     * )
-     */
+
     public function getAllMentionAction(){
 
         $mention = $this->getAllEntity(self::ENTITY_MENTION, array());

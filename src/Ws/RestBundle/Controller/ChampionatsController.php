@@ -6,6 +6,7 @@ use Api\CommonBundle\Controller\ApiController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class ChampionatsController extends ApiController
 {
@@ -14,6 +15,9 @@ class ChampionatsController extends ApiController
 
     /**
      * Ws, récupérer la liste des championnats qui ont des matchs
+     * @ApiDoc(
+     *  description="Ws, récupérer la liste des championnats qui ont des matchs",
+     * )
      */
     public function getListeChampionatWithMatchAction()
     {
@@ -42,17 +46,21 @@ class ChampionatsController extends ApiController
 
     /**
      * Ws, récupérer la liste des matchs pour le championnat sélectionné.(tri décroissant).
+     * @ApiDoc(
+     *      description="Ws, récupérer la liste des matchs pour le championnat sélectionné.(tri décroissant).",
+     *      parameters = {
+     *          {"name" = "championat", "dataType"="string" ,"required"=true, "description"= "code championat ex: fra_l1 ou eng_pl ...."},
+     *          {"name" = "date", "dataType"="date" ,"required"=false, "description"= " Date critere de recherche d'un match ...."}
+     *      }
+     * )
      *
      */
     public function postListeMatchsBySelectedChampionatAction(Request $request)
     {
-
         $championat = $request->request->get('championat');
-
         $date = $request->request->get('date');
 
         $data = $this->getRepo(self::ENTITY_MATCHS)->getListeMatchsBySelectedChampionat($championat, $date);
-
         $result = array();
         if ($data) {
             foreach ($data as $vData) {
@@ -98,6 +106,9 @@ class ChampionatsController extends ApiController
 
     /**
      * GET liste pays with champonat with match
+     * @ApiDoc(
+     *  description = "Liste des pays qui ont des championat avec des matchs"
+     * )
      */
     public function getListePaysWithChampionatWithMatchAction()
     {
@@ -137,6 +148,12 @@ class ChampionatsController extends ApiController
      *
      * List liste des championat par pays si existe match
      *
+     * @ApiDoc(
+     *      description = "liste des championat avec match par pays ",
+     *      requirements = {
+     *          {"name"="pays", "dataType"="string", "required"= true, "description" = "Nom du pays à chercher"}
+     *      }
+     * )
      * @param Request $request
      * @return JsonResponse
      */

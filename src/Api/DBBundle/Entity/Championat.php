@@ -331,4 +331,3 @@ class Championat
         return $this->pays;
     }
 }
-
