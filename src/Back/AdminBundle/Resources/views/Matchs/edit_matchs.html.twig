@@ -69,7 +69,7 @@
             <div class="grey">
                 <table>
                     <tr>
-                        <td>{{ 'Logo Equipe Domicile' }}</td>
+                        <td>{{ 'Logo Equipe Visiteur' }}</td>
                         <td>
                             {{ form_widget(form.cheminLogoVisiteur,{'required': false}) }}
                             {#{{ form_errors(form.cheminLogoVisiteur) }}#}
@@ -80,7 +80,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>{{ 'Equipe Domicile' }}</td>
+                        <td>{{ 'Equipe Visiteur' }}</td>
                         <td colspan="2">
                             {{ form_widget(form.equipeVisiteur) }}
                             {{ form_errors(form.equipeVisiteur) }}
@@ -88,7 +88,7 @@
                     </tr>
                     <tr>
                         <td>
-                            {{ 'Résultat domicile ' }}
+                            {{ 'Résultat Visiteur ' }}
                         </td>
                         <td colspan="2">
                             {{ form_widget(form.resultatVisiteur) }}
@@ -121,7 +121,7 @@
                     </tr>
                     <tr>
                         <td>
-                            {{ 'Temp ecoulé ' }}
+                            {{ 'Temps ecoulés ' }}
                         </td>
                         <td colspan="3">
                             {{ form_widget(form.tempsEcoules, {'attr': {'enable': false}}) }}
@@ -130,7 +130,7 @@
                     </tr>
                     <tr>
                         <td>
-                            {{ 'Pronostic' }}
+                            {{ 'Cote ' }}
                         </td>
                         <td>
                             {{ '1' }} {{ form_widget(form.cot1Pronostic) }}
@@ -147,7 +147,7 @@
 
                     <tr>
                         <td>
-                            {{ 'Resultat Domicile' }}
+                            {{ 'Master pronostic' }}
                         </td>
                         <td>
                             {{ '1' }} {{ form_widget(form.masterProno1) }}

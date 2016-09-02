@@ -5,7 +5,15 @@
 {% block page %}
 
     <div class="sous-menu-page">
-        {% include '@BackAdmin/Championnat/sous_menu.html.twig' %}
+        <div class="col-lg-12">
+            <div class="col-lg-12">
+                <div class="ariane">
+
+                </div>
+                {% include '@BackAdmin/Championnat/sous_menu.html.twig' %}
+            </div>
+        </div>
+
     </div>
 
     <div class="col-lg-12">
@@ -66,12 +74,13 @@
                     <td>
                         {% if droitAdmin.modification is defined and droitAdmin.modification %}
                             <a href="{{ path('edit_championat', {'id': row.id }) }}">
-                                {{ 'Modifier' |trans }} |
-                            </a>
+                                {#<span class="glyphicon glyphicon-pencil orange" aria-hidden="true"></span> #}Modifier
+                            </a> |
                         {% endif %}
                         {% if droitAdmin.suppression is defined and droitAdmin.suppression %}
                             <a  class="suppression" href="{{ path('remove_championat', {'id': row.id }) }}">
-                                {{ 'Supprimer' |trans }}
+                                {#<span id="s" class="glyphicon glyphicon-remove red" aria-hidden="true"></span> #}Supprimer
+
                             </a>
                         {% endif %}
                     </td>

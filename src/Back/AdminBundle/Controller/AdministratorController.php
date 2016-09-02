@@ -176,7 +176,7 @@ class AdministratorController extends ApiController
     public function editDroitAdminAction(Request $request, $id)
     {
 
-
+       // var_dump($request->getContent()); die;
         $droit = $this->getAllRepo(self::ENTITY_DROIT);
         $user = $this->getUser();
 
@@ -223,6 +223,7 @@ class AdministratorController extends ApiController
 
         // if params from form exist
         if($request->get("deselectAll") == "true"){
+
             foreach ($droit as $vDroit) {
                 // var_dump($vDroit); die;
                 $adminDroit = $this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_DROIT_ADMIN)->findOneBy(array('droit' => $vDroit, 'admin' => $this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_ADMIN)->find($id)));
@@ -237,7 +238,7 @@ class AdministratorController extends ApiController
             return $this->redirectToRoute('index_administrator');
         }
         else if($params){
-           
+
             foreach ($droit as $vDroit) {
                 // var_dump($vDroit); die;
                 $adminDroit = $this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_DROIT_ADMIN)->findOneBy(array('droit' => $vDroit, 'admin' => $this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_ADMIN)->find($id)));

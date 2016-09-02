@@ -23,6 +23,7 @@
         <div class="box-response">
         {#{{ form(form) }}#}
         <form action="{#{{ path('edit_roles_admin_droit', {'id': id}) }}#}" method="post">
+
             <div class="user-admin">
                 <table class="table">
                     <tr>
@@ -92,6 +93,7 @@
                      {% endif %}#}
                     <tr class="{{ row.droit.fonctionnalite }}">
                         <td>
+                            {#<input type="hidden" name="post_edit" value="post_edit{{ row.id }}"/>#}
                             <input type="text" disabled="true" value="{{ row.droit.fonctionnalite }}"/>
            
                         </td>

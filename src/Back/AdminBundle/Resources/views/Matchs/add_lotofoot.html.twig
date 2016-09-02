@@ -66,35 +66,42 @@
     <select name="championat_match" id="">
 
 
-        {% if searchValue is defined and searchValue is not empty and searchValue.championat_match is defined %}
+        {% if searchValue.championat_match is defined %}
+
             <option value="{{ searchValue.championat_match }}">{{ searchValue.championat_match }}</option>
             <option value=""></option>
-            {% for rowChampionat  in championat %}
-                <option value="{{ rowChampionat.fullNameChampionat }}">{{ rowChampionat.fullNameChampionat }}</option>
-            {% endfor %}
-        {% else %}
-            <option value=""></option>
-            {% for rowChampionat  in championat %}
-                <option value="{{ rowChampionat.fullNameChampionat }}">{{ rowChampionat.fullNameChampionat }}</option>
+            {% for rowChamp in champi %}
+                <option value="{{ rowChamp.fullNameChampionat }}"> {{ rowChamp.fullNameChampionat }}</option>
             {% endfor %}
 
+        {% else %}
+            <option value="" disabled selected>{{ 'Choisir championnat' }}</option>
+            {% for rowchampinat in championat %}
+
+                <option value="{{ rowchampinat.fullNameChampionat }}">{{ rowchampinat.fullNameChampionat }}</option>
+
+            {% endfor %}
         {% endif %}
     </select>
     {{ 'Pays' }}
-    <select name="pays_match" id="">
-        {% if searchValue is defined and searchValue is not empty and searchValue.pays_match is defined %}
-            <option value="{{ searchValue.pays_match }}">{{ searchValue.pays_match }}</option>
-            <option value=""></option>
-            {% for rowPays in pays %}
-                <option value="{{ rowPays.pays }}">{{ rowPays.pays }}</option>
-            {% endfor %}
-        {% else %}
-            <option value=""></option>
-            {% for rowPays in pays %}
-                <option value="{{ rowPays.pays }}">{{ rowPays.pays }}</option>
-            {% endfor %}
-        {% endif %}
-    </select>
+        <select class="pays_match" name="pays_match" id="">
+
+            {% if searchValue.pays_match is defined %}
+                <option value="{{ searchValue.pays_match }}">{{ searchValue.pays_match }}</option>
+                {% for rowCountry in country %}
+
+                    {% if rowCountry.pays != searchValue.pays_match %}
+                        <option value="{{ rowCountry.pays }}"> {{ rowCountry.pays }}  </option>
+                    {% endif %}
+                {% endfor %}
+
+            {% else %}
+                <option value="" disabled selected>{{ 'Choisir un pays' }}</option>
+                {% for rowCountry in country %}
+                    <option value="{{ rowCountry.pays }}"> {{ rowCountry.pays }}  </option>
+                {% endfor %}
+            {% endif %}
+        </select>
 
     <input type="submit" value="{{ 'Chercher les matchs' }}"/>
         <a href="#" title="annuler filtre">{{ 'Annuler' }}</a>

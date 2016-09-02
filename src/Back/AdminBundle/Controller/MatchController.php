@@ -107,7 +107,7 @@ class MatchController extends ApiController
 
         $searchValue = array();
         #datematch
-        if($request->get('date_match') && !$request->get('time_match')){
+        /*if($request->get('date_match') && !$request->get('time_match')){
 
             $dateMatch = $request->get('date_match');
             $where[] = "m.dateMatch BETWEEN :dateStart AND :dateEnd";
@@ -117,10 +117,10 @@ class MatchController extends ApiController
             $params["dateStart"] = $dateStart;
             $params["dateEnd"] = $dateEnd;
             $searchValue['date_match'] = $dateMatch;
-        }
+        }*/
 
         #datematch heure match
-        if($request->get('time_match') && $request->get('date_match')){
+       /* if($request->get('time_match') && $request->get('date_match')){
             $heureMatch = $request->get('time_match');
             $where[] = "m.dateMatch = :heure";
             $heure = $request->get('date_match').' '.$heureMatch;
@@ -128,6 +128,29 @@ class MatchController extends ApiController
             $params["heure"] = $heure;
             $searchValue['date_match'] = $request->get('date_match');
             $searchValue['time_match'] = $heureMatch;
+        }*/
+
+        if($request->get('dateDebut') && !$request->get('dateFinale')){
+            //Todo:: datedebit
+            $dateDebut  = $request->get('dateDebut').' 00:00:00';
+            $dateFinaleSearch = $request->get('dateDebut'). ' 23:59:59';
+
+            $where[] = " m.dateMatch BETWEEN :dateDebut AND :dateFinaleSearch ";
+            $params['dateDebut'] = $dateDebut;
+            $params['dateFinaleSearch'] = $dateFinaleSearch;
+            $searchValue['dateDebut'] = $request->get('dateDebut');
+
+        }
+
+        if($request->get('dateDebut') && $request->get('dateFinale')){
+            $dateDebut  = $request->get('dateDebut').' 00:00:00';
+            $dateFinaleSearch = $request->get('dateFinale'). ' 23:59:59';
+
+            $where[] = " m.dateMatch BETWEEN :dateDebut AND :dateFinale ";
+            $params['dateDebut'] = $dateDebut;
+            $params['dateFinale'] = $dateFinaleSearch;
+            $searchValue['dateDebut'] = $request->get('dateDebut');
+            $searchValue['dateFinale'] = $request->get('dateFinale');
         }
 
         # champinat seul
@@ -172,15 +195,15 @@ class MatchController extends ApiController
 
             $matchs = $this->get('doctrine.orm.entity_manager')->createQuery($dql)->getResult();
         }else{
-
             $matchs = $this->get('doctrine.orm.entity_manager')->createQuery($dql)->setParameters($params)->getResult();
         }
+
         //$this->em()->createQuery($dql)->setParameters($params);
-        //var_dump($dql); die;
+       // var_dump($dql); die;
         $championatData = $this->getAllEntity(self::ENTITY_CHAMPIONAT);
 //        $country = $this->getAllEntity(self::ENTITY_CHAMPIONAT);
-        $dql = "SELECT ch From ApiDBBundle:championat ch where ch.pays  is not null ";
-        $query = $this->get('doctrine.orm.entity_manager')->createQuery($dql);
+        $dqli = "SELECT ch From ApiDBBundle:championat ch where ch.pays  is not null ";
+        $query = $this->get('doctrine.orm.entity_manager')->createQuery($dqli);
         $country = $query->getResult();
         $droitAdmin = $this->getDroitAdmin('Matchs');
         return $this->render('BackAdminBundle:Matchs:index.html.twig', array(
@@ -385,7 +408,7 @@ class MatchController extends ApiController
         $dql ="SELECT ch from ApiDBBundle:Championat ch where ch.pays is not NULL";
         $query = $this->get('doctrine.orm.entity_manager')->createQuery($dql);
         /*$pays = $this->getAllEntity(self::ENTITY_CHAMPIONAT);*/
-        $pays  = $query->getResult();
+        $country  = $query->getResult();
 
         $dql ="SELECT m, lf7, lf15 from ApiDBBundle:Matchs m
               LEFT JOIN m.lotoFoot7 lf7
@@ -406,7 +429,7 @@ class MatchController extends ApiController
         }
 
         # champinat seul
-        if($request->get('championat_match')){
+        if($request->get('championat_match') && !$request->get('pays_match')){
 
             $championat = $request->get('championat_match');
             $dql .= " LEFT JOIN m.championat c";
@@ -415,12 +438,22 @@ class MatchController extends ApiController
             $searchValue['championat_match'] = $championat;
         }
 
-        if($request->get('pays_match')){
+        if($request->get('pays_match') && !$request->get('championat_match')){
             $pays= $request->get('pays_match');
             $dql .= " LEFT JOIN m.championat c  ";
             $where[] = " c.pays LIKE :pays ";
             $params['pays'] = "%".$pays."%";
             $searchValue['pays_match'] = $pays;
+        }
+        if($request->get('pays_match') && $request->get('championat_match')){
+            $pays= $request->get('pays_match');
+            $championat = $request->get('championat_match');
+            $dql .= " LEFT JOIN m.championat c  ";
+            $where[] = " c.pays LIKE :pays AND c.fullNameChampionat LIKE :championat";
+            $params['pays'] = "%".$pays."%";
+            $params["championat"] = '%'.$championat.'%';
+            $searchValue['pays_match'] = $pays;
+            $searchValue['championat_match'] = $championat;
         }
         if (!empty($where)) {
             $dql .= ' WHERE ' . implode(' AND ', $where);
@@ -522,12 +555,14 @@ class MatchController extends ApiController
 
             $nbMatchs15 = $i;
         }
-
+        $champi = $this->getRepo(self::ENTITY_CHAMPIONAT)->findAll();
         return $this->render('BackAdminBundle:Matchs:add_lotofoot.html.twig', array(
             'entity' => $lotoFoot,
             'idLotoFoot' => $idLotoFoot,
             'championat' => $championat,
-            'pays' => $pays,
+            'champi' => $champi,
+            'country' => $country,
+            'pays' => $country,
             'matchs' => $matchs,
             'searchValue' => $searchValue,
             'nbMatchs7' => $nbMatchs7,
