@@ -34,12 +34,6 @@
                 </td>
             </tr>
             <tr>
-                <td>{{ 'Password'|trans }}</td>
-                <td>
-                    {{ form_widget(form.password) }}
-                </td>
-            </tr>
-            <tr>
                 <td>{{ 'Sexe'|trans }}</td>
                 <td>
                     {{ form_widget(form.sexe) }}
@@ -96,9 +90,15 @@
                 </td>
             </tr>
             <tr>
+                <td>{{ 'Code postale'|trans }}</td>
+                <td>
+                    {{ form_widget(form.cp) }}
+                </td>
+            </tr>
+            <tr>
                 <td>{{ 'Ville'|trans }}</td>
                 <td>
-                    {{ form_widget(form.ville) }}
+                    {{ form_widget(form.town) }}
                 </td>
             </tr>
             <tr>
@@ -121,8 +121,8 @@
             </tr>
 
         </table>
-        <button class="btn">
-            {{ 'UPDATE'|trans }}
+        <button class="btn btn-primary">
+            {{ 'Enregistrer'|trans }}
         </button>
         {{ form_end(form) }}
     </div>

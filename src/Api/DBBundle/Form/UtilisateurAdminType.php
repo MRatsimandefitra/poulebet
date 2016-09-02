@@ -28,7 +28,7 @@ class UtilisateurAdminType extends AbstractType
         $builder
             ->add('username', TextType::class, array())
             ->add('email', EmailType::class, array())
-            ->add('password', PasswordType::class, array('required' => false))
+            //->add('password', PasswordType::class, array('required' => false))
             //->add('salt')
             //->add('roles')
             ->add('isEnable', CheckboxType::class, array())
@@ -53,12 +53,10 @@ class UtilisateurAdminType extends AbstractType
             ->add('adresse2', TextType::class, array('required' =>false))
             ->add('adresse3', TextType::class, array('required' =>false))
             ->add('pays', CountryType::class, array('required' =>false))
-            ->add('telephone', NumberType::class, array('required' =>false))
+            ->add('telephone', TextType::class, array('required' =>false))
             ->add('fax', NumberType::class, array('required' =>false))
-            ->add('ville', EntityType::class, array(
-                'class' => 'ApiDBBundle:Ville',
-                'choice_label' => 'nomVille'
-            ))
+            ->add('town', TextType::class, array('required' =>false))
+            ->add('cp', NumberType::class, array('required' =>false))
         ;
     }
     

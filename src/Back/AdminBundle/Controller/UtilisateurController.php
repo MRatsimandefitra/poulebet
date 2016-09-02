@@ -95,10 +95,10 @@ class UtilisateurController extends ApiController
         $form = $this->formPost(self::FORM_UTILISATEUR_ADMIN, $entity);
         $form->handleRequest($request);
         if($form->isValid()){
-            $password = $encoder->encodePassword($entity->getPassword(), $entity->getSalt());
+            /*$password = $encoder->encodePassword($entity->getPassword(), $entity->getSalt());
             if(!$entity->getPassword()){
                 $entity->setPassword($password);
-            }
+            }*/
 
             $this->insert($entity, array('success' => 'success', 'error' => 'error'));
             return $this->redirectToRoute('index_admin_utilisateur');

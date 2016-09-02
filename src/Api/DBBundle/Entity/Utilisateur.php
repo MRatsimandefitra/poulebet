@@ -182,6 +182,18 @@ class Utilisateur
     private $fax;
     
     /**
+     * @var string
+     *
+     * @ORM\Column(name="cp", type="string", length=15, nullable=true)
+     */
+    private $cp;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="town", type="string", length=100, nullable=true)
+     */
+    private $town;
+    /**
     * @ORM\OneToMany(targetEntity="Api\DBBundle\Entity\Device", mappedBy="utilisateur")
     */
     private $devices;
@@ -841,5 +853,53 @@ class Utilisateur
     }
     public function setSoldePoint($value){
         $this->soldePoint = $value;
+    }
+
+    /**
+     * Set cp
+     *
+     * @param integer $cp
+     *
+     * @return Utilisateur
+     */
+    public function setCp($cp)
+    {
+        $this->cp = $cp;
+
+        return $this;
+    }
+
+    /**
+     * Get cp
+     *
+     * @return integer
+     */
+    public function getCp()
+    {
+        return $this->cp;
+    }
+
+    /**
+     * Set town
+     *
+     * @param string $town
+     *
+     * @return Utilisateur
+     */
+    public function setTown($town)
+    {
+        $this->town = $town;
+
+        return $this;
+    }
+
+    /**
+     * Get town
+     *
+     * @return string
+     */
+    public function getTown()
+    {
+        return $this->town;
     }
 }

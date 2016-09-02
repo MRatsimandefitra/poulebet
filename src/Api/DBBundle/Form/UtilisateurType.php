@@ -23,7 +23,7 @@ class UtilisateurType extends AbstractType
         $builder
             ->add('username', TextType::class, array())
             ->add('email', EmailType::class, array())
-            ->add('password', PasswordType::class, array('required'=>false))
+            //->add('password', PasswordType::class, array('required'=>false))
             //->add('salt')
             ->add('isEnable')
             ->add('nom')
