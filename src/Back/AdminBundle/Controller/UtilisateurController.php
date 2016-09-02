@@ -44,6 +44,8 @@ class UtilisateurController extends ApiController
         $currentDroitAdmin = $this->getRepo(self::ENTITY_DROIT_ADMIN)->findOneBy(array('admin' => $this->getUser(), 'droit' => $droit ));
         $champ = $request->get('champ');
         $utilisateur = $this->getRepo(self::ENTITY_UTILISATEUR)->getAllUtilisateurs($champ, $tri,$criteria);
+        //ecriture dans
+        $this->writeInCsvFile($utilisateur);
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $utilisateur, /* query NOT result */
@@ -60,14 +62,7 @@ class UtilisateurController extends ApiController
 
     public function exportCsvUtilisateurAction(){
 
-        $data = $this->getAllRepo(self::ENTITY_UTILISATEUR);
         $name = $this->get('kernel')->getRootDir().'/../web/csv/utilisateurs.csv';
-        $handle   = fopen($name, 'w');
-        fputcsv($handle, array('Email', 'Utilisateurs', 'Nom', 'Prenom'));
-        foreach($data as $value){
-            fputcsv($handle, array($value->getEmail(), $value->getUsername(), $value->getNom(), $value->getPrenom()));
-        }
-        fclose($handle);
         return new Response(
             file_get_contents($name),
             200,
@@ -78,7 +73,18 @@ class UtilisateurController extends ApiController
         );
 
     }
-
+    
+    public function writeInCsvFile($data){
+        $name = $this->get('kernel')->getRootDir().'/../web/csv/utilisateurs.csv';
+        $handle   = fopen($name, 'w');
+        fputcsv($handle, array('Email', 'Utilisateurs', 'Nom', 'Prenom'));
+        foreach($data as $value){
+            fputcsv($handle, array($value->getEmail(), $value->getUsername(), $value->getNom(), $value->getPrenom()));
+        }
+        fclose($handle);
+        return true;
+        
+    }
     public function updateUtilisateurAction(Request $request, $id){
 
         $entity = $this->getRepoFormId(self::ENTITY_UTILISATEUR, $id);
