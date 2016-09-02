@@ -6,11 +6,18 @@ use Api\CommonBundle\Controller\ApiController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 class LiveScoreController extends ApiController
 {
     const ENTITY_MATCHS = 'ApiDBBundle:Matchs';
 
+    /**
+     * @ApiDoc(
+     *      description = "Recuperer les match en live "
+     * )
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function getMatchLiveScoreAction(Request $request)
     {
         $data = $this->getRepo(self::ENTITY_MATCHS)->getMatchLiveScore();

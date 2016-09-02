@@ -11,13 +11,20 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+
 /**
  * Description of AppyOneController
  *
  * @author miora.manitra
  */
 class AppyOneController extends ApiRestController{
-    //put your code here
+    /**
+     * @ApiDoc(
+     *      description = "Recuperer les information via appyOne",
+     * )
+     * @return JsonResponse
+     */
     public function getDataAction(){
         // traitement WS  appyOne
         // chargement des paramètres

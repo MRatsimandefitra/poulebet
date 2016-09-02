@@ -14,6 +14,12 @@ class MentionController extends ApiController
     const ENTITY_MENTION = 'ApiDBBundle:Mention';
 
 
+    /**
+     * @ApiDoc(
+     *      description="Recuperer tous les mentions"
+     * )
+     * @return JsonResponse
+     */
     public function getAllMentionAction(){
 
         $mention = $this->getAllEntity(self::ENTITY_MENTION, array());
@@ -38,11 +44,9 @@ class MentionController extends ApiController
     }
 
     /**
-     * This method is used to get all of mention in poulebet
-     * You can have Mention Legales, CGV, CGPS, CGU data
      *
      * @ApiDoc(
-     *  description="Description of all mentions in poulebet",
+     *      description = "Recuperer la mention legale"
      * )
      */
     public function getMentionLegale(){
@@ -58,6 +62,12 @@ class MentionController extends ApiController
         return new JsonResponse($result);
     }
 
+    /**
+     * @ApiDoc(
+     *      decription = "Récuperer les infos sur la mention CGU"
+     * )
+     * @return JsonResponse
+     */
     public function getMentionCGUAction(){
         $mention = $this->getMentionData();
         $result = array(
@@ -71,6 +81,12 @@ class MentionController extends ApiController
         return new JsonResponse($result);
     }
 
+    /**
+     * @ApiDoc(
+     *      decription = "Récuperer les infos sur la mention CGPS"
+     * )
+     * @return JsonResponse
+     */
     public function getMentionCGPSAction(){
         $mention = $this->getMentionData();
         $result = array(
@@ -83,6 +99,12 @@ class MentionController extends ApiController
         return new JsonResponse($result);
     }
 
+    /**
+     * @ApiDoc(
+     *      decription = "Récuperer les infos sur la mention GVA"
+     * )
+     * @return JsonResponse
+     */
     public function getMentionCGVAction(){
         $mention = $this->getMentionData();
         $result = array(

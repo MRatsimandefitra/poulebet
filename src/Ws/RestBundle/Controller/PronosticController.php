@@ -5,6 +5,7 @@ namespace Ws\RestBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class PronosticController extends ApiRestController
 {
@@ -13,7 +14,12 @@ class PronosticController extends ApiRestController
     const ENTITY_CHAMPIONNAT = 'ApiDBBundle:Championat';
     const ENTITY_MATCHS = 'ApiDBBundle:Matchs';
 
-    
+    /**
+     * @ApiDoc(
+     *      description = "Recuperr les utilisateur achat promo"
+     * )
+     * @return JsonResponse
+     */
     public function getUtilisateurAchatPromoAction()
     {
 
@@ -34,6 +40,9 @@ class PronosticController extends ApiRestController
         }
     }
     /**
+     * @ApiDoc(
+     *      description = "Reuperer les championnats qui ont des matchs"
+     * )
      * récupérer les championnats qui on des matchs
      */
     public function getChampionnatAction(Request $request){
