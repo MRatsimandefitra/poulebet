@@ -447,7 +447,6 @@ class MatchController extends ApiController
             $params["championat"] = '%'.$championat.'%';
             $searchValue['championat_match'] = $championat;
         }
-
         if($request->get('pays_match') && !$request->get('championat_match')){
             $pays= $request->get('pays_match');
             $dql .= " LEFT JOIN m.championat c  ";
@@ -476,14 +475,16 @@ class MatchController extends ApiController
             $matchs = $this->get('doctrine.orm.entity_manager')->createQuery($dql)->setParameters($params)->getResult();
         }
         //var_dump($matchs); die;
+
         if($request->get('idMatch')){
             $idMatch = $request->get('idMatch');
-            $matchs = $this->getRepoFormId(self::ENTITY_MATCH, $idMatch);
+            //$matchs = $this->getRepoFormId(self::ENTITY_MATCH, $idMatch);
         }
         /*var_dump()*/
        /* if($request->get('idLotoFoot')){
             $idLotoFoot = $request->get('idLotoFoot');
         }*/
+
         $data = explode('&', $request->getContent());
         $arrayData = array();
         //$i = 0;
@@ -528,6 +529,7 @@ class MatchController extends ApiController
 
             }
         }
+
         if($idLotoFoot == 15){
             if(count($arrayData) == 14 or count($arrayData) == 15){
                 foreach($idarray as $vId){
@@ -561,6 +563,7 @@ class MatchController extends ApiController
             }
             $nbMatchs7 = $i;
         }
+
         $nbMatchs15 = null;
         if($idLotoFoot == 15){
             $matchsCount = $this->getAllEntity(self::ENTITY_MATCH);
@@ -574,6 +577,7 @@ class MatchController extends ApiController
             $nbMatchs15 = $i;
         }
         $champi = $this->getRepo(self::ENTITY_CHAMPIONAT)->findAll();
+       // var_dump($matchs[0]->getLotoFoot7()); die;
         return $this->render('BackAdminBundle:Matchs:add_lotofoot.html.twig', array(
             'entity' => $lotoFoot,
             'idLotoFoot' => $idLotoFoot,

@@ -119,28 +119,41 @@
             <td>Status</td>
         </tr>
         {% for rowMatchs in matchs %}
+
             {% if idLotoFoot == 7 %}
-                {% if rowMatchs.lotoFoot7 is not null and rowMatchs.lotoFoot7 %}
+                {% if rowMatchs.lotoFoot7 is not null and rowMatchs.lotofoot7.id is not null   %}
+                    {% if rowMatchs.lotofoot7.id == idLotoFoot %}
                     <tr class="selected">
+                    {% endif %}
 
                 {% else %}
+                    {% if rowMatchs.lotofoot7.id is  defined and rowMatchs.lotofoot7.id != idLotoFoot %}
                     <tr class="">
+                        {% else %}
+                            <tr class="">
+                        {% endif %}
 
                 {% endif %}
             {% endif %}
             {% if idLotoFoot == 15 %}
-                {% if rowMatchs.lotoFoot15 is not null and rowMatchs.lotoFoot15 %}
-                    <tr class="selected">
+                {% if rowMatchs.lotoFoot15 is not null and rowMatchs.lotoFoot15.id is not null and rowMatchs.lotoFoot15.id is defined and rowMatchs.lotoFoot15.id == idLotoFoot %}
+                    {% if rowMatchs.lotofoot15.id == idLotoFoot %}
+                        <tr class="selected">
+                    {% endif %}
 
                 {% else %}
-                    <tr class="">
+                    {% if rowMatchs.lotofoot15.id is  defined and rowMatchs.lotofoot15.id != idLotoFoot %}
+                        <tr class="">
+                    {% else %}
+                        <tr class="">
+                    {% endif %}
 
                 {% endif %}
             {% endif %}
 
             <td>
                 {% if idLotoFoot == 7 %}
-                    {% if rowMatchs.lotoFoot7 is not null and rowMatchs.lotoFoot7 %}
+                    {% if rowMatchs.lotoFoot7 is not null and rowMatchs.lotoFoot7 is defined and rowMatchs.lotoFoot7.id == idLotoFoot %}
                         <input class="selection_match" type="checkbox" name="select_{{ rowMatchs.id }}" checked="true"/>
                         <a onclick="supprimer('Etes vous sur de vouloir supprimer ce match ?')" href="{{ path('remove_match_loto_foot',{'idLotoFoot': idLotoFoot, 'lotoId':entity.id, 'id':rowMatchs.id} ) }}">
                             <span class="glyphicon glyphicon-remove-circle red" aria-hidden="true"></span>
@@ -153,7 +166,7 @@
                 {% endif %}
                 {% if idLotoFoot == 15 %}
 
-                    {% if rowMatchs.lotoFoot15 is not null %}
+                    {% if rowMatchs.lotoFoot15 is not null and rowMatchs.lotoFoot15 is defined and rowMatchs.lotoFoot15.id == idLotoFoot %}
                         <input class="selection_match" type="checkbox" name="select_{{ rowMatchs.id }}" checked="true"/>
 
                     {% else %}
