@@ -106,6 +106,13 @@ class InscriptionController extends ApiRestController
      }
 
 
+    /**
+     * @ApiDoc(
+     *      description= " Details profil utilisateur ws mobile")
+     * )
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function getProfilUtilisateurAction(Request $request)
     {
 
@@ -143,6 +150,16 @@ class InscriptionController extends ApiRestController
         return new JsonResponse($response);
     }
 
+    /**
+     * @ApiDoc(
+     *      description = " recevoir les informations ws du profil utilisateur",
+     *      requirements = {
+     *              {"name"="username", "dataType"="string", "required"=true, "description"="username de l'utilisateur"}
+     *      }
+     * )
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function postProfilUtilisateurAction(Request $request)
     {
         $username = $request->get('username');
