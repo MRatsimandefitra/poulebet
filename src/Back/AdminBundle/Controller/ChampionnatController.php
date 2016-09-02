@@ -29,7 +29,6 @@ class ChampionnatController extends ApiController
 
 
     public function editChampionatAction(Request $request, $id){
-        die('okok');
         $championat = $this->getRepoFormId(self::ENTITY_CHAMPIONAT, $id);
 
         $form = $this->formPost(self::FORM_CHAMPIONAT, $championat);
