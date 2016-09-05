@@ -26,11 +26,11 @@
                 Entrees
             </label>
             <div class="link">
-                 <span class="green">
-                                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                    </span>
+
                 {% if currentAdmin.ajout == true or is_granted('ROLE_SUPER_ADMIN') %}
-                <a href="{{ path('add_new_administrator') }}">{{ "Ajouter un administrateur"|trans }}</a>
+
+                            <a href="{{ path('add_new_administrator') }}"><span class="glyphicon glyphicon-plus green" aria-hidden="true"></span>
+                                    {{ "Ajouter un administrateur"|trans }}</a>
                 {% endif %}
             </div>
         </div>
