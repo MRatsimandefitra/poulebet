@@ -3,6 +3,8 @@
 namespace Back\AdminBundle\Controller;
 
 use Api\CommonBundle\Command\GoalApiCommand;
+use Api\CommonBundle\Command\GoalApiMatchsLiveCommand;
+use Api\CommonBundle\Command\GoalApiMatchsParChampionatCommand;
 use Api\CommonBundle\Controller\ApiController;
 use Api\DBBundle\Entity\Championat;
 use Api\DBBundle\Entity\LotoFoot15;
@@ -764,7 +766,13 @@ class MatchController extends ApiController
     }
 
     public function updateFromGoalApiAction(Request $request){
-        $command = new GoalApiCommand();
+        $command = new GoalApiMatchsParChampionatCommand();
+        $command->setContainer($this->container);
+        $input = new ArrayInput(array());
+        $output = new NullOutput();
+        $resultCode = $command->run($input, $output);
+
+        $command = new GoalApiMatchsLiveCommand();
         $command->setContainer($this->container);
         $input = new ArrayInput(array());
         $output = new NullOutput();

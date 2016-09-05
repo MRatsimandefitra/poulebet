@@ -4,16 +4,16 @@
 
 {% block page %}
 
-    <div class="sous-menu-page">
+    {#<div class="sous-menu-page">
         {% include '@BackAdmin/Matchs/sous_menu.html.twig' %}
-    </div>
+    </div>#}
     <br/><br/>
     {% if droitAdmin.lecture is defined and droitAdmin.lecture %}
         <div class="col-lg-12">
             {#<div class="col-lg-1">
 
             </div>#}
-            <div class="col-lg-10">
+            <div class="col-lg-12">
                 <div class="search-match">
                     <form action="" method="get">
 
@@ -90,13 +90,11 @@
 
                     </form>
                 </div>
-            </div>
-            <div class="col-lg-2">
-                <div class="search-match">
-                    <a class="btn btn-default"
-                       href="{{ path('update_matchs_from_goal_api') }}" {#class="btn btn-default"#}> {{ 'Flux GOALAPI'|trans }}</a>
+                <div class="search-flux-api">
+                    <form action="" ></form>
                 </div>
             </div>
+
 
             <br/>
 
