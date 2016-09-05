@@ -5,7 +5,12 @@
 {% block page %}
 
     <div class="sous-menu-page">
-        {% include '@BackAdmin/Matchs/sous_menu.html.twig' %}
+        <div class="col-lg-12">
+            <div class="col-lg-12">
+                {% include '@BackAdmin/Matchs/sous_menu.html.twig' %}
+            </div>
+        </div>
+
     </div>
     <br/><br/>
     {% if droitAdmin.lecture is defined and droitAdmin.lecture %}
@@ -92,10 +97,10 @@
                 </div>
             </div>
             <div class="col-lg-2">
-                <div class="search-match">
+                {#<div class="search-match">
                     <a class="btn btn-default"
-                       href="{{ path('update_matchs_from_goal_api') }}" {#class="btn btn-default"#}> {{ 'Flux GOALAPI'|trans }}</a>
-                </div>
+                       href="{{ path('update_matchs_from_goal_api') }}" &#123;&#35;class="btn btn-default"&#35;&#125;> {{ 'Flux GOALAPI'|trans }}</a>
+                </div>#}
             </div>
 
             <br/>
