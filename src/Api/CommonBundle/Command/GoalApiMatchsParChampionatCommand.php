@@ -138,8 +138,11 @@ class GoalApiMatchsParChampionatCommand extends ContainerAwareCommand {
         foreach($apiKey as $vApiKey){
             $apiKey = $vApiKey->getApiKeyGoalapi();
         }
+        if(!$apiKey){
+            $this->sendErrorEmail('Error this no api key');
+            return false;
+        }
         $url = "http://api.xmlscores.com/matches/?c[]=" . $data->getNomChampionat() . "&f=json&open=".$apiKey;
-
         $content = file_get_contents($url);
 
         $arrayJson = json_decode($content, true);
