@@ -12,6 +12,7 @@ namespace Api\CommonBundle\Command;
 use Api\DBBundle\Entity\Matchs;
 use Api\DBBundle\Entity\Teams;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -21,6 +22,8 @@ class GoalApiMatchsParChampionatCommand extends ContainerAwareCommand {
     const ENTITY_COUNTRY = 'ApiDBBundle:Country';
     const ENTITY_MATCH = 'ApiDBBundle:Matchs';
     const ENTITY_TEAMS = 'ApiDBBundle:Teams';
+    const ENTITY_ADMIN = 'ApiDBBundle:Admin';
+
 
     protected function configure()
     {
@@ -52,7 +55,7 @@ class GoalApiMatchsParChampionatCommand extends ContainerAwareCommand {
                         if(!$matchs){
                             $matchs = new Matchs();
                         }
-
+                        $matchs->setStateGoalApi(false);
                         $matchs->setId($vItems['id']);
                         $matchs->setStatusMatch($vItems['status']);
                         $mDate = \DateTime::createFromFormat('Y-m-d h:i', date('Y-m-d h:i', $vItems['timestamp_starts']));
@@ -103,27 +106,19 @@ class GoalApiMatchsParChampionatCommand extends ContainerAwareCommand {
                         }
 
                         $matchs->setChampionat($vChampionat);
-                        /*var_dump($vItems['id']); die;
 
-                        $matchs->setCheminLogoVisiteur($logo);
-                        $matchs->setChampionat($championat);
-                        $match->setStatusMatch($mStatus);
-                        $match->setCheminLogoDomicile($vItems['teams']['hosts']['id']);
-                        $match->setCheminLogoVisiteur($vItems['teams']['guests']['id']);
-                        $match->setDateMatch($mDate);
-                        $match->setScore($mScore);
-                        $match->setResultatDomicile($resultatDomicile);
-                        $match->setResultatVisiteur($resultatVisiteur);
-                        $match->setEquipeDomicile($mFullEquipeDomicile);
-                        $match->setEquipeVisiteur($mFullEquipeVisiteur);
-                        $match->setTeamsDomicile($teamsDomicile);
-                        $match->setTeamsVisiteur($teamsVisiteur);
-                        $match->setTempsEcoules($tempEcoule);
-                        $match->setChampionat($championat);
-                        $match->setSeason($season);*/
-                        // $this->insert($match, array('success' => 'success' , 'error' => 'error'));
                         $em->persist($matchs);
                         $em->flush();
+                        $output->writeln("Treatements of matchs " .$matchs->getId()."was successfull");
+                        $matchs->setStateGoalApi(true);
+                        $em->flush();
+                        $mmatchs = $em->getRepository(self::ENTITY_MATCH)->find($matchs->getId());
+                        if(!$mmatchs){
+                            $this->sendErrorEmail('Error to set flux from goal api with matchs'.$mmatchs->getId());
+                        }
+                        if($mmatchs->getStateGoalApi() == false){
+                            $this->sendErrorEmail('Error to set flux from goal api with matchs'.$mmatchs->getId());
+                        }
                     }
                     $output->writeln(" --- End of Championat treatement --- ".$vChampionat->getId());
 
@@ -168,6 +163,10 @@ class GoalApiMatchsParChampionatCommand extends ContainerAwareCommand {
         $url = "http://api.xmlscores.com/matches/?c[]=" . implode('&c[]=', $nameChampionat) . "&f=json&open=".$apiKey;
         $content = file_get_contents($url);
 
+        if(!$content){
+            $this->sendErrorEmail("Error when get url of goalapi");
+        }
+
         $arrayJson = json_decode($content, true);
         return $arrayJson;
 
@@ -175,5 +174,19 @@ class GoalApiMatchsParChampionatCommand extends ContainerAwareCommand {
     private function getEm(){
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         return $em;
+    }
+
+    private function sendErrorEmail($body){
+        $em = $this->getEm();
+        $wm = $this->getContainer()->get('mail.manager');
+        $mailadmin = $em->getRepository(self::ENTITY_ADMIN)->findBy(array('roles' => array('SUPER_ADMIN')));
+        foreach($mailadmin as $vMailAdmin){
+            $wm->setSubject("Error of treatement");
+            $wm->setFrom($vMailAdmin->getEmail());
+            $wm->setTo($vMailAdmin->getEmail());
+            $wm->setBody($body);
+            $wm->send();
+        }
+
     }
 }

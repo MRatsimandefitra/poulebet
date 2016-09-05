@@ -30,14 +30,14 @@ class MatchsType extends AbstractType
             ->add('cheminLogoVisiteur', FileType::class, array(
                 'data_class' => null
             ))
-            ->add('cot1Pronostic')
+           /* ->add('cot1Pronostic')
             ->add('coteNPronistic')
-            ->add('cote2Pronostic')
+            ->add('cote2Pronostic')*/
          //   ->add('statusMatch')
         //    ->add('masterProno')
-            ->add('masterProno1')
+        /*    ->add('masterProno1')
             ->add('masterPronoN')
-            ->add('masterProno2')
+            ->add('masterProno2')*/
             ->add('resultatDomicile')
             ->add('resultatVisiteur')
             ->add('tempsEcoules')

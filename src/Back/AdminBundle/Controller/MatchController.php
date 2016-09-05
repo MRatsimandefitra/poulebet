@@ -36,6 +36,140 @@ class MatchController extends ApiController
     const ENTITY_LOTOFOOT = 'ApiDBBundle:LotoFoot';
     const FORM_LOTOFOOT = 'Api\DBBundle\Form\LotoFootType';
 
+    public function indexMatchsAction(Request $request){
+        if($request->request->get('identifiant')){
+            $identifiant = $request->request->get('identifiant');
+            $cote1 = 'cote1_'.$identifiant;
+            $coten = 'coten_'.$identifiant;
+            $cote2 = 'cote2_'.$identifiant;
+
+            $rCote1 = $request->request->get($cote1);
+            $rCoten = $request->request->get($coten);
+            $rCote2 = $request->request->get($cote2);
+            $cHost = 'c_host_'.$identifiant;
+            $rHost = false;
+            if($request->request->get($cHost) == 'on'){
+                $rHost = true;
+            }
+
+            $cNeutre = 'c_neutre_'.$identifiant;
+            $rNeutre = false;
+            if($request->request->get($cNeutre) == 'on'){
+                $rNeutre = true;
+            }
+            $cGuest = 'c_guest_'.$identifiant;
+            $rGuest = false;
+            if($request->request->get($cGuest) == "on"){
+                $rGuest = true;
+            }
+
+            $match = $this->getRepoFormId(self::ENTITY_MATCH, $identifiant);
+            /*if($rCote1){*/
+            $match->setCot1Pronostic($rCote1);
+            /*}*/
+            /*if($rCoten){*/
+            $match->setCoteNPronistic($rCoten);
+            /*}*/
+            /*if($rCote2){*/
+            $match->setCote2Pronostic($rCote2);
+            /*}*/
+
+            $match->setMasterProno1($rHost);
+            $match->setMasterPronoN($rNeutre);
+            $match->setMasterProno2($rGuest);
+
+            $this->get('doctrine.orm.entity_manager')->persist($match);
+            $this->get('doctrine.orm.entity_manager')->flush();
+        }
+
+        $dql ="SELECT m from ApiDBBundle:Matchs m ";
+        $where = array();
+        $params = array();
+        $searchValue = array();
+        if($request->get('dateDebut') && !$request->get('dateFinale')){
+            //Todo:: datedebit
+            $dateDebut  = $request->get('dateDebut').' 00:00:00';
+            $dateFinaleSearch = $request->get('dateDebut'). ' 23:59:59';
+
+            $where[] = " m.dateMatch BETWEEN :dateDebut AND :dateFinaleSearch ";
+            $params['dateDebut'] = $dateDebut;
+            $params['dateFinaleSearch'] = $dateFinaleSearch;
+            $searchValue['dateDebut'] = $request->get('dateDebut');
+
+        }
+
+        if($request->get('dateDebut') && $request->get('dateFinale')){
+            $dateDebut  = $request->get('dateDebut').' 00:00:00';
+            $dateFinaleSearch = $request->get('dateFinale'). ' 23:59:59';
+
+            $where[] = " m.dateMatch BETWEEN :dateDebut AND :dateFinale ";
+            $params['dateDebut'] = $dateDebut;
+            $params['dateFinale'] = $dateFinaleSearch;
+            $searchValue['dateDebut'] = $request->get('dateDebut');
+            $searchValue['dateFinale'] = $request->get('dateFinale');
+        }
+
+        # champinat seul
+        if($request->get('championat_match')&& !$request->get('pays_match')){
+            $championat = $request->get('championat_match');
+            $dql .= " LEFT JOIN m.championat c";
+            $where[] = " c.fullNameChampionat LIKE :championat ";
+            $params["championat"] = '%'.$championat.'%';
+            $searchValue['championat_match'] = $championat;
+        }
+
+        if($request->get('pays_match') && !$request->get('championat_match')){
+            $pays= $request->get('pays_match');
+            $dql .= " LEFT JOIN m.championat c";
+            $where[] = " c.pays LIKE :pays ";
+            $params['pays'] = "%".$pays."%";
+            $searchValue['pays_match'] = $pays;
+        }
+
+        if($request->get('championat_match') && $request->get('pays_match')){
+            $championat = $request->get('championat_match');
+            $dql .= " LEFT JOIN m.championat c ";
+
+            $pays= $request->get('pays_match');
+            /*$dql .= " LEFT JOIN c.teamsPays tp";*/
+
+            $where[] = " c.fullNameChampionat LIKE :championat ";
+            $where[] = " c.pays LIKE :pays";
+
+            $params['pays'] = "%".$pays."%";
+            $params["championat"] = '%'.$championat.'%';
+
+            $searchValue['championat_match'] = $championat;
+            $searchValue['pays_match'] = $pays;
+
+        }
+        if (!empty($where)) {
+            $dql .= ' WHERE ' . implode(' AND ', $where);
+        }
+
+        if(empty($params)){
+
+            $matchs = $this->get('doctrine.orm.entity_manager')->createQuery($dql)->getResult();
+        }else{
+            $matchs = $this->get('doctrine.orm.entity_manager')->createQuery($dql)->setParameters($params)->getResult();
+        }
+
+        $championatData = $this->getAllEntity(self::ENTITY_CHAMPIONAT);
+        $dqli = "SELECT ch From ApiDBBundle:championat ch where ch.pays  is not null ";
+        $query = $this->get('doctrine.orm.entity_manager')->createQuery($dqli);
+        $country = $query->getResult();
+        $droitAdmin = $this->getDroitAdmin('Matchs');
+        return $this->render('BackAdminBundle:Matchs:indexMatchs.html.twig', array(
+            'matchs' => $matchs,
+            'championat' => $championatData,
+            'country' => $country,
+            'searchValue' => $searchValue,
+            'droitAdmin' => $droitAdmin[0]
+
+        ));
+
+
+    }
     public function indexAction(Request $request)
     {
         if($request->request->get('identifiant')){

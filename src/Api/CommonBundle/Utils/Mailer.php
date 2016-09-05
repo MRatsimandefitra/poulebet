@@ -1,6 +1,7 @@
 <?php
 
 namespace Api\CommonBundle\Utils;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\DependencyInjection\Container;
 
 /**

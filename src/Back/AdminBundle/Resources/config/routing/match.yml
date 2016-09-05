@@ -1,6 +1,10 @@
 index_admin_match:
     path:     /
-    defaults: { _controller: BackAdminBundle:Match:index }
+    defaults: { _controller: BackAdminBundle:Match:indexMatchs }
+#index_admin_match:
+ #   path:     /
+  #  defaults: { _controller: BackAdminBundle:Match:index }
+
 modifier_admin_match:
     path:     /edit/{id}
     defaults: { _controller: BackAdminBundle:Match:editMatchs }
