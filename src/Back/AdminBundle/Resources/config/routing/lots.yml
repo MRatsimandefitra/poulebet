@@ -1,0 +1,12 @@
+index_lots:
+    path:     /
+    defaults: { _controller: BackAdminBundle:Lots:index }
+edit_lots:
+    path:     /edit/{id}
+    defaults: { _controller: BackAdminBundle:Lots:edit }
+add_lots:
+    path:     /add
+    defaults: { _controller: BackAdminBundle:Lots:add }
+remove_lots:
+    path:     /add
+    defaults: { _controller: BackAdminBundle:Lots:remove }
