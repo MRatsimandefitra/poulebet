@@ -79,8 +79,8 @@ class LiveScoreController extends ApiController
                         'scoreVisiteur' => substr($vDataMatchs->getScore(), -1, 1),
                         'live' => ($vData->getStatusMatch() == 'active') ? true : false,
                         'current-state' => array(
-                            'period' => $vData->getPeriod(),
-                            'minute' => $vData->getMinute()
+                            'period' => $vDataMatchs->getPeriod(),
+                            'minute' => $vDataMatchs->getMinute()
                         ),
                         'championat' => $vData->getChampionat()->getId()
 
