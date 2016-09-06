@@ -85,11 +85,11 @@ class ChampionatsController extends ApiController
                     'master_prono_2' => $vData->getMasterProno2(),
                     'tempsEcoules' => $vData->getTempsEcoules(),
                     'live' => ($vData->getStatusMatch() == 'active') ? true : false,
+                        'current-state' => array(
+                            'period' => $vData->getPeriod(),
+                            'minute' => $vData->getMinute()
+                        )
 
-                    'current-state' => array(
-                        'period' => '',
-                        'minute' => ''
-                    )
 
                 );
             }

@@ -55,9 +55,9 @@ class LiveScoreController extends ApiController
                 $query->setParameter('vchampionat', $vChampionat);
                 $dataMatchs = $query->getResult();
                 /*$data['championat'][] = $vChampionat;*/
-                foreach ($dataMatchs as $kDataMatchs => $vDataMatchs) {
+               /* foreach ($dataMatchs as $kDataMatchs => $vDataMatchs) {
                     //var_dump($vDataMatchs->getTeamsDomicile()->getFullNameClub()); die;
-                    $dataDetails['group']['championat'][$vDataMatchs->getChampionat()->getFullNameChampionat()][] = array(
+                    $dataDetails['group'][]['championat'][$vDataMatchs->getChampionat()->getFullNameChampionat()][] = array(
                         'teamsDomicile' => $vDataMatchs->getTeamsDomicile()->getFullNameClub(),
                         'teamsVisiteur' => $vDataMatchs->getTeamsVisiteur()->getFullNameClub(),
                         'score' => $vDataMatchs->getScore(),
@@ -65,6 +65,32 @@ class LiveScoreController extends ApiController
                         'scoreVisiteur' => substr($vDataMatchs->getScore(), -1, 1),
                         'liveTime' => '',
                     );
+                }*/
+                foreach($dataMatchs as $kDataMatchs => $vDataMatchs){
+                    $dataDetails['group'][] = array(
+                        'id' => $vDataMatchs->getChampionat()->getId(),
+                        'nom' => $vDataMatchs->getChampionat()->getFullNameChampionat()
+                    );
+                    $dataDetails['matchs'][] = array(
+                        'teamsDomicile' => $vDataMatchs->getTeamsDomicile()->getFullNameClub(),
+                        'teamsVisiteur' => $vDataMatchs->getTeamsVisiteur()->getFullNameClub(),
+                        'score' => $vDataMatchs->getScore(),
+                        'scoreDomicile' => substr($vDataMatchs->getScore(), 0, 1),
+                        'scoreVisiteur' => substr($vDataMatchs->getScore(), -1, 1),
+                        'live' => ($vData->getStatusMatch() == 'active') ? true : false,
+                        'current-state' => array(
+                            'period' => $vData->getPeriod(),
+                            'minute' => $vData->getMinute()
+                        ),
+                        'championat' => $vData->getChampionat()->getId()
+
+                    );
+                    /*if($vData->getStatusMatch() == 'active'){
+                        $dataDetails['matchs'][]['current-state'] = array(
+                                'period' => $vData->getPeriod(),
+                                'minute' => $vData->getMinute()
+                        );
+                    }*/
                 }
 
             }
