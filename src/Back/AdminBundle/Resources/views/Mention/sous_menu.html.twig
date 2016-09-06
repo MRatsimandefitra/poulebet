@@ -1,0 +1,6 @@
+<div class="link">
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+        <a href="{{ path('edit_api_key') }}"> <img src="{{ asset('images/api.png') }}" alt="" width="25" height="25"/>
+            {{ "Clé API GoalAPI"|trans }}</a>
+    {% endif %}
+</div>

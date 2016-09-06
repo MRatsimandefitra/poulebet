@@ -3,6 +3,8 @@
 namespace Back\AdminBundle\Controller;
 
 use Api\CommonBundle\Command\GoalApiCommand;
+use Api\CommonBundle\Command\GoalApiMatchsLiveCommand;
+use Api\CommonBundle\Command\GoalApiMatchsParChampionatCommand;
 use Api\CommonBundle\Controller\ApiController;
 use Api\DBBundle\Entity\Championat;
 use Api\DBBundle\Entity\LotoFoot15;
@@ -33,6 +35,143 @@ class MatchController extends ApiController
     const FORM_CHAMPIONAT = 'Api\DBBundle\Form\ChampionatType';
     const ENTITY_TEAMS_PAYS = 'ApiDBBundle:TeamsPays';
 
+    const ENTITY_LOTOFOOT = 'ApiDBBundle:LotoFoot';
+    const FORM_LOTOFOOT = 'Api\DBBundle\Form\LotoFootType';
+
+    public function indexMatchsAction(Request $request){
+        if($request->request->get('identifiant')){
+            $identifiant = $request->request->get('identifiant');
+            $cote1 = 'cote1_'.$identifiant;
+            $coten = 'coten_'.$identifiant;
+            $cote2 = 'cote2_'.$identifiant;
+
+            $rCote1 = $request->request->get($cote1);
+            $rCoten = $request->request->get($coten);
+            $rCote2 = $request->request->get($cote2);
+            $cHost = 'c_host_'.$identifiant;
+            $rHost = false;
+            if($request->request->get($cHost) == 'on'){
+                $rHost = true;
+            }
+
+            $cNeutre = 'c_neutre_'.$identifiant;
+            $rNeutre = false;
+            if($request->request->get($cNeutre) == 'on'){
+                $rNeutre = true;
+            }
+            $cGuest = 'c_guest_'.$identifiant;
+            $rGuest = false;
+            if($request->request->get($cGuest) == "on"){
+                $rGuest = true;
+            }
+
+            $match = $this->getRepoFormId(self::ENTITY_MATCH, $identifiant);
+            /*if($rCote1){*/
+            $match->setCot1Pronostic($rCote1);
+            /*}*/
+            /*if($rCoten){*/
+            $match->setCoteNPronistic($rCoten);
+            /*}*/
+            /*if($rCote2){*/
+            $match->setCote2Pronostic($rCote2);
+            /*}*/
+
+            $match->setMasterProno1($rHost);
+            $match->setMasterPronoN($rNeutre);
+            $match->setMasterProno2($rGuest);
+
+            $this->get('doctrine.orm.entity_manager')->persist($match);
+            $this->get('doctrine.orm.entity_manager')->flush();
+        }
+
+        $dql ="SELECT m from ApiDBBundle:Matchs m ";
+        $where = array();
+        $params = array();
+        $searchValue = array();
+        if($request->get('dateDebut') && !$request->get('dateFinale')){
+            //Todo:: datedebit
+            $dateDebut  = $request->get('dateDebut').' 00:00:00';
+            $dateFinaleSearch = $request->get('dateDebut'). ' 23:59:59';
+
+            $where[] = " m.dateMatch BETWEEN :dateDebut AND :dateFinaleSearch ";
+            $params['dateDebut'] = $dateDebut;
+            $params['dateFinaleSearch'] = $dateFinaleSearch;
+            $searchValue['dateDebut'] = $request->get('dateDebut');
+
+        }
+
+        if($request->get('dateDebut') && $request->get('dateFinale')){
+            $dateDebut  = $request->get('dateDebut').' 00:00:00';
+            $dateFinaleSearch = $request->get('dateFinale'). ' 23:59:59';
+
+            $where[] = " m.dateMatch BETWEEN :dateDebut AND :dateFinale ";
+            $params['dateDebut'] = $dateDebut;
+            $params['dateFinale'] = $dateFinaleSearch;
+            $searchValue['dateDebut'] = $request->get('dateDebut');
+            $searchValue['dateFinale'] = $request->get('dateFinale');
+        }
+
+        # champinat seul
+        if($request->get('championat_match')&& !$request->get('pays_match')){
+            $championat = $request->get('championat_match');
+            $dql .= " LEFT JOIN m.championat c";
+            $where[] = " c.fullNameChampionat LIKE :championat ";
+            $params["championat"] = '%'.$championat.'%';
+            $searchValue['championat_match'] = $championat;
+        }
+
+        if($request->get('pays_match') && !$request->get('championat_match')){
+            $pays= $request->get('pays_match');
+            $dql .= " LEFT JOIN m.championat c";
+            $where[] = " c.pays LIKE :pays ";
+            $params['pays'] = "%".$pays."%";
+            $searchValue['pays_match'] = $pays;
+        }
+
+        if($request->get('championat_match') && $request->get('pays_match')){
+            $championat = $request->get('championat_match');
+            $dql .= " LEFT JOIN m.championat c ";
+
+            $pays= $request->get('pays_match');
+            /*$dql .= " LEFT JOIN c.teamsPays tp";*/
+
+            $where[] = " c.fullNameChampionat LIKE :championat ";
+            $where[] = " c.pays LIKE :pays";
+
+            $params['pays'] = "%".$pays."%";
+            $params["championat"] = '%'.$championat.'%';
+
+            $searchValue['championat_match'] = $championat;
+            $searchValue['pays_match'] = $pays;
+
+        }
+        if (!empty($where)) {
+            $dql .= ' WHERE ' . implode(' AND ', $where);
+        }
+
+        if(empty($params)){
+
+            $matchs = $this->get('doctrine.orm.entity_manager')->createQuery($dql)->getResult();
+        }else{
+            $matchs = $this->get('doctrine.orm.entity_manager')->createQuery($dql)->setParameters($params)->getResult();
+        }
+
+        $championatData = $this->getAllEntity(self::ENTITY_CHAMPIONAT);
+        $dqli = "SELECT ch From ApiDBBundle:championat ch where ch.pays  is not null ";
+        $query = $this->get('doctrine.orm.entity_manager')->createQuery($dqli);
+        $country = $query->getResult();
+        $droitAdmin = $this->getDroitAdmin('Matchs');
+        return $this->render('BackAdminBundle:Matchs:indexMatchs.html.twig', array(
+            'matchs' => $matchs,
+            'championat' => $championatData,
+            'country' => $country,
+            'searchValue' => $searchValue,
+            'droitAdmin' => $droitAdmin[0]
+
+        ));
+
+
+    }
     public function indexAction(Request $request)
     {
         if($request->request->get('identifiant')){
@@ -289,6 +428,7 @@ class MatchController extends ApiController
                 $date = new \DateTime($finValidation);
                 $lotofoot7->setFinValidation($date);
                 $this->insert($lotofoot7, array('success' => 'success' , 'error' => 'error'));
+                return $this->redirectToRoute('list_loto_foot');
             }
             if($lotofoot == 'lf15'){
                 $lotofoot15 = new LotoFoot15();
@@ -367,6 +507,7 @@ class MatchController extends ApiController
                 $date = new \DateTime($finValidation);
                 $lotofoot7->setFinValidation($date);
                 $this->insert($lotofoot7, array('success' => 'success' , 'error' => 'error'));
+                return $this->redirectToRoute('list_loto_foot');
             }
             if($lotofoot == 'lf15'){
                 $lotofoot15 = $this->getRepoFormId(self::ENTITY_LOTOFOOT15, $id);
@@ -447,7 +588,6 @@ class MatchController extends ApiController
             $params["championat"] = '%'.$championat.'%';
             $searchValue['championat_match'] = $championat;
         }
-
         if($request->get('pays_match') && !$request->get('championat_match')){
             $pays= $request->get('pays_match');
             $dql .= " LEFT JOIN m.championat c  ";
@@ -476,14 +616,16 @@ class MatchController extends ApiController
             $matchs = $this->get('doctrine.orm.entity_manager')->createQuery($dql)->setParameters($params)->getResult();
         }
         //var_dump($matchs); die;
+
         if($request->get('idMatch')){
             $idMatch = $request->get('idMatch');
-            $matchs = $this->getRepoFormId(self::ENTITY_MATCH, $idMatch);
+            //$matchs = $this->getRepoFormId(self::ENTITY_MATCH, $idMatch);
         }
         /*var_dump()*/
        /* if($request->get('idLotoFoot')){
             $idLotoFoot = $request->get('idLotoFoot');
         }*/
+
         $data = explode('&', $request->getContent());
         $arrayData = array();
         //$i = 0;
@@ -528,6 +670,7 @@ class MatchController extends ApiController
 
             }
         }
+
         if($idLotoFoot == 15){
             if(count($arrayData) == 14 or count($arrayData) == 15){
                 foreach($idarray as $vId){
@@ -561,6 +704,7 @@ class MatchController extends ApiController
             }
             $nbMatchs7 = $i;
         }
+
         $nbMatchs15 = null;
         if($idLotoFoot == 15){
             $matchsCount = $this->getAllEntity(self::ENTITY_MATCH);
@@ -574,6 +718,7 @@ class MatchController extends ApiController
             $nbMatchs15 = $i;
         }
         $champi = $this->getRepo(self::ENTITY_CHAMPIONAT)->findAll();
+       // var_dump($matchs[0]->getLotoFoot7()); die;
         return $this->render('BackAdminBundle:Matchs:add_lotofoot.html.twig', array(
             'entity' => $lotoFoot,
             'idLotoFoot' => $idLotoFoot,
@@ -621,7 +766,13 @@ class MatchController extends ApiController
     }
 
     public function updateFromGoalApiAction(Request $request){
-        $command = new GoalApiCommand();
+        $command = new GoalApiMatchsParChampionatCommand();
+        $command->setContainer($this->container);
+        $input = new ArrayInput(array());
+        $output = new NullOutput();
+        $resultCode = $command->run($input, $output);
+
+        $command = new GoalApiMatchsLiveCommand();
         $command->setContainer($this->container);
         $input = new ArrayInput(array());
         $output = new NullOutput();

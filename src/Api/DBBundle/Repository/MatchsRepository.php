@@ -88,14 +88,14 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
                 LEFT JOIN m.championat ch
                 WHERE m.dateMatch BETWEEN CURRENT_DATE() AND DATE_ADD(CURRENT_DATE(), 7, 'day')
                 AND ch.nomChampionat LIKE :championat
-                ORDER BY ch.nomChampionat ASC";
+                ORDER BY m.dateMatch ASC";
         }else{
 
             $dql = "SELECT m from ApiDBBundle:Matchs m
                 LEFT JOIN m.championat ch
                 WHERE  m.dateMatch BETWEEN :datepost AND DATE_ADD(CURRENT_DATE(), 7, 'day')
                 AND ch.nomChampionat LIKE :championat
-                ORDER BY ch.nomChampionat ASC";
+                ORDER BY m.dateMatch ASC";
         }
 
         $query = $this->getEntityManager()->createQuery($dql);

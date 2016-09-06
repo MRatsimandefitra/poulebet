@@ -145,7 +145,8 @@ class GoalApiCommand extends ContainerAwareCommand
     private function getJson()
     {
         $jsonFile = $this->getContainer()->get('kernel')->getRootDir() . '/../web/json/matches.json';
-        $data = $this->getContainer()->get('doctrine.orm.entity_manager')->getRepository('ApiDBBundle:Championat')->findAll();
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $data = $em->getRepository('ApiDBBundle:Championat')->findAll();
         if (!$data) {
             return false;
         }
@@ -153,9 +154,11 @@ class GoalApiCommand extends ContainerAwareCommand
         foreach ($data as $k => $v) {
             $nameChampionat[] = $v->getNomChampionat();
         }
-
-        $url = "http://api.xmlscores.com/matches/?c[]=" . implode('&c[]=', $nameChampionat) . "&f=json&open=3770d7505de574df4b7d45d88b80027a";
-
+        $apiKey = $em->getRepository('ApiDBBundle:ApiKey')->findAll();
+        foreach($apiKey as $vApiKey){
+            $apiKey = $vApiKey->getApikey();
+        }
+        $url = "http://api.xmlscores.com/matches/?c[]=" . implode('&c[]=', $nameChampionat) . "&f=json&open=".$apiKey;
 //        $url = "http://api.xmlscores.com/matches/?f=json&c[]=eng_pl&c[]=rus_pl&e=1&open=3770d7505de574df4b7d45d88b80027a";
         $content = file_get_contents($url);
 

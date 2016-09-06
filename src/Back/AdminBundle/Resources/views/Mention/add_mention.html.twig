@@ -4,11 +4,84 @@
 
 {% block page %}
 
-<div class="box-header-response">
-    {{ 'Listes des droits'|trans }}
+<div class="sous-menu-page">
+    <div class="col-lg-12">
+        <div class="col-lg-12">
+            {{ 'Listes des droits'|trans }}
+            {% include 'BackAdminBundle:Mention:sous_menu.html.twig' %}
+        </div>
+
+    </div>
 </div>
 <div class="box-response">
     {{ form_start(form) }}
+        <div class="box-textarea">
+            <table class="table">
+                <tr>
+                    <td>
+                        {{ 'appyone_url_login' }}
+                    </td>
+                    <td>
+                        {{ form_widget(form.appyone_url_login) }}
+                    </td>
+                    <td>
+                        {{ 'appyone_username' }}
+                    </td>
+                    <td>
+                        {{ form_widget(form.appyone_username) }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        {{ 'appyone_password' }}
+                    </td>
+                    <td>
+                        {{ form_widget(form.appyone_password) }}
+                    </td>
+                    <td>
+                        {{ 'appyone_nid' }}
+                    </td>
+                    <td>
+                        {{ form_widget(form.appyone_nid) }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        {{ 'appyone_url_details' }}
+                    </td>
+                    <td>
+                        {{ form_widget(form.appyone_url_details) }}
+                    </td>
+                    <td>
+                        {{ 'gcm_url_android' }}
+                    </td>
+                    <td>
+                        {{ form_widget(form.gcm_url_android) }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        {{ 'api_key_apione' }}
+                    </td>
+                    <td>
+                        {{ form_widget(form.api_key_apione) }}
+                    </td>
+                    <td>
+                        {{ 'api_key_goalapi' }}
+                    </td>
+                    <td>
+                        {{ form_widget(form.api_key_goalapi) }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>{{ 'appyone_url_liste_application' }}</td>
+                    <td>
+                        {{ form_widget(form.appyone_url_liste_application) }}
+                    </td>
+                    <td colspan="2"></td>
+                </tr>
+            </table>
+        </div>
         <div class="box-textarea">
             {{ 'Mentions Légales'|trans }}<br />
             {{ form_widget(form.mentionLegale, {'attr': {'placeholder': 'Mention légale'  }}) }}

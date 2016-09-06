@@ -57,7 +57,7 @@ class LiveScoreController extends ApiController
                 /*$data['championat'][] = $vChampionat;*/
                 foreach ($dataMatchs as $kDataMatchs => $vDataMatchs) {
                     //var_dump($vDataMatchs->getTeamsDomicile()->getFullNameClub()); die;
-                    $dataDetails['championat'][$vDataMatchs->getChampionat()->getFullNameChampionat()][] = array(
+                    $dataDetails['group']['championat'][$vDataMatchs->getChampionat()->getFullNameChampionat()][] = array(
                         'teamsDomicile' => $vDataMatchs->getTeamsDomicile()->getFullNameClub(),
                         'teamsVisiteur' => $vDataMatchs->getTeamsVisiteur()->getFullNameClub(),
                         'score' => $vDataMatchs->getScore(),

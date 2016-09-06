@@ -1,6 +1,9 @@
+#index_admin_pronostic:
+ #   path:     /
+  #  defaults: { _controller: BackAdminBundle:Pronostic:index }
 index_admin_pronostic:
     path:     /
-    defaults: { _controller: BackAdminBundle:Pronostic:index }
+    defaults: { _controller: BackAdminBundle:Pronostic:indexPronostic }
 remove_admin_pronostic:
     path:     /remove/{id}
     defaults: { _controller: BackAdminBundle:Pronostic:removePronostic }

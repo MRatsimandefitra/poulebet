@@ -9,18 +9,18 @@
         {% include '@BackAdmin/Matchs/sous_menu.html.twig' %}
     </div>#}
     <div class="space"></div>
-    <div class="sous-menu-page">
+   {# <div class="sous-menu-page">
         <div class="col-lg-12">
             <div class="col-lg-12">
                 <div class="ariane">
-                    {#{% block ariane %} {{ parent() }} {% endblock %}#}
+                    &#123;&#35;{% block ariane %} {{ parent() }} {% endblock %}&#35;&#125;
                     {% block ariane %} {{ parent() }} -> Edit {% endblock %}
                 </div>
 
                 {% include '@BackAdmin/Matchs/sous_menu.html.twig' %}
             </div>
         </div>
-    </div>
+    </div>#}
     {% if droitAdmin.lecture is defined and droitAdmin.lecture %}
         {#<div class="col-lg-12">#}
         <div class="col-lg-12">
@@ -128,7 +128,7 @@
                             {{ form_errors(form.tempsEcoules) }}
                         </td>
                     </tr>
-                    <tr>
+                    {#<tr>
                         <td>
                             {{ 'Cote ' }}
                         </td>
@@ -143,9 +143,9 @@
                         <td>
                             {{ '2' }} {{ form_widget(form.cote2Pronostic) }}
                         </td>
-                    </tr>
+                    </tr>#}
 
-                    <tr>
+                  {#  <tr>
                         <td>
                             {{ 'Master pronostic' }}
                         </td>
@@ -160,7 +160,7 @@
                         <td>
                             {{ '2' }} {{ form_widget(form.masterProno2) }}
                         </td>
-                    </tr>
+                    </tr>#}
                     {# <tr>
                          <td>
                              {{ 'Résultat visiteur' }}

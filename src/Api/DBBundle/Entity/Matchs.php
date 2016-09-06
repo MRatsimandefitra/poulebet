@@ -207,6 +207,12 @@ class Matchs
      * @ORM\Column(name="minute", type="string", length=50, nullable=true)
      */
     private $minute;
+    /**
+     * @var Boolean
+     *
+     * @ORM\Column(name="stateGoalApi", type="boolean", nullable=true)
+     */
+    private $stateGoalApi;
 
 
 
@@ -949,5 +955,29 @@ class Matchs
     public function getMinute()
     {
         return $this->minute;
+    }
+
+    /**
+     * Set stateGoalApi
+     *
+     * @param boolean $stateGoalApi
+     *
+     * @return Matchs
+     */
+    public function setStateGoalApi($stateGoalApi)
+    {
+        $this->stateGoalApi = $stateGoalApi;
+
+        return $this;
+    }
+
+    /**
+     * Get stateGoalApi
+     *
+     * @return boolean
+     */
+    public function getStateGoalApi()
+    {
+        return $this->stateGoalApi;
     }
 }

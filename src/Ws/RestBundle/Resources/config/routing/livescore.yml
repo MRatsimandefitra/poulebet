@@ -1,4 +1,4 @@
 ws_rest_matchs_live_score:
     path:     /matchs
     defaults: { _controller: WsRestBundle:LiveScore:getMatchLiveScore }
-    methods: POST
+    methods: GET

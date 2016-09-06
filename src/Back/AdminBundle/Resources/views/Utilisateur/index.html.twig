@@ -10,7 +10,7 @@
                 {#{% if is_granted('ROLE_SUPER_ADMIN') %}#}
                 {# <a href="{{ path('index_administrator') }}">{{ 'Gestion administrateur'|trans }}</a> |#}
                 {#{% endif %}#}
-                {% if currentAdmin.lecture == true %}
+                {% if currentAdmin.lecture is defined and currentAdmin.lecture == true %}
                     <a href="{{ path('export_csv_utilisateur') }}">{{ 'Export csv'|trans }}</a>
                 {% endif %}
             </div>
@@ -127,10 +127,8 @@
                     </td>
                     {#{% if is_granted('ROLE_SUPER_ADMIN') %}#}
                     <td>
-                        {% if currentAdmin.modification is defined %}
-                            {% if currentAdmin.modification == true %}
+                        {% if currentAdmin.modification is defined and currentAdmin.modification == true %}
                                 <a href="{{ path('update_admin_utilisateur', {'id': row.id }) }}"> {{ 'Modifier'|trans }}</a> |
-                            {% endif %}
                         {% endif %}
 
                         {% if currentAdmin.suppression is defined %}
@@ -140,15 +138,13 @@
                         {% endif %}
 
                         {% if currentAdmin.lecture is defined %}
-                            {% if currentAdmin.lecture == true %}
+                            {% if currentAdmin.lecture == true  and currentAdmin.lecture == true  %}
                                   <a href="{{ path('details_admin_utilisateur', {'id': row.id }) }}"> {{ 'Détails'|trans }}</a> |
                             {% endif %}
                         {% endif %}
-                        {% if currentAdmin.lecture is defined %}
-                            {% if currentAdmin.lecture == true %}
+                        {% if currentAdmin.lecture is defined and currentAdmin.lecture == true%}
                                 <a href="{{ path('mvtCredit_utilisateur', {'id': row.id }) }}"> {{ 'Crédit'|trans }}</a>
-                            {% endif %}    
-                        {% endif %}    
+                        {% endif %}
                     </td>
                     {#{% endif %}#}
 

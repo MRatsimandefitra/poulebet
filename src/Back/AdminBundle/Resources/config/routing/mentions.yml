@@ -1,3 +1,6 @@
 add_admin_mention:
     path:     /
     defaults: { _controller: BackAdminBundle:Mention:addMention }
+edit_api_key:
+    path:     /edit/api-key
+    defaults: { _controller: BackAdminBundle:Mention:editApiKey }

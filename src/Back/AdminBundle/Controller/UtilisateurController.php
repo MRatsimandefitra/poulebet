@@ -20,6 +20,7 @@ class UtilisateurController extends ApiController
     const ENTITY_DROIT = 'ApiDBBundle:Droit';
     const FORM_DROIT_ADMIN = 'Api\DBBundle\Form\DroitAdminType';
     const FORM_MVTCREDIT = 'Api\DBBundle\Form\MvtCreditType';
+    const DROIT = 'Utilisateurs';
     
     
     public function indexAction(Request $request)
@@ -41,7 +42,8 @@ class UtilisateurController extends ApiController
             $criteria["criteria_score_total"]= $request->get('criteria_score_total');
         }
         $droit = $this->getRepo(self::ENTITY_DROIT)->findOneByFonctionnalite('Utilisateurs');
-        $currentDroitAdmin = $this->getRepo(self::ENTITY_DROIT_ADMIN)->findOneBy(array('admin' => $this->getUser(), 'droit' => $droit ));
+        //$currentDroitAdmin = $this->getRepo(self::ENTITY_DROIT_ADMIN)->findOneBy(array('admin' => $this->getUser(), 'droit' => $droit ));
+        $droitAdmin = $this->get('roles.manager')->getDroitAdmin(self::DROIT);
         $champ = $request->get('champ');
         $utilisateur = $this->getRepo(self::ENTITY_UTILISATEUR)->getAllUtilisateurs($champ, $tri,$criteria);
         //ecriture dans
@@ -52,10 +54,11 @@ class UtilisateurController extends ApiController
             $request->query->getInt('page', 1)/*page number*/,
             $nbpage/*limit per page*/
         );
+       // var_dump($this->container->get('security.token_storage')->getToken()->getUser()); die;
         return $this->render('BackAdminBundle:Utilisateur:index.html.twig', array(
             'entities' => $utilisateur,
-            'currentAdmin' => $currentDroitAdmin,
             'pagination' => $pagination,
+            'currentAdmin' => $droitAdmin[0]
            
         ));
     }
