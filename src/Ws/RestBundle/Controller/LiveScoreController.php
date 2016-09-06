@@ -152,8 +152,9 @@ class LiveScoreController extends ApiController
                     'period' => $matchLiveItems->getPeriod(),
                     'minute' => $matchLiveItems->getMinute()
                 ),
-                'championat' => $matchLiveItems->getChampionat()->getId()
-
+                'championat' => $matchLiveItems->getChampionat()->getId(),
+                'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $matchLiveItems->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
+                'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $matchLiveItems->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
             );
         }
         $result = $dataDetailsFull;
