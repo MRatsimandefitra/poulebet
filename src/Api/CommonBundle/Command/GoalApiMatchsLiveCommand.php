@@ -107,6 +107,11 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand {
                             }
 
                             $matchs->setChampionat($vChampionat);
+                            if(array_key_exists('current-state', $vItems)){
+                                $matchs->setPeriod($vItems['current-state']['period']);
+                                $matchs->setMinute($vItems['current-state']['minute']);
+                            }
+
 
                             $em->persist($matchs);
                             $em->flush();

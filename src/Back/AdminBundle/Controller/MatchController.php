@@ -4,6 +4,7 @@ namespace Back\AdminBundle\Controller;
 
 use Api\CommonBundle\Command\GoalApiCommand;
 use Api\CommonBundle\Command\GoalApiMatchsLiveCommand;
+use Api\CommonBundle\Command\GoalApiMatchsManuelCommand;
 use Api\CommonBundle\Command\GoalApiMatchsParChampionatCommand;
 use Api\CommonBundle\Controller\ApiController;
 use Api\DBBundle\Entity\Championat;
@@ -14,9 +15,15 @@ use Api\DBBundle\Entity\matchIndividuel;
 use Api\DBBundle\Entity\Matchs;
 use Back\AdminBundle\Resources\Request\MatchSearch;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\BufferedOutput;
+use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -160,6 +167,7 @@ class MatchController extends ApiController
         $dqli = "SELECT ch From ApiDBBundle:championat ch where ch.pays  is not null ";
         $query = $this->get('doctrine.orm.entity_manager')->createQuery($dqli);
         $country = $query->getResult();
+
         $droitAdmin = $this->getDroitAdmin('Matchs');
         return $this->render('BackAdminBundle:Matchs:indexMatchs.html.twig', array(
             'matchs' => $matchs,
@@ -392,7 +400,9 @@ class MatchController extends ApiController
         // list championat
         $championatData = $this->getAllEntity(self::ENTITY_CHAMPIONAT);
         // pays
-        $country = $this->getAllEntity(self::ENTITY_COUNTRY);
+        $dqli = "SELECT ch From ApiDBBundle:championat ch where ch.pays  is not null ";
+        $query = $this->get('doctrine.orm.entity_manager')->createQuery($dqli);
+        $country = $query->getResult();
 
         return $this->render('BackAdminBundle:Matchs:edit_matchs.html.twig', array(
             'form' => $form->createView(),
@@ -766,17 +776,19 @@ class MatchController extends ApiController
     }
 
     public function updateFromGoalApiAction(Request $request){
-        $command = new GoalApiMatchsParChampionatCommand();
-        $command->setContainer($this->container);
-        $input = new ArrayInput(array());
-        $output = new NullOutput();
-        $resultCode = $command->run($input, $output);
+        $dateDebutGoalApi = $request->request->get('dateDebutGoalApi');
+        $dateFinaleGoalApi = $request->request->get('dateFinaleGoalApi');
+        $championat_goal_api = $request->request->get('championat_goal_api');
 
-        $command = new GoalApiMatchsLiveCommand();
+        $command = new GoalApiMatchsManuelCommand($dateDebutGoalApi, $dateFinaleGoalApi, $championat_goal_api);
         $command->setContainer($this->container);
-        $input = new ArrayInput(array());
+        $input = new ArrayInput(array(
+            '-ch' => $championat_goal_api,
+            '-db' => $dateDebutGoalApi,
+            '-df' => $dateFinaleGoalApi
+        ));
         $output = new NullOutput();
         $resultCode = $command->run($input, $output);
-       return $this->redirectToRoute('index_admin_match');
+        return $this->redirectToRoute('index_admin_match');
     }
 }
