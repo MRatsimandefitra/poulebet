@@ -107,10 +107,9 @@ class GoalApiMatchsManuelCommand extends ContainerAwareCommand
 
 
         if($championat){
-
             foreach ($championat as $vChampionat) {
                 $output->writeln('For championat' . $vChampionat->getFullNameChampionat());
-                $data = $this->getUrlByChampionat($vChampionat->getId());
+                $data = $this->getUrlByChampionat($vChampionat->getId(), $dateDebut, $dateFinale);
                 if($data){
                     foreach ($data['items'] as $vItems) {
                         // var_dump($vItems['teams']); die;
@@ -218,7 +217,7 @@ class GoalApiMatchsManuelCommand extends ContainerAwareCommand
             $this->sendErrorEmail('Error to set flux from goal api with matchs' . $mmatchs->getId());
         }
     }
-    private function getUrlByChampionat($idChampionat)
+    private function getUrlByChampionat($idChampionat ,$dateDebut = null, $dateFinale = null)
     {
         $em = $this->getEm();
         $data = $em->getRepository('ApiDBBundle:Championat')->find($idChampionat);
@@ -234,7 +233,20 @@ class GoalApiMatchsManuelCommand extends ContainerAwareCommand
             $this->sendErrorEmail('Error this no api key');
             return false;
         }
-        $url = "http://api.xmlscores.com/matches/?c[]=" . $data->getNomChampionat() . "&f=json&open=" . $apiKey;
+
+
+        if($dateDebut){
+            $timestampDateDebut = strtotime($dateDebut);
+            $url = "http://api.xmlscores.com/matches/?c[]=" . $data->getNomChampionat() . "&f=json&&s=0&l=128&open=" . $apiKey.'&t1='.$timestampDateDebut;
+        }
+        if($dateDebut && $dateFinale){
+            $timestampDateDebut = strtotime($dateDebut);
+            $timestampDateFinale = strtotime($dateFinale);
+            $url = "http://api.xmlscores.com/matches/?c[]=" . $data->getNomChampionat() . "&f=json&&s=0&l=128&open=" . $apiKey.'&t1='.$timestampDateDebut.'&t2='.$timestampDateFinale;
+        }
+        if(!$dateDebut && !$dateFinale){
+            $url = "http://api.xmlscores.com/matches/?c[]=" . $data->getNomChampionat() . "&f=json&&s=0&l=128&open=" . $apiKey;
+        }
         $content = file_get_contents($url);
 
         $arrayJson = json_decode($content, true);
@@ -252,6 +264,7 @@ class GoalApiMatchsManuelCommand extends ContainerAwareCommand
 
 
         if (!$data) {
+
             return false;
         }
 
@@ -263,6 +276,7 @@ class GoalApiMatchsManuelCommand extends ContainerAwareCommand
             $apiKey = $vApiKey->getApikey();
         }
         $url = "http://api.xmlscores.com/matches/?c[]=" . implode('&c[]=', $nameChampionat) . "&f=json&open=" . $apiKey;
+
         $content = file_get_contents($url);
 
         if (!$content) {
