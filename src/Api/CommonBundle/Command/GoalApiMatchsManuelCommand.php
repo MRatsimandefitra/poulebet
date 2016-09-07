@@ -98,8 +98,10 @@ class GoalApiMatchsManuelCommand extends ContainerAwareCommand
 
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         if($championat == 'All'){
+
             $championat = $em->getRepository(self::ENTITY_CHAMPIONAT)->findAll();
         }else{
+
             $championat = $em->getRepository(self::ENTITY_CHAMPIONAT)->findBy(array('fullNameChampionat' => $championat));
         }
 
@@ -109,28 +111,31 @@ class GoalApiMatchsManuelCommand extends ContainerAwareCommand
             foreach ($championat as $vChampionat) {
                 $output->writeln('For championat' . $vChampionat->getFullNameChampionat());
                 $data = $this->getUrlByChampionat($vChampionat->getId());
-                foreach ($data['items'] as $vItems) {
-                    // var_dump($vItems['teams']); die;
-                   /* $sDateMatch = \DateTime::createFromFormat('Y-m-d h:i', date('Y-m-d h:i', $vItems['timestamp_starts']));
-                    if($dateDebut){
-                        $sDateDebutGoalApi = \DateTime::createFromFormat('Y-m-d h:i', date('Y-m-d h:i', $dateDebut));
-                    }
-                    if($dateFinale){
-                        $sDateFinaleGoalApi = \DateTime::createFromFormat('Y-m-d h:i', date('Y-m-d h:i', $dateFinale));
-                    }*/
+                if($data){
+                    foreach ($data['items'] as $vItems) {
+                        // var_dump($vItems['teams']); die;
+                        /* $sDateMatch = \DateTime::createFromFormat('Y-m-d h:i', date('Y-m-d h:i', $vItems['timestamp_starts']));
+                         if($dateDebut){
+                             $sDateDebutGoalApi = \DateTime::createFromFormat('Y-m-d h:i', date('Y-m-d h:i', $dateDebut));
+                         }
+                         if($dateFinale){
+                             $sDateFinaleGoalApi = \DateTime::createFromFormat('Y-m-d h:i', date('Y-m-d h:i', $dateFinale));
+                         }*/
 
-                    if($dateDebut && $dateFinale or $dateDebut or $dateFinale){
-                        $dateCurrentMatchs = date('Y-m-d h:i:s', $vItems['timestamp_starts']);
-                        if($dateCurrentMatchs > $dateDebut and $dateCurrentMatchs < $dateFinale){
-                            $this->treatementDataToMatch($vItems, $vChampionat, $output, $dateDebut, $dateFinale);
+                        if($dateDebut && $dateFinale or $dateDebut or $dateFinale){
+                            $dateCurrentMatchs = date('Y-m-d h:i:s', $vItems['timestamp_starts']);
+                            if($dateCurrentMatchs > $dateDebut and $dateCurrentMatchs < $dateFinale){
+                                $this->treatementDataToMatch($vItems, $vChampionat, $output, $dateDebut, $dateFinale);
+                            }
+
+                        }else{
+                            $this->treatementDataToMatch($vItems, $vChampionat, $output);
                         }
 
-                    }else{
-                        $this->treatementDataToMatch($vItems, $vChampionat, $output);
+
                     }
-
-
                 }
+
                 $output->writeln(" --- End of Championat treatement --- " . $vChampionat->getId());
 
             }
