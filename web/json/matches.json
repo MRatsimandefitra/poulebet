@@ -6,8 +6,8 @@
   "items": {
     "2cef0a0090feff065851922bca160522": {
       "id": "2cef0a0090feff065851922bca160522",
-      "status": "finished",
-      "timestamp_starts": "1471633200",
+      "status": "active",
+      "timestamp_starts": "1473246515",
       "teams": {
         "hosts": {
           "id": "mufc_en",
@@ -52,8 +52,8 @@
     },
     "e7be998e27dc7bc42899d796923b3e0b": {
       "id": "e7be998e27dc7bc42899d796923b3e0b",
-      "status": "finished",
-      "timestamp_starts": "1471692600",
+      "status": "active",
+      "timestamp_starts": "1473246515",
       "teams": {
         "hosts": {
           "id": "scfc_en",
@@ -171,8 +171,8 @@
     },
     "b5d737b4ccad070a7ccae6fa6674d1dd": {
       "id": "b5d737b4ccad070a7ccae6fa6674d1dd",
-      "status": "finished",
-      "timestamp_starts": "1471701600",
+      "status": "active",
+      "timestamp_starts": "1473246515",
       "teams": {
         "hosts": {
           "id": "burnfc_en",
@@ -224,8 +224,8 @@
     },
     "d9e14a27b6833c7166914a280d3bf176": {
       "id": "d9e14a27b6833c7166914a280d3bf176",
-      "status": "finished",
-      "timestamp_starts": "1471701600",
+      "status": "active",
+      "timestamp_starts": "1473246515",
       "teams": {
         "hosts": {
           "id": "swacafc_en",
@@ -270,8 +270,8 @@
     },
     "2363edaa3c382727e298cabc76202c35": {
       "id": "2363edaa3c382727e298cabc76202c35",
-      "status": "finished",
-      "timestamp_starts": "1471701600",
+      "status": "active",
+      "timestamp_starts": "1473246515",
       "teams": {
         "hosts": {
           "id": "thfc_en",

@@ -35,3 +35,19 @@ route_prefix_admin_championat:
     prefix:   /championnats
 
 
+
+list_lot:
+    path:     /list
+    defaults: { _controller: BackAdminBundle:Lots:listLot }
+
+add_lot:
+    path:     /add
+    defaults: { _controller: BackAdminBundle:Lots:addLot }
+
+edit_lot:
+    path:     /edit/{id}
+    defaults: { _controller: BackAdminBundle:Lots:editLot }
+
+remove_lot:
+    path:     /remove/{id}
+    defaults: { _controller: BackAdminBundle:Lots:removeLot }

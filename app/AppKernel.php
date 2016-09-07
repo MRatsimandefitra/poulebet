@@ -54,6 +54,12 @@ class AppKernel extends Kernel
         return dirname(__DIR__).'/var/logs';
     }
 
+    public function getWebDir(){
+        return dirname(__DIR__).'/web';
+    }
+    public function getJsonDir(){
+        return dirname(__DIR__).'/web/json';
+    }
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
         $loader->load($this->getRootDir().'/config/config_'.$this->getEnvironment().'.yml');

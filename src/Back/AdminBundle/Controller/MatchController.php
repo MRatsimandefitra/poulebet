@@ -780,7 +780,8 @@ class MatchController extends ApiController
         $dateFinaleGoalApi = $request->request->get('dateFinaleGoalApi');
         $championat_goal_api = $request->request->get('championat_goal_api');
 
-        $command = new GoalApiMatchsManuelCommand($dateDebutGoalApi, $dateFinaleGoalApi, $championat_goal_api);
+        $command = new GoalApiMatchsManuelCommand();
+
         $command->setContainer($this->container);
         $input = new ArrayInput(array(
             '-ch' => $championat_goal_api,
