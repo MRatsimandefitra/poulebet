@@ -84,11 +84,13 @@ class LotsController extends ApiController
         ));
     }
 
-    public function removeLotsAction($id){
+    public function removeLotsAction($id)
+    {
         $lots = $this->getRepoFormId(self::ENTITY_LOTS, $id);
         $this->remove($lots);
         return $this->redirectToRoute('index_lots');
     }
+
     private function getDroitAdmin($droit)
     {
 

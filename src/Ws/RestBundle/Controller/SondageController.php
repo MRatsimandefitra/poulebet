@@ -33,21 +33,37 @@ class SondageController extends ApiController
         $isVote = $request->request->get('isvote');
         $MatchId = $request->request->get('matchId');
         $currentUser = $this->getRepo(self::ENTITY_UTILISATEUR)->findOneByUserToken($token);
+
+
         $currentMatch = $this->getRepo(self::ENTITY_MATCHS)->find($MatchId);
         try {
-            $voteUtilisateur = new VoteUtilisateur();
+            $voteUtilisateur = $this->getRepo(self::ENTITY_VOTE)->findOneBy(array('utilisateur' =>$currentUser ));
+            $new= false;
+            if(!$voteUtilisateur){
+                $voteUtilisateur = new VoteUtilisateur();
+                $new = true;
+            }
+
             $voteUtilisateur->setMatchs($currentMatch);
             $voteUtilisateur->setUtilisateur($currentUser);
             $voteUtilisateur->setGagnant(false);
             if ($isVote) {
-                $oldVote = $this->getRepo(self::ENTITY_MATCHS)->find($MatchId);
+                $oldVote = $this->getRepo(self::ENTITY_VOTE)->findOneBy(array('matchs' => $MatchId));
+
                 if(!$oldVote){
                     $oldVote = 0;
+                }else{
+                    $oldVote = $oldVote->getVote();
                 }
+
             }
 
             $voteUtilisateur->setVote($oldVote + 1);
-            $this->insert($voteUtilisateur, array('success' => 'success' , 'error' => 'error'));
+            if($new){
+                $this->getEm()->persist($voteUtilisateur);
+            }
+
+            $this->getEm()->flush();
             $result['code_error'] = 0;
             $result['success'] = true;
             $result['error'] = false;
