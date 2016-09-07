@@ -42,13 +42,26 @@ class Lot
     private $nbPointNecessaire;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="description", type="text")
+     */
+    private $description;
+    
+    /**
      * @var string
      *
      * @ORM\Column(name="cheminImage", type="string", length=255)
      */
     private $cheminImage;
 
-
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="createdAt", type="date")
+     */
+    private $createdAt;
+    
     /**
      * Get id
      *
@@ -153,5 +166,53 @@ class Lot
     public function getConcours()
     {
         return $this->concours;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Lot
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     *
+     * @return Lot
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
     }
 }

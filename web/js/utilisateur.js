@@ -24,10 +24,12 @@ $(document).ready(function(){
 function supprimer(msg){
     var response = confirm(msg);
 
-    if(!response){
+    if(response == false){
         return false;
+    }else{
+        return true;
     }
-    return true;
+
 }
 function onSelectChange(value){
     document.getElementById('nbpage').submit();
