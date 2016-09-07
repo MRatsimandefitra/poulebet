@@ -18,6 +18,7 @@ use Api\DBBundle\Entity\Lot;
 use Api\DBBundle\Entity\DroitAdmin;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 
 class LotsController extends ApiController{
@@ -27,6 +28,7 @@ class LotsController extends ApiController{
     const FORM_LOT = 'Api\DBBundle\Form\LotType';
     const FORM_ADMIN_DROIT = 'Api\DBBundle\Form\DroitAdminType';
     const FORM_ADMIN_DROIT_ADD_ROLES = 'Api\DBBundle\Form\DroitAdminRoleType';
+    
     
     public function indexAction(Request $request){
         $lots = $this->getAllEntity(self::ENTITY_LOTS);
@@ -41,10 +43,14 @@ class LotsController extends ApiController{
         $form = $this->formPost(self::FORM_LOT, $lot);
         $form->handleRequest($request);
         if($form->isValid()){
+            $image = $lot->getCheminImage();
+            $dir = $this->get('kernel')->getRootDir().'/../web/upload/';
+            $filename = time().".".$image->guessExtension();
+            $image->move($dir,$filename);
+            $lot->setCheminImage($filename);
             $lot->setCreatedAt(new \DateTime("now"));
             $this->insert($lot);
-            
-            $this->redirect("index_lots");
+            return $this->redirectToRoute("index_lots");
         }
         return $this->render('BackAdminBundle:Lots:add.html.twig', array(
             'form' => $form->createView()));
