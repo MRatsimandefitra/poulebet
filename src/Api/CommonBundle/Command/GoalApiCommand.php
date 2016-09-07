@@ -158,7 +158,7 @@ class GoalApiCommand extends ContainerAwareCommand
         foreach($apiKey as $vApiKey){
             $apiKey = $vApiKey->getApikey();
         }
-        $url = "http://api.xmlscores.com/matches/?c[]=" . implode('&c[]=', $nameChampionat) . "&f=json&open=".$apiKey;
+        $url = "http://api.xmlscores.com/matches/?c[]=" . implode('&c[]=', $nameChampionat) . "&f=json&s=0&l=128&open=".$apiKey;
 //        $url = "http://api.xmlscores.com/matches/?f=json&c[]=eng_pl&c[]=rus_pl&e=1&open=3770d7505de574df4b7d45d88b80027a";
         $content = file_get_contents($url);
 

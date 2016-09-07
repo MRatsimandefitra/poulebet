@@ -48,81 +48,84 @@ class GoalApiMatchsParChampionatCommand extends ContainerAwareCommand {
                 foreach($championat as $vChampionat){
                     $output->writeln('For championat'.$vChampionat->getFullNameChampionat());
                     $data = $this->getUrlByChampionat($vChampionat->getId());
-                    foreach($data['items'] as $vItems){
-                       // var_dump($vItems['teams']); die;
-                        $output->writeln("Treatement of ". $vItems['id']);
-                        $matchs = $em->getRepository(self::ENTITY_MATCH)->find($vItems['id']);
-                        if(!$matchs){
-                            $matchs = new Matchs();
-                        }
-                        $matchs->setStateGoalApi(false);
-                        $matchs->setId($vItems['id']);
-                        $matchs->setStatusMatch($vItems['status']);
-                        $mDate = \DateTime::createFromFormat('Y-m-d h:i', date('Y-m-d h:i', $vItems['timestamp_starts']));
-                        $matchs->setDateMatch($mDate);
-                        // teams visiteur
-                        $teamsVisiteur = $em->getRepository(self::ENTITY_TEAMS)->findOneBy(array('idNameClub' => $vItems['teams']['guests']['id']));
-                        if(!$teamsVisiteur){
-                            $output->writeln('Ajout d\'un nouveau club');
-                            $teamsVisiteur = new Teams();
-                            $teamsVisiteur->setIdNameClub($vItems['teams']['guests']['id']);
-                            $teamsVisiteur->setFullNameClub($vItems['teams']['guests']['fullname']);
-                            $teamsVisiteur->setNomClub($vItems['teams']['guests']['name']);
-                            $teamsVisiteur->setLogo($vItems['teams']['guests']['id']);
-                            $em->persist($teamsVisiteur);
+                    if($data){
+                        foreach($data['items'] as $vItems){
+                            // var_dump($vItems['teams']); die;
+                            $output->writeln("Treatement of ". $vItems['id']);
+                            $matchs = $em->getRepository(self::ENTITY_MATCH)->find($vItems['id']);
+                            if(!$matchs){
+                                $matchs = new Matchs();
+                            }
+                            $matchs->setStateGoalApi(false);
+                            $matchs->setId($vItems['id']);
+                            $matchs->setStatusMatch($vItems['status']);
+                            $mDate = \DateTime::createFromFormat('Y-m-d h:i', date('Y-m-d h:i', $vItems['timestamp_starts']));
+                            $matchs->setDateMatch($mDate);
+                            // teams visiteur
+                            $teamsVisiteur = $em->getRepository(self::ENTITY_TEAMS)->findOneBy(array('idNameClub' => $vItems['teams']['guests']['id']));
+                            if(!$teamsVisiteur){
+                                $output->writeln('Ajout d\'un nouveau club');
+                                $teamsVisiteur = new Teams();
+                                $teamsVisiteur->setIdNameClub($vItems['teams']['guests']['id']);
+                                $teamsVisiteur->setFullNameClub($vItems['teams']['guests']['fullname']);
+                                $teamsVisiteur->setNomClub($vItems['teams']['guests']['name']);
+                                $teamsVisiteur->setLogo($vItems['teams']['guests']['id']);
+                                $em->persist($teamsVisiteur);
+                                $em->flush();
+                            }
+                            $matchs->setTeamsVisiteur($teamsVisiteur);
+                            $matchs->setEquipeVisiteur($teamsVisiteur->getFullNameClub());
+                            // teams domicile
+
+                            $teamsDomicile = $em->getRepository(self::ENTITY_TEAMS)->findOneBy(array('idNameClub' => $vItems['teams']['hosts']['id']));
+                            if(!$teamsDomicile){
+                                $output->writeln('Ajout d\'un nouveau club');
+                                $teamsDomicile = new Teams();
+                                $teamsDomicile->setIdNameClub($vItems['teams']['hosts']['id']);
+                                $teamsDomicile->setFullNameClub($vItems['teams']['hosts']['fullname']);
+                                $teamsDomicile->setNomClub($vItems['teams']['hosts']['name']);
+                                $teamsDomicile->setLogo($vItems['teams']['hosts']['id']);
+                                $em->persist($teamsDomicile);
+                                $em->flush();
+                            }
+
+                            $matchs->setTeamsDomicile($teamsDomicile);
+                            $matchs->setEquipeDomicile($teamsDomicile->getFullNameClub());
+
+                            $matchs->setCheminLogoVisiteur($teamsVisiteur->getIdNameClub());
+                            $matchs->setCheminLogoDomicile($teamsDomicile->getIdNameClub());
+
+                            // score
+                            $mScore = $vItems['score'];
+                            $resultatDomicile = substr($vItems['score'], 0, 1);
+                            $resultatVisiteur = substr($vItems['score'], -1);
+                            $matchs->setResultatVisiteur($resultatVisiteur);
+                            $matchs->setResultatDomicile($resultatDomicile);
+                            $matchs->setScore($mScore);
+                            if(array_key_exists('season', $vItems['details']['contest']) ){
+                                $matchs->setSeason($vItems['details']['contest']['season']);
+                            }
+
+                            $matchs->setChampionat($vChampionat);
+                            if(array_key_exists('current-state', $vItems)){
+                                $matchs->setPeriod($vItems['current-state']['period']);
+                                $matchs->setMinute($vItems['current-state']['minute']);
+                            }
+                            $em->persist($matchs);
                             $em->flush();
-                        }
-                        $matchs->setTeamsVisiteur($teamsVisiteur);
-                        $matchs->setEquipeVisiteur($teamsVisiteur->getFullNameClub());
-                        // teams domicile
-
-                        $teamsDomicile = $em->getRepository(self::ENTITY_TEAMS)->findOneBy(array('idNameClub' => $vItems['teams']['hosts']['id']));
-                        if(!$teamsDomicile){
-                            $output->writeln('Ajout d\'un nouveau club');
-                            $teamsDomicile = new Teams();
-                            $teamsDomicile->setIdNameClub($vItems['teams']['hosts']['id']);
-                            $teamsDomicile->setFullNameClub($vItems['teams']['hosts']['fullname']);
-                            $teamsDomicile->setNomClub($vItems['teams']['hosts']['name']);
-                            $teamsDomicile->setLogo($vItems['teams']['hosts']['id']);
-                            $em->persist($teamsDomicile);
+                            $output->writeln("Treatements of matchs " .$matchs->getId()."was successfull");
+                            $matchs->setStateGoalApi(true);
                             $em->flush();
-                        }
-
-                        $matchs->setTeamsDomicile($teamsDomicile);
-                        $matchs->setEquipeDomicile($teamsDomicile->getFullNameClub());
-
-                        $matchs->setCheminLogoVisiteur($teamsVisiteur->getIdNameClub());
-                        $matchs->setCheminLogoDomicile($teamsDomicile->getIdNameClub());
-
-                        // score
-                        $mScore = $vItems['score'];
-                        $resultatDomicile = substr($vItems['score'], 0, 1);
-                        $resultatVisiteur = substr($vItems['score'], -1);
-                        $matchs->setResultatVisiteur($resultatVisiteur);
-                        $matchs->setResultatDomicile($resultatDomicile);
-                        $matchs->setScore($mScore);
-                        if(array_key_exists('season', $vItems['details']['contest']) ){
-                            $matchs->setSeason($vItems['details']['contest']['season']);
-                        }
-
-                        $matchs->setChampionat($vChampionat);
-                        if(array_key_exists('current-state', $vItems)){
-                            $matchs->setPeriod($vItems['current-state']['period']);
-                            $matchs->setMinute($vItems['current-state']['minute']);
-                        }
-                        $em->persist($matchs);
-                        $em->flush();
-                        $output->writeln("Treatements of matchs " .$matchs->getId()."was successfull");
-                        $matchs->setStateGoalApi(true);
-                        $em->flush();
-                        $mmatchs = $em->getRepository(self::ENTITY_MATCH)->find($matchs->getId());
-                        if(!$mmatchs){
-                            $this->sendErrorEmail('Error to set flux from goal api with matchs'.$mmatchs->getId());
-                        }
-                        if($mmatchs->getStateGoalApi() == false){
-                            $this->sendErrorEmail('Error to set flux from goal api with matchs'.$mmatchs->getId());
+                            $mmatchs = $em->getRepository(self::ENTITY_MATCH)->find($matchs->getId());
+                            if(!$mmatchs){
+                                $this->sendErrorEmail('Error to set flux from goal api with matchs'.$mmatchs->getId());
+                            }
+                            if($mmatchs->getStateGoalApi() == false){
+                                $this->sendErrorEmail('Error to set flux from goal api with matchs'.$mmatchs->getId());
+                            }
                         }
                     }
+
                     $output->writeln(" --- End of Championat treatement --- ".$vChampionat->getId());
 
                 }
@@ -166,7 +169,7 @@ class GoalApiMatchsParChampionatCommand extends ContainerAwareCommand {
         foreach($apiKey as $vApiKey){
             $apiKey = $vApiKey->getApikey();
         }
-        $url = "http://api.xmlscores.com/matches/?c[]=" . implode('&c[]=', $nameChampionat) . "&f=json&open=".$apiKey;
+        $url = "http://api.xmlscores.com/matches/?c[]=" . implode('&c[]=', $nameChampionat) . "&f=json&s=0&l=128&open=".$apiKey;
         $content = file_get_contents($url);
 
         if(!$content){
