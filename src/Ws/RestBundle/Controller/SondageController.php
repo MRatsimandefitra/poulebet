@@ -247,7 +247,7 @@ class SondageController extends ApiController
 
     private function getVoteEquipeByMatch($value,$idMatch){
         $dql = "SELECT v, m from ApiDBBundle:VoteUtilisateur v LEFT JOIN v.matchs m
-                WHERE m.id = :idMatch AND v.vote :vote ";
+                WHERE m.id = :idMatch AND v.vote = :vote ";
         $query = $this->get('doctrine.orm.entity_manager')->createQuery($dql);
         $query->setParameters(array('idMatch' => $idMatch, 'vote' => $value));
         $data = $query->getResult();
