@@ -138,49 +138,85 @@ class SondageController extends ApiController
         $nbTotalVote = count($dataVote) + 1;
         // vote utilisateur en cours
         $currentUser = $this->getRepo(self::ENTITY_UTILISATEUR)->findOneByUserTokenAuth($token);
-        //$currentMatch = $this->getRepo(self::ENTITY_MATCHS)->find($MatchId);
 
-        /*$dataVote = $this->getTotalVote();
-        $nbTotalVote = count($dataVote);
-        foreach ($dataVote as $keyVote => $vVoteItems) {
-            $vote = $vVoteItems->getVote();
-        }*/
+
+        // dat now:
 
         if ($data) {
             foreach ($data as $KeyMatchs => $matchsItems) {
                 $this->getVoteIdUser($matchsItems->getId(), $currentUser->getUserToken());
-                $result['matchs'][] = array(
-                    'id' => $matchsItems->getId(),
-                    'dateMatch' => $matchsItems->getDateMatch(),
-                    'equipeDomicile' => $matchsItems->getEquipeDomicile(),
-                    'equipeVisiteur' => $matchsItems->getEquipeVisiteur(),
 
-                    'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $matchsItems->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
-                    'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $matchsItems->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
-                    'score' => $matchsItems->getScore(),
-                    'scoreDomicile' => substr($matchsItems->getScore(), 0, 1),
-                    'scoreVisiteur' => substr($matchsItems->getScore(), -1, 1),
-                    'status' => $matchsItems->getStatusMatch(),
+                if($matchsItems->getStatusMatch() == 'active'){
+                    $result['matchs'][] = array(
+                        'id' => $matchsItems->getId(),
+                        'dateMatch' => $matchsItems->getDateMatch(),
+                        'equipeDomicile' => $matchsItems->getEquipeDomicile(),
+                        'equipeVisiteur' => $matchsItems->getEquipeVisiteur(),
 
-                    'tempsEcoules' => $matchsItems->getTempsEcoules(),
-                    'live' => ($matchsItems->getStatusMatch() == 'active') ? true : false,
-                    'current-state' => array(
-                        'period' => $matchsItems->getPeriod(),
-                        'minute' => $matchsItems->getMinute()
-                    ),
-                    /*'is_vote' => ($vote)? true : false,*/
-                    /*'vote' => $vote,*/
-                    'vote' => $this->getVoteIdUser($matchsItems->getId(), $token),
-                    'voteTotal' => $this->getTotalVoteParMatch($matchsItems->getId()),
-                    'pourcentage1' => $this->getPourcentage(1, $matchsItems->getId(), $token),
-                    'pourcentageN' => $this->getPourcentage(0, $matchsItems->getId(), $token),
-                    'pourcentage2' => $this->getPourcentage(2,$matchsItems->getId(), $token),
-                    'voteEquipe1' => $this->getVoteEquipeByMatch(1,$matchsItems->getId(), $token),
-                    'voteEquipeN' => $this->getVoteEquipeByMatch(0,$matchsItems->getId(), $token),
-                    'voteEquipe2' => $this->getVoteEquipeByMatch(2,$matchsItems->getId(), $token),
-                    'championat' => $matchsItems->getChampionat()->getId()
+                        'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $matchsItems->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
+                        'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $matchsItems->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
+                        'score' => $matchsItems->getScore(),
+                        'scoreDomicile' => substr($matchsItems->getScore(), 0, 1),
+                        'scoreVisiteur' => substr($matchsItems->getScore(), -1, 1),
+                        'status' => $matchsItems->getStatusMatch(),
 
-                );
+                        'tempsEcoules' => $matchsItems->getTempsEcoules(),
+                        'live' => ($matchsItems->getStatusMatch() == 'active') ? true : false,
+                        'current-state' => array(
+                            'period' => $matchsItems->getPeriod(),
+                            'minute' => $matchsItems->getMinute()
+                        ),
+
+                        /*'is_vote' => ($vote)? true : false,*/
+                        /*'vote' => $vote,*/
+                        'vote' => $this->getVoteIdUser($matchsItems->getId(), $token),
+                        'voteTotal' => $this->getTotalVoteParMatch($matchsItems->getId()),
+                        'pourcentage1' => $this->getPourcentage(1, $matchsItems->getId(), $token),
+                        'pourcentageN' => $this->getPourcentage(0, $matchsItems->getId(), $token),
+                        'pourcentage2' => $this->getPourcentage(2,$matchsItems->getId(), $token),
+                        'voteEquipe1' => $this->getVoteEquipeByMatch(1,$matchsItems->getId(), $token),
+                        'voteEquipeN' => $this->getVoteEquipeByMatch(0,$matchsItems->getId(), $token),
+                        'voteEquipe2' => $this->getVoteEquipeByMatch(2,$matchsItems->getId(), $token),
+                        'championat' => $matchsItems->getChampionat()->getId()
+
+                    );
+
+                }else{
+                    $result['matchs'][] = array(
+                        'id' => $matchsItems->getId(),
+                        'dateMatch' => $matchsItems->getDateMatch(),
+                        'equipeDomicile' => $matchsItems->getEquipeDomicile(),
+                        'equipeVisiteur' => $matchsItems->getEquipeVisiteur(),
+
+                        'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $matchsItems->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
+                        'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $matchsItems->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
+                        'score' => $matchsItems->getScore(),
+                        'scoreDomicile' => substr($matchsItems->getScore(), 0, 1),
+                        'scoreVisiteur' => substr($matchsItems->getScore(), -1, 1),
+                        'status' => $matchsItems->getStatusMatch(),
+
+                        'tempsEcoules' => $matchsItems->getTempsEcoules(),
+                        'live' => ($matchsItems->getStatusMatch() == 'active') ? true : false,
+                        /*'current-state' => array(
+                            'period' => $matchsItems->getPeriod(),
+                            'minute' => $matchsItems->getMinute()
+                        ),*/
+
+                        /*'is_vote' => ($vote)? true : false,*/
+                        /*'vote' => $vote,*/
+                        'vote' => $this->getVoteIdUser($matchsItems->getId(), $token),
+                        'voteTotal' => $this->getTotalVoteParMatch($matchsItems->getId()),
+                        'pourcentage1' => $this->getPourcentage(1, $matchsItems->getId(), $token),
+                        'pourcentageN' => $this->getPourcentage(0, $matchsItems->getId(), $token),
+                        'pourcentage2' => $this->getPourcentage(2,$matchsItems->getId(), $token),
+                        'voteEquipe1' => $this->getVoteEquipeByMatch(1,$matchsItems->getId(), $token),
+                        'voteEquipeN' => $this->getVoteEquipeByMatch(0,$matchsItems->getId(), $token),
+                        'voteEquipe2' => $this->getVoteEquipeByMatch(2,$matchsItems->getId(), $token),
+                        'championat' => $matchsItems->getChampionat()->getId()
+
+                    );
+                }
+
             }
             $result['code_error'] = 0;
             $result['success'] = true;
