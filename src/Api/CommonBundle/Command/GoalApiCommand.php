@@ -53,7 +53,7 @@ class GoalApiCommand extends ContainerAwareCommand
             $championat = $em->getRepository(self::ENTITY_MATCH)->findChampionat($titleChamionat);
             //season
             $season = $vItems['details']['contest']['season'];
-
+            
             if (!$championat) {
                 $output->writeln("new championat -> set championat in databse");
                 $championat = new Championat();
@@ -154,9 +154,9 @@ class GoalApiCommand extends ContainerAwareCommand
         foreach ($data as $k => $v) {
             $nameChampionat[] = $v->getNomChampionat();
         }
-        $apiKey = $em->getRepository('ApiDBBundle:ApiKey')->findAll();
+        $apiKey = $em->getRepository('ApiDBBundle:Mention')->findAll();
         foreach($apiKey as $vApiKey){
-            $apiKey = $vApiKey->getApikey();
+            $apiKey = $vApiKey->getApiKeyGoalapi();
         }
         $url = "http://api.xmlscores.com/matches/?c[]=" . implode('&c[]=', $nameChampionat) . "&f=json&s=0&l=128&open=".$apiKey;
 //        $url = "http://api.xmlscores.com/matches/?f=json&c[]=eng_pl&c[]=rus_pl&e=1&open=3770d7505de574df4b7d45d88b80027a";

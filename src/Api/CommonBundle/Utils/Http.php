@@ -52,8 +52,19 @@ class Http {
         $result = curl_exec ($this->ch);
         if (curl_errno($this->ch))
         {
-            echo 'GCM error: ' . curl_error($this->ch);
+            echo ' error: ' . curl_error($this->ch);
+            return curl_error($this->ch);
         }
         return $result;
+    }
+    public function sendGCMNotification($data){
+        // chargement des paramètres de gcm
+        $apikey = $this->container->getParameter("apikey");
+        $gcm_url_android = $this->container->getParameter("gcm_url_android");
+        $header = 'Authorization: key='.$apikey;
+        $this->setUrl($gcm_url_android);
+        $this->setHeaders($header);
+        $this->setRawPostData(json_encode($data));
+        return $this->execute();
     }
 }

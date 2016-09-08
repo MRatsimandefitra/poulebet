@@ -23,7 +23,9 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand {
     const ENTITY_COUNTRY = 'ApiDBBundle:Country';
     const ENTITY_MATCH = 'ApiDBBundle:Matchs';
     const ENTITY_TEAMS = 'ApiDBBundle:Teams';
+    const ENTITY_UTILISATEUR = 'ApiDBBundle:Utilisateur';
     const ENTITY_ADMIN = 'ApiDBBundle:Admin';
+    const ENTITY_MATCH_EVENT = 'ApiDBBundle:MatchsEvent';
 
 
     protected function configure()
@@ -48,6 +50,7 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand {
                         $mDate = \DateTime::createFromFormat('Y-m-d h:i', date('Y-m-d h:i', $vItems['timestamp_starts']));
                         $dateDebut = \DateTime::createFromFormat('Y-m-d h:i', date('Y-m-d 00:00'));
                         $dataEnd = \DateTime::createFromFormat('Y-m-d h:i', date('Y-m-d h:i', mktime(0, 0,0, date('m'),date('d') + 1, date('Y') )));
+                        
                         if($mDate > $dateDebut and $mDate < $dataEnd){
                             if($vItems['status'] == 'active'){
                                 $output->writeln("Treatement of ". $vItems['id']);
@@ -100,7 +103,7 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand {
                                 $resultatVisiteur = substr($vItems['score'], -1);
                                 $matchs->setResultatVisiteur($resultatVisiteur);
                                 $matchs->setResultatDomicile($resultatDomicile);
-                                $matchs->setScore($mScore);
+          
                                 if(array_key_exists('season', $vItems['details']['contest']) ){
                                     $matchs->setSeason($vItems['details']['contest']['season']);
                                 }
@@ -110,42 +113,102 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand {
                                     $matchs->setPeriod($vItems['current-state']['period']);
                                     $matchs->setMinute($vItems['current-state']['minute']);
                                 }
+                               
+                                $nbLocalME = $em->getRepository(self::ENTITY_MATCH_EVENT)->findByMatchs($matchs);
+                                $nbGoalApiME = $vItems['events'];
+                                
+                                if(count($nbLocalME) < count($nbGoalApiME) && count($nbGoalApiME)>0){
+                                    
+                                    if(count($nbLocalME) == 0){
+                                        foreach($vItems['events'] as $vEventItems ){
+                                            $matchsEvent = new MatchsEvent();
+                                            $matchsEvent->setMinute($vEventItems['minute']);
+                                            $matchsEvent->setMatchs($matchs);
+                                            $matchsEvent->setPlayer($vEventItems['player']);
+                                            if(array_key_exists('score', $vEventItems)){
+                                                $matchsEvent->setScore($vEventItems['score']);
+                                            }
 
-
-                                $em->persist($matchs);
-                                $em->flush();
-
-                                $matchsEvent = new MatchsEvent();
-
-                                foreach($vItems['events'] as $kEvent => $vEventItems){
-                                    $matchsEvent->setMinute($vEventItems['minute']);
-                                    $matchsEvent->setMatchs($matchs);
-                                    $matchsEvent->setPlayer($vEventItems['player']);
-                                    if(array_key_exists('score', $vEventItems)){
-                                        $matchsEvent->setScore($vEventItems['score']);
-                                    }
-
-                                    $matchsEvent->setType($vEventItems['type']);
-                                    if($vEventItems['team'] =='guests'){
-                                        $matchsEvent->setTeams($matchs->getTeamsVisiteur());
-                                        if(array_key_exists('score', $vEventItems)) {
-                                            $matchsEvent->setTeamsScore(substr($vEventItems['score'], -1));
+                                            $matchsEvent->setType($vEventItems['type']);
+                                            if($vEventItems['team'] =='guests'){
+                                                $matchsEvent->setTeams($matchs->getTeamsVisiteur());
+                                                if(array_key_exists('score', $vEventItems)) {
+                                                    $matchsEvent->setTeamsScore(substr($vEventItems['score'], -1));
+                                                }
+                                            }
+                                            if($vEventItems['team'] == 'hosts'){
+                                                $matchsEvent->setTeams($matchs->getTeamsDomicile());
+                                                if(array_key_exists('score', $vEventItems)) {
+                                                    $matchsEvent->setTeamsScore(substr($vEventItems['score'], 0, 1));
+                                                }
+                                            }
+                                            $this->getEm()->persist($matchsEvent);
+                                            $this->getEm()->flush();
+                                            $output->writeln("insert event ".$matchsEvent->getId());
                                         }
-                                    }
-                                    if($vEventItems['team'] == 'hosts'){
-                                        $matchsEvent->setTeams($matchs->getTeamsDomicile());
-                                        if(array_key_exists('score', $vEventItems)) {
-                                            $matchsEvent->setTeamsScore(substr($vEventItems['score'], 0, 1));
+                                    }else {
+                                        $vEventItems = end($vItems['events']);
+                                        $output->writeln(count($nbLocalME)." #".count($nbGoalApiME));
+                                        if($matchs->getScore()!= $vItems['score']){
+                                            // Si score différent alors push notification
+                                            $output->writeln("A notification will be sent");
+                                            
+                                            $users = $em->getRepository(self::ENTITY_UTILISATEUR)->findAll();
+                                            $device_token = array();
+                                      
+                                            foreach($users as $user){
+                                                $devices = $user->getDevices();
+                                                foreach ($devices as $device){
+                                                    //$device_token[] = $device->getToken();
+                                                    array_push($device_token, $device->getToken());
+                                                } 
+                                            }
+                                            $messageData = array(
+                                                "message"=>$vEventItems['player']." a marqué un but à la ".$vEventItems['minute']."° minute. Score:". $vEventItems['score']
+                                            );
+                                            $data = array(
+                                                'registration_ids' => $device_token,
+                                                'data' => $messageData
+                                            );
+                                            $http = $this->getContainer()->get('http');
+                                            $res = $http->sendGCMNotification($data);
+                                            $output->writeln($res);
+
                                         }
+                                        $matchsEvent = new MatchsEvent();
+                                        $matchsEvent->setMinute($vEventItems['minute']);
+                                        $matchsEvent->setMatchs($matchs);
+                                        $matchsEvent->setPlayer($vEventItems['player']);
+                                        if(array_key_exists('score', $vEventItems)){
+                                            $matchsEvent->setScore($vEventItems['score']);
+                                        }
+
+                                        $matchsEvent->setType($vEventItems['type']);
+                                        if($vEventItems['team'] =='guests'){
+                                            $matchsEvent->setTeams($matchs->getTeamsVisiteur());
+                                            if(array_key_exists('score', $vEventItems)) {
+                                                $matchsEvent->setTeamsScore(substr($vEventItems['score'], -1));
+                                            }
+                                        }
+                                        if($vEventItems['team'] == 'hosts'){
+                                            $matchsEvent->setTeams($matchs->getTeamsDomicile());
+                                            if(array_key_exists('score', $vEventItems)) {
+                                                $matchsEvent->setTeamsScore(substr($vEventItems['score'], 0, 1));
+                                            }
+                                        }
+                                        $this->getEm()->persist($matchsEvent);
+                                        $this->getEm()->flush();
+                                        $output->writeln("insert event ".$matchsEvent->getId());
                                     }
-                                    $this->getEm()->persist($matchsEvent);
-                                    $this->getEm()->flush();
-                                    $output->writeln("insert event ".$matchsEvent->getId());
+                                    
+                                    
+                                }
+                                
 
 
                                     /* $matchsEvent->set
                                      $matchsEvent->setTeamsScore();*/
-                                }
+                                
 
                                 $output->writeln("Treatements of matchs " .$matchs->getId()."was successfull");
                                 $matchs->setStateGoalApi(true);
@@ -157,6 +220,10 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand {
                                 if($mmatchs->getStateGoalApi() == false){
                                     $this->sendErrorEmail('Error to set flux from goal api with matchs'.$mmatchs->getId());
                                 }
+                                $matchs->setScore($mScore);
+                                $em->persist($matchs);
+                                $em->flush();
+                                
                             }
                         }
                         // var_dump($vItems['teams']); die;
@@ -182,8 +249,8 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand {
             $apiKey = $vApiKey->getApiKeyGoalapi();
         }
         $url = "http://api.xmlscores.com/matches/?c[]=" . $data->getNomChampionat() . "&f=json&open=".$apiKey;
-   //     $url = $this->getContainer()->get('kernel')->getRootDir().'/../web/json/matches.json';
-       // var_dump($url); die;
+        //$url = $this->getContainer()->get('kernel')->getRootDir().'/../web/json/matches.json';
+
         $content = file_get_contents($url);
         $arrayJson = json_decode($content, true);
         return $arrayJson;

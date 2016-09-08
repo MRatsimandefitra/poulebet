@@ -214,7 +214,10 @@ class Matchs
      */
     private $stateGoalApi;
 
-
+    /**
+    * @ORM\OneToMany(targetEntity="Api\DBBundle\Entity\MatchsEvent", mappedBy="matchs")
+    */
+    private $matchsEvents;
 
 
     /**
@@ -979,5 +982,39 @@ class Matchs
     public function getStateGoalApi()
     {
         return $this->stateGoalApi;
+    }
+
+    /**
+     * Add matchsEvent
+     *
+     * @param \Api\DBBundle\Entity\MatchsEvent $matchsEvent
+     *
+     * @return Matchs
+     */
+    public function addMatchsEvent(\Api\DBBundle\Entity\MatchsEvent $matchsEvent)
+    {
+        $this->matchsEvents[] = $matchsEvent;
+
+        return $this;
+    }
+
+    /**
+     * Remove matchsEvent
+     *
+     * @param \Api\DBBundle\Entity\MatchsEvent $matchsEvent
+     */
+    public function removeMatchsEvent(\Api\DBBundle\Entity\MatchsEvent $matchsEvent)
+    {
+        $this->matchsEvents->removeElement($matchsEvent);
+    }
+
+    /**
+     * Get matchsEvents
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMatchsEvents()
+    {
+        return $this->matchsEvents;
     }
 }
