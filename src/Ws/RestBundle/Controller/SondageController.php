@@ -104,10 +104,8 @@ class SondageController extends ApiController
     }
 
     public function getAllMatchsSondageAction(Request $request){
-
-
-
-        $dqlChampionat = "SELECT m,ch from ApiDBBundle:Matchs m JOIN m.concours co LEFT JOIN m.championat ch GROUP BY ch.nomChampionat";
+        $token = $request->request->get('token');
+        $dqlChampionat = "SELECT m, ch from ApiDBBundle:Matchs m JOIN m.concours co LEFT JOIN m.championat ch GROUP BY ch.nomChampionat";
         $queryChampionat = $this->get('doctrine.orm.entity_manager')->createQuery($dqlChampionat);
         $dataChampionat = $queryChampionat->getResult();
         if($dataChampionat){
@@ -115,6 +113,7 @@ class SondageController extends ApiController
             foreach($dataChampionat as $kChampionat => $vChampionatItems){
 
                 $result['list_championat'][] = array(
+                    'idChampionat' => $vChampionatItems->getChampionat()->getId(),
                     'nomChampionat' => $vChampionatItems->getChampionat()->getNomChampionat(),
                     'fullNameChampionat' => $vChampionatItems->getChampionat()->getFullNameChampionat(),
                     'season' => $vChampionatItems->getChampionat()->getSeason()
@@ -127,7 +126,23 @@ class SondageController extends ApiController
         $queryMatch = $this->get('doctrine.orm.entity_manager')->createQuery($dqlMatch);
         $data = $queryMatch->getResult();
 
-        $dql = "SELECT ";
+        // vote total
+        $dqlVote = "SELECT co from ApiDBBundle:Concours co  LEFT JOIN co.matchs m";
+        $queryVote = $this->get('doctrine.orm.entity_manager')->createQuery($dqlVote);
+        $dataVote = $queryVote->getResult();
+        $nbTotalVote = count($dataVote) + 1;
+        // vote utilisateur en cours
+        $currentUser = $this->getRepo(self::ENTITY_UTILISATEUR)->findOneByUserToken($token);
+        //$currentMatch = $this->getRepo(self::ENTITY_MATCHS)->find($MatchId);
+        $dqlVoteUtilisateur = "SELECT v from ApiDBBundle:VoteUtilisateur v  LEFT JOIN v.utilisateur u
+                               WHERE u.id = :IdUtilisateur ";
+        $queryVoteUtilisateur = $this->get('doctrine.orm.entity_manager')->createQuery($dqlVoteUtilisateur);
+        $queryVoteUtilisateur->setParameter('IdUtilisateur', $currentUser->getId());
+        $dataVote = $queryVoteUtilisateur->getResult();
+        foreach($dataVote as $keyVote => $vVoteItems){
+            $vote = $vVoteItems->getVote();
+        }
+
         if($data){
             foreach($data as $KeyMatchs => $matchsItems){
                 $result['matchs'][] = array(
@@ -149,10 +164,10 @@ class SondageController extends ApiController
                         'period' => $matchsItems->getPeriod(),
                         'minute' => $matchsItems->getMinute()
                     ),
-                    'is_vote' => '',
-                    'vote' => '',
+                    'is_vote' => ($vote)? true : false,
+                    'vote' => $vote,
 
-                    'voteTotal' => '',
+                    'voteTotal' => $nbTotalVote,
                     'pourcentage' => '',
                     'championat' => $matchsItems->getChampionat()->getId()
 
