@@ -109,6 +109,7 @@ class SondageController extends ApiController
     public function postToGetAllMatchsSondageAction(Request $request)
     {
         $token = $request->request->get('token');
+        $matchId = $request->request->get('matchId');
         $dqlChampionat = "SELECT m, ch from ApiDBBundle:Matchs m JOIN m.concours co LEFT JOIN m.championat ch GROUP BY ch.nomChampionat";
         $queryChampionat = $this->get('doctrine.orm.entity_manager')->createQuery($dqlChampionat);
         $dataChampionat = $queryChampionat->getResult();
@@ -174,6 +175,9 @@ class SondageController extends ApiController
                     'pourcentage1' => $this->getPourcentage(1, $matchsItems->getId(), $token),
                     'pourcentageN' => $this->getPourcentage(0, $matchsItems->getId(), $token),
                     'pourcentage2' => $this->getPourcentage(2,$matchsItems->getId(), $token),
+                    'voteEquipe1' => '',
+                    'voteEquipeN' => '',
+                    'voteEquipe2' => '',
                     'championat' => $matchsItems->getChampionat()->getId()
 
                 );
@@ -231,8 +235,12 @@ class SondageController extends ApiController
         $nbPourcentage = count($dataPourcentage);
 
         $totalVote = $this->getTotalVoteParMatch($idMatch);
+        if($totalVote <= 0){
+            $pourcentage = 0;
+        }else{
+            $pourcentage = ($nbPourcentage / $totalVote) * 100;
+        }
 
-        $pourcentage = ($nbPourcentage / $totalVote) * 100;
 
         return $pourcentage;
     }
