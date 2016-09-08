@@ -124,6 +124,12 @@ class Utilisateur
      * @ORM\Column(name="userToken", type="string", length=255, nullable=true)
      */
     private $userToken;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="userTokenAuth", type="string", length=255, nullable=true)
+     */
+    private $userTokenAuth;
 
     /**
      * @var string
@@ -901,5 +907,29 @@ class Utilisateur
     public function getTown()
     {
         return $this->town;
+    }
+
+    /**
+     * Set userTokenAuth
+     *
+     * @param string $userTokenAuth
+     *
+     * @return Utilisateur
+     */
+    public function setUserTokenAuth($userTokenAuth)
+    {
+        $this->userTokenAuth = $userTokenAuth;
+
+        return $this;
+    }
+
+    /**
+     * Get userTokenAuth
+     *
+     * @return string
+     */
+    public function getUserTokenAuth()
+    {
+        return $this->userTokenAuth;
     }
 }

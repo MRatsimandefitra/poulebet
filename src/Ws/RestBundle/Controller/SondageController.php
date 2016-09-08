@@ -33,7 +33,7 @@ class SondageController extends ApiController
         $token = $request->request->get('token');
         $vote = $request->request->get('vote');
         $MatchId = $request->request->get('matchId');
-        $currentUser = $this->getRepo(self::ENTITY_UTILISATEUR)->findOneByUserToken($token);
+        $currentUser = $this->getRepo(self::ENTITY_UTILISATEUR)->findOneByUserTokenAuth($token);
 
         $currentMatch = $this->getRepo(self::ENTITY_MATCHS)->find($MatchId);
         try {
@@ -137,7 +137,7 @@ class SondageController extends ApiController
         $dataVote = $queryVote->getResult();
         $nbTotalVote = count($dataVote) + 1;
         // vote utilisateur en cours
-        $currentUser = $this->getRepo(self::ENTITY_UTILISATEUR)->findOneByUserToken($token);
+        $currentUser = $this->getRepo(self::ENTITY_UTILISATEUR)->findOneByUserTokenAuth($token);
         //$currentMatch = $this->getRepo(self::ENTITY_MATCHS)->find($MatchId);
 
         /*$dataVote = $this->getTotalVote();
@@ -199,7 +199,7 @@ class SondageController extends ApiController
     public function getVoteIdUser($idMatch, $token)
     {
         $dql = "SELECT vo, m, u from ApiDBBundle:VoteUtilisateur vo LEFT JOIN vo.matchs m LEFT JOIN vo.utilisateur u
-                WHERE m.id = :idMatch AND u.userToken = :token";
+                WHERE m.id = :idMatch AND u.userTokenAuth = :token";
         $query = $this->get('doctrine.orm.entity_manager')->createQuery($dql);
         $query->setParameters(array('idMatch' => $idMatch, 'token' => $token));
         $response = $query->getResult();
@@ -253,5 +253,8 @@ class SondageController extends ApiController
         $data = $query->getResult();
         $nb = count($data);
         return $nb;
+    }
+    private function getTokenValid($token){
+        $dql = "SELECT co from ApiDBBundle:Concours co left Join co.";
     }
 }
