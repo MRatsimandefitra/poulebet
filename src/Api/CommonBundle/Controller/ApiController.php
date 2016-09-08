@@ -273,6 +273,6 @@ class ApiController extends Controller
         $http->setHeaders($header);
         $http->setRawPostData(json_encode($data));
         $response = $http->execute();
-        return true;
+        return $response;
     }
 }
