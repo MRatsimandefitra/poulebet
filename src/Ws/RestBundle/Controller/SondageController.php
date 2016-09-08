@@ -127,7 +127,7 @@ class SondageController extends ApiController
         $data = $queryMatch->getResult();
 
         // vote total
-        $dqlVote = "SELECT co from ApiDBBundle:Concours co  LEFT JOIN co.matchs m";
+       /* $dqlVote = "SELECT co from ApiDBBundle:Concours co  LEFT JOIN co.matchs m";
         $queryVote = $this->get('doctrine.orm.entity_manager')->createQuery($dqlVote);
         $dataVote = $queryVote->getResult();
         $nbTotalVote = count($dataVote) + 1;
@@ -138,11 +138,11 @@ class SondageController extends ApiController
                                WHERE u.id = :IdUtilisateur ";
         $queryVoteUtilisateur = $this->get('doctrine.orm.entity_manager')->createQuery($dqlVoteUtilisateur);
         $queryVoteUtilisateur->setParameter('IdUtilisateur', $currentUser->getId());
-        $dataVote = $queryVoteUtilisateur->getResult();
+        $dataVote = $queryVoteUtilisateur->getResult();*/
 
-        foreach($dataVote as $keyVote => $vVoteItems){
+      /*  foreach($dataVote as $keyVote => $vVoteItems){
             $vote = $vVoteItems->getVote();
-        }
+        }*/
 
         if($data){
             foreach($data as $KeyMatchs => $matchsItems){
