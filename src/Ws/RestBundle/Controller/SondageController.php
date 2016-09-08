@@ -103,7 +103,7 @@ class SondageController extends ApiController
         /*return new JsonResponse($return);*/
     }
 
-    public function getAllMatchsSondageAction(Request $request){
+    public function postToGetAllMatchsSondageAction(Request $request){
         $token = $request->request->get('token');
         $dqlChampionat = "SELECT m, ch from ApiDBBundle:Matchs m JOIN m.concours co LEFT JOIN m.championat ch GROUP BY ch.nomChampionat";
         $queryChampionat = $this->get('doctrine.orm.entity_manager')->createQuery($dqlChampionat);

@@ -7,6 +7,6 @@ ws_rest_sondage_update_vote_utilisateur:
     defaults: { _controller: WsRestBundle:Sondage:updateVoteUsers }
     methods: POST
 ws_rest_sondage_get_data:
-    path:     /get-all-matchs
-    defaults: { _controller: WsRestBundle:Sondage:getAllMatchsSondage }
+    path:     /get-matchs
+    defaults: { _controller: WsRestBundle:Sondage:postToGetAllMatchsSondage }
     methods: POST
