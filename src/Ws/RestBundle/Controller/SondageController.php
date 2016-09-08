@@ -139,6 +139,7 @@ class SondageController extends ApiController
         $queryVoteUtilisateur = $this->get('doctrine.orm.entity_manager')->createQuery($dqlVoteUtilisateur);
         $queryVoteUtilisateur->setParameter('IdUtilisateur', $currentUser->getId());
         $dataVote = $queryVoteUtilisateur->getResult();
+
         foreach($dataVote as $keyVote => $vVoteItems){
             $vote = $vVoteItems->getVote();
         }
@@ -168,7 +169,9 @@ class SondageController extends ApiController
                     'vote' => $vote,
 
                     'voteTotal' => $nbTotalVote,
-                    'pourcentage' => '',
+                    'pourcentage1' => '',
+                    'pourcentageN' => '',
+                    'pourcentage2' => '',
                     'championat' => $matchsItems->getChampionat()->getId()
 
                 );
