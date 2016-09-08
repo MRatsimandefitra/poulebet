@@ -165,10 +165,10 @@ class SondageController extends ApiController
                         'period' => $matchsItems->getPeriod(),
                         'minute' => $matchsItems->getMinute()
                     ),
-                    'is_vote' => ($vote)? true : false,
+                 /*   'is_vote' => ($vote)? true : false,
                     'vote' => $vote,
 
-                    'voteTotal' => $nbTotalVote,
+                    'voteTotal' => $nbTotalVote,*/
                     'pourcentage1' => '',
                     'pourcentageN' => '',
                     'pourcentage2' => '',
