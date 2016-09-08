@@ -340,11 +340,17 @@ class MatchController extends ApiController
 
         if(empty($params)){
 
-            $matchs = $this->get('doctrine.orm.entity_manager')->createQuery($dql)->getResult();
+            $queryMatchs = $this->get('doctrine.orm.entity_manager')->createQuery($dql);
         }else{
-            $matchs = $this->get('doctrine.orm.entity_manager')->createQuery($dql)->setParameters($params)->getResult();
+            $queryMatchs = $this->get('doctrine.orm.entity_manager')->createQuery($dql)->setParameters($params);
         }
-
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $queryMatchs, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
+        $matchs = $queryMatchs->getResult();
         //$this->em()->createQuery($dql)->setParameters($params);
        // var_dump($dql); die;
         $championatData = $this->getAllEntity(self::ENTITY_CHAMPIONAT);
@@ -358,7 +364,8 @@ class MatchController extends ApiController
             'championat' => $championatData,
             'country' => $country,
             'searchValue' => $searchValue,
-            'droitAdmin' => $droitAdmin[0]
+            'droitAdmin' => $droitAdmin[0],
+            'pagination' => $pagination
             /*'items' => $items,
             'totalMatch' => $totalMatch,
             'search' => $dateMatchSearch,

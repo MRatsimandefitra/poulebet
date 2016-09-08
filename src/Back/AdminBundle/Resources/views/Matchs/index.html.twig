@@ -103,10 +103,15 @@
             <div class="col-lg-12">
                 <div class="header-table">
                     {#{{ 'Nombre de match'|trans }} : {{ totalMatch }}#}
+                    <div class="count">
+                        {{ pagination.getTotalItemCount }}
+                    </div>
                 </div>
                 <table class="table-list">
                     <tr>
-                        <th>{{ 'Date'|trans }}</th>
+                        <th>
+                            {{ knp_pagination_sortable(pagination, 'Daty', 'm.dateMatch') }}
+                        </th>
                         <th>
                             {{ 'Domicile'|trans }}
                         </th>
