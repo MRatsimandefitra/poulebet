@@ -48,109 +48,115 @@
                             {{ 'Actions'|trans }}
                         </th>
                     </tr>
-                    {% for row in matchs %}
+                    {% if matchs %}
+                        {% for row in matchs %}
 
 
-                        <tr>
-                            <td>{{ row.dateMatch|date('d/m/Y  - h:i') }}</td>
-                            <td>
-                                {#  <div class="flag flag-{{ row.equipeDomicile|lower|slice(0, 2) }}"
-                                       alt="{{ row.equipeDomicile }}"></div>#}
-                                <div>
-                                    <img class="fanion"
-                                         src="{{ asset('images/Flag-foot/'~row.teamsDomicile.idNameClub~'.png') }}"
-                                         alt=""/>
-                                </div>
+                            <tr>
+                                <td>{{ row.dateMatch|date('d/m/Y  - h:i') }}</td>
+                                <td>
+                                    {#  <div class="flag flag-{{ row.equipeDomicile|lower|slice(0, 2) }}"
+                                           alt="{{ row.equipeDomicile }}"></div>#}
+                                    <div>
+                                        <img class="fanion"
+                                             src="{{ asset('images/Flag-foot/'~row.teamsDomicile.idNameClub~'.png') }}"
+                                             alt=""/>
+                                    </div>
 
-                                {{ row.teamsDomicile.fullNameClub }}
-                            </td>
-                            <td>{{ row.score }}</td>
-                            <td>{{ row.season }}</td>
-                            <td>{{ row.championat.fullNameChampionat }}</td>
-                            <td>
-                                <div>
-                                    <img class="fanion"
-                                         src="{{ asset('images/Flag-foot/'~row.teamsVisiteur.idNameClub~'.png') }}"
-                                         alt=""/>
-                                </div>
-                                {{ row.teamsVisiteur.fullNameClub }}
-                            </td>
-                            <td>{{ row.statusMatch }}</td>
-                           {# <td>
+                                    {{ row.teamsDomicile.fullNameClub }}
+                                </td>
+                                <td>{{ row.score }}</td>
+                                <td>{{ row.season }}</td>
+                                <td>{{ row.championat.fullNameChampionat }}</td>
+                                <td>
+                                    <div>
+                                        <img class="fanion"
+                                             src="{{ asset('images/Flag-foot/'~row.teamsVisiteur.idNameClub~'.png') }}"
+                                             alt=""/>
+                                    </div>
+                                    {{ row.teamsVisiteur.fullNameClub }}
+                                </td>
+                                <td>{{ row.statusMatch }}</td>
+                                {# <td>
 
-                                <form method="post" action="">
-                                    <table class="table-matchs">
-                                        <tr>
-                                            <td>
-                                                {% if row.masterProno1 is defined and row.masterProno1 == true %}
-                                                    {{ 'Cote1' }} <input type="checkbox" name="c_host_{{ row.id }}"
-                                                                         checked="true"/> 1
-                                                {% else %}
-                                                    {{ 'Cote1' }} <input type="checkbox" name="c_host_{{ row.id }}"/> 1
+                                     <form method="post" action="">
+                                         <table class="table-matchs">
+                                             <tr>
+                                                 <td>
+                                                     {% if row.masterProno1 is defined and row.masterProno1 == true %}
+                                                         {{ 'Cote1' }} <input type="checkbox" name="c_host_{{ row.id }}"
+                                                                              checked="true"/> 1
+                                                     {% else %}
+                                                         {{ 'Cote1' }} <input type="checkbox" name="c_host_{{ row.id }}"/> 1
 
-                                                {% endif %}
-                                                {% if row.cot1Pronostic is defined and row.cot1Pronostic %}
-                                                    <input class="cote" type="text" name="cote1_{{ row.id }}"
-                                                           value="{{ row.cot1Pronostic }}"/>
+                                                     {% endif %}
+                                                     {% if row.cot1Pronostic is defined and row.cot1Pronostic %}
+                                                         <input class="cote" type="text" name="cote1_{{ row.id }}"
+                                                                value="{{ row.cot1Pronostic }}"/>
 
-                                                {% else %}
-                                                    <input class="cote" type="text" name="cote1_{{ row.id }}"/>
-                                                {% endif %}
-                                            </td>
-                                            <td>
-                                                {% if row.masterPronoN is defined and row.masterPronoN == true %}
-                                                    <input type="checkbox" name="c_neutre_{{ row.id }}"
-                                                           checked="true"/> N
+                                                     {% else %}
+                                                         <input class="cote" type="text" name="cote1_{{ row.id }}"/>
+                                                     {% endif %}
+                                                 </td>
+                                                 <td>
+                                                     {% if row.masterPronoN is defined and row.masterPronoN == true %}
+                                                         <input type="checkbox" name="c_neutre_{{ row.id }}"
+                                                                checked="true"/> N
 
-                                                {% else %}
-                                                    <input type="checkbox" name="c_neutre_{{ row.id }}"/> N
-                                                {% endif %}
+                                                     {% else %}
+                                                         <input type="checkbox" name="c_neutre_{{ row.id }}"/> N
+                                                     {% endif %}
 
-                                                {% if row.coteNPronistic is defined and row.coteNPronistic %}
-                                                    <input class="cote" type="text" name="coten_{{ row.id }}"
-                                                           value="{{ row.coteNPronistic }}"/>
-                                                {% else %}
-                                                    <input class="cote" type="text" name="coten_{{ row.id }}"/>
-                                                {% endif %}
-                                            </td>
-                                            <td>
-                                                {% if row.masterProno2 is defined and row.masterProno2 == true %}
-                                                    <input type="checkbox" name="guest_{{ row.id }}" checked="true"/> 2
-                                                {% else %}
-                                                    <input type="checkbox" name="c_guest_{{ row.id }}"/> 2
-                                                {% endif %}
-                                                <input type="hidden" name="identifiant" value="{{ row.id }}"/>
-                                                {% if row.cote2Pronostic is defined and  row.cote2Pronostic %}
+                                                     {% if row.coteNPronistic is defined and row.coteNPronistic %}
+                                                         <input class="cote" type="text" name="coten_{{ row.id }}"
+                                                                value="{{ row.coteNPronistic }}"/>
+                                                     {% else %}
+                                                         <input class="cote" type="text" name="coten_{{ row.id }}"/>
+                                                     {% endif %}
+                                                 </td>
+                                                 <td>
+                                                     {% if row.masterProno2 is defined and row.masterProno2 == true %}
+                                                         <input type="checkbox" name="guest_{{ row.id }}" checked="true"/> 2
+                                                     {% else %}
+                                                         <input type="checkbox" name="c_guest_{{ row.id }}"/> 2
+                                                     {% endif %}
+                                                     <input type="hidden" name="identifiant" value="{{ row.id }}"/>
+                                                     {% if row.cote2Pronostic is defined and  row.cote2Pronostic %}
 
-                                                    <input class="cote" type="text" name="cote2_{{ row.id }}"
-                                                           value="{{ row.cote2Pronostic }}"/>
+                                                         <input class="cote" type="text" name="cote2_{{ row.id }}"
+                                                                value="{{ row.cote2Pronostic }}"/>
 
-                                                {% else %}
-                                                    <input class="cote" type="text" name="cote2_{{ row.id }}"/>
-                                                {% endif %}
-                                            </td>
+                                                     {% else %}
+                                                         <input class="cote" type="text" name="cote2_{{ row.id }}"/>
+                                                     {% endif %}
+                                                 </td>
 
-                                        </tr>
-                                        <tr>
-                                            <td colspan="3">
-                                                {% if droitAdmin.ajout is defined and droitAdmin.ajout == true or droitAdmin.modification is defined and droitAdmin.modification == true %}
-                                                    <input id="send-prono" type="submit" value="{{ 'Valider' }}"/>
-                                                {% endif %}
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </form>
+                                             </tr>
+                                             <tr>
+                                                 <td colspan="3">
+                                                     {% if droitAdmin.ajout is defined and droitAdmin.ajout == true or droitAdmin.modification is defined and droitAdmin.modification == true %}
+                                                         <input id="send-prono" type="submit" value="{{ 'Valider' }}"/>
+                                                     {% endif %}
+                                                 </td>
+                                             </tr>
+                                         </table>
+                                     </form>
 
-                                &#123;&#35;<a href="#">{{ 'Enregister'|trans }}</a>&#35;&#125;
-                            </td>#}
-                            <td>
-                                <a href="{{ path('modifier_admin_match', {'id': row.id }) }}">{#<span
+                                     &#123;&#35;<a href="#">{{ 'Enregister'|trans }}</a>&#35;&#125;
+                                 </td>#}
+                                <td>
+                                    <a href="{{ path('modifier_admin_match', {'id': row.id }) }}">{#<span
                                             class="glyphicon glyphicon-pencil orange" aria-hidden="true"></span>#} {{ 'Modifier ' }}</a>
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
 
 
-                    {% endfor %}
+                        {% endfor %}
+                    {% else %}
+                            <tr>
+                                <td colspan="8"> {{ 'Aucun matchs \'a été trouvé' }}</td>
+                            </tr>
+                    {% endif %}
                 </table>
                 <div class="space"></div>
             </div>

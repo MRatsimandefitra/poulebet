@@ -21,11 +21,11 @@ class VoteUtilisateur
      * @ORM\ManyToOne(targetEntity="matchIndividuel", cascade={"persist"})
      * @ORM\JoinColumn(name="matchindividuel_id", nullable=true)
      */
-    private $matchIndividuel;
+   /* private $matchIndividuel;*/
 
     /**
      * @ORM\ManyToOne(targetEntity="Utilisateur", cascade={"persist"})
-     * @ORM\JoinColumn(name="utilisateur_id")
+     * @ORM\JoinColumn(name="utilisateur_id", unique=true)
      */
     private $utilisateur;
 
@@ -130,10 +130,10 @@ class VoteUtilisateur
      *
      * @return \Api\DBBundle\Entity\matchIndividuel
      */
-    public function getMatchIndividuel()
+   /* public function getMatchIndividuel()
     {
         return $this->matchIndividuel;
-    }
+    }*/
 
     /**
      * Set utilisateur
@@ -142,13 +142,13 @@ class VoteUtilisateur
      *
      * @return VoteUtilisateur
      */
-    public function setUtilisateur(\Api\DBBundle\Entity\Utilisateur $utilisateur = null)
+    /*public function setUtilisateur(\Api\DBBundle\Entity\Utilisateur $utilisateur = null)
     {
         $this->utilisateur = $utilisateur;
 
         return $this;
     }
-
+*/
     /**
      * Get utilisateur
      *
@@ -181,5 +181,19 @@ class VoteUtilisateur
     public function getMatchs()
     {
         return $this->matchs;
+    }
+
+    /**
+     * Set utilisateur
+     *
+     * @param \Api\DBBundle\Entity\Utilisateur $utilisateur
+     *
+     * @return VoteUtilisateur
+     */
+    public function setUtilisateur(\Api\DBBundle\Entity\Utilisateur $utilisateur = null)
+    {
+        $this->utilisateur = $utilisateur;
+
+        return $this;
     }
 }

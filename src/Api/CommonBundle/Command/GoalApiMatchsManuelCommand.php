@@ -60,11 +60,15 @@ class GoalApiMatchsManuelCommand extends ContainerAwareCommand
 
 
         $argChampionat = $input->getOption('championat');
+
+
         if($argChampionat){
             $championat = $argChampionat;
         }else{
+
             $championat = 'All';
         }
+
         $argDateDebut = $input->getOption('dateDebut');
         if($argDateDebut){
            // var_dump($argDateDebut. ' 00:00:00'); die;
@@ -220,11 +224,24 @@ class GoalApiMatchsManuelCommand extends ContainerAwareCommand
     private function getUrlByChampionat($idChampionat ,$dateDebut = null, $dateFinale = null)
     {
         $em = $this->getEm();
-        $data = $em->getRepository('ApiDBBundle:Championat')->find($idChampionat);
+
+        if($idChampionat){
+            $data = $em->getRepository('ApiDBBundle:Championat')->find($idChampionat);
+            $nameChampionat[] = $data->getNomChampionat();
+        }/*else{
+
+            $data = $em->getRepository('ApiDBBundle:Championat')->findAll();
+            if(is_array($data)){
+                foreach($data as $kData => $vDataItems){
+                    $nameChampionat[] = $vDataItems->getNomChampionat();
+                }
+            }
+        }*/
+
+
         if (!$data) {
             return false;
         }
-
         $apiKey = $em->getRepository('ApiDBBundle:Mention')->findAll();
         foreach ($apiKey as $vApiKey) {
             $apiKey = $vApiKey->getApiKeyGoalapi();
@@ -237,16 +254,17 @@ class GoalApiMatchsManuelCommand extends ContainerAwareCommand
 
         if($dateDebut){
             $timestampDateDebut = strtotime($dateDebut);
-            $url = "http://api.xmlscores.com/matches/?c[]=" . $data->getNomChampionat() . "&f=json&&s=0&l=128&open=" . $apiKey.'&t1='.$timestampDateDebut;
+            $url = "http://api.xmlscores.com/matches/?c[]=" . $data->getNomChampionat()  . "&f=json&e=1&s=0&l=128&open=" . $apiKey.'&t1='.$timestampDateDebut;
         }
         if($dateDebut && $dateFinale){
             $timestampDateDebut = strtotime($dateDebut);
             $timestampDateFinale = strtotime($dateFinale);
-            $url = "http://api.xmlscores.com/matches/?c[]=" . $data->getNomChampionat() . "&f=json&&s=0&l=128&open=" . $apiKey.'&t1='.$timestampDateDebut.'&t2='.$timestampDateFinale;
+            $url = "http://api.xmlscores.com/matches/?c[]=" . $data->getNomChampionat()  . "&f=json&&e=1&s=0&l=128&open=" . $apiKey.'&t1='.$timestampDateDebut.'&t2='.$timestampDateFinale;
         }
         if(!$dateDebut && !$dateFinale){
-            $url = "http://api.xmlscores.com/matches/?c[]=" . $data->getNomChampionat() . "&f=json&&s=0&l=128&open=" . $apiKey;
+            $url = "http://api.xmlscores.com/matches/?c[]=" . $data->getNomChampionat() . "&f=json&e=1&s=0&l=128&open=" . $apiKey;
         }
+     //   var_dump($url); die;
         $content = file_get_contents($url);
 
         $arrayJson = json_decode($content, true);

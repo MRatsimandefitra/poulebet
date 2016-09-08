@@ -250,6 +250,7 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand {
         }
         $url = "http://api.xmlscores.com/matches/?c[]=" . $data->getNomChampionat() . "&f=json&open=".$apiKey;
         //$url = $this->getContainer()->get('kernel')->getRootDir().'/../web/json/matches.json';
+
         $content = file_get_contents($url);
         $arrayJson = json_decode($content, true);
         return $arrayJson;
@@ -270,8 +271,8 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand {
             $apiKey = $vApiKey->getApikey();
         }
 
-        $url = "http://api.xmlscores.com/matches/?c[]=" . implode('&c[]=', $nameChampionat) . "&f=json&e=1&s=0&l=128&open=".$apiKey;
-        //$url = $this->getContainer()->get('kernel')->getRootDir().'/../web/json/matches.json';
+      //  $url = "http://api.xmlscores.com/matches/?c[]=" . implode('&c[]=', $nameChampionat) . "&f=json&e=1&s=0&l=128&open=".$apiKey;
+        $url = $this->getContainer()->get('kernel')->getRootDir().'/../web/json/matches.json';
         $content = file_get_contents($url);
 
         if(!$content){
