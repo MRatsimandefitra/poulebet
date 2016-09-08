@@ -9,6 +9,7 @@ use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+
 class SondageController extends ApiController
 {
     const ENTITY_UTILISATEUR = 'ApiDBBundle:Utilisateur';
@@ -36,9 +37,9 @@ class SondageController extends ApiController
 
         $currentMatch = $this->getRepo(self::ENTITY_MATCHS)->find($MatchId);
         try {
-            $voteUtilisateur = $this->getRepo(self::ENTITY_VOTE)->findOneBy(array('utilisateur' =>$currentUser ));
-            $new= false;
-            if(!$voteUtilisateur){
+            $voteUtilisateur = $this->getRepo(self::ENTITY_VOTE)->findOneBy(array('utilisateur' => $currentUser, 'matchs' => $currentMatch));
+            $new = false;
+            if (!$voteUtilisateur) {
                 $voteUtilisateur = new VoteUtilisateur();
                 $new = true;
             }
@@ -47,7 +48,7 @@ class SondageController extends ApiController
             $voteUtilisateur->setUtilisateur($currentUser);
             $voteUtilisateur->setGagnant(false);
             $voteUtilisateur->setVote($vote);
-            if($new){
+            if ($new) {
                 $this->getEm()->persist($voteUtilisateur);
             }
             $this->getEm()->flush();
@@ -73,7 +74,8 @@ class SondageController extends ApiController
      * )
      * @param Request $request
      */
-    public function updateVoteUsersAction(Request $request){
+    public function updateVoteUsersAction(Request $request)
+    {
 
     }
 
@@ -82,35 +84,37 @@ class SondageController extends ApiController
      *      description = "Listes des matchs dans sondage, a noter que les matchs sont des matchs issue des match dans les concours
      * )
      */
-    public function getAllSondageAction(Request $request){
+    public function getAllSondageAction(Request $request)
+    {
 
         die('okok');
-       /* $dqlMatchConcour = "SELECT m from ApiDBBundle:Matchs m ";
-        $query = $this->get('doctrine.orm.entity_manager')->createQuery($dqlMatchConcour);
-        $data = $query->getResult();
+        /* $dqlMatchConcour = "SELECT m from ApiDBBundle:Matchs m ";
+         $query = $this->get('doctrine.orm.entity_manager')->createQuery($dqlMatchConcour);
+         $data = $query->getResult();
 
-        $return = array();
-        if($data){
-            foreach($data as $kItems => $vItems){
-                var_dump($vItems);
-            }
-        }else{
-            $result['code_error'] = 2;
-            $result['success'] = false;
-            $result['error'] = true;
-            $result['message'] = "Error";
-        }*/
+         $return = array();
+         if($data){
+             foreach($data as $kItems => $vItems){
+                 var_dump($vItems);
+             }
+         }else{
+             $result['code_error'] = 2;
+             $result['success'] = false;
+             $result['error'] = true;
+             $result['message'] = "Error";
+         }*/
         /*return new JsonResponse($return);*/
     }
 
-    public function postToGetAllMatchsSondageAction(Request $request){
+    public function postToGetAllMatchsSondageAction(Request $request)
+    {
         $token = $request->request->get('token');
         $dqlChampionat = "SELECT m, ch from ApiDBBundle:Matchs m JOIN m.concours co LEFT JOIN m.championat ch GROUP BY ch.nomChampionat";
         $queryChampionat = $this->get('doctrine.orm.entity_manager')->createQuery($dqlChampionat);
         $dataChampionat = $queryChampionat->getResult();
-        if($dataChampionat){
+        if ($dataChampionat) {
 
-            foreach($dataChampionat as $kChampionat => $vChampionatItems){
+            foreach ($dataChampionat as $kChampionat => $vChampionatItems) {
 
                 $result['list_championat'][] = array(
                     'idChampionat' => $vChampionatItems->getChampionat()->getId(),
@@ -127,25 +131,23 @@ class SondageController extends ApiController
         $data = $queryMatch->getResult();
 
         // vote total
-       /* $dqlVote = "SELECT co from ApiDBBundle:Concours co  LEFT JOIN co.matchs m";
+        $dqlVote = "SELECT co from ApiDBBundle:Concours co  LEFT JOIN co.matchs m";
         $queryVote = $this->get('doctrine.orm.entity_manager')->createQuery($dqlVote);
         $dataVote = $queryVote->getResult();
         $nbTotalVote = count($dataVote) + 1;
         // vote utilisateur en cours
         $currentUser = $this->getRepo(self::ENTITY_UTILISATEUR)->findOneByUserToken($token);
         //$currentMatch = $this->getRepo(self::ENTITY_MATCHS)->find($MatchId);
-        $dqlVoteUtilisateur = "SELECT v from ApiDBBundle:VoteUtilisateur v  LEFT JOIN v.utilisateur u
-                               WHERE u.id = :IdUtilisateur ";
-        $queryVoteUtilisateur = $this->get('doctrine.orm.entity_manager')->createQuery($dqlVoteUtilisateur);
-        $queryVoteUtilisateur->setParameter('IdUtilisateur', $currentUser->getId());
-        $dataVote = $queryVoteUtilisateur->getResult();*/
 
-      /*  foreach($dataVote as $keyVote => $vVoteItems){
+        /*$dataVote = $this->getTotalVote();
+        $nbTotalVote = count($dataVote);
+        foreach ($dataVote as $keyVote => $vVoteItems) {
             $vote = $vVoteItems->getVote();
         }*/
 
-        if($data){
-            foreach($data as $KeyMatchs => $matchsItems){
+        if ($data) {
+            foreach ($data as $KeyMatchs => $matchsItems) {
+                $this->getVoteIdUser($matchsItems->getId(), $currentUser->getUserToken());
                 $result['matchs'][] = array(
                     'id' => $matchsItems->getId(),
                     'dateMatch' => $matchsItems->getDateMatch(),
@@ -165,13 +167,13 @@ class SondageController extends ApiController
                         'period' => $matchsItems->getPeriod(),
                         'minute' => $matchsItems->getMinute()
                     ),
-                 /*   'is_vote' => ($vote)? true : false,
-                    'vote' => $vote,
-
-                    'voteTotal' => $nbTotalVote,*/
-                    'pourcentage1' => '',
-                    'pourcentageN' => '',
-                    'pourcentage2' => '',
+                    /*'is_vote' => ($vote)? true : false,*/
+                    /*'vote' => $vote,*/
+                    'vote' => $this->getVoteIdUser($matchsItems->getId(), $token),
+                    'voteTotal' => $this->getTotalVoteParMatch($matchsItems->getId()),
+                    'pourcentage1' => $this->getPourcentage(1, $matchsItems->getId(), $token),
+                    'pourcentageN' => $this->getPourcentage(0, $matchsItems->getId(), $token),
+                    'pourcentage2' => $this->getPourcentage(2,$matchsItems->getId(), $token),
                     'championat' => $matchsItems->getChampionat()->getId()
 
                 );
@@ -180,7 +182,7 @@ class SondageController extends ApiController
             $result['success'] = true;
             $result['error'] = true;
             $result['message'] = "Sucess";
-        }else{
+        } else {
             $result['code_error'] = 2;
             $result['success'] = false;
             $result['error'] = true;
@@ -188,5 +190,50 @@ class SondageController extends ApiController
         }
 
         return new JsonResponse($result);
+    }
+
+    public function getVoteIdUser($idMatch, $token)
+    {
+        $dql = "SELECT vo, m, u from ApiDBBundle:VoteUtilisateur vo LEFT JOIN vo.matchs m LEFT JOIN vo.utilisateur u
+                WHERE m.id = :idMatch AND u.userToken = :token";
+        $query = $this->get('doctrine.orm.entity_manager')->createQuery($dql);
+        $query->setParameters(array('idMatch' => $idMatch, 'token' => $token));
+        $response = $query->getResult();
+        if ($response) {
+            foreach ($response as $kVote => $voteItems) {
+                $result = $voteItems->getVote();
+            }
+        } else {
+            $result = null;
+        }
+        return $result;
+
+    }
+
+    private function getTotalVoteParMatch($idMatch)
+    {
+        $dqlVoteUtilisateur = "SELECT v, m from ApiDBBundle:VoteUtilisateur v LEFT JOIN v.matchs m WHERE m.id = :idmatch";
+        $queryVoteUtilisateur = $this->get('doctrine.orm.entity_manager')->createQuery($dqlVoteUtilisateur);
+        $queryVoteUtilisateur->setParameter('idmatch', $idMatch);
+        $dataVote = $queryVoteUtilisateur->getResult();
+        $result = count($dataVote);
+        return $result;
+    }
+
+    private function getPourcentage($value, $idMatch, $token = null)
+    {
+        $dqlPourcentage = "SELECT vo, m, u from ApiDBBundle:VoteUtilisateur vo LEFT JOIN vo.matchs m LEFT JOIN vo.utilisateur u
+                           WHERE vo.vote = :vote AND m.id = :idMatch";
+        $queryPourcentage = $this->get('doctrine.orm.entity_manager')->createQuery($dqlPourcentage);
+        //$queryPourcentage->setParameter('vote', $value);
+         $queryPourcentage->setParameters(array('vote' => $value, 'idMatch' => $idMatch/*, 'token' => $token*/));
+        $dataPourcentage = $queryPourcentage->getResult();
+        $nbPourcentage = count($dataPourcentage);
+
+        $totalVote = $this->getTotalVoteParMatch($idMatch);
+
+        $pourcentage = ($nbPourcentage / $totalVote) * 100;
+
+        return $pourcentage;
     }
 }
