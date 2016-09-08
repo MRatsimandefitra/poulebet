@@ -175,9 +175,9 @@ class SondageController extends ApiController
                     'pourcentage1' => $this->getPourcentage(1, $matchsItems->getId(), $token),
                     'pourcentageN' => $this->getPourcentage(0, $matchsItems->getId(), $token),
                     'pourcentage2' => $this->getPourcentage(2,$matchsItems->getId(), $token),
-                    'voteEquipe1' => '',
-                    'voteEquipeN' => '',
-                    'voteEquipe2' => '',
+                    'voteEquipe1' => $this->getVoteEquipeByMatch(1,$matchsItems->getId(), $token),
+                    'voteEquipeN' => $this->getVoteEquipeByMatch(0,$matchsItems->getId(), $token),
+                    'voteEquipe2' => $this->getVoteEquipeByMatch(2,$matchsItems->getId(), $token),
                     'championat' => $matchsItems->getChampionat()->getId()
 
                 );
@@ -243,5 +243,15 @@ class SondageController extends ApiController
 
 
         return $pourcentage;
+    }
+
+    private function getVoteEquipeByMatch($value,$idMatch){
+        $dql = "SELECT v, m from ApiDBBundle:VoteUtilisateur v LEFT JOIN v.matchs m
+                WHERE m.id = :idMatch AND v.vote :vote ";
+        $query = $this->get('doctrine.orm.entity_manager')->createQuery($dql);
+        $query->setParameters(array('idMatch' => $idMatch, 'vote' => $value));
+        $data = $query->getResult();
+        $nb = count($data);
+        return $nb;
     }
 }
