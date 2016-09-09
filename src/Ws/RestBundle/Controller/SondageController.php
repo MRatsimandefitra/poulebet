@@ -142,7 +142,7 @@ class SondageController extends ApiController
 
         // dat now:
 
-        if ($data) {
+        if ($data && $currentUser) {
             foreach ($data as $KeyMatchs => $matchsItems) {
                 $this->getVoteIdUser($matchsItems->getId(), $currentUser->getUserToken());
 
