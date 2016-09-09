@@ -88,11 +88,8 @@ class GoalApiMatchsManuelCommand extends ContainerAwareCommand
         }else{
          //   $dateFinale = date('Y-m-d 23:59:59');
            // $dateFinale = date('Y-m-d 23:59:59',  strtotime($argDateDebut. ' 23:59:59'));
-            if($dateDebut){
-                $dateFinale = date('Y-m-d 23:59:59',  strtotime($argDateDebut. ' 23:59:59'));
-            }else{
+
                 $dateFinale = null;
-            }
 
         }
 
@@ -114,6 +111,7 @@ class GoalApiMatchsManuelCommand extends ContainerAwareCommand
             foreach ($championat as $vChampionat) {
                 $output->writeln('For championat' . $vChampionat->getFullNameChampionat());
                 $data = $this->getUrlByChampionat($vChampionat->getId(), $dateDebut, $dateFinale);
+
                 if($data){
                     foreach ($data['items'] as $vItems) {
                         // var_dump($vItems['teams']); die;
@@ -129,6 +127,8 @@ class GoalApiMatchsManuelCommand extends ContainerAwareCommand
                             $dateCurrentMatchs = date('Y-m-d h:i:s', $vItems['timestamp_starts']);
                             if($dateCurrentMatchs > $dateDebut and $dateCurrentMatchs < $dateFinale){
                                 $this->treatementDataToMatch($vItems, $vChampionat, $output, $dateDebut, $dateFinale);
+                            }elseif($dateCurrentMatchs > $dateDebut && !$dateFinale){
+                                $this->treatementDataToMatch($vItems, $vChampionat, $output, $dateDebut);
                             }
 
                         }else{
@@ -228,16 +228,7 @@ class GoalApiMatchsManuelCommand extends ContainerAwareCommand
         if($idChampionat){
             $data = $em->getRepository('ApiDBBundle:Championat')->find($idChampionat);
             $nameChampionat[] = $data->getNomChampionat();
-        }/*else{
-
-            $data = $em->getRepository('ApiDBBundle:Championat')->findAll();
-            if(is_array($data)){
-                foreach($data as $kData => $vDataItems){
-                    $nameChampionat[] = $vDataItems->getNomChampionat();
-                }
-            }
-        }*/
-
+        }
 
         if (!$data) {
             return false;
@@ -252,7 +243,7 @@ class GoalApiMatchsManuelCommand extends ContainerAwareCommand
         }
 
 
-        if($dateDebut){
+        if($dateDebut && !$dateFinale){
             $timestampDateDebut = strtotime($dateDebut);
             $url = "http://api.xmlscores.com/matches/?c[]=" . $data->getNomChampionat()  . "&f=json&e=1&s=0&l=128&open=" . $apiKey.'&t1='.$timestampDateDebut;
         }
@@ -264,10 +255,10 @@ class GoalApiMatchsManuelCommand extends ContainerAwareCommand
         if(!$dateDebut && !$dateFinale){
             $url = "http://api.xmlscores.com/matches/?c[]=" . $data->getNomChampionat() . "&f=json&e=1&s=0&l=128&open=" . $apiKey;
         }
-     //   var_dump($url); die;
         $content = file_get_contents($url);
 
         $arrayJson = json_decode($content, true);
+
         return $arrayJson;
     }
 

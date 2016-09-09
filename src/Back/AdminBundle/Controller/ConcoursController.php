@@ -85,26 +85,77 @@ class ConcoursController extends ApiController {
         $championat = $this->getAllEntity(self::ENTITY_CHAMPIONAT);
         $pays = $this->getAllEntity(self::ENTITY_TEAMS_PAYS);
 
-        $dql ="SELECT m, conc from ApiDBBundle:Matchs m
-              LEFT JOIN m.concours conc 
-              LEFT JOIN m.championat c 
+        $dql ="SELECT m, conc, c from ApiDBBundle:Matchs m
+              LEFT JOIN m.concours conc
+              LEFT JOIN m.championat c
               "
               ;
+        $query = $this->get('doctrine.orm.entity_manager')->createQuery($dql);
+        $result = $query->getResult();
+
         $where = array();
         $params = array();
         $searchValue = array();
 
-        if($request->get('date_match')){
-            $dateMatch = $request->get('date_match');
+        if($request->get('date_match_debut') && $request->get('date_match_finale')){
+
+            $dateDebut = $request->get('date_match_debut');
+            $where[] = "m.dateMatch BETWEEN :dateStart AND :dateEnd";
+            $dateStart = $dateDebut.' 00:00:00';
+
+            $dateFinale = $request->get('date_match_finale');
+            $dateEnd = $dateFinale. ' 23:59:59';
+
+            $params["dateStart"] = $dateStart;
+            $params["dateEnd"] = $dateEnd;
+            $searchValue['date_match_debut'] = $dateStart;
+            $searchValue['date_match_finale'] = $dateEnd;
+
+            $tmpDateDebut = new \DateTime('now');
+            $tmpDateDebut->modify('next monday');
+            $tmpDateDebut = $tmpDateDebut->format('Y-m-d h:i:s');
+            if($tmpDateDebut == $dateStart){
+                $searchValue['date_match_debut'] = $dateStart;
+            }
+
+
+            // date finale
+            $tmpDateFinale = new \DateTime($dateDebut);
+            $tmpDateFinale->modify('next sunday');
+            $tmpDateFinale = $dateFinale->format('Y-m-d');
+            if($tmpDateFinale == $dateEnd){
+                $searchValue['date_match_finale'] = $dateEnd;
+            }
+
+
+        }
+
+
+        /*if($request->get('date_match_debut') && !$request->get('date_match_finale')){
+            $dateMatch = $request->get('date_match_debut');
+            $where[] = "m.dateMatch BETWEEN :dateStart AND :dateEnd";
+            $dateStart = $dateMatch.' 00:00:00';
+
+            $dateEnd = new \DateTime($dateStart);
+            $dateEnd->modify('next sunday');
+            $dateEnd = $dateEnd->format('Y-m-d');
+            $dateEnd = $dateEnd. ' 23:59:59';
+
+            $params["dateStart"] = $dateStart;
+            $params["dateEnd"] = $dateEnd;
+            $searchValue['date_match_debut'] = $dateMatch;
+        }
+        if($request->get('date_match_finale') ){
+            $dateMatch = $request->get('date_match_finale');
             $where[] = "m.dateMatch BETWEEN :dateStart AND :dateEnd";
             $dateStart = $dateMatch.' 00:00:00';
             $dateEnd = $dateMatch. ' 23:59:59';
 
             $params["dateStart"] = $dateStart;
             $params["dateEnd"] = $dateEnd;
-            $searchValue['date_match'] = $dateMatch;
+            $searchValue['date_match_debut'] = $dateMatch;
         }
-
+        */
         # champinat seul
         if($request->get('championat_match')){
 
