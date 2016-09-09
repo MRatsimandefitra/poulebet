@@ -168,13 +168,21 @@ class MatchController extends ApiController
         $query = $this->get('doctrine.orm.entity_manager')->createQuery($dqli);
         $country = $query->getResult();
 
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $matchs, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
+
         $droitAdmin = $this->getDroitAdmin('Matchs');
         return $this->render('BackAdminBundle:Matchs:indexMatchs.html.twig', array(
             'matchs' => $matchs,
             'championat' => $championatData,
             'country' => $country,
             'searchValue' => $searchValue,
-            'droitAdmin' => $droitAdmin[0]
+            'droitAdmin' => $droitAdmin[0],
+            'pagination' => $pagination
 
         ));
 

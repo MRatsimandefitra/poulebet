@@ -289,6 +289,7 @@ class SondageController extends ApiController
             $pourcentage = 0;
         }else{
             $pourcentage = ($nbPourcentage / $totalVote) * 100;
+            $pourcentage = round($pourcentage,2);
         }
 
 

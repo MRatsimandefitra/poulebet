@@ -273,3 +273,24 @@ span.span-title{
     width:50px;
     height:50px;
 }
+div.pagination{
+
+}
+div.pagination span {
+    padding: 10px ;
+    background-color: #525475;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 300;
+}
+div.pagination span a{
+    color: #ffffff;
+}
+div.pagination span.current{
+    background-color: #ffffff;
+    color: #555;
+
+}
+div.pagination span.last{
+    background-color: darkorange;
+}

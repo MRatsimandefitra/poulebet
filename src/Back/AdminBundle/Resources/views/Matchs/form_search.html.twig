@@ -1,6 +1,6 @@
 <div class="col-lg-12">
     <div class="search-match">
-        <form action="" method="get">
+
 
             {# {% if searchValue.date_match is defined %}
                  {{ "Date"|trans }} : <input type="text" name="date_match" id="datepic"
@@ -8,19 +8,110 @@
              {% else %}
                  {{ "Date"|trans }} : <input type="text" name="date_match" id="datepic" placeholder="{{ 'Date'|trans }}"/>
              {% endif %}#}
-            {% if searchValue.dateDebut is defined %}
-                {{ "Date Début"|trans }} :   <input class="datepic" type="text" name="dateDebut"
-                                                    value="{{ searchValue.dateDebut }}"/>
-            {% else %}
-                {{ "Date Début"|trans }} :   <input class="datepic" type="text" name="dateDebut"/>
-            {% endif %}
+            <div class="col-lg-4">
+                <form action="" method="get">
+                    <div class="col-lg-4">
+                        {% if searchValue.dateDebut is defined %}
+                            {{ "Date Début"|trans }} :   <input class="datepic" type="text" name="dateDebut"
+                                                                value="{{ searchValue.dateDebut }}"/>
+                        {% else %}
+                            {{ "Date Début"|trans }} :   <input class="datepic" type="text" name="dateDebut"/>
+                        {% endif %}
+                    </div>
+                    <div class="col-lg-8">
+                        {{ "Championat"|trans }} :
+                        <select class="championat" name="championat_match" id="">
 
-            {% if searchValue.dateFinale is defined %}
-                {{ "Date Finale"|trans }} : <input class="datepic" type="text" name=""
-                                                   value="{{ searchValue.dateFinale }}"/>
-            {% else %}
-                {{ "Date Finale"|trans }} : <input class="datepic" type="text" name="dateFinale"/>
-            {% endif %}
+                            {#{{ searchValue.championat_match }}#}
+                            {% if searchValue.championat_match is defined %}
+                                <option value="{{ searchValue.championat_match }}">{{ searchValue.championat_match }}</option>
+                                {% for rowchampinat in championat %}
+
+                                    {% if rowchampinat.fullNameChampionat != searchValue.championat_match %}
+                                        <option value="{{ rowchampinat.fullNameChampionat }}">{{ rowchampinat.fullNameChampionat }}</option>
+                                    {% endif %}
+
+                                {% endfor %}
+                                <option value=""></option>
+                            {% else %}
+                                <option value="" disabled selected>{{ 'Choisir championnat' }}</option>
+                                {% for rowchampinat in championat %}
+
+                                    <option value="{{ rowchampinat.fullNameChampionat }}">{{ rowchampinat.fullNameChampionat }}</option>
+
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                    </div>
+                    <div class="col-lg-4">
+                        {% if searchValue.dateFinale is defined %}
+                            {{ "Date Finale"|trans }} : <input class="datepic" type="text" name=""
+                                                               value="{{ searchValue.dateFinale }}"/>
+                        {% else %}
+                            {{ "Date Finale"|trans }} : <input class="datepic" type="text" name="dateFinale"/>
+                        {% endif %}
+                    </div>
+                    <div class="col-lg-8">
+                        {{ "Pays" }}
+                        <select class="pays" name="pays_match" id="">
+
+                            {% if searchValue.pays_match is defined %}
+                                <option value="{{ searchValue.pays_match }}">{{ searchValue.pays_match }}</option>
+                                {% for rowCountry in country %}
+
+                                    {% if rowCountry.pays != searchValue.pays_match %}
+                                        <option value="{{ rowCountry.pays }}"> {{ rowCountry.pays }}  </option>
+                                    {% endif %}
+                                {% endfor %}
+
+                            {% else %}
+                                <option value="" disabled selected>{{ 'Choisir un pays' }}</option>
+                                {% for rowCountry in country %}
+                                    <option value="{{ rowCountry.pays }}"> {{ rowCountry.pays }}  </option>
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                    </div>
+
+                <input type="submit" class="searh-btn-match" value="{{ 'Chercher'|trans }}"/>
+                <a href="{{ path('index_admin_match') }}">{{ 'Annuler Filtre' }}<span class="glyphicon glyphicon-remove red" aria-hidden="true"></span></a>
+
+                        </form>
+            </div>
+            <div class="col-lg-6">
+                <div class="search-flux-api">
+                    <form action="{{ path('update_matchs_from_goal_api') }}" method="post" >
+                        {{ "Date Début"|trans }} :   <input class="datepic" type="text" name="dateDebutGoalApi"
+                                                            value="{#{{ searchValue.dateDebutGoalApi }}#}"/>
+                        {{ "Date Finale"|trans }} :   <input class="datepic" type="text" name="dateFinaleGoalApi"
+                                                             value="{#{{ searchValue.dateDebutGoalApi }}#}"/>
+                        <select class="championat" name="championat_goal_api" id="">
+
+                            {#{{ searchValue.championat_match }}#}
+                            {% if searchValue.championat_match is defined %}
+                                <option value="{{ searchValue.championat_match }}">{{ searchValue.championat_match }}</option>
+                                {% for rowchampinat in championat %}
+
+                                    {% if rowchampinat.fullNameChampionat != searchValue.championat_match %}
+                                        <option value="{{ rowchampinat.fullNameChampionat }}">{{ rowchampinat.fullNameChampionat }}</option>
+                                    {% endif %}
+
+                                {% endfor %}
+                                <option value=""></option>
+                            {% else %}
+                                <option value="" disabled selected>{{ 'Choisir championnat' }}</option>
+                                {% for rowchampinat in championat %}
+
+                                    <option value="{{ rowchampinat.fullNameChampionat }}">{{ rowchampinat.fullNameChampionat }}</option>
+
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                        <input type="submit" class="searh-btn-match" value="{{ 'Check GOAL API'|trans }}"/>
+
+                    </form>
+                </div>
+            </div>
 
 
             {# {% if searchValue.time_match is defined %}
@@ -29,83 +120,7 @@
                  {{ 'Heure'|trans }}: <input type="text" name="time_match" id="timepic" placeholder="{{ 'Heure'|trans }}"/>
              {% endif %}#}
 
-            <select class="championat" name="championat_match" id="">
 
-                {#{{ searchValue.championat_match }}#}
-                {% if searchValue.championat_match is defined %}
-                    <option value="{{ searchValue.championat_match }}">{{ searchValue.championat_match }}</option>
-                    {% for rowchampinat in championat %}
-
-                        {% if rowchampinat.fullNameChampionat != searchValue.championat_match %}
-                            <option value="{{ rowchampinat.fullNameChampionat }}">{{ rowchampinat.fullNameChampionat }}</option>
-                        {% endif %}
-
-                    {% endfor %}
-                    <option value=""></option>
-                {% else %}
-                    <option value="" disabled selected>{{ 'Choisir championnat' }}</option>
-                    {% for rowchampinat in championat %}
-
-                        <option value="{{ rowchampinat.fullNameChampionat }}">{{ rowchampinat.fullNameChampionat }}</option>
-
-                    {% endfor %}
-                {% endif %}
-            </select>
-
-            <select class="pays" name="pays_match" id="">
-
-                {% if searchValue.pays_match is defined %}
-                    <option value="{{ searchValue.pays_match }}">{{ searchValue.pays_match }}</option>
-                    {% for rowCountry in country %}
-
-                        {% if rowCountry.pays != searchValue.pays_match %}
-                            <option value="{{ rowCountry.pays }}"> {{ rowCountry.pays }}  </option>
-                        {% endif %}
-                    {% endfor %}
-
-                {% else %}
-                    <option value="" disabled selected>{{ 'Choisir un pays' }}</option>
-                    {% for rowCountry in country %}
-                        <option value="{{ rowCountry.pays }}"> {{ rowCountry.pays }}  </option>
-                    {% endfor %}
-                {% endif %}
-            </select>
-            <input type="submit" class="btn btn-default" value="{{ 'Chercher'|trans }}"/>
-            <a href="{{ path('index_admin_match') }}">{{ 'Annuler Filtre' }}<span class="glyphicon glyphicon-remove red" aria-hidden="true"></span></a>
-
-        </form>
-        <div class="search-flux-api">
-            <form action="{{ path('update_matchs_from_goal_api') }}" method="post" >
-                {{ "Date Début"|trans }} :   <input class="datepic" type="text" name="dateDebutGoalApi"
-                                                    value="{#{{ searchValue.dateDebutGoalApi }}#}"/>
-                {{ "Date Finale"|trans }} :   <input class="datepic" type="text" name="dateFinaleGoalApi"
-                                                     value="{#{{ searchValue.dateDebutGoalApi }}#}"/>
-                <select class="championat" name="championat_goal_api" id="">
-
-                    {#{{ searchValue.championat_match }}#}
-                    {% if searchValue.championat_match is defined %}
-                        <option value="{{ searchValue.championat_match }}">{{ searchValue.championat_match }}</option>
-                        {% for rowchampinat in championat %}
-
-                            {% if rowchampinat.fullNameChampionat != searchValue.championat_match %}
-                                <option value="{{ rowchampinat.fullNameChampionat }}">{{ rowchampinat.fullNameChampionat }}</option>
-                            {% endif %}
-
-                        {% endfor %}
-                        <option value=""></option>
-                    {% else %}
-                        <option value="" disabled selected>{{ 'Choisir championnat' }}</option>
-                        {% for rowchampinat in championat %}
-
-                            <option value="{{ rowchampinat.fullNameChampionat }}">{{ rowchampinat.fullNameChampionat }}</option>
-
-                        {% endfor %}
-                    {% endif %}
-                </select>
-                <input type="submit" class="btn btn-default" value="{{ 'Check GOAL API'|trans }}"/>
-
-            </form>
-        </div>
     </div>
 
 </div>

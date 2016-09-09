@@ -21,12 +21,24 @@
             <div class="col-lg-12">
                 <div class="header-table">
                     {#{{ 'Nombre de match'|trans }} : {{ totalMatch }}#}
+                    <div class="count">
+                     <u>{{ 'Total Matchs :'|trans }}</u>   {{ pagination.getTotalItemCount }}
+                        &nbsp;&nbsp;
+
+                    </div>
                 </div>
                 <table class="table-list">
                     <tr>
-                        <th>{{ 'Date'|trans }}</th>
                         <th>
-                            {{ 'Domicile'|trans }}
+                            <span class="sortable">
+                                 {{ knp_pagination_sortable(pagination, 'Date', 'm.dateMatch')|raw }}
+                                </span>
+                            {#{{ 'Date'|trans }}#}</th>
+                        <th>
+                            <span class="sortable">
+                                {{ knp_pagination_sortable(pagination, 'Domicile', 'm.teamsDomicile') }}
+                            </span>
+                            {#{{ 'Domicile'|trans }}#}
                         </th>
                         <th>
                             {{ 'Score'|trans }}
@@ -41,15 +53,16 @@
                             {{ 'Visiteur'|trans }}
                         </th>
                         <th>
-                            {{ 'Status'|trans }}
+                            {{ knp_pagination_sortable(pagination, 'Status', 'm.status_match') }}
+                            {#{{ 'Status'|trans }}#}
                         </th>
                         {#<th>{{ 'Master prono' }}</th>#}
                         <th>
                             {{ 'Actions'|trans }}
                         </th>
                     </tr>
-                    {% if matchs %}
-                        {% for row in matchs %}
+                    {% if pagination %}
+                        {% for row in pagination %}
 
 
                             <tr>
@@ -159,7 +172,11 @@
                     {% endif %}
                 </table>
                 <div class="space"></div>
+                <div class="navigation">
+                    {{ knp_pagination_render(pagination) }}
+                </div><br /><br />
             </div>
+
         </div>
     {% else %}
         {{ 'vous n\' avez pas le droit de lecture sur un match ' }}
