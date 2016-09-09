@@ -9,6 +9,7 @@
                  {{ "Date"|trans }} : <input type="text" name="date_match" id="datepic" placeholder="{{ 'Date'|trans }}"/>
              {% endif %}#}
             <div class="col-lg-4">
+                <div class="search-match-form">
                 <form action="" method="get">
                     <div class="col-lg-4">
                         {% if searchValue.dateDebut is defined %}
@@ -72,42 +73,60 @@
                             {% endif %}
                         </select>
                     </div>
+                    <div class="col-lg-6"></div>
+                    <div class="col-lg-6">
+                        <a href="{{ path('index_admin_match') }}">{{ 'Annuler Filtre' }}<span class="glyphicon glyphicon-remove red" aria-hidden="true"></span></a>
+                        <input type="submit" class="searh-btn-match" value="{{ 'Chercher'|trans }}"/>
 
-                <input type="submit" class="searh-btn-match" value="{{ 'Chercher'|trans }}"/>
-                <a href="{{ path('index_admin_match') }}">{{ 'Annuler Filtre' }}<span class="glyphicon glyphicon-remove red" aria-hidden="true"></span></a>
+                    </div>
+
+
 
                         </form>
+                </div>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-8">
                 <div class="search-flux-api">
                     <form action="{{ path('update_matchs_from_goal_api') }}" method="post" >
-                        {{ "Date Début"|trans }} :   <input class="datepic" type="text" name="dateDebutGoalApi"
-                                                            value="{#{{ searchValue.dateDebutGoalApi }}#}"/>
-                        {{ "Date Finale"|trans }} :   <input class="datepic" type="text" name="dateFinaleGoalApi"
-                                                             value="{#{{ searchValue.dateDebutGoalApi }}#}"/>
-                        <select class="championat" name="championat_goal_api" id="">
+                        <div class="col-lg-2">
+                            {{ "Date Début"|trans }} :   <input class="datepic" type="text" name="dateDebutGoalApi"
+                                                                value="{#{{ searchValue.dateDebutGoalApi }}#}"/>
+                        </div>
+                        <div class="col-lg-2">
 
-                            {#{{ searchValue.championat_match }}#}
-                            {% if searchValue.championat_match is defined %}
-                                <option value="{{ searchValue.championat_match }}">{{ searchValue.championat_match }}</option>
-                                {% for rowchampinat in championat %}
+                            {{ "Date Finale"|trans }} :   <input class="datepic" type="text" name="dateFinaleGoalApi"
+                                                                 value="{#{{ searchValue.dateDebutGoalApi }}#}"/>
+                        </div>
+                        <div class="col-lg-6">
+                            {{ 'Championat'|trans }}
+                            <select class="championat" name="championat_goal_api" id="">
 
-                                    {% if rowchampinat.fullNameChampionat != searchValue.championat_match %}
+                                {#{{ searchValue.championat_match }}#}
+                                {% if searchValue.championat_match is defined %}
+                                    <option value="{{ searchValue.championat_match }}">{{ searchValue.championat_match }}</option>
+                                    {% for rowchampinat in championat %}
+
+                                        {% if rowchampinat.fullNameChampionat != searchValue.championat_match %}
+                                            <option value="{{ rowchampinat.fullNameChampionat }}">{{ rowchampinat.fullNameChampionat }}</option>
+                                        {% endif %}
+
+                                    {% endfor %}
+                                    <option value=""></option>
+                                {% else %}
+                                    <option value="" disabled selected>{{ 'Choisir championnat' }}</option>
+                                    {% for rowchampinat in championat %}
+
                                         <option value="{{ rowchampinat.fullNameChampionat }}">{{ rowchampinat.fullNameChampionat }}</option>
-                                    {% endif %}
 
-                                {% endfor %}
-                                <option value=""></option>
-                            {% else %}
-                                <option value="" disabled selected>{{ 'Choisir championnat' }}</option>
-                                {% for rowchampinat in championat %}
+                                    {% endfor %}
+                                {% endif %}
+                            </select>
+                        </div>
+                        <div class="col-lg-2">
+                            <input type="submit" class="searh-btn-match" value="{{ 'Check GOAL API'|trans }}"/>
+                        </div>
 
-                                    <option value="{{ rowchampinat.fullNameChampionat }}">{{ rowchampinat.fullNameChampionat }}</option>
 
-                                {% endfor %}
-                            {% endif %}
-                        </select>
-                        <input type="submit" class="searh-btn-match" value="{{ 'Check GOAL API'|trans }}"/>
 
                     </form>
                 </div>
