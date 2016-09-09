@@ -110,22 +110,7 @@ class SondageController extends ApiController
     {
         $token = $request->request->get('token');
         $matchId = $request->request->get('matchId');
-        $dqlChampionat = "SELECT m, ch from ApiDBBundle:Matchs m JOIN m.concours co LEFT JOIN m.championat ch GROUP BY ch.nomChampionat";
-        $queryChampionat = $this->get('doctrine.orm.entity_manager')->createQuery($dqlChampionat);
-        $dataChampionat = $queryChampionat->getResult();
-        if ($dataChampionat) {
 
-            foreach ($dataChampionat as $kChampionat => $vChampionatItems) {
-
-                $result['list_championat'][] = array(
-                    'idChampionat' => $vChampionatItems->getChampionat()->getId(),
-                    'nomChampionat' => $vChampionatItems->getChampionat()->getNomChampionat(),
-                    'fullNameChampionat' => $vChampionatItems->getChampionat()->getFullNameChampionat(),
-                    'season' => $vChampionatItems->getChampionat()->getSeason()
-                );
-            }
-
-        }
 
         $dqlMatch = "SELECT m from ApiDBBundle:Matchs m JOIN m.concours co LEFT JOIN m.championat ch ";
         $queryMatch = $this->get('doctrine.orm.entity_manager')->createQuery($dqlMatch);
@@ -142,9 +127,31 @@ class SondageController extends ApiController
 
         // dat now:
 
-        if ($data && $currentUser) {
+        if ($data ) {
+
+            $dqlChampionat = "SELECT m, ch from ApiDBBundle:Matchs m JOIN m.concours co LEFT JOIN m.championat ch GROUP BY ch.nomChampionat";
+            $queryChampionat = $this->get('doctrine.orm.entity_manager')->createQuery($dqlChampionat);
+            $dataChampionat = $queryChampionat->getResult();
+            if ($dataChampionat) {
+
+                foreach ($dataChampionat as $kChampionat => $vChampionatItems) {
+
+                    $result['list_championat'][] = array(
+                        'idChampionat' => $vChampionatItems->getChampionat()->getId(),
+                        'nomChampionat' => $vChampionatItems->getChampionat()->getNomChampionat(),
+                        'fullNameChampionat' => $vChampionatItems->getChampionat()->getFullNameChampionat(),
+                        'season' => $vChampionatItems->getChampionat()->getSeason()
+                    );
+                }
+
+            }
             foreach ($data as $KeyMatchs => $matchsItems) {
-                $this->getVoteIdUser($matchsItems->getId(), $currentUser->getUserToken());
+                if($currentUser){
+                    $vote = $this->getVoteIdUser($matchsItems->getId(), $currentUser->getUserToken());
+                }else{
+                    $vote = null;
+                }
+
 
                 if($matchsItems->getStatusMatch() == 'active'){
                     $result['matchs'][] = array(
@@ -169,7 +176,7 @@ class SondageController extends ApiController
 
                         /*'is_vote' => ($vote)? true : false,*/
                         /*'vote' => $vote,*/
-                        'vote' => $this->getVoteIdUser($matchsItems->getId(), $token),
+                        'vote' => $vote,
                         'voteTotal' => $this->getTotalVoteParMatch($matchsItems->getId()),
                         'pourcentage1' => $this->getPourcentage(1, $matchsItems->getId(), $token),
                         'pourcentageN' => $this->getPourcentage(0, $matchsItems->getId(), $token),
@@ -204,7 +211,7 @@ class SondageController extends ApiController
 
                         /*'is_vote' => ($vote)? true : false,*/
                         /*'vote' => $vote,*/
-                        'vote' => $this->getVoteIdUser($matchsItems->getId(), $token),
+                        'vote' => $vote,
                         'voteTotal' => $this->getTotalVoteParMatch($matchsItems->getId()),
                         'pourcentage1' => $this->getPourcentage(1, $matchsItems->getId(), $token),
                         'pourcentageN' => $this->getPourcentage(0, $matchsItems->getId(), $token),
@@ -218,6 +225,7 @@ class SondageController extends ApiController
                 }
 
             }
+
             $result['code_error'] = 0;
             $result['success'] = true;
             $result['error'] = true;
@@ -234,18 +242,24 @@ class SondageController extends ApiController
 
     public function getVoteIdUser($idMatch, $token)
     {
-        $dql = "SELECT vo, m, u from ApiDBBundle:VoteUtilisateur vo LEFT JOIN vo.matchs m LEFT JOIN vo.utilisateur u
+        if($token && $idMatch){
+
+            $dql = "SELECT vo, m, u from ApiDBBundle:VoteUtilisateur vo LEFT JOIN vo.matchs m LEFT JOIN vo.utilisateur u
                 WHERE m.id = :idMatch AND u.userTokenAuth = :token";
-        $query = $this->get('doctrine.orm.entity_manager')->createQuery($dql);
-        $query->setParameters(array('idMatch' => $idMatch, 'token' => $token));
-        $response = $query->getResult();
-        if ($response) {
-            foreach ($response as $kVote => $voteItems) {
-                $result = $voteItems->getVote();
+            $query = $this->get('doctrine.orm.entity_manager')->createQuery($dql);
+            $query->setParameters(array('idMatch' => $idMatch, 'token' => $token));
+            $response = $query->getResult();
+            if ($response) {
+                foreach ($response as $kVote => $voteItems) {
+                    $result = $voteItems->getVote();
+                }
+            } else {
+                $result = null;
             }
-        } else {
+        }else{
             $result = null;
         }
+
         return $result;
 
     }
