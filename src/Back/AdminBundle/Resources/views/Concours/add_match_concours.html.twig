@@ -19,7 +19,8 @@
         <tr>
             <td>Numero</td>
             <td>Nom du concours</td>
-            <td>Fin de validation</td>
+            <td>Date Debut</td>
+            <td>Date Finale</td>
             <td>Nb Matchs</td>
         </tr>
         <tr>
@@ -28,7 +29,10 @@
                 {{ entity.nomConcours}}
             </td>
             <td>
-                {{ entity.finValidation|date('d/m/Y') }}
+                {{ entity.dateDebut|date('d/m/Y') }}
+            </td>
+            <td>
+                {{ entity.dateFinale|date('d/m/Y') }}
             </td>
             <td>
                 {{ entity.getMatchs() | length }}

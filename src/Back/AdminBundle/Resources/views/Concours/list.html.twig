@@ -19,7 +19,8 @@
                 <tr>
                     <td>{{ 'Numero'|trans }}</td>
                     <td>{{ 'Nom du concours'|trans }}</td>
-                    <td>{{ 'Fin de validation'|trans }}</td>
+                    <td>{{ 'Date Debut'|trans }}</td>
+                    <td>{{ 'Date Finale'|trans }}</td>
                     <td>{{ 'Actions'|trans }}</td>
                 </tr>
                 {% for row in concours %}
@@ -31,7 +32,10 @@
                             {{ row.nomConcours }}
                         </td>
                         <td>
-                            {{ row.finValidation|date('d-m-Y') }}
+                            {{ row.dateDebut|date('d-m-Y') }}
+                        </td>
+                        <td>
+                            {{ row.dateFinale|date('d-m-Y') }}
                         </td>
                         <td>
                             {% if droitAdmin.modification is defined and droitAdmin.modification %}

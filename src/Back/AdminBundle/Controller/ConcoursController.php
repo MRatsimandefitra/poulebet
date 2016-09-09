@@ -170,9 +170,8 @@ class ConcoursController extends ApiController {
             'matchs' => $matchs,
             'searchValue' => $searchValue,
         ));
-
-
     }
+
     public function removeMatchInConcoursAction(Request $request, $idConcours, $id){
         $match = $this->getRepoFormId(self::ENTITY_MATCH, $id);
         $concours = $this->getRepoFormId(self::ENTITY_CONCOURS, $idConcours);
