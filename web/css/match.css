@@ -3,11 +3,23 @@ div.search-match{
     padding: 7px;
     font-size: 11px;
 }
-div.search-match input[type=text]{
+div.search-flux-api{
+    background-color: #FFF;
+    font-size: 11px;
+}
+div.search-flux-api input[type=text]{
     width: 100px;
     height: 20px;
-    display: block;
 
+}
+div.search-match  input[type=text]{
+    width: 100px;
+    height: 20px;
+
+
+}
+div.search-match-form input[type=text]{
+    display: block;
 }
 div.search-match select{
     width: 100%;
@@ -25,6 +37,7 @@ img.fanion {
 div.search-match input[type=submit]{
     height: 25px;
     padding: 5px;
+    margin-top: 6px;
 }
 table.search-match{
     width: 100%;

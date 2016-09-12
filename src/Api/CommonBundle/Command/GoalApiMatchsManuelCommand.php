@@ -150,13 +150,15 @@ class GoalApiMatchsManuelCommand extends ContainerAwareCommand
     private function treatementDataToMatch($vItems, $vChampionat,  $output, $datDebut = null, $dateFinale = null){
         $output->writeln("Treatement of " . $vItems['id']);
         $matchs = $this->getEm()->getRepository(self::ENTITY_MATCH)->find($vItems['id']);
+        $newMatch = false;
         if (!$matchs) {
             $matchs = new Matchs();
+            $newMatch = true;
         }
         $matchs->setStateGoalApi(false);
         $matchs->setId($vItems['id']);
         $matchs->setStatusMatch($vItems['status']);
-        $mDate = \DateTime::createFromFormat('Y-m-d h:i', date('Y-m-d h:i', $vItems['timestamp_starts']));
+        $mDate = \DateTime::createFromFormat('Y-m-d H:i', date('Y-m-d H:i', $vItems['timestamp_starts']));
         $matchs->setDateMatch($mDate);
         // teams visiteur
         $teamsVisiteur = $this->getEm()->getRepository(self::ENTITY_TEAMS)->findOneBy(array('idNameClub' => $vItems['teams']['guests']['id']));
@@ -208,7 +210,9 @@ class GoalApiMatchsManuelCommand extends ContainerAwareCommand
             $matchs->setPeriod($vItems['current-state']['period']);
             $matchs->setMinute($vItems['current-state']['minute']);
         }
-        $this->getEm()->persist($matchs);
+        if($newMatch){
+            $this->getEm()->persist($matchs);
+        }
         $this->getEm()->flush();
         $output->writeln("Treatements of matchs " . $matchs->getId() . "was successfull");
         $matchs->setStateGoalApi(true);

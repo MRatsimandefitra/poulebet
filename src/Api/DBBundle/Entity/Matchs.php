@@ -64,6 +64,12 @@ class Matchs
      * @ORM\Column(name="dateMatch", type="datetime", nullable=true)
      */
     private $dateMatch;
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="timestampDateMatch", type="string", nullable=true)
+     */
+    private $timestampDateMatch;
 
     /**
      * @var string
@@ -1016,5 +1022,30 @@ class Matchs
     public function getMatchsEvents()
     {
         return $this->matchsEvents;
+    }
+
+
+    /**
+     * Set timestampDateMatch
+     *
+     * @param string $timestampDateMatch
+     *
+     * @return Matchs
+     */
+    public function setTimestampDateMatch($timestampDateMatch)
+    {
+        $this->timestampDateMatch = $timestampDateMatch;
+
+        return $this;
+    }
+
+    /**
+     * Get timestampDateMatch
+     *
+     * @return string
+     */
+    public function getTimestampDateMatch()
+    {
+        return $this->timestampDateMatch;
     }
 }
