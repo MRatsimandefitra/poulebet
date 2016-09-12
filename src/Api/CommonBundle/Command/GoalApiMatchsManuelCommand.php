@@ -160,6 +160,7 @@ class GoalApiMatchsManuelCommand extends ContainerAwareCommand
         $matchs->setStatusMatch($vItems['status']);
         $mDate = \DateTime::createFromFormat('Y-m-d H:i', date('Y-m-d H:i', $vItems['timestamp_starts']));
         $matchs->setDateMatch($mDate);
+        $matchs->setTimestampDateMatch($vItems['timestamp_starts']);
         // teams visiteur
         $teamsVisiteur = $this->getEm()->getRepository(self::ENTITY_TEAMS)->findOneBy(array('idNameClub' => $vItems['teams']['guests']['id']));
         if (!$teamsVisiteur) {
