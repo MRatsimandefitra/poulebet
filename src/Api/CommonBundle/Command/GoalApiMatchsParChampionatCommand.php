@@ -30,7 +30,7 @@ class GoalApiMatchsParChampionatCommand extends ContainerAwareCommand {
         $this
             ->setName('goalapi:check:matchs-by-championat')
             // the short description shown while running "php bin/console list"
-            ->addArgument('championat', InputArgument::OPTIONAL, 'What do you want to import?')
+            ->addArgument('championat', InputArgument::OPTIONAL, 'Championat ?')
             ->setDescription('Check match');
     }
 
@@ -61,6 +61,7 @@ class GoalApiMatchsParChampionatCommand extends ContainerAwareCommand {
                             $matchs->setStatusMatch($vItems['status']);
                             $mDate = \DateTime::createFromFormat('Y-m-d h:i', date('Y-m-d h:i', $vItems['timestamp_starts']));
                             $matchs->setDateMatch($mDate);
+                            $matchs->setTimestampDateMatch($vItems['timestamp_starts']);
                             // teams visiteur
                             $teamsVisiteur = $em->getRepository(self::ENTITY_TEAMS)->findOneBy(array('idNameClub' => $vItems['teams']['guests']['id']));
                             if(!$teamsVisiteur){

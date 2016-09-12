@@ -39,10 +39,22 @@ class OutputExtension extends \Twig_Extension
     {
         return array(
             'verify' => new \Twig_Function_Method($this, 'verify'),
-            'get_roles' => new \Twig_Function_Method($this, 'getRoles')
+            'get_roles' => new \Twig_Function_Method($this, 'getRoles'),
+            'get_search_value' => new \Twig_Function_Method($this, 'getSearchValue')
+
         );
     }
 
+    public function getSearchValue($column, $tri, $data = array()){
+
+        $result = array();
+        $result['column'] = $column;
+        $result['tri'] = $tri;
+        foreach($data as $k => $v){
+            $result[$k] = $v;
+        }
+        return $result;
+    }
     public function getRoles($idAdmin)
     {
         /*  $entity  = $this->container->get('doctrine.orm.entity_manager')->getRepository('ApiDBBundle:DroitAdmin')->getDroitByAdminId(3);

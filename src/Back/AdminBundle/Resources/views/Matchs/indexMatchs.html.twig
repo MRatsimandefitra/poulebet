@@ -30,15 +30,36 @@
                 <table class="table-list">
                     <tr>
                         <th>
-                            <span class="sortable">
-                                 {{ knp_pagination_sortable(pagination, 'Date', 'm.dateMatch')|raw }}
-                                </span>
-                            {#{{ 'Date'|trans }}#}</th>
+                                {{ 'Date'|trans }}
+
+                                <div class="tri">
+                                    {#{% set searchValueTriDateAsc= searchValue|merge({'column': 'm.dateMatch', 'tri': 'asc'}) %}
+                                    {% set searchValueTriDateDesc= searchValue|merge({'column': 'm.dateMatch', 'tri': 'asc'}) %}#}
+
+                                    <a href="{{ path('index_admin_match', get_search_value('m.dateMatch','asc', searchValue) ) }}">
+                                        <img class="tri" id="up" src="{{ asset('images/up.png') }}" width="16" height="16" alt="">
+                                    </a>
+                                    <a href="{{ path('index_admin_match', get_search_value('m.dateMatch','desc', searchValue)) }}">
+                                        <img class="tri" id="up" src="{{ asset('images/down.png') }}" width="16" height="16" alt="">
+                                    </a>
+                                </div>
+                                 {#{{ knp_pagination_sortable(pagination, 'Date', 'm.dateMatch')|raw }}#}
+                            {#{{ 'Date'|trans }}#}
+                        </th>
                         <th>
-                            <span class="sortable">
+                            {#<span class="sortable">
                                 {{ knp_pagination_sortable(pagination, 'Domicile', 'm.teamsDomicile') }}
-                            </span>
+                            </span>#}
                             {#{{ 'Domicile'|trans }}#}
+                            {{ 'Domicile'|trans }}
+                          {#  <div class="tri">
+                                <a href="{{ path('index_admin_match',{'column': 'm.dateMatch', 'tri': 'asc'}) }}">
+                                    <img class="tri" id="up" src="{{ asset('images/up.png') }}" width="16" height="16" alt="">
+                                </a>
+                                <a href="">
+                                    <img class="tri" id="up" src="{{ asset('images/down.png') }}" width="16" height="16" alt="">
+                                </a>
+                            </div>#}
                         </th>
                         <th>
                             {{ 'Score'|trans }}
@@ -48,13 +69,29 @@
                         </th>
                         <th>
                             {{ 'Championnat'|trans }}
+                            <div class="tri">
+                                <a href="{{ path('index_admin_match', get_search_value('ch.fullNameChampionat','asc', searchValue)) }}">
+                                    <img class="tri" id="up" src="{{ asset('images/up.png') }}" width="16" height="16" alt="">
+                                </a>
+                                <a href="{{ path('index_admin_match', get_search_value('ch.fullNameChampionat','asc', searchValue)) }}">
+                                    <img class="tri" id="up" src="{{ asset('images/down.png') }}" width="16" height="16" alt="">
+                                </a>
+                            </div>
                         </th>
                         <th>
                             {{ 'Visiteur'|trans }}
                         </th>
                         <th>
-                            {{ knp_pagination_sortable(pagination, 'Status', 'm.status_match') }}
-                            {#{{ 'Status'|trans }}#}
+                            {#{{ knp_pagination_sortable(pagination, 'Status', 'm.status_match') }}#}
+                            {{ 'Status'|trans }}
+                            <div class="tri">
+                                <a href="{{ path('index_admin_match',get_search_value('m.statusMatch','asc', searchValue)) }}">
+                                    <img class="tri" id="up" src="{{ asset('images/up.png') }}" width="16" height="16" alt="">
+                                </a>
+                                <a href="{{ path('index_admin_match',get_search_value('m.statusMatch','asc', searchValue)) }}">
+                                    <img class="tri" id="up" src="{{ asset('images/down.png') }}" width="16" height="16" alt="">
+                                </a>
+                            </div>
                         </th>
                         {#<th>{{ 'Master prono' }}</th>#}
                         <th>
@@ -63,9 +100,17 @@
                     </tr>
                     {% if pagination %}
                         {% for row in pagination %}
-
-
-                            <tr>
+                            {% if row.statusMatch is defined and row.statusMatch == 'active' %}
+                                <tr class="active">
+                            {% elseif row.statusMatch is defined and row.statusMatch == 'not_started' %}
+                                <tr class="not_started">
+                            {% elseif row.statusMatch is defined and row.statusMatch == 'finished' %}
+                                <tr class="finished">
+                            {% elseif row.statusMatch is defined and row.statusMatch == 'postphoned' %}
+                                <tr class="postphoned">
+                            {% else %}
+                                <tr>
+                            {% endif %}
                                 <td>{{ row.dateMatch|date('d/m/Y  - H:i') }}</td>
                                 <td>
                                     {#  <div class="flag flag-{{ row.equipeDomicile|lower|slice(0, 2) }}"

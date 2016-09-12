@@ -46,6 +46,7 @@ class MatchController extends ApiController
     const FORM_LOTOFOOT = 'Api\DBBundle\Form\LotoFootType';
 
     public function indexMatchsAction(Request $request){
+
         if($request->request->get('identifiant')){
             $identifiant = $request->request->get('identifiant');
             $cote1 = 'cote1_'.$identifiant;
@@ -91,7 +92,7 @@ class MatchController extends ApiController
             $this->get('doctrine.orm.entity_manager')->flush();
         }
 
-        $dql ="SELECT m from ApiDBBundle:Matchs m ";
+        $dql ="SELECT m from ApiDBBundle:Matchs m";
         $where = array();
         $params = array();
         $searchValue = array();
@@ -106,6 +107,21 @@ class MatchController extends ApiController
             $searchValue['dateDebut'] = $request->get('dateDebut');
 
         }
+        $dd = new \DateTime('now');
+
+        $searchValue['date_debut']  = $dd->format('Y-m-d');;
+
+        $df = new \DateTime('now');
+        $dff = $df->modify('next monday');
+
+        $searchValue['date_finale']  = $dff->format('Y-m-d');;
+
+        /*if($request->get('dateDebut')){
+            $dateDebutRequest=$request->get('dateDebut');
+        }
+        if($request->get('dateDebut')){
+            $dateFinaleRequest=$request->get('dateDebut');
+        }*/
 
         if($request->get('dateDebut') && $request->get('dateFinale')){
             $dateDebut  = $request->get('dateDebut').' 00:00:00';
@@ -119,12 +135,15 @@ class MatchController extends ApiController
         }
 
         # champinat seul
+        $requestChampionat = false;
         if($request->get('championat_match')&& !$request->get('pays_match')){
+
             $championat = $request->get('championat_match');
             $dql .= " LEFT JOIN m.championat c";
             $where[] = " c.fullNameChampionat LIKE :championat ";
             $params["championat"] = '%'.$championat.'%';
             $searchValue['championat_match'] = $championat;
+            $requestChampionat = true;
         }
 
         if($request->get('pays_match') && !$request->get('championat_match')){
@@ -152,8 +171,39 @@ class MatchController extends ApiController
             $searchValue['pays_match'] = $pays;
 
         }
+        if($request->get('match_status')){
+            $where[] = " m.statusMatch LIKE :match_status ";
+            $match_status = $request->get('match_status');
+            $params['match_status'] = "%".$match_status."%";
+            $searchValue['match_status'] = $match_status;
+        }
+
+
+        $orderByChampionat = false;
+        if($request->query->get('column') && $request->query->get('tri')){
+
+            //var_dump("ORDER BY ".$request->query->get('column'). " ".$request->query->get('tri')); die;$*
+         //   $dql .= " ORDER BY ".$request->query->get('column'). " ". strtoupper($request->query->get('tri'));
+            if($requestChampionat){
+                $dql .= " ORDER BY ".$request->query->get('column'). " ". strtoupper($request->query->get('tri'));
+            }else{
+                if($request->query->get('column') == 'ch.fullNameChampionat'){
+                    $dql  .= " LEFT JOIN m.championat ch ";
+                    $orderByChampionat = true;
+
+                }else{
+                    $orderByChampionat = true;
+                    //$dql .= " ORDER BY ".$request->query->get('column'). " ". strtoupper($request->query->get('tri'));
+                }
+
+            }
+
+        }
         if (!empty($where)) {
             $dql .= ' WHERE ' . implode(' AND ', $where);
+        }
+        if($orderByChampionat){
+            $dql .= " ORDER BY ".$request->query->get('column'). " ". strtoupper($request->query->get('tri'));
         }
 
         if(empty($params)){
@@ -182,7 +232,7 @@ class MatchController extends ApiController
             'country' => $country,
             'searchValue' => $searchValue,
             'droitAdmin' => $droitAdmin[0],
-            'pagination' => $pagination
+            'pagination' => $pagination,
 
         ));
 

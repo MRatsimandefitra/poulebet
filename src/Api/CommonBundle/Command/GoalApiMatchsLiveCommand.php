@@ -196,6 +196,7 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand {
                                                 $matchsEvent->setTeamsScore(substr($vEventItems['score'], 0, 1));
                                             }
                                         }
+                                        $matchs->setTimestampDateMatch($vItems['timestamp_starts']);
                                         $this->getEm()->persist($matchsEvent);
                                         $this->getEm()->flush();
                                         $output->writeln("insert event ".$matchsEvent->getId());
