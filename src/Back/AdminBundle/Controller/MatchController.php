@@ -226,6 +226,11 @@ class MatchController extends ApiController
         );
 
         $droitAdmin = $this->getDroitAdmin('Matchs');
+
+
+
+        // get Total Match aujourdhui
+
         return $this->render('BackAdminBundle:Matchs:indexMatchs.html.twig', array(
             'matchs' => $matchs,
             'championat' => $championatData,
@@ -233,10 +238,34 @@ class MatchController extends ApiController
             'searchValue' => $searchValue,
             'droitAdmin' => $droitAdmin[0],
             'pagination' => $pagination,
+            'totalItemsActif' => $this->getTotalItemsMatchsByStatus('active'),
+            'totalItemsFinished' => $this->getTotalItemsMatchsByStatus('finished'),
+            'totalItemsMatchs' => $this->getTotalItemsMatchsByStatus(),
+            'totalItemsNotStarted' => $this->getTotalItemsMatchsByStatus('not_started'),
 
         ));
 
 
+    }
+    private function getTotalItemsMatchsByStatus($status = null){
+        // getTotal By argument
+        $dqlTotal = "SELECT m from ApiDBBundle:Matchs m ";
+        if($status){
+            $dqlTotal .= " WHERE m.statusMatch LIKE :status";
+        }
+
+        $queryTotal = $this->get('doctrine.orm.entity_manager')->createQuery($dqlTotal);
+        if($status){
+            $queryTotal->setParameter('status', $status);
+        }
+
+        $data = $queryTotal->getResult();
+        if(count($data)!= 0){
+            $result = count($data) + 1;
+        }else{
+            $result = 0;
+        }
+        return count($data);
     }
     public function indexAction(Request $request)
     {
