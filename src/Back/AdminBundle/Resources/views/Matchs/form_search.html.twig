@@ -12,11 +12,13 @@
             <div class="search-match-form">
                 <form action="" method="get">
                     <div class="col-md-2 col-lg-2">
+
                         {% if searchValue.dateDebut is defined %}
+
                             {{ "Date début"|trans }} :   <input class="datepic" type="text" name="dateDebut"
                                                                 value="{{ searchValue.dateDebut }}"/>
                         {% else %}
-                            {% if default.date_debut is defined and default.date_debut %}
+                            {% if searchValue.date_debut is defined and searchValue.date_debut %}
                                 {{ "Date Début"|trans }} :   <input class="datepic" type="text" name="dateDebut"
                                                                     value="{{ searchValue.date_debut }}"/>
                             {% else %}
