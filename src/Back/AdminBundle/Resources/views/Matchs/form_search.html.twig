@@ -28,7 +28,7 @@
                     </div>
                     <div class="col-md-2 col-lg-2">
                         {% if searchValue.dateFinale is defined %}
-                            {{ "Date Fin"|trans }} : <input class="datepic" type="text" name=""
+                            {{ "Date Fin"|trans }} : <input class="datepic" type="text" name="dateFinale"
                                                                value="{{ searchValue.dateFinale }}"/>
                         {% else %}
                             {% if searchValue.date_finale is defined and searchValue.date_finale %}
@@ -69,13 +69,13 @@
                         <select name="match_status" id="">
                             {% if searchValue.match_status is defined and searchValue.match_status %}
                                 <option value="{{ searchValue.match_status }}">
-                                    {% if searchValue.matchs_status == 'not_started' %}
+                                    {% if searchValue.match_status == 'not_started' %}
                                         {{ 'Non commencé' }}
-                                    {% elseif searchValue.matchs_status == 'postponed' %}
+                                    {% elseif searchValue.match_status == 'postponed' %}
                                         {{ 'Reporté' }}
-                                    {% elseif searchValue.matchs_status == 'finished' %}
+                                    {% elseif searchValue.match_status == 'finished' %}
                                         {{ 'Terminé' }}
-                                    {% elseif searchValue.matchs_status == 'active' %}
+                                    {% elseif searchValue.match_status == 'active' %}
                                         {{ 'Active' }}
                                     {% endif %}
 
@@ -117,7 +117,7 @@
                         </select>
                     </div>
                     <div class="col-md-4 col-lg-4">
-                        <a href="{{ path('index_admin_match') }}">{{ 'Annuler Filtre' }}<span
+                        <a href="{{ path('index_admin_match',{'filter': 'nofilter' }) }}">{{ 'Annuler Filtre' }}<span
                                     class="glyphicon glyphicon-remove red" aria-hidden="true"></span></a>
                         <input type="submit" class="searh-btn-match" value="{{ 'Rechercher'|trans }}"/>
 
