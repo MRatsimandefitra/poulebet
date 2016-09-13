@@ -1090,6 +1090,7 @@ class Matchs
      * @param string $timestampCheckGoalApi
      *
      * @return Matchs
+     *
      */
     public function setTimestampCheckGoalApi($timestampCheckGoalApi)
     {

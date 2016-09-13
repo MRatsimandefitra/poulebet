@@ -201,11 +201,14 @@ class MatchController extends ApiController
         }
         if (!empty($where)) {
             $dql .= ' WHERE ' . implode(' AND ', $where);
+
         }
         if($orderByChampionat){
             $dql .= " ORDER BY ".$request->query->get('column'). " ". strtoupper($request->query->get('tri'));
+        }else{
+            $dql .= ' ORDER BY m.dateMatch asc';
         }
-
+        //var_dump($dql); die;
         if(empty($params)){
 
             $matchs = $this->get('doctrine.orm.entity_manager')->createQuery($dql)->getResult();

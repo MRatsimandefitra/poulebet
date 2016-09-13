@@ -26,19 +26,19 @@
                     </div>
                     <div class="col-md-2 col-lg-2">
                         {% if searchValue.dateFinale is defined %}
-                            {{ "Date Finale"|trans }} : <input class="datepic" type="text" name=""
+                            {{ "Date Fin"|trans }} : <input class="datepic" type="text" name=""
                                                                value="{{ searchValue.dateFinale }}"/>
                         {% else %}
                             {% if searchValue.date_finale is defined and searchValue.date_finale %}
-                                {{ "Date Finale"|trans }} : <input class="datepic" type="text" name="dateFinale" value="{{ searchValue.date_finale }}"/>
+                                {{ "Date Fin"|trans }} : <input class="datepic" type="text" name="dateFinale" value="{{ searchValue.date_finale }}"/>
                             {% else %}
-                                {{ "Date Finale"|trans }} : <input class="datepic" type="text" name="dateFinale"/>
+                                {{ "Date Fin"|trans }} : <input class="datepic" type="text" name="dateFinale"/>
                             {% endif %}
 
                         {% endif %}
                     </div>
                     <div class="col-md-4 col-lg-4">
-                        {{ "Championat"|trans }} :
+                        {{ "Championnat"|trans }} :
                         <select class="championat" name="championat_match" id="">
 
                             {#{{ searchValue.championat_match }}#}
@@ -106,7 +106,7 @@
                     <div class="col-md-4 col-lg-4">
                         <a href="{{ path('index_admin_match') }}">{{ 'Annuler Filtre' }}<span
                                     class="glyphicon glyphicon-remove red" aria-hidden="true"></span></a>
-                        <input type="submit" class="searh-btn-match" value="{{ 'Chercher'|trans }}"/>
+                        <input type="submit" class="searh-btn-match" value="{{ 'Rechercher'|trans }}"/>
 
                     </div>
 
@@ -123,7 +123,7 @@
                     </div>
                     <div class="col-md-2 col-lg-3">
 
-                        {{ "Date Finale"|trans }} : <input class="datepic" type="text" name="dateFinaleGoalApi"
+                        {{ "Date Fin"|trans }} : <input class="datepic" type="text" name="dateFinaleGoalApi"
                                                            value="{#{{ searchValue.dateDebutGoalApi }}#}"/>
                     </div>
                     <div class="col-md-6 col-lg-6">
