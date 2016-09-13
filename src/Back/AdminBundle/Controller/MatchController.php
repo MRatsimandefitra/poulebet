@@ -116,22 +116,26 @@ class MatchController extends ApiController
 
         $searchValue['date_finale']  = $dff->format('Y-m-d');;
 
-        /*if($request->get('dateDebut')){
+        if($request->get('dateDebut')){
             $dateDebutRequest=$request->get('dateDebut');
+        }else{
+            $dateDebutRequest=$searchValue['date_debut'];
         }
         if($request->get('dateDebut')){
             $dateFinaleRequest=$request->get('dateDebut');
-        }*/
-
-        if($request->get('dateDebut') && $request->get('dateFinale')){
-            $dateDebut  = $request->get('dateDebut').' 00:00:00';
-            $dateFinaleSearch = $request->get('dateFinale'). ' 23:59:59';
+        }else{
+            $dateFinaleRequest= $searchValue['date_finale'];
+        }
+        if($dateDebutRequest && $dateFinaleRequest){
+            /*die('plpl');*/
+            $dateDebut  = $dateDebutRequest.' 00:00:00';
+            $dateFinaleSearch = $dateFinaleRequest. ' 23:59:59';
 
             $where[] = " m.dateMatch BETWEEN :dateDebut AND :dateFinale ";
             $params['dateDebut'] = $dateDebut;
             $params['dateFinale'] = $dateFinaleSearch;
-            $searchValue['dateDebut'] = $request->get('dateDebut');
-            $searchValue['dateFinale'] = $request->get('dateFinale');
+            $searchValue['dateDebut'] = date('Y-m-d', strtotime($dateDebut));
+            $searchValue['dateFinale'] = date('Y-m-d', strtotime($dateFinaleSearch)) ;
         }
 
         # champinat seul
@@ -208,11 +212,12 @@ class MatchController extends ApiController
         }else{
             $dql .= ' ORDER BY m.dateMatch asc';
         }
-        //var_dump($dql); die;
+
         if(empty($params)){
 
             $matchs = $this->get('doctrine.orm.entity_manager')->createQuery($dql)->getResult();
         }else{
+
             $matchs = $this->get('doctrine.orm.entity_manager')->createQuery($dql)->setParameters($params)->getResult();
         }
 
