@@ -111,7 +111,6 @@ class GoalApiMatchsManuelCommand extends ContainerAwareCommand
             foreach ($championat as $vChampionat) {
                 $output->writeln('For championat' . $vChampionat->getFullNameChampionat());
                 $data = $this->getUrlByChampionat($vChampionat->getId(), $dateDebut, $dateFinale);
-
                 if($data){
                     foreach ($data['items'] as $vItems) {
                         // var_dump($vItems['teams']); die;
@@ -126,13 +125,13 @@ class GoalApiMatchsManuelCommand extends ContainerAwareCommand
                         if($dateDebut && $dateFinale or $dateDebut or $dateFinale){
                             $dateCurrentMatchs = date('Y-m-d h:i:s', $vItems['timestamp_starts']);
                             if($dateCurrentMatchs > $dateDebut and $dateCurrentMatchs < $dateFinale){
-                                $this->treatementDataToMatch($vItems, $vChampionat, $output, $dateDebut, $dateFinale);
+                                $this->treatementDataToMatch($vItems, $vChampionat, $output, $data, $dateDebut, $dateFinale);
                             }elseif($dateCurrentMatchs > $dateDebut && !$dateFinale){
-                                $this->treatementDataToMatch($vItems, $vChampionat, $output, $dateDebut);
+                                $this->treatementDataToMatch($vItems, $vChampionat, $output, $data, $dateDebut);
                             }
 
                         }else{
-                            $this->treatementDataToMatch($vItems, $vChampionat, $output);
+                            $this->treatementDataToMatch($vItems, $vChampionat,   $output, $data);
                         }
 
 
@@ -147,14 +146,19 @@ class GoalApiMatchsManuelCommand extends ContainerAwareCommand
 
     }
 
-    private function treatementDataToMatch($vItems, $vChampionat,  $output, $datDebut = null, $dateFinale = null){
+    private function treatementDataToMatch($vItems, $vChampionat,  $output, $data, $datDebut = null, $dateFinale = null){
         $output->writeln("Treatement of " . $vItems['id']);
+        $dateCheckGoalapi = new \DateTime(strtotime($data['timestamp_created']));
+        //$dateCheckGoalapi = $dateCheckGoalapi->format('Y-m-d H:i:s');
+
         $matchs = $this->getEm()->getRepository(self::ENTITY_MATCH)->find($vItems['id']);
         $newMatch = false;
         if (!$matchs) {
             $matchs = new Matchs();
             $newMatch = true;
         }
+        $matchs->setTimestampCheckGoalApi($data['timestamp_created']);
+        $matchs->setDateCheckGoalApi($dateCheckGoalapi);
         $matchs->setStateGoalApi(false);
         $matchs->setId($vItems['id']);
         $matchs->setStatusMatch($vItems['status']);
@@ -211,10 +215,12 @@ class GoalApiMatchsManuelCommand extends ContainerAwareCommand
             $matchs->setPeriod($vItems['current-state']['period']);
             $matchs->setMinute($vItems['current-state']['minute']);
         }
+
         if($newMatch){
             $this->getEm()->persist($matchs);
         }
         $this->getEm()->flush();
+
         $output->writeln("Treatements of matchs " . $matchs->getId() . "was successfull");
         $matchs->setStateGoalApi(true);
         $this->getEm()->flush();
@@ -260,6 +266,7 @@ class GoalApiMatchsManuelCommand extends ContainerAwareCommand
         if(!$dateDebut && !$dateFinale){
             $url = "http://api.xmlscores.com/matches/?c[]=" . $data->getNomChampionat() . "&f=json&e=1&s=0&l=128&open=" . $apiKey;
         }
+      //  var_dump($url); die;
         $content = file_get_contents($url);
 
         $arrayJson = json_decode($content, true);
@@ -267,7 +274,7 @@ class GoalApiMatchsManuelCommand extends ContainerAwareCommand
         return $arrayJson;
     }
 
-    private function getJson($dateDebut = null, $dateFinale = null, $championat = null)
+   /* private function getJson($dateDebut = null, $dateFinale = null, $championat = null)
     {
         $em = $this->getEm();
         if($dateDebut){
@@ -300,7 +307,7 @@ class GoalApiMatchsManuelCommand extends ContainerAwareCommand
         $arrayJson = json_decode($content, true);
         return $arrayJson;
 
-    }
+    }*/
 
     private function getEm()
     {

@@ -56,6 +56,9 @@ class GoalApiMatchsParChampionatCommand extends ContainerAwareCommand {
                             if(!$matchs){
                                 $matchs = new Matchs();
                             }
+                            $dateCheckGoalapi = new \DateTime(strtotime($data['timestamp_created']));
+                            $matchs->setTimestampCheckGoalApi($data['timestamp_created']);
+                            $matchs->setDateCheckGoalApi($dateCheckGoalapi);
                             $matchs->setStateGoalApi(false);
                             $matchs->setId($vItems['id']);
                             $matchs->setStatusMatch($vItems['status']);

@@ -7,7 +7,7 @@
     "2cef0a0090feff065851922bca160522": {
       "id": "2cef0a0090feff065851922bca160522",
       "status": "active",
-      "timestamp_starts": "1473246515",
+      "timestamp_starts": "1473718261",
       "teams": {
         "hosts": {
           "id": "mufc_en",
@@ -52,8 +52,8 @@
     },
     "e7be998e27dc7bc42899d796923b3e0b": {
       "id": "e7be998e27dc7bc42899d796923b3e0b",
-      "status": "active",
-      "timestamp_starts": "1473246515",
+      "status": "not_started",
+      "timestamp_starts": "1473718261",
       "teams": {
         "hosts": {
           "id": "scfc_en",
@@ -171,7 +171,7 @@
     },
     "b5d737b4ccad070a7ccae6fa6674d1dd": {
       "id": "b5d737b4ccad070a7ccae6fa6674d1dd",
-      "status": "active",
+      "status": "not_started",
       "timestamp_starts": "1473246515",
       "teams": {
         "hosts": {
@@ -224,7 +224,7 @@
     },
     "d9e14a27b6833c7166914a280d3bf176": {
       "id": "d9e14a27b6833c7166914a280d3bf176",
-      "status": "active",
+      "status": "not_started",
       "timestamp_starts": "1473246515",
       "teams": {
         "hosts": {
@@ -270,7 +270,7 @@
     },
     "2363edaa3c382727e298cabc76202c35": {
       "id": "2363edaa3c382727e298cabc76202c35",
-      "status": "active",
+      "status": "not_started",
       "timestamp_starts": "1473246515",
       "teams": {
         "hosts": {

@@ -3,11 +3,11 @@
 {% block ariane %} {{ parent() }} {% endblock %}
 
 {% block page %}
-
-    <div class="box-header-response">
+<div class="col-lg-12">
+   {# <div class="box-header-response">
         {{ 'Ajouter des matchs'|trans }}
         {% include '@BackAdmin/Matchs/sous_menu.html.twig' %}
-    </div>
+    </div>#}
 
     <div class="col-lg-12">
         <div class="list">
@@ -42,25 +42,26 @@
                 <br/><br/>
 
                 <div class="search">
-                    <form action="" method="post">
+                    <div class="search-matchs">
+                        <form action="" method="post">
 
                         {# Date debut#}
                         {% if searchValue is defined and searchValue is not empty and searchValue.date_match_debut is defined %}
-                            {{ 'Date Début' }} <input type="text" name="date_match_debut" class="datepic"
+                         <span class="label black">{{ 'Date Début' }}</span> <input type="text" name="date_match_debut" class="datepic"
                                                       value="{{ searchValue.date_match_debut }}"/>
                         {% else %}
-                            {{ 'Date Debut' }} <input type="text" name="date_match_debut" class="datepic"/>
+                            <span class="label black">   {{ 'Date Debut' }}</span> <input type="text" name="date_match_debut" class="datepic"/>
                         {% endif %}
 
                         {# Date finale #}
                         {% if searchValue is defined and searchValue is not empty and searchValue.date_match_finale is defined %}
-                            {{ 'Date Finale' }} <input type="text" name="date_match_finale" class="datepic"
+                            <span class="label black">{{ 'Date Finale' }}</span> <input type="text" name="date_match_finale" class="datepic"
                                                        value="{{ searchValue.date_match_finale }}"/>
                         {% else %}
-                            {{ 'Date Finale' }} <input type="text" name="date_match_finale" class="datepic"/>
+                            <span class="label black">{{ 'Date Finale' }}</span> <input type="text" name="date_match_finale" class="datepic"/>
                         {% endif %}
 
-                        {{ 'Championat'|trans }}
+                            <span class="label black">{{ 'Championat'|trans }}</span>
                         <select name="championat_match" id="">
 
 
@@ -77,7 +78,7 @@
 
                             {% endif %}
                         </select>
-                        {{ 'Pays' }}
+                        <span class="label black">{{ 'Pays' }}</span>
                         <select name="pays_match" id="">
                             {% if searchValue is defined and searchValue is not empty and searchValue.pays_match is defined %}
                                 <option value="{{ searchValue.pays_match }}">{{ searchValue.pays_match }}</option>
@@ -93,10 +94,19 @@
                             {% endif %}
                         </select>
 
+                            <span class="label black">{{ 'Status' }}</span>
+                            <select name="status_match" id="">
+                                <option value=""></option>
+                                <option value="active">Active</option>
+                                <option value="not_started">Non Commencé</option>
+                                <option value=""></option>
+
+                            </select>
+
                         <input type="submit" value="{{ 'Chercher les matchs' }}"/>
 
 
-                        <br/><br/>
+
                         {% if matchs is defined and matchs is not null %}
 
                         <table>
@@ -126,6 +136,27 @@
                                         </a>
                                     </td>
 
+                                {#{% else %}#}
+                                {% elseif rowMatchs.statusMatch is defined and rowMatchs.statusMatch == 'active' and row_selected != 1 %}
+                                    <tr class="active">
+                                    <td>
+                                        <input type="checkbox" name="select_{{ rowMatchs.id }}"/>
+                                    </td>
+                                {% elseif rowMatchs.statusMatch is defined and rowMatchs.statusMatch == 'not_started' and row_selected != 1 %}
+                                    <tr class="not_started">
+                                    <td>
+                                        <input type="checkbox" name="select_{{ rowMatchs.id }}"/>
+                                    </td>
+                                {% elseif rowMatchs.statusMatch is defined and rowMatchs.statusMatch == 'finished' and row_selected != 1 %}
+                                    <tr class="finished">
+                                    <td>
+                                        <input type="checkbox" name="select_{{ rowMatchs.id }}"/>
+                                    </td>
+                                {% elseif rowMatchs.statusMatch is defined and rowMatchs.statusMatch == 'postphoned' and row_selected != 1 %}
+                                    <tr class="postphoned">
+                                    <td>
+                                        <input type="checkbox" name="select_{{ rowMatchs.id }}"/>
+                                    </td>
                                 {% else %}
                                     <tr class="">
                                     <td>
@@ -154,7 +185,7 @@
                         <input id="addMatch" class="btn btn-primary" type="submit" value="{{ 'Insérer matchs' }}"/>
                         <br/><br/>
                     </form>
-
+                    </div>
                     {% else %}
                         {{ 'Vous devez effectué une recherche des matchs ' }}
                     {% endif %}
@@ -164,4 +195,5 @@
             </div>
         </div>
     </div>
+</div>
 {% endblock %}

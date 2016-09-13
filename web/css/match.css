@@ -89,3 +89,10 @@ table tr.active{
 .black{
     color: #555555;
 }
+input.datepic{
+    width: 80px;
+    height: 20px;
+}
+div.search-matchs form{
+    background-color: #eeeeee;
+}
