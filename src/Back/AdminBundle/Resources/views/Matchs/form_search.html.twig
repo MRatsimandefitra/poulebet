@@ -65,21 +65,32 @@
                         </select>
                     </div>
                     <div class="col-md-4 col-lg-4">
-                        {{ 'Status : '|trans }}
+                        {{ 'Statut : '|trans }}
                         <select name="match_status" id="">
                             {% if searchValue.match_status is defined and searchValue.match_status %}
-                                <option value="{{ searchValue.match_status }}">{{ searchValue.match_status }}</option>
+                                <option value="{{ searchValue.match_status }}">
+                                    {% if searchValue.matchs_status == 'not_started' %}
+                                        {{ 'Non commencé' }}
+                                    {% elseif searchValue.matchs_status == 'postponed' %}
+                                        {{ 'Reporté' }}
+                                    {% elseif searchValue.matchs_status == 'finished' %}
+                                        {{ 'Terminé' }}
+                                    {% elseif searchValue.matchs_status == 'active' %}
+                                        {{ 'Active' }}
+                                    {% endif %}
+
+                                </option>
                                 <option value=""></option>
                                 <option value="active">Active</option>
-                                <option value="not_started"> Pour bientot</option>
+                                <option value="not_started"> Non commencé</option>
                                 <option value="finished">Terminé</option>
-                                <option value="postponed">Postphoned</option>
+                                <option value="postponed">Reporté</option>
                             {% else %}
                                 <option value="">{{ 'Choisir une statut'|trans }}</option>
                                 <option value="active">Active</option>
-                                <option value="not_started"> Pour bientot</option>
+                                <option value="not_started"> Non commencé</option>
                                 <option value="finished">Terminé</option>
-                                <option value="postponed">Postphoned</option>
+                                <option value="postponed">Reporté</option>
                             {% endif %}
 
                         </select>
