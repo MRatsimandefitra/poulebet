@@ -916,6 +916,29 @@ class MatchController extends ApiController
 
     public function updateFromGoalApiAction(Request $request)
     {
+        //var_dump(explode('&',$request->getContent())); die;
+       /* $ArrayUrl = explode('&',$request->getContent());
+        foreach($ArrayUrl as $k => $v){
+            $arrayData[] = explode('=', $v);
+        }
+        var_dump($arrayData); die;*/
+        $dateDebutGoalApi = "";
+        if($request->get('dateDebutGoalApi')){
+            $dateDebutGoalApi = $request->get('dateDebutGoalApi');
+        }
+        $dateFinaleGoalApi = "";
+        if($request->get('dateFinaleGoalApi')){
+            $dateFinaleGoalApi = $request->get('dateFinaleGoalApi');
+        }
+        $dateChampionatGoalApi = "";
+        if($request->get('championat_goal_api')){
+            $dateChampionatGoalApi = $request->get('championat_goal_api');
+        }
+        $params = array(
+            'dateDebut' => $dateDebutGoalApi,
+            'dateFinale' => $dateFinaleGoalApi,
+            'championat_match' => $dateChampionatGoalApi
+        );
         $dateDebutGoalApi = $request->request->get('dateDebutGoalApi');
         $dateFinaleGoalApi = $request->request->get('dateFinaleGoalApi');
         $championat_goal_api = $request->request->get('championat_goal_api');
@@ -930,6 +953,6 @@ class MatchController extends ApiController
         ));
         $output = new NullOutput();
         $resultCode = $command->run($input, $output);
-        return $this->redirectToRoute('index_admin_match');
+        return $this->redirectToRoute('index_admin_match', $params);
     }
 }

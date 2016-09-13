@@ -15,33 +15,33 @@
 
                         {% if searchValue.dateDebut is defined %}
 
-                            {{ "Date début"|trans }} :   <input class="datepic" type="text" name="dateDebut"
+                            {{ "Date début"|trans }} :   <input id="dateDebut" class="datepic" type="text" name="dateDebut"
                                                                 value="{{ searchValue.dateDebut }}"/>
                         {% else %}
                             {% if searchValue.date_debut is defined and searchValue.date_debut %}
-                                {{ "Date Début"|trans }} :   <input class="datepic" type="text" name="dateDebut"
+                                {{ "Date Début"|trans }} :   <input id="dateDebut" class="datepic" type="text" name="dateDebut"
                                                                     value="{{ searchValue.date_debut }}"/>
                             {% else %}
-                                {{ "Date Début"|trans }} :   <input class="datepic" type="text" name="dateDebut"/>
+                                {{ "Date Début"|trans }} :   <input id="dateDebut" class="datepic" type="text" name="dateDebut"/>
                             {% endif %}
                         {% endif %}
                     </div>
                     <div class="col-md-2 col-lg-2">
                         {% if searchValue.dateFinale is defined %}
-                            {{ "Date Fin"|trans }} : <input class="datepic" type="text" name="dateFinale"
+                            {{ "Date Fin"|trans }} : <input id="dateFinale" class="datepic" type="text" name="dateFinale"
                                                                value="{{ searchValue.dateFinale }}"/>
                         {% else %}
                             {% if searchValue.date_finale is defined and searchValue.date_finale %}
-                                {{ "Date Fin"|trans }} : <input class="datepic" type="text" name="dateFinale" value="{{ searchValue.date_finale }}"/>
+                                {{ "Date Fin"|trans }} : <input id="dateFinale" class="datepic" type="text" name="dateFinale" value="{{ searchValue.date_finale }}"/>
                             {% else %}
-                                {{ "Date Fin"|trans }} : <input class="datepic" type="text" name="dateFinale"/>
+                                {{ "Date Fin"|trans }} : <input id="dateFinale" class="datepic" type="text" name="dateFinale"/>
                             {% endif %}
 
                         {% endif %}
                     </div>
                     <div class="col-md-4 col-lg-4">
                         {{ "Championnat"|trans }} :
-                        <select class="championat" name="championat_match" id="">
+                        <select class="championat" name="championat_match" id="championat_match">
 
                             {#{{ searchValue.championat_match }}#}
                             {% if searchValue.championat_match is defined %}
@@ -131,17 +131,17 @@
             <div class="search-flux-api">
                 <form action="{{ path('update_matchs_from_goal_api') }}" method="post">
                     <div class="col-lg-3">
-                        {{ "Date Début"|trans }} : <input class="datepic" type="text" name="dateDebutGoalApi"
+                        {{ "Date Début"|trans }} : <input id="dateDebutGoalApi" class="datepic" type="text" name="dateDebutGoalApi"
                                                           value="{#{{ searchValue.dateDebutGoalApi }}#}"/>
                     </div>
                     <div class="col-md-2 col-lg-3">
 
-                        {{ "Date Fin"|trans }} : <input class="datepic" type="text" name="dateFinaleGoalApi"
+                        {{ "Date Fin"|trans }} : <input id="dateFinaleGoalApi" class="datepic" type="text" name="dateFinaleGoalApi"
                                                            value="{#{{ searchValue.dateDebutGoalApi }}#}"/>
                     </div>
                     <div class="col-md-6 col-lg-6">
                         {{ 'Championat'|trans }}
-                        <select class="championat" name="championat_goal_api" id="">
+                        <select id="championat_goal_api" class="championat" name="championat_goal_api" id="">
 
                             {#{{ searchValue.championat_match }}#}
                             {% if searchValue.championat_match is defined %}
@@ -165,6 +165,12 @@
                         </select>
                     </div>
                     <div class="col-md-8 col-lg-8"></div>
+                    <div class="col-md-8 col-lg-8">
+                        <input type="hidden" name="dateDebut"/>
+                        <input type="hidden" name="dateFinale"/>
+                        <input type="hidden" name="championat"/>
+                        <input type="checkbox" name="withParams" id="withParams" onchange="getParams();">{{ 'Avec parametres' }}
+                    </div>
                     <div class="col-md-2 col-lg-2">
                         <input type="submit" class="searh-btn-match" value="{{ 'Check GOAL API'|trans }}"/>
                     </div>
