@@ -251,24 +251,8 @@ class MatchController extends ApiController
 
     }
     private function getTotalItemsMatchsByStatus($status = null){
-        // getTotal By argument
-        $dqlTotal = "SELECT m from ApiDBBundle:Matchs m ";
-        if($status){
-            $dqlTotal .= " WHERE m.statusMatch LIKE :status";
-        }
-
-        $queryTotal = $this->get('doctrine.orm.entity_manager')->createQuery($dqlTotal);
-        if($status){
-            $queryTotal->setParameter('status', $status);
-        }
-
-        $data = $queryTotal->getResult();
-        if(count($data)!= 0){
-            $result = count($data) + 1;
-        }else{
-            $result = 0;
-        }
-        return count($data);
+        $matchManager= $this->get('matchs.manager')->getTotalItemsMatchsByStatus($status);
+        return $matchManager;
     }
     public function indexAction(Request $request)
     {

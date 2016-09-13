@@ -18,8 +18,8 @@
             {#<div class="col-lg-1">
 
             </div>#}
-            <div class="col-lg-10">
-                <div class="search-match">
+            <div class="col-lg-12">
+                <div class="search-match-pronostic">
                     <form action="" method="get">
 
                         {# {% if searchValue.date_match is defined %}
@@ -90,28 +90,58 @@
                                 {% endfor %}
                             {% endif %}
                         </select>
-                        <input type="submit" class="btn btn-default" value="{{ 'Chercher'|trans }}"/>
+                        <input type="submit" class="" value="{{ 'Rechercher'|trans }}"/>
                         <a href="{{ path('index_admin_match') }}">{{ 'Annuler Filtre' }}<span class="glyphicon glyphicon-remove red" aria-hidden="true"></span></a>
 
                     </form>
                 </div>
             </div>
-            <div class="col-lg-2">
-                {#<div class="search-match">
+{#            <div class="col-lg-2">
+                &#123;&#35;<div class="search-match">
                     <a class="btn btn-default"
                        href="{{ path('update_matchs_from_goal_api') }}" &#123;&#35;class="btn btn-default"&#35;&#125;> {{ 'Flux GOALAPI'|trans }}</a>
-                </div>#}
-            </div>
+                </div>&#35;&#125;
+            </div>#}
 
             <br/>
 
             <div class="col-lg-12">
                 <div class="header-table">
                     {#{{ 'Nombre de match'|trans }} : {{ totalMatch }}#}
+                    <div class="count">
+                        <span class="label black">{{ 'Total recherche'|trans }}
+                            :    {{ totalRecherche }}</span>&nbsp;&nbsp; | &nbsp;&nbsp;
+                        <span class="label black">{{ 'Total Matchs Finis'|trans }}
+                            :    {{ totalItemsFinished }}</span>&nbsp;&nbsp;| &nbsp;&nbsp;
+                        <span class="label black">{{ 'Total Matchs Active'|trans }}
+                            :    {{ totalItemsActif }}</span>&nbsp;&nbsp;| &nbsp;&nbsp;
+                        <span class="label black">{{ 'Total Matchs Non commencé'|trans }}
+                            :    {{ totalItemsNotStarted }}</span>&nbsp;&nbsp;| &nbsp;&nbsp;
+                        <span class="label black">{{ 'Total de tous les Matchs'|trans }}
+                            :    {{ totalItemsMatchs }}</span>&nbsp;&nbsp; |
+                        <span class="label black">{{ 'Total des matchs pronostic'|trans }}
+                            :    {{ totalPronostic }}</span>&nbsp;&nbsp;
+
+
+                    </div>
                 </div>
                 <table class="table-list">
+
                     <tr>
-                        <th>{{ 'Date'|trans }}</th>
+                        <th>
+
+                            {{ 'Date'|trans }}
+                            <div class="tri">
+                                <a href="{{ path('index_admin_match', get_search_value('ch.fullNameChampionat','asc', searchValue)) }}">
+                                    <img class="tri" id="up" src="{{ asset('images/up.png') }}" width="16" height="16"
+                                         alt="">
+                                </a>
+                                <a href="{{ path('index_admin_match', get_search_value('ch.fullNameChampionat','asc', searchValue)) }}">
+                                    <img class="tri" id="up" src="{{ asset('images/down.png') }}" width="16" height="16"
+                                         alt="">
+                                </a>
+                            </div>
+                        </th>
                         <th>
                             {{ 'Domicile'|trans }}
                         </th>
@@ -121,14 +151,35 @@
                         <th>
                             {{ 'Season'|trans }}
                         </th>
-                        <th>
+                        <th style="min-width: 200px;">
                             {{ 'Championnat'|trans }}
+
+                            <div class="tri">
+                                <a href="{{ path('index_admin_match', get_search_value('ch.fullNameChampionat','asc', searchValue)) }}">
+                                    <img class="tri" id="up" src="{{ asset('images/up.png') }}" width="16" height="16"
+                                         alt="">
+                                </a>
+                                <a href="{{ path('index_admin_match', get_search_value('ch.fullNameChampionat','asc', searchValue)) }}">
+                                    <img class="tri" id="up" src="{{ asset('images/down.png') }}" width="16" height="16"
+                                         alt="">
+                                </a>
+                            </div>
                         </th>
                         <th>
                             {{ 'Visiteur'|trans }}
                         </th>
-                        <th>
+                        <th style="min-width: 150px;" >
                             {{ 'Status'|trans }}
+                            <div class="tri">
+                                <a href="{{ path('index_admin_match', get_search_value('ch.fullNameChampionat','asc', searchValue)) }}">
+                                    <img class="tri" id="up" src="{{ asset('images/up.png') }}" width="16" height="16"
+                                         alt="">
+                                </a>
+                                <a href="{{ path('index_admin_match', get_search_value('ch.fullNameChampionat','asc', searchValue)) }}">
+                                    <img class="tri" id="up" src="{{ asset('images/down.png') }}" width="16" height="16"
+                                         alt="">
+                                </a>
+                            </div>
                         </th>
                         <th>{{ 'Master prono' }}</th>
                         <th>
@@ -136,9 +187,17 @@
                         </th>
                     </tr>
                     {% for row in matchs %}
-
-
-                        <tr>
+                        {% if row.statusMatch is defined and row.statusMatch == 'active' %}
+                            <tr class="active">
+                        {% elseif row.statusMatch is defined and row.statusMatch == 'not_started' %}
+                            <tr class="not_started">
+                        {% elseif row.statusMatch is defined and row.statusMatch == 'finished' %}
+                            <tr class="finished">
+                        {% elseif row.statusMatch is defined and row.statusMatch == 'postphoned' %}
+                            <tr class="postphoned">
+                        {% else %}
+                            <tr>
+                        {% endif %}
                             <td>{{ row.dateMatch|date('d/m/Y  - h:i') }}</td>
                             <td>
                                 {#  <div class="flag flag-{{ row.equipeDomicile|lower|slice(0, 2) }}"
@@ -243,7 +302,7 @@
                                     <a class="supprimer" href="{{ path('remove_admin_pronostic', {'id': row.id }) }}"
                                        onclick="supprimer('Etes vous sur de vouloir supprimer ce pronostic ?');"> <span
                                                 class="glyphicon glyphicon-remove red"
-                                                aria-hidden="true"></span> {{ 'Suppression Master prono'|trans }}
+                                                aria-hidden="true"></span> {{ 'Supprimer'|trans }}
                                     </a> &nbsp;  &nbsp;
                                         {% endif %}
                                 {% endif %}

@@ -96,3 +96,19 @@ input.datepic{
 div.search-matchs form{
     background-color: #eeeeee;
 }
+div.search-match-pronostic {
+    background-color: #d5d5d5;
+    padding: 5px;
+}
+div.search-match-pronostic input{
+
+}
+div.search-match-pronostic select{
+    height: 20px;
+}
+div.search-match-pronostic input[type=submit]{
+    padding: 0px 15px;
+    background-color: #525475;
+    border: 1px #555555 solid;
+    color: #ffffff;
+}

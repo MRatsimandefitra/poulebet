@@ -219,7 +219,7 @@ class PronosticController extends ApiController
         }else{
             $matchs = $this->get('doctrine.orm.entity_manager')->createQuery($dql)->setParameters($params)->getResult();
         }
-
+        $totalRecherche = count($matchs);
         $championatData = $this->getAllEntity(self::ENTITY_CHAMPIONAT);
         $dqli = "SELECT ch From ApiDBBundle:championat ch where ch.pays  is not null ";
         $query = $this->get('doctrine.orm.entity_manager')->createQuery($dqli);
@@ -227,13 +227,26 @@ class PronosticController extends ApiController
         $droitAdmin = $this->getDroitAdmin('Matchs');
         return $this->render('BackAdminBundle:Pronostic:index_pronostic.html.twig', array(
             'matchs' => $matchs,
-
             'championat' => $championatData,
             'country' => $country,
             'searchValue' => $searchValue,
-            'droitAdmin' => $droitAdmin[0]
+            'droitAdmin' => $droitAdmin[0],
+            'totalRecherche' => $totalRecherche,
+            'totalItemsActif' => $this->getTotalItemsMatchsByStatus('active'),
+            'totalItemsFinished' => $this->getTotalItemsMatchsByStatus('finished'),
+            'totalItemsMatchs' => $this->getTotalItemsMatchsByStatus(),
+            'totalItemsNotStarted' => $this->getTotalItemsMatchsByStatus('not_started'),
+            'totalPronostic' => $this->getTotalPronostic()
 
         ));
+    }
+    private function getTotalPronostic(){
+        $totalPronostic = $this->get('matchs.manager')->getTotalPronostic();
+        return $totalPronostic;
+    }
+    private function getTotalItemsMatchsByStatus($status = null){
+        $matchsManager = $this->get('matchs.manager')->getTotalItemsMatchsByStatus($status);
+        return $matchsManager;
     }
 
 
