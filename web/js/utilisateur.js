@@ -13,9 +13,11 @@ $(document).ready(function(){
     });
     $('#check_all').click(function(){
          $('input:checkbox').not(this).prop('checked', "checked");
+         $('#all_user').val("true");
     });
     $('#uncheck_all').click(function(){
         $("input.checking_users").removeAttr("checked");
+        $("#all_user").removeAttr("value");
     });
 
 
@@ -23,7 +25,6 @@ $(document).ready(function(){
 });
 function supprimer(msg){
     var response = confirm(msg);
-
     if(response == false){
         return false;
     }else{

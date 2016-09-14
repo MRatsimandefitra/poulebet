@@ -28,8 +28,9 @@ class NotificationController extends ApiController {
         $tri = $request->get('tri');
         $champ = $request->get('champ');
         $users_id = $request->get('users');
+        $all_user = $request->get("all_user");
         $nbpage = 10; 
-        $criteria = array();
+        $criteria = array("criteria_username"=>null,"criteria_email"=>null);
         if($request->get('nbpage')){
             $nbpage = $request->get('nbpage');
         }
@@ -58,10 +59,21 @@ class NotificationController extends ApiController {
         
         if ($form->isValid()) {
             if($users_id){
-                foreach($users_id as $id){
-                    $usr = $this->getRepo(self::ENTITY_UTILISATEUR)->find($id);
-                    $notification->addUtilisateur($usr);
+                $all=false;
+                if($all_user=="true"){
+                    $all= true;
+                    $usrs = $this->getRepo(self::ENTITY_UTILISATEUR)->findAll();
+                    foreach($usrs as $item){
+                        $notification->addUtilisateur($item);
                     }
+                }
+                if(!$all){
+                    foreach($users_id as $id){
+                        $usr = $this->getRepo(self::ENTITY_UTILISATEUR)->find($id);
+                        $notification->addUtilisateur($usr);
+                    }
+                }
+                
             }
             //insertion dans la base de donnée
             $this->insert($notification);
@@ -86,7 +98,8 @@ class NotificationController extends ApiController {
         }
         return $this->render('BackAdminBundle:Notification:index.html.twig', array(
             'form' => $form->createView(),
-            'pagination'=>$pagination
+            'pagination'=>$pagination,
+            'criteria'=>$criteria
         ));
         
        
