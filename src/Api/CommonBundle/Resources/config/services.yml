@@ -19,3 +19,6 @@ services:
     matchs.manager:
         class: Api\CommonBundle\Utils\MatchsManager
         arguments: ["@service_container"]
+    items.manager:
+        class: Api\CommonBundle\Utils\ItemsManager
+        arguments: ["@service_container"]

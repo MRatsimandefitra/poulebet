@@ -3,15 +3,17 @@
 {% block ariane %} {{ parent() }} {% endblock %}
 
 {% block page %}
-    {{ form_start(form) }}
-    <div class="box-header-response">
+
+    {#<div class="box-header-response">
         {{ 'Détails membres'|trans }}
-    </div>
+    </div>#}
+    <div class="col-lg-12">
+    {{ form_start(form) }}
     <div class="box-response">
-        <div class="search">
+        {#<div class="search">
             {% include 'BackAdminBundle:Utilisateur:sous_menu.html.twig'  %}
             <div class="space"></div>
-        </div>
+        </div>#}
         <table>
             <tr>
                 <td>{{ 'photo'|trans }}</td>
@@ -125,5 +127,6 @@
             {{ 'Enregistrer'|trans }}
         </button>
         {{ form_end(form) }}
+    </div>
     </div>
 {% endblock %}

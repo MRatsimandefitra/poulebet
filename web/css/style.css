@@ -100,7 +100,7 @@ table {
 }
 
 table thead {
-    background-color: #a3a4ae;
+    background-color: #d5d5d5;
 
 }
 
@@ -299,4 +299,9 @@ div.pagination span.current{
 }
 div.pagination span.last{
     background-color: darkorange;
+}
+div.export{
+    background-color: #474f6d;
+    padding: 5px 15px;
+    color: #ffffff;
 }
