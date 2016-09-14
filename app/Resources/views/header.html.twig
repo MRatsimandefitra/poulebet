@@ -38,12 +38,20 @@
                         <a href="{{ path('index_admin_match') }}">{{ 'Matchs'|trans }}</a>
                     </li>
                     <li>
+                        <img src="{{ asset('images/master-prono.png') }}" alt=""/>
+                        <a href="{{ path('index_admin_pronostic') }}">{{ 'Master prono'|trans }}</a>
+                    </li>
+                    <li>
                         <img src="{{ asset('images/loto.png') }}" alt=""/>
                         <a href="{{ path('list_loto_foot') }}">{{ 'Loto Foot'|trans }}</a>
                     </li>
                     <li>
-                        <img src="{{ asset('images/master-prono.png') }}" alt=""/>
-                        <a href="{{ path('index_admin_pronostic') }}">{{ 'Master prono'|trans }}</a>
+                        <img src="{{ asset('images/councours.png') }}" alt=""/>
+                        <a href="{{ path('list_concours')}}">{{ 'Concours'|trans }}</a>
+                    </li>
+                    <li>
+                        <img src="{{ asset('images/lot.png') }}" alt=""/>
+                        <a href="{{ path('index_lots')}}">{{ 'Lots à gagner'|trans }}</a>
                     </li>
 
                    {# <li>
@@ -55,14 +63,8 @@
                         <img src="{{ asset('images/classement.png') }}" alt=""/>
                         <a href="#">{{ 'Classement'|trans }}</a>
                     </li>
-                    <li>
-                        <img src="{{ asset('images/lot.png') }}" alt=""/>
-                        <a href="{{ path('index_lots')}}">{{ 'Lots à gagner'|trans }}</a>
-                    </li>
-                    <li>
-                        <img src="{{ asset('images/councours.png') }}" alt=""/>
-                        <a href="{{ path('list_concours')}}">{{ 'Concours'|trans }}</a>
-                    </li>
+                    
+                    
                     
                     
                 </ul>
