@@ -109,7 +109,7 @@
                 </div>
                 <table class="table-list">
                     <tr>
-                        <th>
+                        <th class="sorted">
                             {{ knp_pagination_sortable(pagination, 'Daty', 'm.dateMatch') }}
                         </th>
                         <th>
@@ -135,7 +135,7 @@
                             {{ 'Actions'|trans }}
                         </th>
                     </tr>
-                    {% for row in matchs %}
+                    {% for row in pagination %}
 
 
                         <tr>

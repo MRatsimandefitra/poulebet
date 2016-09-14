@@ -170,7 +170,7 @@ class PronosticController extends ApiController
             $searchValue['dateDebut'] = $request->get('dateDebut');
             $searchValue['dateFinale'] = $request->get('dateFinale');
         }
-
+        $requestChampionat = false;
         # champinat seul
         if($request->get('championat_match')&& !$request->get('pays_match')){
             $championat = $request->get('championat_match');
@@ -208,18 +208,42 @@ class PronosticController extends ApiController
         if(!$request->get('championat_match') && !$request->get('pays_match') && !$request->get('dateDebut') && !$request->get('dateFinale')){
             $where[] = " m.dateMatch BETWEEN CURRENT_DATE() AND DATE_ADD(CURRENT_DATE(), 7,'day')";
         }
+        $orderByChampionat = false;
+        if ($request->query->get('column') && $request->query->get('tri')) {
+
+            //var_dump("ORDER BY ".$request->query->get('column'). " ".$request->query->get('tri')); die;$*
+            //   $dql .= " ORDER BY ".$request->query->get('column'). " ". strtoupper($request->query->get('tri'));
+            if ($requestChampionat) {
+                $dql .= " ORDER BY " . $request->query->get('column') . " " . strtoupper($request->query->get('tri'));
+            } else {
+                if ($request->query->get('column') == 'ch.fullNameChampionat') {
+                    $dql .= " LEFT JOIN m.championat ch ";
+                    $orderByChampionat = true;
+
+                } else {
+                    $orderByChampionat = true;
+                    //$dql .= " ORDER BY ".$request->query->get('column'). " ". strtoupper($request->query->get('tri'));
+                }
+
+            }
+
+        }
         if (!empty($where)) {
             $dql .= ' WHERE ' . implode(' AND ', $where);
         }
-
-       // var_dump($dql); die;
+        if ($orderByChampionat) {
+            $dql .= " ORDER BY " . $request->query->get('column') . " " . strtoupper($request->query->get('tri'));
+        } else {
+            $dql .= ' ORDER BY m.dateMatch asc';
+        }
+      //  var_dump($dql); die;
         if(empty($params)){
 
             $matchs = $this->get('doctrine.orm.entity_manager')->createQuery($dql)->getResult();
         }else{
             $matchs = $this->get('doctrine.orm.entity_manager')->createQuery($dql)->setParameters($params)->getResult();
         }
-
+        $totalRecherche = count($matchs);
         $championatData = $this->getAllEntity(self::ENTITY_CHAMPIONAT);
         $dqli = "SELECT ch From ApiDBBundle:championat ch where ch.pays  is not null ";
         $query = $this->get('doctrine.orm.entity_manager')->createQuery($dqli);
@@ -227,13 +251,26 @@ class PronosticController extends ApiController
         $droitAdmin = $this->getDroitAdmin('Matchs');
         return $this->render('BackAdminBundle:Pronostic:index_pronostic.html.twig', array(
             'matchs' => $matchs,
-
             'championat' => $championatData,
             'country' => $country,
             'searchValue' => $searchValue,
-            'droitAdmin' => $droitAdmin[0]
+            'droitAdmin' => $droitAdmin[0],
+            'totalRecherche' => $totalRecherche,
+            'totalItemsActif' => $this->getTotalItemsMatchsByStatus('active'),
+            'totalItemsFinished' => $this->getTotalItemsMatchsByStatus('finished'),
+            'totalItemsMatchs' => $this->getTotalItemsMatchsByStatus(),
+            'totalItemsNotStarted' => $this->getTotalItemsMatchsByStatus('not_started'),
+            'totalPronostic' => $this->getTotalPronostic()
 
         ));
+    }
+    private function getTotalPronostic(){
+        $totalPronostic = $this->get('matchs.manager')->getTotalPronostic();
+        return $totalPronostic;
+    }
+    private function getTotalItemsMatchsByStatus($status = null){
+        $matchsManager = $this->get('matchs.manager')->getTotalItemsMatchsByStatus($status);
+        return $matchsManager;
     }
 
 

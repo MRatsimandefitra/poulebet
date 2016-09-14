@@ -30,7 +30,7 @@ class GoalApiMatchsParChampionatCommand extends ContainerAwareCommand {
         $this
             ->setName('goalapi:check:matchs-by-championat')
             // the short description shown while running "php bin/console list"
-            ->addArgument('championat', InputArgument::OPTIONAL, 'What do you want to import?')
+            ->addArgument('championat', InputArgument::OPTIONAL, 'Championat ?')
             ->setDescription('Check match');
     }
 
@@ -56,11 +56,15 @@ class GoalApiMatchsParChampionatCommand extends ContainerAwareCommand {
                             if(!$matchs){
                                 $matchs = new Matchs();
                             }
+                            $dateCheckGoalapi = new \DateTime(strtotime($data['timestamp_created']));
+                            $matchs->setTimestampCheckGoalApi($data['timestamp_created']);
+                            $matchs->setDateCheckGoalApi($dateCheckGoalapi);
                             $matchs->setStateGoalApi(false);
                             $matchs->setId($vItems['id']);
                             $matchs->setStatusMatch($vItems['status']);
                             $mDate = \DateTime::createFromFormat('Y-m-d h:i', date('Y-m-d h:i', $vItems['timestamp_starts']));
                             $matchs->setDateMatch($mDate);
+                            $matchs->setTimestampDateMatch($vItems['timestamp_starts']);
                             // teams visiteur
                             $teamsVisiteur = $em->getRepository(self::ENTITY_TEAMS)->findOneBy(array('idNameClub' => $vItems['teams']['guests']['id']));
                             if(!$teamsVisiteur){
@@ -148,8 +152,8 @@ class GoalApiMatchsParChampionatCommand extends ContainerAwareCommand {
             $this->sendErrorEmail('Error this no api key');
             return false;
         }
-        //$url = "http://api.xmlscores.com/matches/?c[]=" . $data->getNomChampionat() . "&f=json&open=".$apiKey;
-        $url = $this->getContainer()->get('kernel')->getRootDir().'/../web/json/matches1.json';
+        $url = "http://api.xmlscores.com/matches/?c[]=" . $data->getNomChampionat() . "&f=json&open=".$apiKey;
+       // $url = $this->getContainer()->get('kernel')->getRootDir().'/../web/json/matches1.json';
 
         $content = file_get_contents($url);
 

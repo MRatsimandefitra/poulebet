@@ -88,11 +88,8 @@ class GoalApiMatchsManuelCommand extends ContainerAwareCommand
         }else{
          //   $dateFinale = date('Y-m-d 23:59:59');
            // $dateFinale = date('Y-m-d 23:59:59',  strtotime($argDateDebut. ' 23:59:59'));
-            if($dateDebut){
-                $dateFinale = date('Y-m-d 23:59:59',  strtotime($argDateDebut. ' 23:59:59'));
-            }else{
+
                 $dateFinale = null;
-            }
 
         }
 
@@ -128,11 +125,13 @@ class GoalApiMatchsManuelCommand extends ContainerAwareCommand
                         if($dateDebut && $dateFinale or $dateDebut or $dateFinale){
                             $dateCurrentMatchs = date('Y-m-d h:i:s', $vItems['timestamp_starts']);
                             if($dateCurrentMatchs > $dateDebut and $dateCurrentMatchs < $dateFinale){
-                                $this->treatementDataToMatch($vItems, $vChampionat, $output, $dateDebut, $dateFinale);
+                                $this->treatementDataToMatch($vItems, $vChampionat, $output, $data, $dateDebut, $dateFinale);
+                            }elseif($dateCurrentMatchs > $dateDebut && !$dateFinale){
+                                $this->treatementDataToMatch($vItems, $vChampionat, $output, $data, $dateDebut);
                             }
 
                         }else{
-                            $this->treatementDataToMatch($vItems, $vChampionat, $output);
+                            $this->treatementDataToMatch($vItems, $vChampionat,   $output, $data);
                         }
 
 
@@ -147,17 +146,25 @@ class GoalApiMatchsManuelCommand extends ContainerAwareCommand
 
     }
 
-    private function treatementDataToMatch($vItems, $vChampionat,  $output, $datDebut = null, $dateFinale = null){
+    private function treatementDataToMatch($vItems, $vChampionat,  $output, $data, $datDebut = null, $dateFinale = null){
         $output->writeln("Treatement of " . $vItems['id']);
+        $dateCheckGoalapi = new \DateTime(strtotime($data['timestamp_created']));
+        //$dateCheckGoalapi = $dateCheckGoalapi->format('Y-m-d H:i:s');
+
         $matchs = $this->getEm()->getRepository(self::ENTITY_MATCH)->find($vItems['id']);
+        $newMatch = false;
         if (!$matchs) {
             $matchs = new Matchs();
+            $newMatch = true;
         }
+        $matchs->setTimestampCheckGoalApi($data['timestamp_created']);
+        $matchs->setDateCheckGoalApi($dateCheckGoalapi);
         $matchs->setStateGoalApi(false);
         $matchs->setId($vItems['id']);
         $matchs->setStatusMatch($vItems['status']);
-        $mDate = \DateTime::createFromFormat('Y-m-d h:i', date('Y-m-d h:i', $vItems['timestamp_starts']));
+        $mDate = \DateTime::createFromFormat('Y-m-d H:i', date('Y-m-d H:i', $vItems['timestamp_starts']));
         $matchs->setDateMatch($mDate);
+        $matchs->setTimestampDateMatch($vItems['timestamp_starts']);
         // teams visiteur
         $teamsVisiteur = $this->getEm()->getRepository(self::ENTITY_TEAMS)->findOneBy(array('idNameClub' => $vItems['teams']['guests']['id']));
         if (!$teamsVisiteur) {
@@ -208,8 +215,12 @@ class GoalApiMatchsManuelCommand extends ContainerAwareCommand
             $matchs->setPeriod($vItems['current-state']['period']);
             $matchs->setMinute($vItems['current-state']['minute']);
         }
-        $this->getEm()->persist($matchs);
+
+        if($newMatch){
+            $this->getEm()->persist($matchs);
+        }
         $this->getEm()->flush();
+
         $output->writeln("Treatements of matchs " . $matchs->getId() . "was successfull");
         $matchs->setStateGoalApi(true);
         $this->getEm()->flush();
@@ -228,16 +239,7 @@ class GoalApiMatchsManuelCommand extends ContainerAwareCommand
         if($idChampionat){
             $data = $em->getRepository('ApiDBBundle:Championat')->find($idChampionat);
             $nameChampionat[] = $data->getNomChampionat();
-        }/*else{
-
-            $data = $em->getRepository('ApiDBBundle:Championat')->findAll();
-            if(is_array($data)){
-                foreach($data as $kData => $vDataItems){
-                    $nameChampionat[] = $vDataItems->getNomChampionat();
-                }
-            }
-        }*/
-
+        }
 
         if (!$data) {
             return false;
@@ -252,7 +254,7 @@ class GoalApiMatchsManuelCommand extends ContainerAwareCommand
         }
 
 
-        if($dateDebut){
+        if($dateDebut && !$dateFinale){
             $timestampDateDebut = strtotime($dateDebut);
             $url = "http://api.xmlscores.com/matches/?c[]=" . $data->getNomChampionat()  . "&f=json&e=1&s=0&l=128&open=" . $apiKey.'&t1='.$timestampDateDebut;
         }
@@ -264,14 +266,15 @@ class GoalApiMatchsManuelCommand extends ContainerAwareCommand
         if(!$dateDebut && !$dateFinale){
             $url = "http://api.xmlscores.com/matches/?c[]=" . $data->getNomChampionat() . "&f=json&e=1&s=0&l=128&open=" . $apiKey;
         }
-     //   var_dump($url); die;
+      //  var_dump($url); die;
         $content = file_get_contents($url);
 
         $arrayJson = json_decode($content, true);
+
         return $arrayJson;
     }
 
-    private function getJson($dateDebut = null, $dateFinale = null, $championat = null)
+   /* private function getJson($dateDebut = null, $dateFinale = null, $championat = null)
     {
         $em = $this->getEm();
         if($dateDebut){
@@ -304,7 +307,7 @@ class GoalApiMatchsManuelCommand extends ContainerAwareCommand
         $arrayJson = json_decode($content, true);
         return $arrayJson;
 
-    }
+    }*/
 
     private function getEm()
     {

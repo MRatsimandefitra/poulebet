@@ -37,3 +37,24 @@ function onSelectChange(value){
     xhttp.send();
 
 }
+function getParams(){
+    var isChecked = document.getElementById('withParams').checked;
+    if(isChecked){
+      //  console.log('is cheked an ');
+        var dateDebut = document.getElementById('dateDebut').value;
+        console.log("Date debut " + dateDebut);
+        var dateFinale = document.getElementById('dateFinale').value;
+        var championnat = document.getElementById('championat_match').value;
+
+        var dateDebutGoalApi = document.getElementById('dateDebutGoalApi').value = dateDebut;
+        var dateFinaleGoalApi = document.getElementById('dateFinaleGoalApi').value = dateFinale;
+        var championnatGoalApi = document.getElementById('championat_goal_api').value = championnat;
+    }else{
+        console.log("vider ihany");
+        var dateDebutGoalApi = document.getElementById('dateDebutGoalApi').value = "";
+        var dateFinaleGoalApi = document.getElementById('dateFinaleGoalApi').value = "";
+        var championnatGoalApi = document.getElementById('championat_goal_api').value = "";
+    }
+
+
+}

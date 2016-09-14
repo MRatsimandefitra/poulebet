@@ -19,7 +19,10 @@ class ConcoursType extends AbstractType
         $builder
             ->add('numero')
             ->add('nomConcours')
-            ->add('finValidation', DateType::class)
+            ->add('dateDebut', DateType::class, array(
+                'data' => new \DateTime('now')
+            ))
+            ->add('dateFinale', DateType::class, array('data' => new \DateTime('now')))
         ;
     }
     

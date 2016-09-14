@@ -16,3 +16,6 @@ services:
     roles.manager:
         class: Api\CommonBundle\Utils\Roles
         arguments: ["@service_container"]
+    matchs.manager:
+        class: Api\CommonBundle\Utils\MatchsManager
+        arguments: ["@service_container"]

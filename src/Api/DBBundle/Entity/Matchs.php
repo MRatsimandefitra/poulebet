@@ -64,7 +64,24 @@ class Matchs
      * @ORM\Column(name="dateMatch", type="datetime", nullable=true)
      */
     private $dateMatch;
-
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="timestampDateMatch", type="string", nullable=true)
+     */
+    private $timestampDateMatch;
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateCheckGoalApi", type="datetime", nullable=true)
+     */
+    private $dateCheckGoalApi;
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="timestampCheckGoalApi", type="string", nullable=true)
+     */
+    private $timestampCheckGoalApi;
     /**
      * @var string
      *
@@ -1016,5 +1033,79 @@ class Matchs
     public function getMatchsEvents()
     {
         return $this->matchsEvents;
+    }
+
+
+    /**
+     * Set timestampDateMatch
+     *
+     * @param string $timestampDateMatch
+     *
+     * @return Matchs
+     */
+    public function setTimestampDateMatch($timestampDateMatch)
+    {
+        $this->timestampDateMatch = $timestampDateMatch;
+
+        return $this;
+    }
+
+    /**
+     * Get timestampDateMatch
+     *
+     * @return string
+     */
+    public function getTimestampDateMatch()
+    {
+        return $this->timestampDateMatch;
+    }
+
+    /**
+     * Set dateCheckGoalApi
+     *
+     * @param \DateTime $dateCheckGoalApi
+     *
+     * @return Matchs
+     */
+    public function setDateCheckGoalApi($dateCheckGoalApi)
+    {
+        $this->dateCheckGoalApi = $dateCheckGoalApi;
+
+        return $this;
+    }
+
+    /**
+     * Get dateCheckGoalApi
+     *
+     * @return \DateTime
+     */
+    public function getDateCheckGoalApi()
+    {
+        return $this->dateCheckGoalApi;
+    }
+
+    /**
+     * Set timestampCheckGoalApi
+     *
+     * @param string $timestampCheckGoalApi
+     *
+     * @return Matchs
+     *
+     */
+    public function setTimestampCheckGoalApi($timestampCheckGoalApi)
+    {
+        $this->timestampCheckGoalApi = $timestampCheckGoalApi;
+
+        return $this;
+    }
+
+    /**
+     * Get timestampCheckGoalApi
+     *
+     * @return string
+     */
+    public function getTimestampCheckGoalApi()
+    {
+        return $this->timestampCheckGoalApi;
     }
 }

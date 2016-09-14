@@ -1,16 +1,114 @@
 div.search-match{
-    background-color: #F2F2F2;
-    padding: 15px;
+    background-color: #cccccc;
+    padding: 7px;
+    font-size: 11px;
+    color: #555;
 }
-div.search-match input[type=text]{
-    width: 100px;
-    
+div.search-match div.search{
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,f6f6f6+47,ededed+100;White+3D+%231 */
+    background: #ffffff; /* Old browsers */
+    background: -moz-radial-gradient(center, ellipse cover, #ffffff 0%, #f6f6f6 47%, #ededed 100%); /* FF3.6-15 */
+    background: -webkit-radial-gradient(center, ellipse cover, #ffffff 0%,#f6f6f6 47%,#ededed 100%); /* Chrome10-25,Safari5.1-6 */
+    background: radial-gradient(ellipse at center, #ffffff 0%,#f6f6f6 47%,#ededed 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+    border-right: 1px solid #cccccc;
+}
+div.search-match div.goalapi{
+    background-color: #d5d5d5;
+    padding: 7px;
+}
+div.search-flux-api{
+    background-color: #FFF;
+    font-size: 11px;
+    border-right: 1px solid #ffffff;
+}
+div.search-flux-api input[type=text]{
+    width: 70px;
+    height: 20px;
+    border: 1px #555 solid;
+    color: #555555;
+}
+div.search-match  input[type=text]{
+    width: 70px;
+    height: 20px;
+    border: 1px #c0c0c0 solid;
+    color: #555555;
+
+}
+div.search-match-form input[type=text]{
+    display: block;
 }
 div.search-match select{
-    height: 25px;
+    width: 100%;
+    height: 20px;
+    display: block;
+    border: 1px #c0c0c0 solid;
+    color: #555555;
+}
+div.search-match select{
+    height: 20px;
     /*width: 200px;*/
 }
 img.fanion {
     width:30px;
     height: 30px;
+}
+div.search-match input[type=submit]{
+    height: 25px;
+    padding: 5px;
+    margin-top: 6px;
+    background-color: #525475;
+    border: 1px #555555 solid;
+    color: #ffffff;
+}
+table.search-match{
+    width: 100%;
+}
+table.search-match tr th{
+    font-weight: 400;
+
+}
+table.search-match tr{
+
+}
+table.search-match tr td{
+
+}
+div.search-match  table tr th{
+    font-weight: 400;
+}
+table tr.finished{
+    background-color: #d4ceda;
+}
+table tr.not_started{
+    background-color: #ffdbb6;
+}
+table tr.active{
+    background-color: #dbffdb;
+}
+.black{
+    color: #555555;
+}
+input.datepic{
+    width: 80px;
+    height: 20px;
+}
+div.search-matchs form{
+    background-color: #eeeeee;
+}
+div.search-match-pronostic {
+    background-color: #d5d5d5;
+    padding: 5px;
+}
+div.search-match-pronostic input{
+
+}
+div.search-match-pronostic select{
+    height: 20px;
+}
+div.search-match-pronostic input[type=submit]{
+    padding: 0px 15px;
+    background-color: #525475;
+    border: 1px #555555 solid;
+    color: #ffffff;
 }

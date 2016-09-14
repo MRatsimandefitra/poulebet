@@ -30,7 +30,7 @@ class Device
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="Utilisateur", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Utilisateur", cascade={"persist","remove"})
      * @ORM\JoinColumn(name="utilisateur_id")
      */
     private $utilisateur;

@@ -18,8 +18,8 @@
             {#<div class="col-lg-1">
 
             </div>#}
-            <div class="col-lg-10">
-                <div class="search-match">
+            <div class="col-lg-12">
+                <div class="search-match-pronostic">
                     <form action="" method="get">
 
                         {# {% if searchValue.date_match is defined %}
@@ -90,28 +90,88 @@
                                 {% endfor %}
                             {% endif %}
                         </select>
-                        <input type="submit" class="btn btn-default" value="{{ 'Chercher'|trans }}"/>
-                        <a href="{{ path('index_admin_match') }}">{{ 'Annuler Filtre' }}<span class="glyphicon glyphicon-remove red" aria-hidden="true"></span></a>
+                        {{ 'Statut : '|trans }}
+                        <select name="match_status" id="">
+                            {% if searchValue.match_status is defined and searchValue.match_status %}
+                                <option value="{{ searchValue.match_status }}">
+                                    {% if searchValue.matchs_status == 'not_started' %}
+                                        {{ 'Non commencé' }}
+                                    {% elseif searchValue.matchs_status == 'postponed' %}
+                                        {{ 'Reporté' }}
+                                    {% elseif searchValue.matchs_status == 'finished' %}
+                                        {{ 'Terminé' }}
+                                    {% elseif searchValue.matchs_status == 'active' %}
+                                        {{ 'Active' }}
+                                    {% endif %}
+
+                                </option>
+                                <option value=""></option>
+                                <option value="active">Active</option>
+                                <option value="not_started"> Non commencé</option>
+                                <option value="finished">Terminé</option>
+                                <option value="postponed">Reporté</option>
+                            {% else %}
+                                <option value="">{{ 'Choisir une statut'|trans }}</option>
+                                <option value="active">Active</option>
+                                <option value="not_started"> Non commencé</option>
+                                <option value="finished">Terminé</option>
+                                <option value="postponed">Reporté</option>
+                            {% endif %}
+
+                        </select>
+                        <input type="submit" class="" value="{{ 'Rechercher'|trans }}"/>
+                        <a href="{{ path('index_admin_match') }}">{{ 'Annuler Filtre' }}<span
+                                    class="glyphicon glyphicon-remove red" aria-hidden="true"></span></a>
 
                     </form>
                 </div>
             </div>
-            <div class="col-lg-2">
-                {#<div class="search-match">
-                    <a class="btn btn-default"
-                       href="{{ path('update_matchs_from_goal_api') }}" &#123;&#35;class="btn btn-default"&#35;&#125;> {{ 'Flux GOALAPI'|trans }}</a>
-                </div>#}
-            </div>
+            {#            <div class="col-lg-2">
+                            &#123;&#35;<div class="search-match">
+                                <a class="btn btn-default"
+                                   href="{{ path('update_matchs_from_goal_api') }}" &#123;&#35;class="btn btn-default"&#35;&#125;> {{ 'Flux GOALAPI'|trans }}</a>
+                            </div>&#35;&#125;
+                        </div>#}
 
             <br/>
 
             <div class="col-lg-12">
                 <div class="header-table">
                     {#{{ 'Nombre de match'|trans }} : {{ totalMatch }}#}
+                    <div class="count">
+                        <span class="label black">{{ 'Total recherche'|trans }}
+                            :    {{ totalRecherche }}</span>&nbsp;&nbsp; | &nbsp;&nbsp;
+                        <span class="label black">{{ 'Total Matchs Finis'|trans }}
+                            :    {{ totalItemsFinished }}</span>&nbsp;&nbsp;| &nbsp;&nbsp;
+                        <span class="label black">{{ 'Total Matchs Active'|trans }}
+                            :    {{ totalItemsActif }}</span>&nbsp;&nbsp;| &nbsp;&nbsp;
+                        <span class="label black">{{ 'Total Matchs Non commencé'|trans }}
+                            :    {{ totalItemsNotStarted }}</span>&nbsp;&nbsp;| &nbsp;&nbsp;
+                        <span class="label black">{{ 'Total de tous les Matchs'|trans }}
+                            :    {{ totalItemsMatchs }}</span>&nbsp;&nbsp; |
+                        <span class="label black">{{ 'Total des matchs pronostic'|trans }}
+                            :    {{ totalPronostic }}</span>&nbsp;&nbsp;
+
+
+                    </div>
                 </div>
                 <table class="table-list">
+
                     <tr>
-                        <th>{{ 'Date'|trans }}</th>
+                        <th>
+
+                            {{ 'Date'|trans }}
+                            <div class="tri">
+                                <a href="{{ path('index_admin_pronostic', get_search_value('ch.fullNameChampionat','asc', searchValue)) }}">
+                                    <img class="tri" id="up" src="{{ asset('images/up.png') }}" width="16" height="16"
+                                         alt="">
+                                </a>
+                                <a href="{{ path('index_admin_pronostic', get_search_value('ch.fullNameChampionat','asc', searchValue)) }}">
+                                    <img class="tri" id="up" src="{{ asset('images/down.png') }}" width="16" height="16"
+                                         alt="">
+                                </a>
+                            </div>
+                        </th>
                         <th>
                             {{ 'Domicile'|trans }}
                         </th>
@@ -121,14 +181,35 @@
                         <th>
                             {{ 'Season'|trans }}
                         </th>
-                        <th>
+                        <th style="min-width: 200px;">
                             {{ 'Championnat'|trans }}
+
+                            <div class="tri">
+                                <a href="{{ path('index_admin_pronostic', get_search_value('ch.fullNameChampionat','asc', searchValue)) }}">
+                                    <img class="tri" id="up" src="{{ asset('images/up.png') }}" width="16" height="16"
+                                         alt="">
+                                </a>
+                                <a href="{{ path('index_admin_pronostic', get_search_value('ch.fullNameChampionat','asc', searchValue)) }}">
+                                    <img class="tri" id="up" src="{{ asset('images/down.png') }}" width="16" height="16"
+                                         alt="">
+                                </a>
+                            </div>
                         </th>
                         <th>
                             {{ 'Visiteur'|trans }}
                         </th>
-                        <th>
-                            {{ 'Status'|trans }}
+                        <th style="min-width: 150px;">
+                            {{ 'Statut'|trans }}
+                            <div class="tri">
+                                <a href="{{ path('index_admin_pronostic', get_search_value('ch.fullNameChampionat','asc', searchValue)) }}">
+                                    <img class="tri" id="up" src="{{ asset('images/up.png') }}" width="16" height="16"
+                                         alt="">
+                                </a>
+                                <a href="{{ path('index_admin_pronostic', get_search_value('ch.fullNameChampionat','asc', searchValue)) }}">
+                                    <img class="tri" id="up" src="{{ asset('images/down.png') }}" width="16" height="16"
+                                         alt="">
+                                </a>
+                            </div>
                         </th>
                         <th>{{ 'Master prono' }}</th>
                         <th>
@@ -136,118 +217,126 @@
                         </th>
                     </tr>
                     {% for row in matchs %}
+                        {% if row.statusMatch is defined and row.statusMatch == 'active' %}
+                            <tr class="active">
+                        {% elseif row.statusMatch is defined and row.statusMatch == 'not_started' %}
+                            <tr class="not_started">
+                        {% elseif row.statusMatch is defined and row.statusMatch == 'finished' %}
+                            <tr class="finished">
+                        {% elseif row.statusMatch is defined and row.statusMatch == 'postphoned' %}
+                            <tr class="postphoned">
+                        {% else %}
+                            <tr>
+                        {% endif %}
+                        <td>{{ row.dateMatch|date('d/m/Y  - h:i') }}</td>
+                        <td>
+                            {#  <div class="flag flag-{{ row.equipeDomicile|lower|slice(0, 2) }}"
+                                   alt="{{ row.equipeDomicile }}"></div>#}
+                            <div>
+                                <img class="fanion"
+                                     src="{{ asset('images/Flag-foot/'~row.teamsDomicile.idNameClub~'.png') }}"
+                                     alt=""/>
+                            </div>
 
+                            {{ row.teamsDomicile.fullNameClub }}
+                        </td>
+                        <td>{{ row.score }}</td>
+                        <td>{{ row.season }}</td>
+                        <td>{{ row.championat.fullNameChampionat }}</td>
+                        <td>
+                            <div>
+                                <img class="fanion"
+                                     src="{{ asset('images/Flag-foot/'~row.teamsVisiteur.idNameClub~'.png') }}"
+                                     alt=""/>
+                            </div>
+                            {{ row.teamsVisiteur.fullNameClub }}
+                        </td>
+                        <td>{{ row.statusMatch }}</td>
+                        <td>
 
-                        <tr>
-                            <td>{{ row.dateMatch|date('d/m/Y  - h:i') }}</td>
-                            <td>
-                                {#  <div class="flag flag-{{ row.equipeDomicile|lower|slice(0, 2) }}"
-                                       alt="{{ row.equipeDomicile }}"></div>#}
-                                <div>
-                                    <img class="fanion"
-                                         src="{{ asset('images/Flag-foot/'~row.teamsDomicile.idNameClub~'.png') }}"
-                                         alt=""/>
-                                </div>
+                            <form method="post" action="">
+                                <table class="table-matchs">
+                                    <tr>
+                                        <td>
+                                            {% if row.masterProno1 is defined and row.masterProno1 == true %}
+                                                <input type="checkbox" name="c_host_{{ row.id }}"
+                                                       checked="true"/> 1
+                                            {% else %}
+                                                <input type="checkbox" name="c_host_{{ row.id }}"/> 1
 
-                                {{ row.teamsDomicile.fullNameClub }}
-                            </td>
-                            <td>{{ row.score }}</td>
-                            <td>{{ row.season }}</td>
-                            <td>{{ row.championat.fullNameChampionat }}</td>
-                            <td>
-                                <div>
-                                    <img class="fanion"
-                                         src="{{ asset('images/Flag-foot/'~row.teamsVisiteur.idNameClub~'.png') }}"
-                                         alt=""/>
-                                </div>
-                                {{ row.teamsVisiteur.fullNameClub }}
-                            </td>
-                            <td>{{ row.statusMatch }}</td>
-                            <td>
+                                            {% endif %}
+                                            {% if row.cot1Pronostic is defined and row.cot1Pronostic %}
+                                                <input class="cote" type="text" name="cote1_{{ row.id }}"
+                                                       value="{{ row.cot1Pronostic }}"/>
 
-                                <form method="post" action="">
-                                    <table class="table-matchs">
-                                        <tr>
-                                            <td>
-                                                {% if row.masterProno1 is defined and row.masterProno1 == true %}
-                                                     <input type="checkbox" name="c_host_{{ row.id }}"
-                                                                         checked="true"/> 1
-                                                {% else %}
-                                                     <input type="checkbox" name="c_host_{{ row.id }}"/> 1
+                                            {% else %}
+                                                <input class="cote" type="text" name="cote1_{{ row.id }}"/>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if row.masterPronoN is defined and row.masterPronoN == true %}
+                                                <input type="checkbox" name="c_neutre_{{ row.id }}"
+                                                       checked="true"/> N
 
-                                                {% endif %}
-                                                {% if row.cot1Pronostic is defined and row.cot1Pronostic %}
-                                                    <input class="cote" type="text" name="cote1_{{ row.id }}"
-                                                           value="{{ row.cot1Pronostic }}"/>
+                                            {% else %}
+                                                <input type="checkbox" name="c_neutre_{{ row.id }}"/> N
+                                            {% endif %}
 
-                                                {% else %}
-                                                    <input class="cote" type="text" name="cote1_{{ row.id }}"/>
-                                                {% endif %}
-                                            </td>
-                                            <td>
-                                                {% if row.masterPronoN is defined and row.masterPronoN == true %}
-                                                    <input type="checkbox" name="c_neutre_{{ row.id }}"
-                                                           checked="true"/> N
+                                            {% if row.coteNPronistic is defined and row.coteNPronistic %}
+                                                <input class="cote" type="text" name="coten_{{ row.id }}"
+                                                       value="{{ row.coteNPronistic }}"/>
+                                            {% else %}
+                                                <input class="cote" type="text" name="coten_{{ row.id }}"/>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if row.masterProno2 is defined and row.masterProno2 == true %}
+                                                <input type="checkbox" name="guest_{{ row.id }}" checked="true"/> 2
+                                            {% else %}
+                                                <input type="checkbox" name="c_guest_{{ row.id }}"/> 2
+                                            {% endif %}
+                                            <input type="hidden" name="identifiant" value="{{ row.id }}"/>
+                                            {% if row.cote2Pronostic is defined and  row.cote2Pronostic %}
 
-                                                {% else %}
-                                                    <input type="checkbox" name="c_neutre_{{ row.id }}"/> N
-                                                {% endif %}
+                                                <input class="cote" type="text" name="cote2_{{ row.id }}"
+                                                       value="{{ row.cote2Pronostic }}"/>
 
-                                                {% if row.coteNPronistic is defined and row.coteNPronistic %}
-                                                    <input class="cote" type="text" name="coten_{{ row.id }}"
-                                                           value="{{ row.coteNPronistic }}"/>
-                                                {% else %}
-                                                    <input class="cote" type="text" name="coten_{{ row.id }}"/>
-                                                {% endif %}
-                                            </td>
-                                            <td>
-                                                {% if row.masterProno2 is defined and row.masterProno2 == true %}
-                                                    <input type="checkbox" name="guest_{{ row.id }}" checked="true"/> 2
-                                                {% else %}
-                                                    <input type="checkbox" name="c_guest_{{ row.id }}"/> 2
-                                                {% endif %}
-                                                <input type="hidden" name="identifiant" value="{{ row.id }}"/>
-                                                {% if row.cote2Pronostic is defined and  row.cote2Pronostic %}
+                                            {% else %}
+                                                <input class="cote" type="text" name="cote2_{{ row.id }}"/>
+                                            {% endif %}
+                                        </td>
 
-                                                    <input class="cote" type="text" name="cote2_{{ row.id }}"
-                                                           value="{{ row.cote2Pronostic }}"/>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            {% if droitAdmin.ajout is defined and droitAdmin.ajout == true or droitAdmin.modification is defined and droitAdmin.modification == true %}
+                                                <input id="send-prono" type="submit" value="{{ 'Valider' }}"/>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                </table>
+                            </form>
 
-                                                {% else %}
-                                                    <input class="cote" type="text" name="cote2_{{ row.id }}"/>
-                                                {% endif %}
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td colspan="3">
-                                                {% if droitAdmin.ajout is defined and droitAdmin.ajout == true or droitAdmin.modification is defined and droitAdmin.modification == true %}
-                                                    <input id="send-prono" type="submit" value="{{ 'Valider' }}"/>
-                                                {% endif %}
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </form>
-
-                                {#<a href="#">{{ 'Enregister'|trans }}</a>#}
-                            </td>
-                            <td>
-                                {#<a href="{{ path('modifier_admin_match', {'id': row.id }) }}">&#123;&#35;<span
-                                            class="glyphicon glyphicon-pencil orange" aria-hidden="true"></span>&#35;&#125; {{ 'Modifier ' }}</a><br/>#}
-                                {% if droitAdmin.suppression is defined and droitAdmin.suppression %}
-                                    {% if row.masterProno1 is  defined and row.masterProno
-                                    or row.masterPronoN is defined and row.masterPronoN
-                                    or row.masterProno2 is defined and row.masterProno2
-                                    or row.cot1Pronostic is defined and row.cot1Pronostic
-                                    or row.cote2pronistic is defined and row.cote2pronistic
-                                    or row.coteNPronostic is defined and row.coteNPronostic %}
+                            {#<a href="#">{{ 'Enregister'|trans }}</a>#}
+                        </td>
+                        <td>
+                            {#<a href="{{ path('modifier_admin_match', {'id': row.id }) }}">&#123;&#35;<span
+                                        class="glyphicon glyphicon-pencil orange" aria-hidden="true"></span>&#35;&#125; {{ 'Modifier ' }}</a><br/>#}
+                            {% if droitAdmin.suppression is defined and droitAdmin.suppression %}
+                                {% if row.masterProno1 is  defined and row.masterProno
+                                or row.masterPronoN is defined and row.masterPronoN
+                                or row.masterProno2 is defined and row.masterProno2
+                                or row.cot1Pronostic is defined and row.cot1Pronostic
+                                or row.cote2pronistic is defined and row.cote2pronistic
+                                or row.coteNPronostic is defined and row.coteNPronostic %}
                                     <a class="supprimer" href="{{ path('remove_admin_pronostic', {'id': row.id }) }}"
                                        onclick="supprimer('Etes vous sur de vouloir supprimer ce pronostic ?');"> <span
                                                 class="glyphicon glyphicon-remove red"
-                                                aria-hidden="true"></span> {{ 'Suppression Master prono'|trans }}
+                                                aria-hidden="true"></span> {{ 'Supprimer'|trans }}
                                     </a> &nbsp;  &nbsp;
-                                        {% endif %}
                                 {% endif %}
-                            </td>
+                            {% endif %}
+                        </td>
                         </tr>
 
 

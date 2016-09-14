@@ -38,9 +38,15 @@ class Concours
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="finValidation", type="datetime")
+     * @ORM\Column(name="dateDebut", type="datetime")
      */
-    private $finValidation;
+    private $dateDebut;
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateFinale", type="datetime")
+     */
+    private $dateFinale;
 
 
 
@@ -109,29 +115,6 @@ class Concours
     }
 
     /**
-     * Set finValidation
-     *
-     * @param \DateTime $finValidation
-     *
-     * @return Concours
-     */
-    public function setFinValidation($finValidation)
-    {
-        $this->finValidation = $finValidation;
-
-        return $this;
-    }
-
-    /**
-     * Get finValidation
-     *
-     * @return \DateTime
-     */
-    public function getFinValidation()
-    {
-        return $this->finValidation;
-    }
-    /**
      * Constructor
      */
     public function __construct()
@@ -171,5 +154,53 @@ class Concours
     public function getMatchs()
     {
         return $this->matchs;
+    }
+
+    /**
+     * Set dateDebut
+     *
+     * @param \DateTime $dateDebut
+     *
+     * @return Concours
+     */
+    public function setDateDebut($dateDebut)
+    {
+        $this->dateDebut = $dateDebut;
+
+        return $this;
+    }
+
+    /**
+     * Get dateDebut
+     *
+     * @return \DateTime
+     */
+    public function getDateDebut()
+    {
+        return $this->dateDebut;
+    }
+
+    /**
+     * Set dateFinale
+     *
+     * @param \DateTime $dateFinale
+     *
+     * @return Concours
+     */
+    public function setDateFinale($dateFinale)
+    {
+        $this->dateFinale = $dateFinale;
+
+        return $this;
+    }
+
+    /**
+     * Get dateFinale
+     *
+     * @return \DateTime
+     */
+    public function getDateFinale()
+    {
+        return $this->dateFinale;
     }
 }

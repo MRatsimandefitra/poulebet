@@ -123,10 +123,16 @@ div.link{
 div.header-table {
     padding: 10px;
     min-height: 20px;
-    border-top: 1px solid #D3D3D3;
+   /* border-top: 1px solid #D3D3D3;
     border-right: 1px solid #D3D3D3;
-    border-left: 1px solid #D3D3D3;
+    border-left: 1px solid #D3D3D3;*/
     margin-top: 20px;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,f6f6f6+47,ededed+100;White+3D+%231 */
+    background: #ffffff; /* Old browsers */
+   /* background: -moz-radial-gradient(center, ellipse cover, #ffffff 0%, #f6f6f6 47%, #ededed 100%); *//* FF3.6-15 *//*
+    background: -webkit-radial-gradient(center, ellipse cover, #ffffff 0%,#f6f6f6 47%,#ededed 100%); *//* Chrome10-25,Safari5.1-6 *//*
+    background: radial-gradient(ellipse at center, #ffffff 0%,#f6f6f6 47%,#ededed 100%); *//* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ *//*
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=1 ); *//* IE6-9 fallback on horizontal gradient */
 
 }
 
@@ -139,7 +145,7 @@ div.table-list tr {
 }
 
 table.table-list th {
-    font-weight: normal;
+    /*font-weight: normal;*/
     text-align: center;
 }
 
@@ -272,4 +278,25 @@ span.span-title{
 .lots {
     width:50px;
     height:50px;
+}
+div.pagination{
+
+}
+div.pagination span {
+    padding: 10px ;
+    background-color: #525475;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 300;
+}
+div.pagination span a{
+    color: #ffffff;
+}
+div.pagination span.current{
+    background-color: #ffffff;
+    color: #555;
+
+}
+div.pagination span.last{
+    background-color: darkorange;
 }

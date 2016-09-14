@@ -110,22 +110,7 @@ class SondageController extends ApiController
     {
         $token = $request->request->get('token');
         $matchId = $request->request->get('matchId');
-        $dqlChampionat = "SELECT m, ch from ApiDBBundle:Matchs m JOIN m.concours co LEFT JOIN m.championat ch GROUP BY ch.nomChampionat";
-        $queryChampionat = $this->get('doctrine.orm.entity_manager')->createQuery($dqlChampionat);
-        $dataChampionat = $queryChampionat->getResult();
-        if ($dataChampionat) {
 
-            foreach ($dataChampionat as $kChampionat => $vChampionatItems) {
-
-                $result['list_championat'][] = array(
-                    'idChampionat' => $vChampionatItems->getChampionat()->getId(),
-                    'nomChampionat' => $vChampionatItems->getChampionat()->getNomChampionat(),
-                    'fullNameChampionat' => $vChampionatItems->getChampionat()->getFullNameChampionat(),
-                    'season' => $vChampionatItems->getChampionat()->getSeason()
-                );
-            }
-
-        }
 
         $dqlMatch = "SELECT m from ApiDBBundle:Matchs m JOIN m.concours co LEFT JOIN m.championat ch ";
         $queryMatch = $this->get('doctrine.orm.entity_manager')->createQuery($dqlMatch);
@@ -138,50 +123,109 @@ class SondageController extends ApiController
         $nbTotalVote = count($dataVote) + 1;
         // vote utilisateur en cours
         $currentUser = $this->getRepo(self::ENTITY_UTILISATEUR)->findOneByUserTokenAuth($token);
-        //$currentMatch = $this->getRepo(self::ENTITY_MATCHS)->find($MatchId);
 
-        /*$dataVote = $this->getTotalVote();
-        $nbTotalVote = count($dataVote);
-        foreach ($dataVote as $keyVote => $vVoteItems) {
-            $vote = $vVoteItems->getVote();
-        }*/
 
-        if ($data) {
-            foreach ($data as $KeyMatchs => $matchsItems) {
-                $this->getVoteIdUser($matchsItems->getId(), $currentUser->getUserToken());
-                $result['matchs'][] = array(
-                    'id' => $matchsItems->getId(),
-                    'dateMatch' => $matchsItems->getDateMatch(),
-                    'equipeDomicile' => $matchsItems->getEquipeDomicile(),
-                    'equipeVisiteur' => $matchsItems->getEquipeVisiteur(),
+        // dat now:
 
-                    'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $matchsItems->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
-                    'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $matchsItems->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
-                    'score' => $matchsItems->getScore(),
-                    'scoreDomicile' => substr($matchsItems->getScore(), 0, 1),
-                    'scoreVisiteur' => substr($matchsItems->getScore(), -1, 1),
-                    'status' => $matchsItems->getStatusMatch(),
+        if ($data ) {
 
-                    'tempsEcoules' => $matchsItems->getTempsEcoules(),
-                    'live' => ($matchsItems->getStatusMatch() == 'active') ? true : false,
-                    'current-state' => array(
-                        'period' => $matchsItems->getPeriod(),
-                        'minute' => $matchsItems->getMinute()
-                    ),
-                    /*'is_vote' => ($vote)? true : false,*/
-                    /*'vote' => $vote,*/
-                    'vote' => $this->getVoteIdUser($matchsItems->getId(), $token),
-                    'voteTotal' => $this->getTotalVoteParMatch($matchsItems->getId()),
-                    'pourcentage1' => $this->getPourcentage(1, $matchsItems->getId(), $token),
-                    'pourcentageN' => $this->getPourcentage(0, $matchsItems->getId(), $token),
-                    'pourcentage2' => $this->getPourcentage(2,$matchsItems->getId(), $token),
-                    'voteEquipe1' => $this->getVoteEquipeByMatch(1,$matchsItems->getId(), $token),
-                    'voteEquipeN' => $this->getVoteEquipeByMatch(0,$matchsItems->getId(), $token),
-                    'voteEquipe2' => $this->getVoteEquipeByMatch(2,$matchsItems->getId(), $token),
-                    'championat' => $matchsItems->getChampionat()->getId()
+            $dqlChampionat = "SELECT m, ch from ApiDBBundle:Matchs m JOIN m.concours co LEFT JOIN m.championat ch GROUP BY ch.nomChampionat";
+            $queryChampionat = $this->get('doctrine.orm.entity_manager')->createQuery($dqlChampionat);
+            $dataChampionat = $queryChampionat->getResult();
+            if ($dataChampionat) {
 
-                );
+                foreach ($dataChampionat as $kChampionat => $vChampionatItems) {
+
+                    $result['list_championat'][] = array(
+                        'idChampionat' => $vChampionatItems->getChampionat()->getId(),
+                        'nomChampionat' => $vChampionatItems->getChampionat()->getNomChampionat(),
+                        'fullNameChampionat' => $vChampionatItems->getChampionat()->getFullNameChampionat(),
+                        'season' => $vChampionatItems->getChampionat()->getSeason()
+                    );
+                }
+
             }
+            foreach ($data as $KeyMatchs => $matchsItems) {
+                if($currentUser){
+                    $vote = $this->getVoteIdUser($matchsItems->getId(), $currentUser->getUserToken());
+                }else{
+                    $vote = null;
+                }
+
+
+                if($matchsItems->getStatusMatch() == 'active'){
+                    $result['matchs'][] = array(
+                        'id' => $matchsItems->getId(),
+                        'dateMatch' => $matchsItems->getDateMatch(),
+                        'equipeDomicile' => $matchsItems->getEquipeDomicile(),
+                        'equipeVisiteur' => $matchsItems->getEquipeVisiteur(),
+
+                        'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $matchsItems->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
+                        'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $matchsItems->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
+                        'score' => $matchsItems->getScore(),
+                        'scoreDomicile' => substr($matchsItems->getScore(), 0, 1),
+                        'scoreVisiteur' => substr($matchsItems->getScore(), -1, 1),
+                        'status' => $matchsItems->getStatusMatch(),
+
+                        'tempsEcoules' => $matchsItems->getTempsEcoules(),
+                        'live' => ($matchsItems->getStatusMatch() == 'active') ? true : false,
+                        'current-state' => array(
+                            'period' => $matchsItems->getPeriod(),
+                            'minute' => $matchsItems->getMinute()
+                        ),
+
+                        /*'is_vote' => ($vote)? true : false,*/
+                        /*'vote' => $vote,*/
+                        'vote' => $vote,
+                        'voteTotal' => $this->getTotalVoteParMatch($matchsItems->getId()),
+                        'pourcentage1' => $this->getPourcentage(1, $matchsItems->getId(), $token),
+                        'pourcentageN' => $this->getPourcentage(0, $matchsItems->getId(), $token),
+                        'pourcentage2' => $this->getPourcentage(2,$matchsItems->getId(), $token),
+                        'voteEquipe1' => $this->getVoteEquipeByMatch(1,$matchsItems->getId(), $token),
+                        'voteEquipeN' => $this->getVoteEquipeByMatch(0,$matchsItems->getId(), $token),
+                        'voteEquipe2' => $this->getVoteEquipeByMatch(2,$matchsItems->getId(), $token),
+                        'championat' => $matchsItems->getChampionat()->getId()
+
+                    );
+
+                }else{
+                    $result['matchs'][] = array(
+                        'id' => $matchsItems->getId(),
+                        'dateMatch' => $matchsItems->getDateMatch(),
+                        'equipeDomicile' => $matchsItems->getEquipeDomicile(),
+                        'equipeVisiteur' => $matchsItems->getEquipeVisiteur(),
+
+                        'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $matchsItems->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
+                        'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $matchsItems->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
+                        'score' => $matchsItems->getScore(),
+                        'scoreDomicile' => substr($matchsItems->getScore(), 0, 1),
+                        'scoreVisiteur' => substr($matchsItems->getScore(), -1, 1),
+                        'status' => $matchsItems->getStatusMatch(),
+
+                        'tempsEcoules' => $matchsItems->getTempsEcoules(),
+                        'live' => ($matchsItems->getStatusMatch() == 'active') ? true : false,
+                        /*'current-state' => array(
+                            'period' => $matchsItems->getPeriod(),
+                            'minute' => $matchsItems->getMinute()
+                        ),*/
+
+                        /*'is_vote' => ($vote)? true : false,*/
+                        /*'vote' => $vote,*/
+                        'vote' => $vote,
+                        'voteTotal' => $this->getTotalVoteParMatch($matchsItems->getId()),
+                        'pourcentage1' => $this->getPourcentage(1, $matchsItems->getId(), $token),
+                        'pourcentageN' => $this->getPourcentage(0, $matchsItems->getId(), $token),
+                        'pourcentage2' => $this->getPourcentage(2,$matchsItems->getId(), $token),
+                        'voteEquipe1' => $this->getVoteEquipeByMatch(1,$matchsItems->getId(), $token),
+                        'voteEquipeN' => $this->getVoteEquipeByMatch(0,$matchsItems->getId(), $token),
+                        'voteEquipe2' => $this->getVoteEquipeByMatch(2,$matchsItems->getId(), $token),
+                        'championat' => $matchsItems->getChampionat()->getId()
+
+                    );
+                }
+
+            }
+
             $result['code_error'] = 0;
             $result['success'] = true;
             $result['error'] = true;
@@ -198,18 +242,24 @@ class SondageController extends ApiController
 
     public function getVoteIdUser($idMatch, $token)
     {
-        $dql = "SELECT vo, m, u from ApiDBBundle:VoteUtilisateur vo LEFT JOIN vo.matchs m LEFT JOIN vo.utilisateur u
+        if($token && $idMatch){
+
+            $dql = "SELECT vo, m, u from ApiDBBundle:VoteUtilisateur vo LEFT JOIN vo.matchs m LEFT JOIN vo.utilisateur u
                 WHERE m.id = :idMatch AND u.userTokenAuth = :token";
-        $query = $this->get('doctrine.orm.entity_manager')->createQuery($dql);
-        $query->setParameters(array('idMatch' => $idMatch, 'token' => $token));
-        $response = $query->getResult();
-        if ($response) {
-            foreach ($response as $kVote => $voteItems) {
-                $result = $voteItems->getVote();
+            $query = $this->get('doctrine.orm.entity_manager')->createQuery($dql);
+            $query->setParameters(array('idMatch' => $idMatch, 'token' => $token));
+            $response = $query->getResult();
+            if ($response) {
+                foreach ($response as $kVote => $voteItems) {
+                    $result = $voteItems->getVote();
+                }
+            } else {
+                $result = null;
             }
-        } else {
+        }else{
             $result = null;
         }
+
         return $result;
 
     }
@@ -239,6 +289,7 @@ class SondageController extends ApiController
             $pourcentage = 0;
         }else{
             $pourcentage = ($nbPourcentage / $totalVote) * 100;
+            $pourcentage = round($pourcentage,2);
         }
 
 

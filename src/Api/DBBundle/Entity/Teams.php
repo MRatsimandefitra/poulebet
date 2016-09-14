@@ -49,7 +49,7 @@ class Teams
     /**
      * @var string
      *
-     * @ORM\Column(name="codePays", type="string", length=255)
+     * @ORM\Column(name="codePays", type="string", length=255, nullable=true)
      */
     private $codePays;
     /**
