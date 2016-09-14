@@ -31,10 +31,14 @@
                     </div>
                     <div class="col-lg-9">
                         <form id="form_criteria" method="post" action="{{ path('add_notification') }}">
-                            <input type="text" name ="criteria_username" placeholder="{{'Username'|trans}}">
-                            <input type="text" name ="criteria_email" placeholder="{{'Email'|trans}}">
-                            <input type="submit" value="Rechercher">
-                        </form> 
+                            <input type="text" name ="criteria_username" placeholder="{{'Username'|trans}}" {% if criteria.criteria_username %}value="{{criteria.criteria_username}}" {% endif %}>
+                            <input type="text" name ="criteria_email" placeholder="{{'Email'|trans}}" {% if criteria.criteria_email %}value="{{criteria.criteria_email}}" {% endif %}>
+                            <input type="submit" class="btn btn-default" value="Rechercher">
+                            <a href="{{ path('add_notification') }}">{{ 'Annuler Filtre' }}<span class="glyphicon glyphicon-remove red" aria-hidden="true"></span></a>
+                        </form>
+     
+                            
+                       
                     </div>
                 </div>
             </div>
