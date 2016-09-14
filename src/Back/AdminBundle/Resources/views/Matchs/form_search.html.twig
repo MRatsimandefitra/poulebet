@@ -119,7 +119,7 @@
                     <div class="col-md-4 col-lg-4">
                         <a href="{{ path('index_admin_match',{'filter': 'nofilter' }) }}">{{ 'Annuler Filtre' }}<span
                                     class="glyphicon glyphicon-remove red" aria-hidden="true"></span></a>
-                        <input type="submit" class="searh-btn-match" value="{{ 'Rechercher'|trans }}"/>
+                        <input onclick="getParams();" type="submit" class="searh-btn-match" value="{{ 'Rechercher'|trans }}"/>
 
                     </div>
 
@@ -132,12 +132,20 @@
                 <form action="{{ path('update_matchs_from_goal_api') }}" method="post">
                     <div class="col-lg-3">
                         {{ "Date Début"|trans }} : <input id="dateDebutGoalApi" class="datepic" type="text" name="dateDebutGoalApi"
-                                                          value="{#{{ searchValue.dateDebutGoalApi }}#}"/>
+
+                                                          {% if searchValue.dateDebut is defined and searchValue.dateDebut %}
+                                                              value=" {{ searchValue.dateDebut }}"
+                                                          {% endif %}
+                                                          />
                     </div>
                     <div class="col-md-2 col-lg-3">
 
                         {{ "Date Fin"|trans }} : <input id="dateFinaleGoalApi" class="datepic" type="text" name="dateFinaleGoalApi"
-                                                           value="{#{{ searchValue.dateDebutGoalApi }}#}"/>
+                                                           value="{#{{ searchValue.dateDebutGoalApi }}#}
+                                                           {% if searchValue.dateFinale is defined and searchValue.dateFinale %}
+                                                                {{ searchValue.dateFinale }}
+                                                            {% endif %}
+                                                           "/>
                     </div>
                     <div class="col-md-6 col-lg-6">
                         {{ 'Championat'|trans }}
@@ -166,12 +174,17 @@
                     </div>
                     <div class="col-md-8 col-lg-8"></div>
                     <div class="col-md-8 col-lg-8">
-                        <input type="hidden" name="dateDebut"/>
+                        {#<input type="hidden" name="dateDebut"/>
                         <input type="hidden" name="dateFinale"/>
                         <input type="hidden" name="championat"/>
-                        <input type="checkbox" name="withParams" id="withParams" onchange="getParams();">{{ 'Avec parametres' }}
+                        <input type="checkbox" name="withParams" id="withParams" onchange="getParams();">{{ 'Avec parametres' }}#}
+
+                        <br/><a href="" id="cancelGoalapi" onclick="cancelGoalapi();"> Annuler filtre goalapi</a>
+                        {{ 'Date check'|trans }} :
+
                     </div>
                     <div class="col-md-2 col-lg-2">
+
                         <input type="submit" class="searh-btn-match" value="{{ 'Check GOAL API'|trans }}"/>
                     </div>
 
