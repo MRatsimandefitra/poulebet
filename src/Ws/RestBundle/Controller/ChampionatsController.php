@@ -85,12 +85,11 @@ class ChampionatsController extends ApiController
                     'master_prono_2' => $vData->getMasterProno2(),
                     'tempsEcoules' => $vData->getTempsEcoules(),
                     'live' => ($vData->getStatusMatch() == 'active') ? true : false,
-                        'current-state' => array(
-                            'period' => $vData->getPeriod(),
-                            'minute' => $vData->getMinute()
-                        )
-
-
+                    'current-state' => array(
+                        'period' => $vData->getPeriod(),
+                        'minute' => $vData->getMinute()
+                    ),
+                    'voteTotal' => $this->getTotalVoteParMatch($vData->getId()),
                 );
             }
             $result['code_error'] = 0;
@@ -121,11 +120,11 @@ class ChampionatsController extends ApiController
 
         if ($data) {
             foreach ($data as $k => $vData) {
-               /* foreach ($vData->getChampionat()->getPays() as $ktp => $vDataTp) {
-                    if (!in_array($vDataTp->getName(), $dataName)) {
-                        $dataName[] = $vDataTp->getName();
-                    }
-                }*/
+                /* foreach ($vData->getChampionat()->getPays() as $ktp => $vDataTp) {
+                     if (!in_array($vDataTp->getName(), $dataName)) {
+                         $dataName[] = $vDataTp->getName();
+                     }
+                 }*/
                 if (!in_array($vData->getChampionat()->getPays(), $dataName)) {
                     $dataName[] = $vData->getChampionat()->getPays();
                 }
@@ -172,8 +171,8 @@ class ChampionatsController extends ApiController
 
                 if ($ancienName != $vData->getChampionat()->getNomChampionat()) {
                     $dataName[] = array(
-                       'nomChampionat' => $vData->getChampionat()->getNomChampionat(),
-                        'fullNameChampionat' =>$vData->getChampionat()->getFullNameChampionat()
+                        'nomChampionat' => $vData->getChampionat()->getNomChampionat(),
+                        'fullNameChampionat' => $vData->getChampionat()->getFullNameChampionat()
                     );
                 }
                 $ancienName = $vData->getChampionat()->getNomChampionat();
@@ -267,5 +266,14 @@ class ChampionatsController extends ApiController
 
         $result['data'] = $json;
         return new JsonResponse($result);
+    }
+    private function getTotalVoteParMatch($idMatch)
+    {
+        $dqlVoteUtilisateur = "SELECT v, m from ApiDBBundle:VoteUtilisateur v LEFT JOIN v.matchs m WHERE m.id = :idmatch";
+        $queryVoteUtilisateur = $this->get('doctrine.orm.entity_manager')->createQuery($dqlVoteUtilisateur);
+        $queryVoteUtilisateur->setParameter('idmatch', $idMatch);
+        $dataVote = $queryVoteUtilisateur->getResult();
+        $result = count($dataVote);
+        return $result;
     }
 }
