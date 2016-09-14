@@ -3,22 +3,20 @@
 {% block ariane %} {{ parent() }} {% endblock %}
 
 {% block page %}
-    <div class="col-lg-12">
-        <div class="box-header-response">
+    {#<div class="col-lg-12">
+        &#123;&#35;<div class="box-header-response">
             {{ 'Listes des Membres'|trans }}
             <div class="link">
-                {#{% if is_granted('ROLE_SUPER_ADMIN') %}#}
-                {# <a href="{{ path('index_administrator') }}">{{ 'Gestion administrateur'|trans }}</a> |#}
-                {#{% endif %}#}
-                {% if currentAdmin.lecture is defined and currentAdmin.lecture == true %}
-                    <a href="{{ path('export_csv_utilisateur') }}">{{ 'Export csv'|trans }}</a>
-                {% endif %}
+                &#123;&#35;{% if is_granted('ROLE_SUPER_ADMIN') %}&#35;&#125;
+                &#123;&#35; <a href="{{ path('index_administrator') }}">{{ 'Gestion administrateur'|trans }}</a> |&#35;&#125;
+                &#123;&#35;{% endif %}&#35;&#125;
+
             </div>
             <div class="clear">
 
             </div>
-        </div>
-    </div>
+        </div>&#35;&#125;
+    </div>#}
     <div class="col-lg-12">
         {% if currentAdmin.lecture == true %}
             <div class="box-response">
@@ -28,131 +26,154 @@
                     </div>
                 {% endfor %}
                 <div id="search-utilisateur">
-                    <div class="col-lg-3">
-                        <label class="white" for="">
-                            Afficher
-                        </label>
+                    <div class="col-lg-6">
+                        {#<span class="label black">{{ 'Afficher' }}</span>#}
 
-                        <form id="nbpage" method="get" action="{{ path('index_admin_utilisateur') }}" >
+                        <form id="nbpage" method="get" action="{{ path('index_admin_utilisateur') }}">
                             <select class="nbaffiche" name="nbpage" onchange="onSelectChange(this.value);">
                                 <option value="10">10</option>
                                 <option value="20">20</option>
                                 <option value="30">30</option>
                             </select>
+                            <span class="label black"> {{ 'Total recherche' }}
+                            : {{ pagination.getTotalItemCount }}</span>
+                            <span class="label black"> {{ 'Total Utilisateurs' }}
+                            : {{ totalUtilisateur }}</span>
+                            <span class="label black"> {{ 'Total  actifs' }}
+                            : {{ totalEnable }}</span>
+                            <span class="label black"> {{ 'Total non actifs' }}
+                            : {{ totalDisable }}</span>
+
                         </form>
 
-                        <label class="white" for="">
-                            Entrees
-                        </label>
-                        <label>
-                            {{ 'Total' }} : {{ pagination.getTotalItemCount }}
-                        </label>    
-
-                      
                     </div>
-                    <div class="col-lg-9">
+                    <div class="col-lg-6">
                         <form id="form_criteria" method="post" action="{{ path('index_admin_utilisateur') }}">
-                            <input type="text" name ="criteria_username" placeholder="{{'Username'|trans}}">
-                            <input type="text" name ="criteria_email" placeholder="{{'Email'|trans}}">
-                            <input type="submit" value="Rechercher" class="btn btn-default">
-                        </form> 
+                            <input type="text" name="criteria_username" placeholder="{{ 'Username'|trans }}"
+                                   style="height: 20px;">
+                            <input type="text" name="criteria_email" placeholder="{{ 'Email'|trans }}"
+                                   style="height: 20px;">
+                            <input type="submit" value="Rechercher" class="">
+                            {% if currentAdmin.lecture is defined and currentAdmin.lecture == true %}
+
+                                <a href="{{ path('export_csv_utilisateur') }}">
+                                    <div class="export">
+                                        <img src="{{ asset('images/') }}" alt="" width="15" height="15"/>
+                                        {{ 'Export csv'|trans }}
+
+                                    </div>
+                                </a>
+
+
+                            {% endif %}
+                        </form>
+
                     </div>
                 </div>
                 <table class="table-user">
                     <thead>
                     <td>{{ 'Nom d\' Utilisateur'|trans }}
-                <div class="tri">
-                    <a href="{{ path('index_admin_utilisateur',{'tri': 'asc', 'champ': 'username'}) }}">
-                        <img class="tri" id="up" src="{{ asset('images/up.png') }}" width="16" height="16" alt=""/>
-                    </a>
-                    <a href="{{ path('index_admin_utilisateur',{'tri': 'desc'}) }}">
-                        <img class="tri" id="up" src="{{ asset('images/down.png') }}" width="16" height="16" alt=""/>
-                    </a>
-                </div>
+                        <div class="tri">
+                            <a href="{{ path('index_admin_utilisateur',{'tri': 'asc', 'champ': 'username'}) }}">
+                                <img class="tri" id="up" src="{{ asset('images/up.png') }}" width="16" height="16"
+                                     alt=""/>
+                            </a>
+                            <a href="{{ path('index_admin_utilisateur',{'tri': 'desc'}) }}">
+                                <img class="tri" id="up" src="{{ asset('images/down.png') }}" width="16" height="16"
+                                     alt=""/>
+                            </a>
+                        </div>
 
-            </td>
-            <td>{{ 'E-mail'|trans }}
-                <div class="tri">
-                    <a href="{{ path('index_admin_utilisateur',{'tri': 'asc', 'champ': 'email'}) }}">
-                        <img class="tri" id="up" src="{{ asset('images/up.png') }}" width="16" height="16" alt=""/>
-                    </a>
-                    <a href="{{ path('index_admin_utilisateur',{'tri': 'desc'}) }}">
-                        <img class="tri" id="up" src="{{ asset('images/down.png') }}" width="16" height="16" alt=""/>
-                    </a>
-                </div>
-            </td>
-            <td>{{ 'Pays'|trans }}
-                <div class="tri">
-                    <a href="{{ path('index_admin_utilisateur',{'tri': 'asc'}) }}">
-                        <img class="tri" id="up" src="{{ asset('images/up.png') }}" width="16" height="16" alt=""/>
-                    </a>
-                    <a href="{{ path('index_admin_utilisateur',{'tri': 'desc'}) }}">
-                        <img class="tri" id="up" src="{{ asset('images/down.png') }}" width="16" height="16" alt=""/>
-                    </a>
-                </div>
+                    </td>
+                    <td>{{ 'E-mail'|trans }}
+                        <div class="tri">
+                            <a href="{{ path('index_admin_utilisateur',{'tri': 'asc', 'champ': 'email'}) }}">
+                                <img class="tri" id="up" src="{{ asset('images/up.png') }}" width="16" height="16"
+                                     alt=""/>
+                            </a>
+                            <a href="{{ path('index_admin_utilisateur',{'tri': 'desc'}) }}">
+                                <img class="tri" id="up" src="{{ asset('images/down.png') }}" width="16" height="16"
+                                     alt=""/>
+                            </a>
+                        </div>
+                    </td>
+                    <td>{{ 'Pays'|trans }}
+                        <div class="tri">
+                            <a href="{{ path('index_admin_utilisateur',{'tri': 'asc'}) }}">
+                                <img class="tri" id="up" src="{{ asset('images/up.png') }}" width="16" height="16"
+                                     alt=""/>
+                            </a>
+                            <a href="{{ path('index_admin_utilisateur',{'tri': 'desc'}) }}">
+                                <img class="tri" id="up" src="{{ asset('images/down.png') }}" width="16" height="16"
+                                     alt=""/>
+                            </a>
+                        </div>
 
-            </td>
-            <td>{{ 'Score total'|trans }}
-                <div class="tri">
-                    <a href="{{ path('index_admin_utilisateur',{'tri': 'asc'}) }}">
-                        <img class="tri" id="up" src="{{ asset('images/up.png') }}" width="16" height="16" alt=""/>
-                    </a>
-                    <a href="{{ path('index_admin_utilisateur',{'tri': 'desc'}) }}">
-                        <img class="tri" id="up" src="{{ asset('images/down.png') }}" width="16" height="16" alt=""/>
-                    </a>
-                </div>
-            </td>
-            {#{% if is_granted('ROLE_SUPER_ADMIN') %}#}
-            <td>{{ 'Actions'|trans }}</td>
-            {#{% endif %}#}
-            </thead>
-            <tbody>
-            {% for row in pagination %}
-                <tr>
-                    <td>
-                        {{ row.username }}
                     </td>
-                    <td>
-                        {{ row.email }}
-                    </td>
-                    <td>
-                        {% if row.pays is not null %}
-                            {{ row.pays }}
-                        {% else %}
-                            ---
-                        {% endif %}
-                    </td>
-                    <td>
-                        {{ row.mvtPoints | last}}
+                    <td>{{ 'Score total'|trans }}
+                        <div class="tri">
+                            <a href="{{ path('index_admin_utilisateur',{'tri': 'asc'}) }}">
+                                <img class="tri" id="up" src="{{ asset('images/up.png') }}" width="16" height="16"
+                                     alt=""/>
+                            </a>
+                            <a href="{{ path('index_admin_utilisateur',{'tri': 'desc'}) }}">
+                                <img class="tri" id="up" src="{{ asset('images/down.png') }}" width="16" height="16"
+                                     alt=""/>
+                            </a>
+                        </div>
                     </td>
                     {#{% if is_granted('ROLE_SUPER_ADMIN') %}#}
-                    <td>
-                        {% if currentAdmin.modification is defined and currentAdmin.modification == true %}
-                                <a href="{{ path('update_admin_utilisateur', {'id': row.id }) }}"> {{ 'Modifier'|trans }}</a> |
-                        {% endif %}
-
-                        {% if currentAdmin.suppression is defined %}
-                            {% if currentAdmin.suppression == true %}
-                                <a id="supprimer-utilisateur" href="{{ path('remove_admin_utilisateur', {'id': row.id }) }}"> {{ 'Supprimer'|trans }}</a> |
-                            {% endif %}
-                        {% endif %}
-
-                        {% if currentAdmin.lecture is defined %}
-                            {% if currentAdmin.lecture == true  and currentAdmin.lecture == true  %}
-                                  <a href="{{ path('details_admin_utilisateur', {'id': row.id }) }}"> {{ 'Détails'|trans }}</a> |
-                            {% endif %}
-                        {% endif %}
-                        {% if currentAdmin.lecture is defined and currentAdmin.lecture == true%}
-                                <a href="{{ path('mvtCredit_utilisateur', {'id': row.id }) }}"> {{ 'Crédit'|trans }}</a>
-                        {% endif %}
-                    </td>
+                    <td>{{ 'Actions'|trans }}</td>
                     {#{% endif %}#}
+                    </thead>
+                    <tbody>
+                    {% for row in pagination %}
+                        <tr>
+                            <td>
+                                {{ row.username }}
+                            </td>
+                            <td>
+                                {{ row.email }}
+                            </td>
+                            <td>
+                                {% if row.pays is not null %}
+                                    {{ row.pays }}
+                                {% else %}
+                                    ---
+                                {% endif %}
+                            </td>
+                            <td>
+                                {{ row.mvtPoints | last }}
+                            </td>
+                            {#{% if is_granted('ROLE_SUPER_ADMIN') %}#}
+                            <td>
+                                {% if currentAdmin.modification is defined and currentAdmin.modification == true %}
+                                    <a href="{{ path('update_admin_utilisateur', {'id': row.id }) }}"> {{ 'Modifier'|trans }}</a> |
+                                {% endif %}
 
-                </tr>
-            {% endfor %}
-            </tbody>
-            <thead>
-            <td>{{ 'Nom d\' Utilisateur'|trans }}</td>
+                                {% if currentAdmin.suppression is defined %}
+                                    {% if currentAdmin.suppression == true %}
+                                        <a id="supprimer-utilisateur"
+                                           href="{{ path('remove_admin_utilisateur', {'id': row.id }) }}"> {{ 'Supprimer'|trans }}</a> |
+                                    {% endif %}
+                                {% endif %}
+
+                                {% if currentAdmin.lecture is defined %}
+                                    {% if currentAdmin.lecture == true  and currentAdmin.lecture == true %}
+                                        <a href="{{ path('details_admin_utilisateur', {'id': row.id }) }}"> {{ 'Détails'|trans }}</a> |
+                                    {% endif %}
+                                {% endif %}
+                                {% if currentAdmin.lecture is defined and currentAdmin.lecture == true %}
+                                    <a href="{{ path('mvtCredit_utilisateur', {'id': row.id }) }}"> {{ 'Crédit'|trans }}</a>
+                                {% endif %}
+                            </td>
+                            {#{% endif %}#}
+
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                    <thead>
+                    <td>{{ 'Nom d\' Utilisateur'|trans }}</td>
                     <td>{{ 'E-mail'|trans }}</td>
                     <td>{{ 'Pays'|trans }}</td>
                     <td>{{ 'Score total'|trans }}</td>
@@ -161,17 +182,17 @@
                     {#{% endif %}#}
                     </thead>
                 </table>
-                
-                    {#<label class="white" for="">
-                        Afficher
-        
-                        Entrees
-                    </label>#}
 
-                    
+                {#<label class="white" for="">
+                    Afficher
+
+                    Entrees
+                </label>#}
+
+
                 {{ knp_pagination_render(pagination) }}
-                    
-                
+
+
             </div>
         {% else %}
             {{ "Vous n\'avez pas l\'autorisation pour cette page"|trans }}

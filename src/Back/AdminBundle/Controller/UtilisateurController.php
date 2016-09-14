@@ -21,7 +21,7 @@ class UtilisateurController extends ApiController
     const FORM_DROIT_ADMIN = 'Api\DBBundle\Form\DroitAdminType';
     const FORM_MVTCREDIT = 'Api\DBBundle\Form\MvtCreditType';
     const DROIT = 'Utilisateurs';
-    
+    const ENTITY_DEVICE = 'ApiDBBundle:Device';
     
     public function indexAction(Request $request)
     {
@@ -58,9 +58,16 @@ class UtilisateurController extends ApiController
         return $this->render('BackAdminBundle:Utilisateur:index.html.twig', array(
             'entities' => $utilisateur,
             'pagination' => $pagination,
-            'currentAdmin' => $droitAdmin[0]
+            'currentAdmin' => $droitAdmin[0],
+            'totalEnable' => $this->getItemsCountUtilisateurTotal('enable'),
+            'totalDisable' => $this->getItemsCountUtilisateurTotal('disable'),
+            'totalUtilisateur' => $this->getItemsCountUtilisateurTotal()
            
         ));
+    }
+
+    private function getItemsCountUtilisateurTotal($args = null){
+        return $this->get('items.manager')->getItemsCountUtilisateurTotal($args);
     }
 
     public function exportCsvUtilisateurAction(){
@@ -88,6 +95,7 @@ class UtilisateurController extends ApiController
         return true;
         
     }
+
     public function updateUtilisateurAction(Request $request, $id){
 
         $entity = $this->getRepoFormId(self::ENTITY_UTILISATEUR, $id);
@@ -116,6 +124,15 @@ class UtilisateurController extends ApiController
 
     public function deleteUtilisateurAction($id){
         $currentUtilisateur = $this->getRepoFormId(self::ENTITY_UTILISATEUR, $id);
+
+        $deviceUser = $this->getRepoFrom(self::ENTITY_DEVICE, array('utilisateur' => $currentUtilisateur));
+
+        if($deviceUser){
+            foreach($deviceUser as $k => $items){
+                $this->remove($items);
+            }
+        }
+
         $this->remove($currentUtilisateur);
         $this->addFlash(
             'notice',

@@ -26,21 +26,22 @@ class UtilisateurAdminType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username', TextType::class, array())
-            ->add('email', EmailType::class, array())
+            ->add('username', TextType::class, array('required' => false))
+            ->add('email', EmailType::class, array('required' => false))
             //->add('password', PasswordType::class, array('required' => false))
             //->add('salt')
             //->add('roles')
-            ->add('isEnable', CheckboxType::class, array())
-            ->add('nom', TextType::class, array())
-            ->add('prenom',TextType::class, array() )
+            ->add('isEnable', CheckboxType::class, array('required' => false))
+            ->add('nom', TextType::class, array('required' => false))
+            ->add('prenom',TextType::class, array('required' => false) )
             ->add('sexe', ChoiceType::class, array(
+                'required' => false,
                 'choices' => array(
                     'Femme' => 0,
                     'Homme' => 1
                 )
             ))
-            ->add('dateNaissance', DateType::class, array())
+            ->add('dateNaissance', DateType::class, array('required' => false))
           //  ->add('dateCreation', DateType::class, array())
             /*->add('createdAt', 'datetime')
             ->add('updatedAt', 'datetime')
