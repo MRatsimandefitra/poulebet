@@ -148,6 +148,24 @@ class PronosticController extends ApiController
         $where = array();
         $params = array();
         $searchValue = array();
+        if($request->get('dateDebut')){
+            $dateDebut = $request->get('dateDebut');
+
+        }else{
+            $dateDebut = date('Y-m-d');
+        }
+        $searchValue['dateDebut'] = $dateDebut;
+        if($request->get('dateFinale')){
+            $dateFinale = $request->get('dateFinale');
+
+        }else{
+            $now = new \DateTime('now');
+            $nextMonday = $now->modify('next monday');
+            $nextMonday = $nextMonday->format('Y-m-d');
+            $dateFinale = $nextMonday;
+        }
+        $searchValue['dateFinale'] = $dateFinale;
+       // var_dump($dateFinale); die;
         if($request->get('dateDebut') && !$request->get('dateFinale')){
             //Todo:: datedebit
             $dateDebut  = $request->get('dateDebut').' 00:00:00';
@@ -160,15 +178,15 @@ class PronosticController extends ApiController
 
         }
 
-        if($request->get('dateDebut') && $request->get('dateFinale')){
-            $dateDebut  = $request->get('dateDebut').' 00:00:00';
-            $dateFinaleSearch = $request->get('dateFinale'). ' 23:59:59';
+        if($dateDebut && $dateFinale){
+            $dateDebutFull  = $dateDebut .' 00:00:00';
+            $dateFinaleFull = $dateFinale. ' 23:59:59';
 
             $where[] = " m.dateMatch BETWEEN :dateDebut AND :dateFinale ";
-            $params['dateDebut'] = $dateDebut;
-            $params['dateFinale'] = $dateFinaleSearch;
-            $searchValue['dateDebut'] = $request->get('dateDebut');
-            $searchValue['dateFinale'] = $request->get('dateFinale');
+            $params['dateDebut'] = $dateDebutFull;
+            $params['dateFinale'] = $dateFinaleFull;
+            $searchValue['dateDebut'] = $dateDebut;
+            $searchValue['dateFinale'] = $dateFinale;
         }
         $requestChampionat = false;
         # champinat seul
@@ -208,6 +226,13 @@ class PronosticController extends ApiController
         if(!$request->get('championat_match') && !$request->get('pays_match') && !$request->get('dateDebut') && !$request->get('dateFinale')){
             $where[] = " m.dateMatch BETWEEN CURRENT_DATE() AND DATE_ADD(CURRENT_DATE(), 7,'day')";
         }
+        if($request->get('match_status')){
+            $where[] = " m.statusMatch LIKE :statusMatch ";
+            $params['statusMatch'] = $request->get('match_status');
+
+
+            $searchValue['match_status'] = $request->get('match_status');
+        }
         $orderByChampionat = false;
         if ($request->query->get('column') && $request->query->get('tri')) {
 
@@ -245,9 +270,11 @@ class PronosticController extends ApiController
         }
         $totalRecherche = count($matchs);
         $championatData = $this->getAllEntity(self::ENTITY_CHAMPIONAT);
-        $dqli = "SELECT ch From ApiDBBundle:championat ch where ch.pays  is not null ";
+        /*$dqli = "SELECT ch From ApiDBBundle:championat ch where ch.pays  is not null ";
         $query = $this->get('doctrine.orm.entity_manager')->createQuery($dqli);
-        $country = $query->getResult();
+        $country = $query->getResult();*/
+        $sm = $this->getMatchsService();
+        $country = $sm->getCountry();
         $droitAdmin = $this->getDroitAdmin('Matchs');
         return $this->render('BackAdminBundle:Pronostic:index_pronostic.html.twig', array(
             'matchs' => $matchs,
@@ -279,5 +306,9 @@ class PronosticController extends ApiController
     private function getDroitAdmin($droit){
         $droitAdmin = $this->getRepo(self::ENTITY_DROIT_ADMIN)->findBy(array('admin' => $this->getUser(), 'droit' => $this->getRepo(self::ENTITY_DROIT)->findOneBy(array('fonctionnalite' => $droit))));
         return $droitAdmin;
+    }
+
+    private function getMatchsService(){
+        return $this->get('matchs.manager');
     }
 }

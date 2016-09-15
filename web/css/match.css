@@ -112,3 +112,9 @@ div.search-match-pronostic input[type=submit]{
     border: 1px #555555 solid;
     color: #ffffff;
 }
+input.mybtn{
+    padding: 0px 15px;
+    background-color: #525475;
+    border: 1px #555555 solid;
+    color: #ffffff;
+}

@@ -41,4 +41,18 @@ or m.masterProno1 is not null or m.masterPronoN is not null or m.masterProno2 is
 
         return count($data);
     }
+
+    public function getTotalMatch(){
+        $dql = "SELECT m from ApiDBBundle:Matchs m ";
+        $query = $this->getEm()->createQuery($dql);
+        $data = $query->getResult();
+        return count($data);
+    }
+
+    public function getCountry(){
+        $dqli = "SELECT ch From ApiDBBundle:championat ch where ch.pays  is not null ";
+        $query = $this->getEm()->createQuery($dqli);
+        $country = $query->getResult();
+        return $country;
+    }
 }
