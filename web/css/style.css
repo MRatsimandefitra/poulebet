@@ -308,5 +308,8 @@ div.export{
 input#withSelection{
     width: 15px;
     height: 15px;
-    padding-top: 10px;
+    margin-top: 10px;
+}
+table tr.selected table {
+    color: #555555;
 }

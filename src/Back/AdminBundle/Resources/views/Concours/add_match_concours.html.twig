@@ -3,148 +3,301 @@
 {% block ariane %} {{ parent() }} {% endblock %}
 
 {% block page %}
-<div class="col-lg-12">
-   {# <div class="box-header-response">
-        {{ 'Ajouter des matchs'|trans }}
-        {% include '@BackAdmin/Matchs/sous_menu.html.twig' %}
-    </div>#}
-
     <div class="col-lg-12">
-        <div class="list">
-            <div class="form-filter">
-            </div>
+        {# <div class="box-header-response">
+             {{ 'Ajouter des matchs'|trans }}
+             {% include '@BackAdmin/Matchs/sous_menu.html.twig' %}
+         </div>#}
+
+        <div class="col-lg-12">
             <div class="list">
-                <table>
-                    <tr>
-                        <td><span class="label black">Numero</span></td>
-                        <td><span class="label black">Nom du concours</span></td>
-                        <td><span class="label black">Date Debut</span></td>
-                        <td><span class="label black">Date Fin</span></td>
-                        <td><span class="label black">Matchs affiliés</span></td>
-                        <td><span class="label black">Total Matchs</span></td>
-                        <td><span class="label black">Matchs Finis </span></td>
-                        <td><span class="label black">Matchs Actives</span></td>
-                        <td><span class="label black">Matchs Non commencés</span></td>
-                    </tr>
-                    <tr>
-                        <td><span class="label black">{{ entity.numero }}</span> </td>
-                        <td><span class="label black">
+                <div class="form-filter">
+                </div>
+                <div class="list">
+                    <table>
+                        <tr>
+                            <td><span class="label black">Numero</span></td>
+                            <td><span class="label black">Nom du concours</span></td>
+                            <td><span class="label black">Date Debut</span></td>
+                            <td><span class="label black">Date Fin</span></td>
+                            <td><span class="label black">Matchs affiliés</span></td>
+                            <td><span class="label black">Total Matchs</span></td>
+                            <td><span class="label black">Matchs Finis </span></td>
+                            <td><span class="label black">Matchs Actives</span></td>
+                            <td><span class="label black">Matchs Non commencés</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="label black">{{ entity.numero }}</span></td>
+                            <td><span class="label black">
                             {{ entity.nomConcours }}
-                        </span> </td>
-                        <td><span class="label black">
+                        </span></td>
+                            <td><span class="label black">
                             {{ entity.dateDebut|date('d/m/Y') }}
-                        </span> </td>
-                        <td><span class="label black">
+                        </span></td>
+                            <td><span class="label black">
                             {{ entity.dateFinale|date('d/m/Y') }}
-                        </span> </td>
-                        <td><span class="label black">
+                        </span></td>
+                            <td><span class="label black">
                             {{ entity.getMatchs() | length }}
-                        </span> </td>
-                        <td><span class="label black">{{ totalMatchs }}</span> </td>
-                        <td><span class="label black">{{ matchFinished }}</span> </td>
-                        <td><span class="label black">{{ matchActive }}</span> </td>
-                        <td><span class="label black">{{ matchNonStarted }}</span> </td>
-                    </tr>
-                </table>
-                <br/><br/>
+                        </span></td>
+                            <td><span class="label black">{{ totalMatchs }}</span></td>
+                            <td><span class="label black">{{ matchFinished }}</span></td>
+                            <td><span class="label black">{{ matchActive }}</span></td>
+                            <td><span class="label black">{{ matchNonStarted }}</span></td>
+                        </tr>
+                    </table>
+                    <br/><br/>
 
-                <div class="search">
-                    <div class="search-matchs">
-                        <form action="" method="post">
+                    <div class="search">
+                        <div class="search-matchs">
+                            <form action="" method="post">
 
-                        {# Date debut#}
-      {#                  {% if searchValue is defined and searchValue is not empty and searchValue.dateDebut is defined %}
-                         <span class="label black">{{ 'Date Début' }}</span> <input id="dateFinale" type="text" name="dateDebut" class="datepic"
-                                                      value="{{ searchValue.dateDebut }}"/>
-                        {% else %}
-                            <span class="label black">   {{ 'Date Debut' }}</span> <input type="text" name="dateDebut" class="datepic"/>
-                        {% endif %}
+                                {# Date debut#}
+                                {#                  {% if searchValue is defined and searchValue is not empty and searchValue.dateDebut is defined %}
+                                                   <span class="label black">{{ 'Date Début' }}</span> <input id="dateFinale" type="text" name="dateDebut" class="datepic"
+                                                                                value="{{ searchValue.dateDebut }}"/>
+                                                  {% else %}
+                                                      <span class="label black">   {{ 'Date Debut' }}</span> <input type="text" name="dateDebut" class="datepic"/>
+                                                  {% endif %}
 
-                        &#123;&#35; Date finale &#35;&#125;
-                        {% if searchValue is defined and searchValue is not empty and searchValue.dateFinale is defined %}
-                            <span class="label black">{{ 'Date Fin' }}</span> <input type="text" name="dateFinale" class="datepic"
-                                                       value="{{ searchValue.dateFinale }}"/>
-                        {% else %}
-                            <span class="label black">{{ 'Date Fin' }}</span> <input id="dateFinale" type="text" name="dateFinale" class="datepic"/>
-                        {% endif %}#}
+                                                  &#123;&#35; Date finale &#35;&#125;
+                                                  {% if searchValue is defined and searchValue is not empty and searchValue.dateFinale is defined %}
+                                                      <span class="label black">{{ 'Date Fin' }}</span> <input type="text" name="dateFinale" class="datepic"
+                                                                                 value="{{ searchValue.dateFinale }}"/>
+                                                  {% else %}
+                                                      <span class="label black">{{ 'Date Fin' }}</span> <input id="dateFinale" type="text" name="dateFinale" class="datepic"/>
+                                                  {% endif %}#}
 
-                            <span class="label black">{{ 'Championnat'|trans }}</span>
-                        <select name="championat_match" id="championat_match">
+                                <span class="label black">{{ 'Championnat'|trans }}</span>
+                                <select name="championat_match" id="championat_match">
 
 
-                            {% if searchValue is defined and searchValue is not empty and searchValue.championat_match is defined %}
-                                <option value="{{ searchValue.championat_match }}">{{ searchValue.championat_match }}</option>
-                                {% for rowChampionat  in championat %}
-                                    <option value="{{ rowChampionat.fullNameChampionat }}">{{ rowChampionat.fullNameChampionat }}</option>
-                                {% endfor %}
-                            {% else %}
-                                <option value=""></option>
-                                {% for rowChampionat  in championat %}
-                                    <option value="{{ rowChampionat.fullNameChampionat }}">{{ rowChampionat.fullNameChampionat }}</option>
-                                {% endfor %}
+                                    {% if searchValue is defined and searchValue is not empty and searchValue.championat_match is defined %}
+                                        <option value="{{ searchValue.championat_match }}">{{ searchValue.championat_match }}</option>
+                                        {% for rowChampionat  in championat %}
+                                            <option value="{{ rowChampionat.fullNameChampionat }}">{{ rowChampionat.fullNameChampionat }}</option>
+                                        {% endfor %}
+                                    {% else %}
+                                        <option value=""></option>
+                                        {% for rowChampionat  in championat %}
+                                            <option value="{{ rowChampionat.fullNameChampionat }}">{{ rowChampionat.fullNameChampionat }}</option>
+                                        {% endfor %}
 
-                            {% endif %}
-                        </select>
-                        <span class="label black">{{ 'Pays' }}</span>
-                        <select name="pays_match" id="pays_match">
-                            {% if searchValue is defined and searchValue is not empty and searchValue.pays_match is defined %}
-                                <option value="{{ searchValue.pays_match }}">{{ searchValue.pays_match }}</option>
-                                <option value=""></option>
-                                {% for rowPays in pays %}
-                                    <option value="{{ rowPays.pays }}">{{ rowPays.pays }}</option>
-                                {% endfor %}
-                            {% else %}
-                                <option value=""></option>
-                                {% for rowPays in pays %}
-                                    <option value="{{ rowPays.pays }}">{{ rowPays.pays }}</option>
-                                {% endfor %}
-                            {% endif %}
-                        </select>
+                                    {% endif %}
+                                </select>
+                                <span class="label black">{{ 'Pays' }}</span>
+                                <select name="pays_match" id="pays_match">
+                                    {% if searchValue is defined and searchValue is not empty and searchValue.pays_match is defined %}
+                                        <option value="{{ searchValue.pays_match }}">{{ searchValue.pays_match }}</option>
+                                        <option value=""></option>
+                                        {% for rowPays in pays %}
+                                            <option value="{{ rowPays.pays }}">{{ rowPays.pays }}</option>
+                                        {% endfor %}
+                                    {% else %}
+                                        <option value=""></option>
+                                        {% for rowPays in pays %}
+                                            <option value="{{ rowPays.pays }}">{{ rowPays.pays }}</option>
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
 
-                            <span class="label black">{{ 'Statut' }}</span>
-                            <select name="status_match" id="status_match">
-                                {% if searchValue.status_match is defined and searchValue.status_match %}
-                                    <option value="{{ searchValue.status_match }}">{{ searchValue.status_match }}</option>
+                                <span class="label black">{{ 'Statut' }}</span>
+                                <select name="status_match" id="status_match">
+                                    {% if searchValue.status_match is defined and searchValue.status_match %}
+                                        <option value="{{ searchValue.status_match }}">{{ searchValue.status_match }}</option>
+                                    {% endif %}
+                                    <option value=""></option>
+                                    <option value="active">Active</option>
+                                    <option value="not_started">Non Commencé</option>
+                                    <option value="finished">Terminé</option>
+                                    <option value="postphoned">Reporté</option>
+
+                                </select>
+                                <span class="label black">{{ "Matchs selectionnés" }}</span>
+                                {% if withSelection is defined and withSelection %}
+                                    <input id="withSelection" type="checkbox" name="withSelection" checked="true"/>
+                                {% else %}
+                                    <input id="withSelection" type="checkbox" name="withSelection"/>
+
                                 {% endif %}
-                                <option value=""></option>
-                                <option value="active">Active</option>
-                                <option value="not_started">Non Commencé</option>
-                                <option value="finished">Terminé</option>
-                                <option value="postphoned">Reporté</option>
 
-                            </select>
-                            <span class="label black">{{ "Matchs selectionnés" }}</span>
-                            {% if withSelection is defined and withSelection %}
-                                <input id="withSelection" type="checkbox" name="withSelection" checked="true"/>
-                            {% else %}
-                                <input id="withSelection" type="checkbox" name="withSelection" />
-
-                            {% endif %}
-
-                        <input class="mybtn" type="submit" value="{{ 'Rechercher les matchs' }}"/>
-                            <span class="glyphicon glyphicon-remove red"></span>
-                            <a id="withSelection" href="#" id="cancelFiltre" onclick="cancelForm();">Annuler filtres</a>
+                                <input class="mybtn" type="submit" value="{{ 'Rechercher les matchs' }}"/>
+                                <span class="glyphicon glyphicon-remove red"></span>
+                                <a id="withSelection" href="#" id="cancelFiltre" onclick="cancelForm();">Annuler
+                                    filtres</a>
 
 
-                        {% if matchs is defined and matchs is not null %}
+                                {% if matchs is defined and matchs is not null %}
 
-                        <table class="master-prono">
-                            <tr class="header">
-                                <td>Selection</td>
-                                <td>Date</td>
-                                <td>{{ 'Championnat' }}</td>
-                                <td>Equipe 1</td>
-                                <td>Score</td>
-                                <td>Equipe 2</td>
-                                <td>{{ 'Statut' }}</td>
-                                <td>Pronostic</td>
-                                {#<td>Statut</td>#}
-                            </tr>
-                            {% if withSelection is defined and withSelection == true %}
-                                {% for rowMatchs in matchs %}
-                                    {% for concour in rowMatchs.concours %}
-                                        {% if concour.id == entity.id %}
-                                            {% set row_selected = 1 %}
+                                <table class="master-prono">
+                                    <tr class="header">
+                                        <td>Selection</td>
+                                        <td>Date</td>
+                                        <td>{{ 'Championnat' }}</td>
+                                        <td>Equipe 1</td>
+                                        <td>Score</td>
+                                        <td>Equipe 2</td>
+                                        <td>{{ 'Statut' }}</td>
+                                        <td>Pronostic</td>
+                                        {#<td>Statut</td>#}
+                                    </tr>
+                                    {% if withSelection is defined and withSelection == true %}
+                                        {% for rowMatchs in matchs %}
+                                            {% for concour in rowMatchs.concours %}
+                                                {% if concour.id == entity.id %}
+                                                    {% set row_selected = 1 %}
+                                                    {% if row_selected == 1 %}
+                                                        <tr class="selected">
+                                                        <td>
+                                                            <a onclick="return supprimer('Etes-vous sûr de vouloir enlever ce match ?')"
+                                                               href="{{ path('remove_match_concours',{'idConcours':entity.id, 'id':rowMatchs.id} ) }}">
+                                            <span class="glyphicon glyphicon-remove-circle red"
+                                                  aria-hidden="true"></span>
+                                                            </a>
+                                                        </td>
+
+                                                        {#{% else %}#}
+                                                    {% elseif rowMatchs.statusMatch is defined and rowMatchs.statusMatch == 'active' and row_selected != 1 %}
+                                                        <tr class="active">
+                                                        <td>
+                                                            <input type="checkbox" name="select_{{ rowMatchs.id }}"/>
+                                                        </td>
+                                                    {% elseif rowMatchs.statusMatch is defined and rowMatchs.statusMatch == 'not_started' and row_selected != 1 %}
+                                                        <tr class="not_started">
+                                                        <td>
+                                                            <input type="checkbox" name="select_{{ rowMatchs.id }}"/>
+                                                        </td>
+                                                    {% elseif rowMatchs.statusMatch is defined and rowMatchs.statusMatch == 'finished' and row_selected != 1 %}
+                                                        <tr class="finished">
+                                                        <td>
+                                                            <input type="checkbox" name="select_{{ rowMatchs.id }}"/>
+                                                        </td>
+                                                    {% elseif rowMatchs.statusMatch is defined and rowMatchs.statusMatch == 'postphoned' and row_selected != 1 %}
+                                                        <tr class="postphoned">
+                                                        <td>
+                                                            <input type="checkbox" name="select_{{ rowMatchs.id }}"/>
+                                                        </td>
+                                                    {% else %}
+                                                        <tr class="">
+                                                        <td>
+                                                            <input type="checkbox" name="select_{{ rowMatchs.id }}"/>
+                                                        </td>
+                                                    {% endif %}
+                                                    <td>
+                                                        {{ rowMatchs.dateMatch|date('d/m/Y h:i') }}
+                                                    </td>
+                                                    <td>
+                                                        {{ rowMatchs.championat.fullNameChampionat }}
+                                                    </td>
+                                                    <td>{{ rowMatchs.equipeDomicile }}</td>
+                                                    <td>
+                                                        {{ rowMatchs.score }}
+                                                    </td>
+                                                    <td>
+                                                        {{ rowMatchs.equipeVisiteur }}
+                                                    </td>
+                                                    <td>
+                                                        {{ rowMatchs.statusMatch }}
+                                                        <input type="hidden" name="idMatch" value="{{ rowMatchs.id }}"/>
+                                                    </td>
+
+                                                    <td>
+
+                                                        <form method="post" action="">
+                                                            <table class="table-matchs">
+                                                                <tr>
+                                                                    <td>
+                                                                        {% if rowMatchs.masterProno1 is defined and rowMatchs.masterProno1 == true %}
+                                                                            <input type="checkbox"
+                                                                                   name="c_host_{{ rowMatchs.id }}"
+                                                                                   checked="true"/>  1
+                                                                        {% else %}
+                                                                            <input type="checkbox"
+                                                                                   name="c_host_{{ rowMatchs.id }}"/> 1
+
+                                                                        {% endif %}
+                                                                        {#{% if rowMatchs.cot1Pronostic is defined and rowMatchs.cot1Pronostic %}
+                                                                            <input class="cote" type="text"
+                                                                                   name="cote1_{{ rowMatchs.id }}"
+                                                                                   value="{{ rowMatchs.cot1Pronostic }}"/>
+
+                                                                        {% else %}
+                                                                            <input class="cote" type="text"
+                                                                                   name="cote1_{{ rowMatchs.id }}"/>
+                                                                        {% endif %}#}
+                                                                    </td>
+                                                                    <td>
+                                                                        {% if rowMatchs.masterPronoN is defined and rowMatchs.masterPronoN == true %}
+                                                                            <input type="checkbox"
+                                                                                   name="c_neutre_{{ rowMatchs.id }}"
+                                                                                   checked="true"/> N
+
+                                                                        {% else %}
+                                                                            <input type="checkbox"
+                                                                                   name="c_neutre_{{ rowMatchs.id }}"/> N
+                                                                        {% endif %}
+
+                                                                        {#{% if rowMatchs.coteNPronistic is defined and rowMatchs.coteNPronistic %}
+                                                                            <input class="cote" type="text"
+                                                                                   name="coten_{{ rowMatchs.id }}"
+                                                                                   value="{{ rowMatchs.coteNPronistic }}"/>
+                                                                        {% else %}
+                                                                            <input class="cote" type="text"
+                                                                                   name="coten_{{ rowMatchs.id }}"/>
+                                                                        {% endif %}#}
+                                                                    </td>
+                                                                    <td>
+                                                                        {% if rowMatchs.masterProno2 is defined and rowMatchs.masterProno2 == true %}
+                                                                            <input type="checkbox"
+                                                                                   name="guest_{{ rowMatchs.id }}"
+                                                                                   checked="true"/> 2
+                                                                        {% else %}
+                                                                            <input type="checkbox"
+                                                                                   name="c_guest_{{ rowMatchs.id }}"/> 2
+                                                                        {% endif %}
+                                                                        <input type="hidden" name="identifiant"
+                                                                               value="{{ rowMatchs.id }}"/>
+                                                                        {#{% if rowMatchs.cote2Pronostic is defined and  rowMatchs.cote2Pronostic %}
+
+                                                                            <input class="cote" type="text"
+                                                                                   name="cote2_{{ rowMatchs.id }}"
+                                                                                   value="{{ rowMatchs.cote2Pronostic }}"/>
+
+                                                                        {% else %}
+                                                                            <input class="cote" type="text"
+                                                                                   name="cote2_{{ rowMatchs.id }}"/>
+                                                                        {% endif %}#}
+                                                                    </td>
+
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="3">
+                                                                        {% if droitAdmin.ajout is defined and droitAdmin.ajout == true or droitAdmin.modification is defined and droitAdmin.modification == true %}
+                                                                            <input id="send-prono" type="submit"
+                                                                                   value="{{ 'Valider' }}"/>
+                                                                        {% endif %}
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </form>
+
+                                                        {#<a href="#">{{ 'Enregister'|trans }}</a>#}
+                                                    </td>
+                                                    </tr>
+
+                                                {% endif %}
+
+                                            {% endfor %}
+                                        {% endfor %}
+                                    {% else %}
+                                        {% for rowMatchs in matchs %}
+                                            {% set row_selected = 0 %}
+                                            {% for concour in rowMatchs.concours %}
+                                                {% if concour.id == entity.id %}
+                                                    {% set row_selected = 1 %}
+                                                {% endif %}
+
+                                            {% endfor %}
                                             {% if row_selected == 1 %}
                                                 <tr class="selected">
                                                 <td>
@@ -207,50 +360,68 @@
                                                         <tr>
                                                             <td>
                                                                 {% if rowMatchs.masterProno1 is defined and rowMatchs.masterProno1 == true %}
-                                                                    <input type="checkbox" name="c_host_{{ rowMatchs.id }}"
+                                                                    <input type="checkbox"
+                                                                           name="c_host_{{ rowMatchs.id }}"
                                                                            checked="true"/> 1
                                                                 {% else %}
-                                                                    <input type="checkbox" name="c_host_{{ rowMatchs.id }}"/> 1
+                                                                    <input type="checkbox"
+                                                                           name="c_host_{{ rowMatchs.id }}"/> 1
 
                                                                 {% endif %}
-                                                                {% if rowMatchs.cot1Pronostic is defined and rowMatchs.cot1Pronostic %}
-                                                                    <input class="cote" type="text" name="cote1_{{ rowMatchs.id }}"
-                                                                           value="{{ rowMatchs.cot1Pronostic }}"/>
+                                                                {% if row_selected is defined and row_selected != 1 %}
+                                                                    {% if rowMatchs.cot1Pronostic is defined and rowMatchs.cot1Pronostic %}
+                                                                        <input class="cote" type="text"
+                                                                               name="cote1_{{ rowMatchs.id }}"
+                                                                               value="{{ rowMatchs.cot1Pronostic }}"/>
 
-                                                                {% else %}
-                                                                    <input class="cote" type="text" name="cote1_{{ rowMatchs.id }}"/>
+                                                                    {% else %}
+                                                                        <input class="cote" type="text"
+                                                                               name="cote1_{{ rowMatchs.id }}"/>
+                                                                    {% endif %}
                                                                 {% endif %}
                                                             </td>
                                                             <td>
                                                                 {% if rowMatchs.masterPronoN is defined and rowMatchs.masterPronoN == true %}
-                                                                    <input type="checkbox" name="c_neutre_{{ rowMatchs.id }}"
+                                                                    <input type="checkbox"
+                                                                           name="c_neutre_{{ rowMatchs.id }}"
                                                                            checked="true"/> N
 
                                                                 {% else %}
-                                                                    <input type="checkbox" name="c_neutre_{{ rowMatchs.id }}"/> N
+                                                                    <input type="checkbox"
+                                                                           name="c_neutre_{{ rowMatchs.id }}"/> N
                                                                 {% endif %}
-
-                                                                {% if rowMatchs.coteNPronistic is defined and rowMatchs.coteNPronistic %}
-                                                                    <input class="cote" type="text" name="coten_{{ rowMatchs.id }}"
-                                                                           value="{{ rowMatchs.coteNPronistic }}"/>
-                                                                {% else %}
-                                                                    <input class="cote" type="text" name="coten_{{ rowMatchs.id }}"/>
+                                                                {% if row_selected is defined and row_selected != 1 %}
+                                                                    {% if rowMatchs.coteNPronistic is defined and rowMatchs.coteNPronistic %}
+                                                                        <input class="cote" type="text"
+                                                                               name="coten_{{ rowMatchs.id }}"
+                                                                               value="{{ rowMatchs.coteNPronistic }}"/>
+                                                                    {% else %}
+                                                                        <input class="cote" type="text"
+                                                                               name="coten_{{ rowMatchs.id }}"/>
+                                                                    {% endif %}
                                                                 {% endif %}
                                                             </td>
                                                             <td>
                                                                 {% if rowMatchs.masterProno2 is defined and rowMatchs.masterProno2 == true %}
-                                                                    <input type="checkbox" name="guest_{{ rowMatchs.id }}" checked="true"/> 2
+                                                                    <input type="checkbox"
+                                                                           name="guest_{{ rowMatchs.id }}"
+                                                                           checked="true"/> 2
                                                                 {% else %}
-                                                                    <input type="checkbox" name="c_guest_{{ rowMatchs.id }}"/> 2
+                                                                    <input type="checkbox"
+                                                                           name="c_guest_{{ rowMatchs.id }}"/> 2
                                                                 {% endif %}
-                                                                <input type="hidden" name="identifiant" value="{{ rowMatchs.id }}"/>
-                                                                {% if rowMatchs.cote2Pronostic is defined and  rowMatchs.cote2Pronostic %}
+                                                                <input type="hidden" name="identifiant"
+                                                                       value="{{ rowMatchs.id }}"/>
+                                                                {% if row_selected is defined and row_selected != 1 %}
+                                                                    {% if rowMatchs.cote2Pronostic is defined and  rowMatchs.cote2Pronostic %}
 
-                                                                    <input class="cote" type="text" name="cote2_{{ rowMatchs.id }}"
-                                                                           value="{{ rowMatchs.cote2Pronostic }}"/>
-
-                                                                {% else %}
-                                                                    <input class="cote" type="text" name="cote2_{{ rowMatchs.id }}"/>
+                                                                        <input class="cote" type="text"
+                                                                               name="cote2_{{ rowMatchs.id }}"
+                                                                               value="{{ rowMatchs.cote2Pronostic }}"/>
+                                                                    {% else %}
+                                                                        <input class="cote" type="text"
+                                                                               name="cote2_{{ rowMatchs.id }}"/>
+                                                                    {% endif %}
                                                                 {% endif %}
                                                             </td>
 
@@ -258,7 +429,8 @@
                                                         <tr>
                                                             <td colspan="3">
                                                                 {% if droitAdmin.ajout is defined and droitAdmin.ajout == true or droitAdmin.modification is defined and droitAdmin.modification == true %}
-                                                                    <input id="send-prono" type="submit" value="{{ 'Valider' }}"/>
+                                                                    <input id="send-prono" type="submit"
+                                                                           value="{{ 'Valider' }}"/>
                                                                 {% endif %}
                                                             </td>
                                                         </tr>
@@ -268,159 +440,23 @@
                                                 {#<a href="#">{{ 'Enregister'|trans }}</a>#}
                                             </td>
                                             </tr>
-
-                                        {% endif %}
-
-                                    {% endfor %}
-                                {% endfor %}
-                            {% else %}
-                            {% for rowMatchs in matchs %}
-                                {% set row_selected = 0 %}
-                                {% for concour in rowMatchs.concours %}
-                                    {% if concour.id == entity.id %}
-                                        {% set row_selected = 1 %}
+                                        {% endfor %}
                                     {% endif %}
+                                </table>
+                                <br/>
+                                <input id="addMatch" class="btn btn-primary" type="submit"
+                                       value="{{ 'Insérer matchs' }}"/>
+                                <br/><br/>
+                            </form>
+                        </div>
+                        {% else %}
+                            {{ 'Vous devez effectué une recherche des matchs ' }}
+                        {% endif %}
 
-                                {% endfor %}
-                                {% if row_selected == 1 %}
-                                    <tr class="selected">
-                                    <td>
-                                        <a onclick="return supprimer('Etes vous sur de vouloir supprimer ce match ?')"
-                                           href="{{ path('remove_match_concours',{'idConcours':entity.id, 'id':rowMatchs.id} ) }}">
-                                            <span class="glyphicon glyphicon-remove-circle red"
-                                                  aria-hidden="true"></span>
-                                        </a>
-                                    </td>
 
-                                {#{% else %}#}
-                                {% elseif rowMatchs.statusMatch is defined and rowMatchs.statusMatch == 'active' and row_selected != 1 %}
-                                    <tr class="active">
-                                    <td>
-                                        <input type="checkbox" name="select_{{ rowMatchs.id }}"/>
-                                    </td>
-                                {% elseif rowMatchs.statusMatch is defined and rowMatchs.statusMatch == 'not_started' and row_selected != 1 %}
-                                    <tr class="not_started">
-                                    <td>
-                                        <input type="checkbox" name="select_{{ rowMatchs.id }}"/>
-                                    </td>
-                                {% elseif rowMatchs.statusMatch is defined and rowMatchs.statusMatch == 'finished' and row_selected != 1 %}
-                                    <tr class="finished">
-                                    <td>
-                                        <input type="checkbox" name="select_{{ rowMatchs.id }}"/>
-                                    </td>
-                                {% elseif rowMatchs.statusMatch is defined and rowMatchs.statusMatch == 'postphoned' and row_selected != 1 %}
-                                    <tr class="postphoned">
-                                    <td>
-                                        <input type="checkbox" name="select_{{ rowMatchs.id }}"/>
-                                    </td>
-                                {% else %}
-                                    <tr class="">
-                                    <td>
-                                        <input type="checkbox" name="select_{{ rowMatchs.id }}"/>
-                                    </td>
-                                {% endif %}
-                                <td>
-                                    {{ rowMatchs.dateMatch|date('d/m/Y h:i') }}
-                                </td>
-                                <td>
-                                    {{ rowMatchs.championat.fullNameChampionat }}
-                                </td>
-                                <td>{{ rowMatchs.equipeDomicile }}</td>
-                                <td>
-                                    {{ rowMatchs.score }}
-                                </td>
-                                <td>
-                                    {{ rowMatchs.equipeVisiteur }}
-                                </td>
-                                <td>
-                                    {{ rowMatchs.statusMatch }}
-                                    <input type="hidden" name="idMatch" value="{{ rowMatchs.id }}"/>
-                                </td>
-
-                                <td>
-
-                                    <form method="post" action="">
-                                        <table class="table-matchs">
-                                            <tr>
-                                                <td>
-                                                    {% if rowMatchs.masterProno1 is defined and rowMatchs.masterProno1 == true %}
-                                                        <input type="checkbox" name="c_host_{{ rowMatchs.id }}"
-                                                               checked="true"/> 1
-                                                    {% else %}
-                                                        <input type="checkbox" name="c_host_{{ rowMatchs.id }}"/> 1
-
-                                                    {% endif %}
-                                                    {% if rowMatchs.cot1Pronostic is defined and rowMatchs.cot1Pronostic %}
-                                                        <input class="cote" type="text" name="cote1_{{ rowMatchs.id }}"
-                                                               value="{{ rowMatchs.cot1Pronostic }}"/>
-
-                                                    {% else %}
-                                                        <input class="cote" type="text" name="cote1_{{ rowMatchs.id }}"/>
-                                                    {% endif %}
-                                                </td>
-                                                <td>
-                                                    {% if rowMatchs.masterPronoN is defined and rowMatchs.masterPronoN == true %}
-                                                        <input type="checkbox" name="c_neutre_{{ rowMatchs.id }}"
-                                                               checked="true"/> N
-
-                                                    {% else %}
-                                                        <input type="checkbox" name="c_neutre_{{ rowMatchs.id }}"/> N
-                                                    {% endif %}
-
-                                                    {% if rowMatchs.coteNPronistic is defined and rowMatchs.coteNPronistic %}
-                                                        <input class="cote" type="text" name="coten_{{ rowMatchs.id }}"
-                                                               value="{{ rowMatchs.coteNPronistic }}"/>
-                                                    {% else %}
-                                                        <input class="cote" type="text" name="coten_{{ rowMatchs.id }}"/>
-                                                    {% endif %}
-                                                </td>
-                                                <td>
-                                                    {% if rowMatchs.masterProno2 is defined and rowMatchs.masterProno2 == true %}
-                                                        <input type="checkbox" name="guest_{{ rowMatchs.id }}" checked="true"/> 2
-                                                    {% else %}
-                                                        <input type="checkbox" name="c_guest_{{ rowMatchs.id }}"/> 2
-                                                    {% endif %}
-                                                    <input type="hidden" name="identifiant" value="{{ rowMatchs.id }}"/>
-                                                    {% if rowMatchs.cote2Pronostic is defined and  rowMatchs.cote2Pronostic %}
-
-                                                        <input class="cote" type="text" name="cote2_{{ rowMatchs.id }}"
-                                                               value="{{ rowMatchs.cote2Pronostic }}"/>
-
-                                                    {% else %}
-                                                        <input class="cote" type="text" name="cote2_{{ rowMatchs.id }}"/>
-                                                    {% endif %}
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td colspan="3">
-                                                    {% if droitAdmin.ajout is defined and droitAdmin.ajout == true or droitAdmin.modification is defined and droitAdmin.modification == true %}
-                                                        <input id="send-prono" type="submit" value="{{ 'Valider' }}"/>
-                                                    {% endif %}
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </form>
-
-                                    {#<a href="#">{{ 'Enregister'|trans }}</a>#}
-                                </td>
-                                </tr>
-                            {% endfor %}
-                            {% endif %}
-                        </table>
-                        <br/>
-                        <input id="addMatch" class="btn btn-primary" type="submit" value="{{ 'Insérer matchs' }}"/>
-                        <br/><br/>
-                    </form>
                     </div>
-                    {% else %}
-                        {{ 'Vous devez effectué une recherche des matchs ' }}
-                    {% endif %}
-
-
                 </div>
             </div>
         </div>
     </div>
-</div>
 {% endblock %}
