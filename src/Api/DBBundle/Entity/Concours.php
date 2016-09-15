@@ -49,7 +49,7 @@ class Concours
     private $dateFinale;
     /**
      * @ORM\ManyToMany(targetEntity="Matchs" , cascade={"persist", "remove"})
-     *
+     * @ORM\JoinColumn(nullable=true)
      **/
     private $matchs;
     

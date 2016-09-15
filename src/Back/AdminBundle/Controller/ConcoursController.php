@@ -52,11 +52,8 @@ class ConcoursController extends ApiController {
         $form = $this->formPost(self::FORM_CONCOURS, $concours);
         $form->handleRequest($request);
         if($form->isValid()){
-            $concours->setNumero($form['numero']->getData());
-            $concours->setNomConcours($form['nomConcours']->getData());
-            $concours->setDateDebut(date('Y-m-d H:i:s', strtotime($form['dateDebut']->getData())));
-            $concours->setDateFinale(date('Y-m-d H:i:s', strtotime($form['dateFinale']->getData())));
-
+            $concours->setDateDebut(new \DateTime(date('Y-m-d H:i:s', strtotime($form['dateDebut']->getData()))));
+            $concours->setDateFinale(new \DateTime(date('Y-m-d H:i:s', strtotime($form['dateFinale']->getData()))));
             $this->insert($concours, array('success' => 'success', 'error' => 'error'));
             return $this->redirectToRoute("list_concours");
         }
@@ -70,6 +67,8 @@ class ConcoursController extends ApiController {
         $form = $this->formPost(self::FORM_CONCOURS, $concours);
         $form->handleRequest($request);
         if($form->isValid()){
+            $concours->setDateDebut(new \DateTime(date('Y-m-d H:i:s', strtotime($form['dateDebut']->getData()))));
+            $concours->setDateFinale(new \DateTime(date('Y-m-d H:i:s', strtotime($form['dateFinale']->getData()))));
             $this->insert($concours);
             return $this->redirectToRoute("list_concours");
         }
