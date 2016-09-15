@@ -29,17 +29,17 @@
                              {{ "Date"|trans }} : <input type="text" name="date_match" id="datepic" placeholder="{{ 'Date'|trans }}"/>
                          {% endif %}#}
                         {% if searchValue.dateDebut is defined %}
-                            {{ "Date Début"|trans }} :   <input class="datepic" type="text" name="dateDebut"
+                            {{ "Date Début"|trans }} :   <input id="dateDebut" class="datepic" type="text" name="dateDebut"
                                                                 value="{{ searchValue.dateDebut }}"/>
                         {% else %}
-                            {{ "Date Début"|trans }} :   <input class="datepic" type="text" name="dateDebut"/>
+                            {{ "Date Début"|trans }} :   <input id="dateDebut" class="datepic" type="text" name="dateDebut"/>
                         {% endif %}
 
                         {% if searchValue.dateFinale is defined %}
-                            {{ "Date Finale"|trans }} : <input class="datepic" type="text" name=""
+                            {{ "Date Fin"|trans }} : <input id="dateFinale" class="datepic" type="text" name="dateFinale"
                                                                value="{{ searchValue.dateFinale }}"/>
                         {% else %}
-                            {{ "Date Finale"|trans }} : <input class="datepic" type="text" name="dateFinale"/>
+                            {{ "Date Fin"|trans }} : <input id="dateFinale" class="datepic" type="text" name="dateFinale"/>
                         {% endif %}
 
 
@@ -49,7 +49,7 @@
                              {{ 'Heure'|trans }}: <input type="text" name="time_match" id="timepic" placeholder="{{ 'Heure'|trans }}"/>
                          {% endif %}#}
 
-                        <select class="championat" name="championat_match" id="">
+                        <select class="championat" name="championat_match" id="championat_match">
 
                             {#{{ searchValue.championat_match }}#}
                             {% if searchValue.championat_match is defined %}
@@ -72,7 +72,7 @@
                             {% endif %}
                         </select>
 
-                        <select class="pays" name="pays_match" id="">
+                        <select class="pays" name="pays_match" id="pays_match">
 
                             {% if searchValue.pays_match is defined %}
                                 <option value="{{ searchValue.pays_match }}">{{ searchValue.pays_match }}</option>
@@ -91,16 +91,16 @@
                             {% endif %}
                         </select>
                         {{ 'Statut : '|trans }}
-                        <select name="match_status" id="">
+                        <select name="match_status" id="match_status">
                             {% if searchValue.match_status is defined and searchValue.match_status %}
                                 <option value="{{ searchValue.match_status }}">
-                                    {% if searchValue.matchs_status == 'not_started' %}
+                                    {% if searchValue.match_status == 'not_started' %}
                                         {{ 'Non commencé' }}
-                                    {% elseif searchValue.matchs_status == 'postponed' %}
+                                    {% elseif searchValue.match_status == 'postponed' %}
                                         {{ 'Reporté' }}
-                                    {% elseif searchValue.matchs_status == 'finished' %}
+                                    {% elseif searchValue.match_status == 'finished' %}
                                         {{ 'Terminé' }}
-                                    {% elseif searchValue.matchs_status == 'active' %}
+                                    {% elseif searchValue.match_status == 'active' %}
                                         {{ 'Active' }}
                                     {% endif %}
 
@@ -120,7 +120,7 @@
 
                         </select>
                         <input type="submit" class="" value="{{ 'Rechercher'|trans }}"/>
-                        <a href="{{ path('index_admin_match') }}">{{ 'Annuler Filtre' }}<span
+                        <a id="annuler-filtre-prono" onclick="annulerProno();" href="{#{{ path('index_admin_match') }}#}#">{{ 'Annuler Filtre' }}<span
                                     class="glyphicon glyphicon-remove red" aria-hidden="true"></span></a>
 
                     </form>
@@ -179,7 +179,7 @@
                             {{ 'Score'|trans }}
                         </th>
                         <th>
-                            {{ 'Season'|trans }}
+                            {{ 'Saison'|trans }}
                         </th>
                         <th style="min-width: 200px;">
                             {{ 'Championnat'|trans }}
@@ -329,8 +329,8 @@
                                 or row.cot1Pronostic is defined and row.cot1Pronostic
                                 or row.cote2pronistic is defined and row.cote2pronistic
                                 or row.coteNPronostic is defined and row.coteNPronostic %}
-                                    <a class="supprimer" href="{{ path('remove_admin_pronostic', {'id': row.id }) }}"
-                                       onclick="supprimer('Etes vous sur de vouloir supprimer ce pronostic ?');"> <span
+                                    <a id="supprimer-masterprono" href="{{ path('remove_admin_pronostic', {'id': row.id }) }}"
+                                       onclick="deleteProno('Etes vous sur de vouloir supprimer ce pronostic ?');"> <span
                                                 class="glyphicon glyphicon-remove red"
                                                 aria-hidden="true"></span> {{ 'Supprimer'|trans }}
                                     </a> &nbsp;  &nbsp;
