@@ -14,6 +14,7 @@ use Api\DBBundle\Entity\DroitAdmin;
 use Api\DBBundle\Entity\Concours;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * Description of ConcoursController
@@ -83,7 +84,8 @@ class ConcoursController extends ApiController {
 
         $concours = $this->getRepoFormId(self::ENTITY_CONCOURS, $id);
         $championat = $this->getAllEntity(self::ENTITY_CHAMPIONAT);
-        $pays = $this->getAllEntity(self::ENTITY_TEAMS_PAYS);
+        $sm = $this->getServiceMatch();
+        $pays = $sm->getCountry();
 
         $dql ="SELECT m, conc, c from ApiDBBundle:Matchs m
               LEFT JOIN m.concours conc
@@ -97,21 +99,37 @@ class ConcoursController extends ApiController {
         $params = array();
         $searchValue = array();
 
-        if($request->get('date_match_debut') && $request->get('date_match_finale')){
+        if($request->get('dateDebut')){
+            $dateDebut = $request->get('dateDebut');
+        }else{
+            $dateDebut = date('Y-m-d');
+        }
+        $searchValue['dateDebut'] = $dateDebut;
 
-            $dateDebut = $request->get('date_match_debut');
+        if($request->get('dateFinale')){
+            $dateFinale = $request->get('dateFinale');
+        }else{
+            $now = new \DateTime('now');
+            $now = $now->modify('next monday');
+            $dateFinale = $now->format('Y-m-d');
+        }
+        $searchValue['dateFinale'] = $dateFinale;
+
+        if($dateDebut && $dateFinale){
+
+            $dateDebut = $dateDebut;
             $where[] = "m.dateMatch BETWEEN :dateStart AND :dateEnd";
             $dateStart = $dateDebut.' 00:00:00';
 
-            $dateFinale = $request->get('date_match_finale');
+            $dateFinale = $dateFinale;
             $dateEnd = $dateFinale. ' 23:59:59';
 
             $params["dateStart"] = $dateStart;
             $params["dateEnd"] = $dateEnd;
-            $searchValue['date_match_debut'] = $dateStart;
-            $searchValue['date_match_finale'] = $dateEnd;
+            $searchValue['dateDebut'] = $dateDebut;
+            $searchValue['dateFinale'] = $dateFinale;
 
-            $tmpDateDebut = new \DateTime('now');
+           /* $tmpDateDebut = new \DateTime('now');
             $tmpDateDebut->modify('next monday');
             $tmpDateDebut = $tmpDateDebut->format('Y-m-d h:i:s');
             if($tmpDateDebut == $dateStart){
@@ -125,7 +143,7 @@ class ConcoursController extends ApiController {
             $tmpDateFinale = $dateFinale->format('Y-m-d');
             if($tmpDateFinale == $dateEnd){
                 $searchValue['date_match_finale'] = $dateEnd;
-            }
+            }*/
 
 
         }
@@ -171,10 +189,16 @@ class ConcoursController extends ApiController {
             $params['pays'] = "%".$p."%";
             $searchValue['pays_match'] = $p;
         }
+
+        if($request->get('status_match')){
+            $where[] = " m.statusMatch like :statusMatch";
+            $params['statusMatch']= $request->get('status_match');
+            $searchValue['status_match'] = $request->get('status_match');
+        }
         if (!empty($where)) {
             $dql .= ' WHERE ' . implode(' AND ', $where);
         }
-
+        $dql .= " ORDER BY m.dateMatch ASC";
         if(empty($params)){
             $matchs = $this->get('doctrine.orm.entity_manager')->createQuery($dql)->getResult();
         }else{
@@ -220,6 +244,10 @@ class ConcoursController extends ApiController {
             'pays' => $pays,
             'matchs' => $matchs,
             'searchValue' => $searchValue,
+            'matchActive' => $this->getServiceMatch()->getTotalItemsMatchsByStatus('active'),
+            'matchFinished' => $this->getServiceMatch()->getTotalItemsMatchsByStatus('finished'),
+            'matchNonStarted' => $this->getServiceMatch()->getTotalItemsMatchsByStatus('not_started'),
+            'totalMatchs' => $this->getServiceMatch()->getTotalMatch()
         ));
     }
 
@@ -235,5 +263,9 @@ class ConcoursController extends ApiController {
         return $this->redirectToRoute("add_match_concours", array(
             "id"=>$concours->getId()
         ));
+    }
+    private function getServiceMatch(){
+        $sm = $this->get('matchs.manager');
+        return $sm;
     }
 }

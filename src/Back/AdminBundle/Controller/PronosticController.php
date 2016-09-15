@@ -270,9 +270,11 @@ class PronosticController extends ApiController
         }
         $totalRecherche = count($matchs);
         $championatData = $this->getAllEntity(self::ENTITY_CHAMPIONAT);
-        $dqli = "SELECT ch From ApiDBBundle:championat ch where ch.pays  is not null ";
+        /*$dqli = "SELECT ch From ApiDBBundle:championat ch where ch.pays  is not null ";
         $query = $this->get('doctrine.orm.entity_manager')->createQuery($dqli);
-        $country = $query->getResult();
+        $country = $query->getResult();*/
+        $sm = $this->getMatchsService();
+        $country = $sm->getCountry();
         $droitAdmin = $this->getDroitAdmin('Matchs');
         return $this->render('BackAdminBundle:Pronostic:index_pronostic.html.twig', array(
             'matchs' => $matchs,
@@ -304,5 +306,9 @@ class PronosticController extends ApiController
     private function getDroitAdmin($droit){
         $droitAdmin = $this->getRepo(self::ENTITY_DROIT_ADMIN)->findBy(array('admin' => $this->getUser(), 'droit' => $this->getRepo(self::ENTITY_DROIT)->findOneBy(array('fonctionnalite' => $droit))));
         return $droitAdmin;
+    }
+
+    private function getMatchsService(){
+        return $this->get('matchs.manager');
     }
 }

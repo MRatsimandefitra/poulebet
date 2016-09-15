@@ -12,7 +12,6 @@
     <div class="col-lg-12">
         <div class="list">
             <div class="form-filter">
-
             </div>
             <div class="list">
                 <table>
@@ -20,8 +19,12 @@
                         <td>Numero</td>
                         <td>Nom du concours</td>
                         <td>Date Debut</td>
-                        <td>Date Finale</td>
-                        <td>Nb Matchs</td>
+                        <td>Date Fin</td>
+                        <td>Matchs affiliés</td>
+                        <td>Total Matchs</td>
+                        <td>Matchs Finis </td>
+                        <td>Matchs Actives</td>
+                        <td>Matchs Non commencés</td>
                     </tr>
                     <tr>
                         <td>{{ entity.numero }}</td>
@@ -37,6 +40,10 @@
                         <td>
                             {{ entity.getMatchs() | length }}
                         </td>
+                        <td>{{ totalMatchs }}</td>
+                        <td>{{ matchFinished }}</td>
+                        <td>{{ matchActive }}</td>
+                        <td>{{ matchNonStarted }}</td>
                     </tr>
                 </table>
                 <br/><br/>
@@ -46,23 +53,23 @@
                         <form action="" method="post">
 
                         {# Date debut#}
-                        {% if searchValue is defined and searchValue is not empty and searchValue.date_match_debut is defined %}
-                         <span class="label black">{{ 'Date Début' }}</span> <input type="text" name="date_match_debut" class="datepic"
-                                                      value="{{ searchValue.date_match_debut }}"/>
+                        {% if searchValue is defined and searchValue is not empty and searchValue.dateDebut is defined %}
+                         <span class="label black">{{ 'Date Début' }}</span> <input id="dateFinale" type="text" name="dateDebut" class="datepic"
+                                                      value="{{ searchValue.dateDebut }}"/>
                         {% else %}
-                            <span class="label black">   {{ 'Date Debut' }}</span> <input type="text" name="date_match_debut" class="datepic"/>
+                            <span class="label black">   {{ 'Date Debut' }}</span> <input type="text" name="dateDebut" class="datepic"/>
                         {% endif %}
 
                         {# Date finale #}
-                        {% if searchValue is defined and searchValue is not empty and searchValue.date_match_finale is defined %}
-                            <span class="label black">{{ 'Date Finale' }}</span> <input type="text" name="date_match_finale" class="datepic"
-                                                       value="{{ searchValue.date_match_finale }}"/>
+                        {% if searchValue is defined and searchValue is not empty and searchValue.dateFinale is defined %}
+                            <span class="label black">{{ 'Date Fin' }}</span> <input type="text" name="dateFinale" class="datepic"
+                                                       value="{{ searchValue.dateFinale }}"/>
                         {% else %}
-                            <span class="label black">{{ 'Date Finale' }}</span> <input type="text" name="date_match_finale" class="datepic"/>
+                            <span class="label black">{{ 'Date Fin' }}</span> <input id="dateFinale" type="text" name="dateFinale" class="datepic"/>
                         {% endif %}
 
-                            <span class="label black">{{ 'Championat'|trans }}</span>
-                        <select name="championat_match" id="">
+                            <span class="label black">{{ 'Championnat'|trans }}</span>
+                        <select name="championat_match" id="championat_match">
 
 
                             {% if searchValue is defined and searchValue is not empty and searchValue.championat_match is defined %}
@@ -79,31 +86,35 @@
                             {% endif %}
                         </select>
                         <span class="label black">{{ 'Pays' }}</span>
-                        <select name="pays_match" id="">
+                        <select name="pays_match" id="pays_match">
                             {% if searchValue is defined and searchValue is not empty and searchValue.pays_match is defined %}
                                 <option value="{{ searchValue.pays_match }}">{{ searchValue.pays_match }}</option>
                                 <option value=""></option>
                                 {% for rowPays in pays %}
-                                    <option value="{{ rowPays.name }}">{{ rowPays.name }}</option>
+                                    <option value="{{ rowPays.pays }}">{{ rowPays.pays }}</option>
                                 {% endfor %}
                             {% else %}
                                 <option value=""></option>
                                 {% for rowPays in pays %}
-                                    <option value="{{ rowPays.name }}">{{ rowPays.name }}</option>
+                                    <option value="{{ rowPays.pays }}">{{ rowPays.pays }}</option>
                                 {% endfor %}
                             {% endif %}
                         </select>
 
-                            <span class="label black">{{ 'Status' }}</span>
-                            <select name="status_match" id="">
+                            <span class="label black">{{ 'Statut' }}</span>
+                            <select name="status_match" id="status_match">
+                                {% if searchValue.status_match is defined and searchValue.status_match %}
+                                    <option value="{{ searchValue.status_match }}">{{ searchValue.status_match }}</option>
+                                {% endif %}
                                 <option value=""></option>
                                 <option value="active">Active</option>
                                 <option value="not_started">Non Commencé</option>
-                                <option value=""></option>
+                                <option value="finished">Terminé</option>
+                                <option value="postphoned">Reporté</option>
 
                             </select>
 
-                        <input type="submit" value="{{ 'Chercher les matchs' }}"/>
+                        <input type="submit" value="{{ 'Rechercher les matchs' }}"/>
 
 
 
@@ -116,7 +127,7 @@
                                 <td>Equipe 1</td>
                                 <td>Score</td>
                                 <td>Equipe 2</td>
-                                <td>Status</td>
+                                <td>Statut</td>
                             </tr>
                             {% for rowMatchs in matchs %}
                                 {% set row_selected = 0 %}
