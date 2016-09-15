@@ -3,6 +3,8 @@
 namespace Api\DBBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -16,13 +18,38 @@ class ConcoursType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $now = new \DateTime('now');
+        $dateDebutModify = $now->modify('next monday');
+        $dateDebut = $dateDebutModify->format('Y-m-d');
+
+        $fin = new \DateTime('now');
+        $ddF = $fin->modify('next sunday');
+
+        $dddF = $ddF->modify('next sunday');
+        $dateFinale = $dddF->format('Y-m-d');
+
         $builder
-            ->add('numero')
-            ->add('nomConcours')
-            ->add('dateDebut', DateType::class, array(
-                'data' => new \DateTime('now')
+            ->add('numero', TextType::class, array(
+                'required' => true,
+                'label' => 'Numéro concour'
             ))
-            ->add('dateFinale', DateType::class, array('data' => new \DateTime('now')))
+            ->add('nomConcours', TextType::class, array(
+
+            ))
+            ->add('dateDebut', TextType::class, array(
+                'label' => 'Date début',
+                'attr' => array(
+                    'class' => 'datepic'
+                ),
+                'data' => $dateDebut
+            ))
+            ->add('dateFinale', TextType::class, array(
+                'label' => 'Date Fin',
+                'attr' => array(
+                    'class' => 'datepic'
+                ),
+                'data' => $dateFinale
+            ))
         ;
     }
     
