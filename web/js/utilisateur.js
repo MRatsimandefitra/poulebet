@@ -76,3 +76,10 @@ function annulerProno() {
     document.getElementById('pays_match').value = "";
     document.getElementById('match_status').value = "";
 }
+function cancelForm(){
+    document.getElementById('championat_match').value = "";
+    document.getElementById('pays_match').value = "";
+    document.getElementById('status_match').value = "";
+    document.getElementById('withSelection').checked = false;
+
+}
