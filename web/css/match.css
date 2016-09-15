@@ -85,6 +85,7 @@ table tr.not_started{
 }
 table tr.active{
     background-color: #dbffdb;
+    text-align: center;
 }
 .black{
     color: #555555;

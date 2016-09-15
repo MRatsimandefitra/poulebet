@@ -305,3 +305,8 @@ div.export{
     padding: 5px 15px;
     color: #ffffff;
 }
+input#withSelection{
+    width: 15px;
+    height: 15px;
+    padding-top: 10px;
+}
