@@ -26,6 +26,10 @@ $(document).ready(function () {
         $("input.checking_users").removeAttr("checked");
         $("#all_user").removeAttr("value");
     });
+    $('#all_user_btn').click(function(){
+        $('#all_user').val("true");
+        $("#form-notification").submit();
+    });
 
 
 });
