@@ -94,7 +94,7 @@ input.datepic{
     height: 20px;
 }
 div.search-matchs form{
-    background-color: #eeeeee;
+    background-color: #ffffff;
 }
 div.search-match-pronostic {
     background-color: #d5d5d5;
@@ -117,4 +117,11 @@ input.mybtn{
     background-color: #525475;
     border: 1px #555555 solid;
     color: #ffffff;
+}
+table.master-prono{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+table.master-prono tr.header{
+    background-color: #eeeeee;
 }

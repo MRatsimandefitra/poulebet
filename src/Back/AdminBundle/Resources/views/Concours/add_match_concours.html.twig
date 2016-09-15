@@ -16,34 +16,34 @@
             <div class="list">
                 <table>
                     <tr>
-                        <td>Numero</td>
-                        <td>Nom du concours</td>
-                        <td>Date Debut</td>
-                        <td>Date Fin</td>
-                        <td>Matchs affiliés</td>
-                        <td>Total Matchs</td>
-                        <td>Matchs Finis </td>
-                        <td>Matchs Actives</td>
-                        <td>Matchs Non commencés</td>
+                        <td><span class="label black">Numero</span></td>
+                        <td><span class="label black">Nom du concours</span></td>
+                        <td><span class="label black">Date Debut</span></td>
+                        <td><span class="label black">Date Fin</span></td>
+                        <td><span class="label black">Matchs affiliés</span></td>
+                        <td><span class="label black">Total Matchs</span></td>
+                        <td><span class="label black">Matchs Finis </span></td>
+                        <td><span class="label black">Matchs Actives</span></td>
+                        <td><span class="label black">Matchs Non commencés</span></td>
                     </tr>
                     <tr>
-                        <td>{{ entity.numero }}</td>
-                        <td>
+                        <td><span class="label black">{{ entity.numero }}</span> </td>
+                        <td><span class="label black">
                             {{ entity.nomConcours }}
-                        </td>
-                        <td>
+                        </span> </td>
+                        <td><span class="label black">
                             {{ entity.dateDebut|date('d/m/Y') }}
-                        </td>
-                        <td>
+                        </span> </td>
+                        <td><span class="label black">
                             {{ entity.dateFinale|date('d/m/Y') }}
-                        </td>
-                        <td>
+                        </span> </td>
+                        <td><span class="label black">
                             {{ entity.getMatchs() | length }}
-                        </td>
-                        <td>{{ totalMatchs }}</td>
-                        <td>{{ matchFinished }}</td>
-                        <td>{{ matchActive }}</td>
-                        <td>{{ matchNonStarted }}</td>
+                        </span> </td>
+                        <td><span class="label black">{{ totalMatchs }}</span> </td>
+                        <td><span class="label black">{{ matchFinished }}</span> </td>
+                        <td><span class="label black">{{ matchActive }}</span> </td>
+                        <td><span class="label black">{{ matchNonStarted }}</span> </td>
                     </tr>
                 </table>
                 <br/><br/>
@@ -128,8 +128,8 @@
 
                         {% if matchs is defined and matchs is not null %}
 
-                        <table>
-                            <tr>
+                        <table class="master-prono">
+                            <tr class="header">
                                 <td>Selection</td>
                                 <td>Date</td>
                                 <td>{{ 'Championnat' }}</td>
