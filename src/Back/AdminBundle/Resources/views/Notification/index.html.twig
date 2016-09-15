@@ -51,6 +51,7 @@
             <div class="row">
                 <div>
                     <form action="{{ path('add_notification') }}" method="post">
+                        
                         <div class="form-group row">
                             {{ form_label (form.message)}}
                             {{ form_widget (form.message,{'attr':{'class':'form-control'}}) }}
@@ -59,7 +60,7 @@
                         <table class="table-user">
                             <thead>
                             <td>
-                                <a id="check_all">Tout sélectionner</a>&nbsp;|&nbsp;<a id="uncheck_all">Déselectionner</a> 
+                                <a id="check_all">Tout sélectionner(page courant)</a>&nbsp;|&nbsp;<a id="uncheck_all">Déselectionner</a> 
                             </td>
                             <td>
                                 {{'Username'|trans}}
@@ -81,7 +82,8 @@
                         </table> 
                         <div class="row">{{ knp_pagination_render(pagination) }}</div>        
                         <div class="form-group row">
-                            <input type="submit" class="btn btn-primary" value={{"Envoyer"|trans}}>
+                            <p><input type="checkbox" name="all_user" value="true"><label> Tous les utilisateurs</label></p>
+                            <p><input type="submit" class="btn btn-primary" value={{"Envoyer"|trans}}></p>
                         </div>
                         {{ form_rest(form)}}
                     </form>

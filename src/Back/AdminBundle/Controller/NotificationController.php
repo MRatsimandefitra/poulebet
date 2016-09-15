@@ -29,6 +29,7 @@ class NotificationController extends ApiController {
         $champ = $request->get('champ');
         $users_id = $request->get('users');
         $all_user = $request->get("all_user");
+        
         $nbpage = 10; 
         $criteria = array("criteria_username"=>null,"criteria_email"=>null);
         if($request->get('nbpage')){
@@ -58,15 +59,16 @@ class NotificationController extends ApiController {
         //var_dump($notification->getUtilisateurs());
         
         if ($form->isValid()) {
-            if($users_id){
-                $all=false;
-                if($all_user=="true"){
-                    $all= true;
-                    $usrs = $this->getRepo(self::ENTITY_UTILISATEUR)->findAll();
-                    foreach($usrs as $item){
-                        $notification->addUtilisateur($item);
-                    }
+            $all=false;
+            if($all_user){
+                $all= true;
+                $usrs = $this->getRepo(self::ENTITY_UTILISATEUR)->findAll();
+                foreach($usrs as $item){
+                    $notification->addUtilisateur($item);
                 }
+            }
+            if($users_id){
+                
                 if(!$all){
                     foreach($users_id as $id){
                         $usr = $this->getRepo(self::ENTITY_UTILISATEUR)->find($id);
@@ -99,7 +101,8 @@ class NotificationController extends ApiController {
         return $this->render('BackAdminBundle:Notification:index.html.twig', array(
             'form' => $form->createView(),
             'pagination'=>$pagination,
-            'criteria'=>$criteria
+            'criteria'=>$criteria,
+            'all_user'=>$all_user
         ));
         
        
