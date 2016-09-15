@@ -89,7 +89,7 @@ div.box-header-response {
 }
 
 div.search {
-    background-color: #F5F5F5;
+/*    background-color: #F5F5F5;*/
     padding: 5px;
     color: #555;
 }
@@ -109,7 +109,7 @@ table, th, td {
 }
 
 th, td {
-    padding: 15px;
+    padding: 10px;
     text-align: left;
 }
 
@@ -304,4 +304,12 @@ div.export{
     background-color: #474f6d;
     padding: 5px 15px;
     color: #ffffff;
+}
+input#withSelection{
+    width: 15px;
+    height: 15px;
+    margin-top: 10px;
+}
+table tr.selected table {
+    color: #555555;
 }
