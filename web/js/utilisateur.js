@@ -12,7 +12,7 @@ $(document).ready(function(){
         return true;
     });
     $('#check_all').click(function(){
-         $('input:checkbox').not(this).prop('checked', "checked");
+         $('input.checking_users').not(this).prop('checked', "checked");
          $('#all_user').val("true");
     });
     $('#uncheck_all').click(function(){
