@@ -7,11 +7,12 @@
     <div class="sous-menu-page">
         <div class="col-lg-12">
             <div class="col-lg-12">
-                <div class="ariane">
-                    {% block ariane %} {{ parent() }} -> {{ 'Ajouter un championnat'|trans }}  {% endblock %}
-
+                <div class="link">
+                    {% if droitAdmin.lecture is defined and droitAdmin.lecture %}
+                        <span class="glyphicon glyphicon-list green" aria-hidden="true"></span>
+                        <a href="{{ path('list_championat') }}">{{ 'Liste des championnats'|trans }}</a>
+                    {% endif %}
                 </div>
-                {% include '@BackAdmin/Championnat/sous_menu.html.twig' %}
             </div>
         </div>
     </div>
@@ -73,7 +74,7 @@
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <input type="submit" value="{{ 'Ajouter' }}"/>
+                            <input type="submit" class="btn btn-primary" value="{{ 'Enregistrer' }}"/>
                         </td>
                     </tr>
                 </table>
