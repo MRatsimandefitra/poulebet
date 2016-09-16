@@ -115,8 +115,8 @@ class SondageController extends ApiController
         $dqlMatch = "SELECT m from ApiDBBundle:Matchs m "
                 . "JOIN m.concours co "
                 . "JOIN m.championat ch "
-                . "WHERE co.dateDebut < CURRENT_DATE() "
-                . "AND co.dateFinale > CURRENT_DATE() ";
+                . "WHERE co.dateDebut <= CURRENT_DATE() "
+                . "AND co.dateFinale >= CURRENT_DATE() ";
         $queryMatch = $this->get('doctrine.orm.entity_manager')->createQuery($dqlMatch);
         $data = $queryMatch->getResult();
 
@@ -136,6 +136,8 @@ class SondageController extends ApiController
             $dqlChampionat = "SELECT m, ch from ApiDBBundle:Matchs m "
                     . "JOIN m.concours co "
                     . "JOIN m.championat ch "
+                    . "WHERE co.dateDebut <= CURRENT_DATE() "
+                    . "AND co.dateFinale >= CURRENT_DATE() "
                     . "GROUP BY ch.nomChampionat ";
             $queryChampionat = $this->get('doctrine.orm.entity_manager')->createQuery($dqlChampionat);
             $dataChampionat = $queryChampionat->getResult();
