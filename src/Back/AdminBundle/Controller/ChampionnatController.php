@@ -59,8 +59,9 @@ class ChampionnatController extends ApiController
         $dateF = new \DateTime($dateDebut);
         $championat->setDateDebutChampionat($dateD);
         $championat->setDateFinaleChampionat($dateF);*/
-        $countries = Intl::getRegionBundle()->getCountryName(strtoupper($form['pays']->getData()));
-        $championat->setPays($countries);
+        //$countries = Intl::getRegionBundle()->getCountryName(strtoupper($form['pays']->getData()));
+        //$countries = strtoupper($form['pays']->getData());
+        //$championat->setPays($countries);
 
         if($form->isValid()){
             $this->insert($championat, array('success' => 'success' , 'error' => 'error'));

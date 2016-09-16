@@ -56,11 +56,7 @@ class ChampionatType extends AbstractType
                 'choice_label' => 'fullName',
                 'multiple' => true
             ))*/
-            ->add('pays', CountryType::class, array(
-               'placeholder' => 'Choisir un pays',
-               'empty_data' => null,
-               'required' => false
-           ))
+            ->add('pays', TextType::class, array())
 
             ->add('season', TextType::class, array())
 
