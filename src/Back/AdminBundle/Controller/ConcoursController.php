@@ -52,7 +52,9 @@ class ConcoursController extends ApiController {
         $form = $this->formPost(self::FORM_CONCOURS, $concours);
         $form->handleRequest($request);
         if($form->isValid()){
-            $this->insert($concours);
+            $concours->setDateDebut(new \DateTime(date('Y-m-d H:i:s', strtotime($form['dateDebut']->getData()))));
+            $concours->setDateFinale(new \DateTime(date('Y-m-d H:i:s', strtotime($form['dateFinale']->getData()))));
+            $this->insert($concours, array('success' => 'success', 'error' => 'error'));
             return $this->redirectToRoute("list_concours");
         }
         return $this->render('BackAdminBundle:Concours:add_concours.html.twig', array(
@@ -65,6 +67,8 @@ class ConcoursController extends ApiController {
         $form = $this->formPost(self::FORM_CONCOURS, $concours);
         $form->handleRequest($request);
         if($form->isValid()){
+            $concours->setDateDebut(new \DateTime(date('Y-m-d H:i:s', strtotime($form['dateDebut']->getData()))));
+            $concours->setDateFinale(new \DateTime(date('Y-m-d H:i:s', strtotime($form['dateFinale']->getData()))));
             $this->insert($concours);
             return $this->redirectToRoute("list_concours");
         }
