@@ -83,7 +83,8 @@
                         <div class="row">{{ knp_pagination_render(pagination) }}</div>        
                         <div class="form-group row">
                             <input type="hidden" id="all_user" name="all_user">
-                            <p><input type="submit" class="btn btn-primary" value={{"Envoyer"|trans}}><input type="button" class="btn btn-primary" id="all_user_btn" value="Envoyer à tous les utilisateurs"></p>
+                            <p><input type="submit" class="btn btn-primary" value="Envoyer aux utilisateurs sélectionnés seulement"></p>
+                            <p><input type="button" class="btn btn-primary" id="all_user_btn" value="Envoyer à tous les utilisateurs"></p>
                         </div>
                         {{ form_rest(form)}}
                     </form>
