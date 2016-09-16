@@ -38,13 +38,13 @@ class ChampionatType extends AbstractType
                     //'data' => new \DateTime('2016-01-01'),
                     /*'html5' => false,*/
                     'widget' => 'single_text',
-                    'attr' => ['class' => 'datepic']
+                    'attr' => ['class' => 'datepic', 'style' => "width:200px"]
                 /*'format' => 'yyyy-MM-dd'*/
             ))
             ->add('dateFinaleChampionat', DateType::class, array(
                     //'data' => new \DateTime('2016-12-31'),
                     /*'html5' => false,*/
-                    'attr' => ['class' => 'datepic'],
+                    'attr' => ['class' => 'datepic', 'style' => "width:200px"],
                     'widget' => 'single_text',
                     // do not render as type="date", to avoid HTML5 date pickers
                     //'html5' => false,
