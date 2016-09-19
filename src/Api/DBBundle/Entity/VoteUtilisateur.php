@@ -14,7 +14,7 @@ class VoteUtilisateur
 {
     /**
      * @ORM\ManyToOne(targetEntity="Matchs", cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=true, onDelete="CASADE")
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $matchs;
 
