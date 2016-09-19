@@ -4,9 +4,7 @@
 
 {% block page %}
 
-    <div class="sous-menu-page">
-        {% include '@BackAdmin/Championnat/sous_menu.html.twig' %}
-    </div>
+    
 
     <div class="col-lg-12">
         <div class="col-lg-12">
@@ -15,27 +13,27 @@
             <table>
 
                 <tr>
-                    <td>{{ 'Nom championat (ID)' }}</td>
+                    <td>{{ 'Nom championnat (ID)' }}</td>
                     <td>
                         {{ form_widget(form.nomChampionat) }}
                     </td>
                 </tr>
                 <tr>
-                    <td>{{ 'Nom complet du championat' }}</td>
+                    <td>{{ 'Nom complet du championnat' }}</td>
                     <td>
                         {{ form_widget(form.fullNameChampionat) }}
 
                     </td>
                 </tr>
                 <tr>
-                    <td>{{ 'Type de championat' }}</td>
+                    <td>{{ 'Type de championnat' }}</td>
                     <td>
                         {{ form_widget(form.typeChampionat) }}
 
                     </td>
                 </tr>
                 <tr>
-                    <td>{{ 'Saison championat' }}</td>
+                    <td>{{ 'Saison championnat' }}</td>
                     <td>
                         {{ form_widget(form.season) }}
 
@@ -43,14 +41,14 @@
                 </tr>
                 <tr>
 
-                    <td>{{ 'Date de début valide du championat' }}</td>
+                    <td>{{ 'Date de début valide du championnat' }}</td>
                     <td>
                         {{ form_widget(form.dateDebutChampionat) }}
 
                     </td>
                 </tr>
                 <tr>
-                    <td>{{ 'Date finale valide du championat' }}</td>
+                    <td>{{ 'Date fin valide du championnat' }}</td>
                     <td>
                         {{ form_widget(form.dateFinaleChampionat)  }}
 

@@ -46,7 +46,7 @@
                             <a href="{{ path('edit_concours', {'id': row.id }) }}"> <span class="glyphicon glyphicon-pencil orange" aria-hidden="true"></span> Modifier </a> |
                                 {% endif %}
                             {% if droitAdmin.suppression is defined and droitAdmin.suppression  %}
-                                <a onclick="supprimer('Etes vous sur de vouloir supprimer ?');" href="{{ path('remove_concours', {'id': row.id}) }}"><span class="glyphicon glyphicon-remove red" aria-hidden="true"></span> Supprimer </a>
+                                <a onclick="return supprimer('Etes vous sur de vouloir supprimer ?');" href="{{ path('remove_concours', {'id': row.id}) }}"><span class="glyphicon glyphicon-remove red" aria-hidden="true"></span> Supprimer </a>
                             {% endif %}
                             {% if droitAdmin.ajout is defined and droitAdmin.ajout %}
                             <a href="{{ path('add_match_concours', {'id': row.id }) }}"><span class="glyphicon glyphicon-plus green" aria-hidden="true"></span>  {{ 'Ajouter match' }}</a>
