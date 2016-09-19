@@ -24,13 +24,7 @@
                     {{ form_widget(form.nomConcours) }}
                     {{ form_errors(form.nomConcours) }}
                 </div>
-                <div>
-                    {{ form_label(form.dateFinale) }}
-                </div>
-                <div>
-                    {{ form_widget(form.dateFinale) }}
-                    {{ form_errors(form.dateFinale) }}
-                </div>
+
                 <div>
                     {{ form_label(form.dateDebut) }}
                 </div>
@@ -38,6 +32,16 @@
                     {{ form_widget(form.dateDebut) }}
                     {{ form_errors(form.dateDebut) }}
                 </div>
+
+                <div>
+                    {{ form_label(form.dateFinale) }}
+                </div>
+
+                <div>
+                    {{ form_widget(form.dateFinale) }}
+                    {{ form_errors(form.dateFinale) }}
+                </div>
+
 
                 {{ form_rest(form) }}
                 <div>
