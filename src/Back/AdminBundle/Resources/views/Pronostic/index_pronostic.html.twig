@@ -4,14 +4,14 @@
 
 {% block page %}
 
-    <div class="sous-menu-page">
+    {#<div class="sous-menu-page">
         <div class="col-lg-12">
             <div class="col-lg-12">
                 {% include '@BackAdmin/Matchs/sous_menu.html.twig' %}
             </div>
         </div>
 
-    </div>
+    </div>#}
     <br/><br/>
     {% if droitAdmin.lecture is defined and droitAdmin.lecture %}
         <div class="col-lg-12">
@@ -172,15 +172,6 @@
                                 </a>
                             </div>
                         </th>
-                        <th>
-                            {{ 'Domicile'|trans }}
-                        </th>
-                        <th>
-                            {{ 'Score'|trans }}
-                        </th>
-                        <th>
-                            {{ 'Saison'|trans }}
-                        </th>
                         <th style="min-width: 200px;">
                             {{ 'Championnat'|trans }}
 
@@ -195,6 +186,16 @@
                                 </a>
                             </div>
                         </th>
+                        <th>
+                            {{ 'Domicile'|trans }}
+                        </th>
+                        <th>
+                            {{ 'Score'|trans }}
+                        </th>
+                        {#<th>
+                            {{ 'Saison'|trans }}
+                        </th>#}
+
                         <th>
                             {{ 'Visiteur'|trans }}
                         </th>
@@ -229,6 +230,7 @@
                             <tr>
                         {% endif %}
                         <td>{{ row.dateMatch|date('d/m/Y  - H:i') }}</td>
+                        <td>{{ row.championat.fullNameChampionat }}</td>
                         <td>
                             {#  <div class="flag flag-{{ row.equipeDomicile|lower|slice(0, 2) }}"
                                    alt="{{ row.equipeDomicile }}"></div>#}
@@ -241,8 +243,8 @@
                             {{ row.teamsDomicile.fullNameClub }}
                         </td>
                         <td>{{ row.score }}</td>
-                        <td>{{ row.season }}</td>
-                        <td>{{ row.championat.fullNameChampionat }}</td>
+                        {#<td>{{ row.season }}</td>#}
+
                         <td>
                             <div>
                                 <img class="fanion"

@@ -117,7 +117,7 @@ class MatchController extends ApiController
         $searchValue['date_debut'] = $dd->format('Y-m-d');;
 
         $df = new \DateTime('now');
-        $dff = $df->modify('next monday');
+        $dff = $df->modify('+7 day');
 
         $searchValue['date_finale'] = $dff->format('Y-m-d');;
 

@@ -58,6 +58,19 @@
                             {#{{ 'Date'|trans }}#}
                         </th>
                         <th>
+                            {{ 'Championnat'|trans }}
+                            <div class="tri">
+                                <a href="{{ path('index_admin_match', get_search_value('ch.fullNameChampionat','asc', searchValue)) }}">
+                                    <img class="tri" id="up" src="{{ asset('images/up.png') }}" width="16" height="16"
+                                         alt="">
+                                </a>
+                                <a href="{{ path('index_admin_match', get_search_value('ch.fullNameChampionat','asc', searchValue)) }}">
+                                    <img class="tri" id="up" src="{{ asset('images/down.png') }}" width="16" height="16"
+                                         alt="">
+                                </a>
+                            </div>
+                        </th>
+                        <th>
                             {#<span class="sortable">
                                 {{ knp_pagination_sortable(pagination, 'Domicile', 'm.teamsDomicile') }}
                             </span>#}
@@ -75,22 +88,10 @@
                         <th>
                             {{ 'Score'|trans }}
                         </th>
-                        <th>
+                      {#  <th>
                             {{ 'Saison'|trans }}
-                        </th>
-                        <th>
-                            {{ 'Championnat'|trans }}
-                            <div class="tri">
-                                <a href="{{ path('index_admin_match', get_search_value('ch.fullNameChampionat','asc', searchValue)) }}">
-                                    <img class="tri" id="up" src="{{ asset('images/up.png') }}" width="16" height="16"
-                                         alt="">
-                                </a>
-                                <a href="{{ path('index_admin_match', get_search_value('ch.fullNameChampionat','asc', searchValue)) }}">
-                                    <img class="tri" id="up" src="{{ asset('images/down.png') }}" width="16" height="16"
-                                         alt="">
-                                </a>
-                            </div>
-                        </th>
+                        </th>#}
+
                         <th>
                             {{ 'Visiteur'|trans }}
                         </th>
@@ -127,6 +128,7 @@
                                 <tr>
                             {% endif %}
                             <td>{{ row.dateMatch|date('d/m/Y  - H:i') }}</td>
+                            <td>{{ row.championat.fullNameChampionat }}</td>
                             <td>
                                 {#  <div class="flag flag-{{ row.equipeDomicile|lower|slice(0, 2) }}"
                                        alt="{{ row.equipeDomicile }}"></div>#}
@@ -139,8 +141,8 @@
                                 {{ row.teamsDomicile.fullNameClub }}
                             </td>
                             <td>{{ row.score }}</td>
-                            <td>{{ row.season }}</td>
-                            <td>{{ row.championat.fullNameChampionat }}</td>
+                            {#<td>{{ row.season }}</td>#}
+
                             <td>
                                 <div>
                                     <img class="fanion"

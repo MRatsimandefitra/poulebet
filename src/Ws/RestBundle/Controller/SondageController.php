@@ -116,7 +116,7 @@ class SondageController extends ApiController
                 . "JOIN m.concours co "
                 . "JOIN m.championat ch "
                 . "WHERE co.dateDebut <= CURRENT_DATE() "
-                . "AND co.dateFinale >= CURRENT_DATE() ";
+                . "AND co.dateFinale >= CURRENT_DATE() ORDER BY m.dateMatch, m.id ";
         $queryMatch = $this->get('doctrine.orm.entity_manager')->createQuery($dqlMatch);
         $data = $queryMatch->getResult();
 
@@ -241,8 +241,8 @@ class SondageController extends ApiController
             $result['message'] = "Sucess";
         } else {
             $result['code_error'] = 2;
-            $result['success'] = false;
-            $result['error'] = true;
+            $result['success'] = true;
+            $result['error'] = false;
             $result['message'] = "Aucun resultat trouvé";
         }
 

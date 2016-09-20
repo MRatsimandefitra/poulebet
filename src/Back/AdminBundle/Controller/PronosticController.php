@@ -164,7 +164,7 @@ class PronosticController extends ApiController
 
         }else{
             $now = new \DateTime('now');
-            $nextMonday = $now->modify('next monday');
+            $nextMonday = $now->modify('+7 day');
             $nextMonday = $nextMonday->format('Y-m-d');
             $dateFinale = $nextMonday;
         }
