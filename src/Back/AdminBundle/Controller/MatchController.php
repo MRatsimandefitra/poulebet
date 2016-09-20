@@ -26,6 +26,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class MatchController extends ApiController
 {
@@ -47,6 +48,9 @@ class MatchController extends ApiController
 
     public function indexMatchsAction(Request $request)
     {
+        $session = new Session();
+        
+        $session->set("current_page","Matchs");
         //var_dump($request->get('dateFinale')); die;
         if ($request->request->get('identifiant')) {
             $identifiant = $request->request->get('identifiant');
@@ -588,7 +592,9 @@ class MatchController extends ApiController
 
     public function listLotofootAction(Request $request)
     {
-
+        $session = new Session();
+        
+        $session->set("current_page","Loto_foot");
         $lotoFoot7 = $this->getAllEntity(self::ENTITY_LOTOFOOT7);
         $lotoFoot15 = $this->getAllEntity(self::ENTITY_LOTOFOOT15);
         $droitAdmin = $this->get('roles.manager')->getDroitAdmin('Matchs');

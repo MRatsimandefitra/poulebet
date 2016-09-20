@@ -9,6 +9,7 @@ use Api\DBBundle\Entity\TemplateMail;
 use Api\DBBundle\Entity\Utilisateur;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class EmailController extends ApiController
 {
@@ -26,6 +27,7 @@ class EmailController extends ApiController
 
     public function indexAction(Request $request)
     {
+        
         $utilisateur = $this->get('doctrine.orm.entity_manager')->getRepository('ApiDBBundle:Utilisateur')->findOneBy(array('email' => $request->request->get('email')));
         if (!$utilisateur) {
             $utilisateur = new Utilisateur();
@@ -94,6 +96,8 @@ class EmailController extends ApiController
 
     public function parametersAction(Request $request)
     {
+        $session = new Session();
+        $session->set("current_page","Email");
         $droit = $this->getRepo(self::ENTITY_DROIT)->findOneByFonctionnalite('Gestion Email');
         $parameters = $this->getAllEntity(self::ENTITY_PARAMETRE_EMAIL);
         $currentDroitAdmin = $this->getRepo(self::ENTITY_DROIT_ADMIN)->findOneBy(array('admin' => $this->getUser(), 'droit' => $droit ));

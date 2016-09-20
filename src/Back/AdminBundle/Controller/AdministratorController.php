@@ -7,6 +7,7 @@ use Api\DBBundle\Entity\Admin;
 use Api\DBBundle\Entity\DroitAdmin;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class AdministratorController extends ApiController
 {
@@ -19,6 +20,8 @@ class AdministratorController extends ApiController
 
     public function indexAction()
     {
+       $session = new Session();
+       $session->set("current_page","Administrator");
       //  $droit = $this->getRepo(self::ENTITY_DROIT)->findOneByFonctionnalite('Administration');
         /*$currentDroitAdmin = $this->getRepo(self::ENTITY_DROIT_ADMIN)->findBy(array('admin' => $this->getUser(), 'droit' => $droit ));*/
         $currentDroitAdmin = $this->getRepo(self::ENTITY_DROIT_ADMIN)->findDroitAdminByUserConnected($this->getUser());

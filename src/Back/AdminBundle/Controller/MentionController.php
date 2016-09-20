@@ -7,6 +7,7 @@ use Api\DBBundle\Entity\ApiKey;
 use Api\DBBundle\Entity\Mention;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class MentionController extends ApiController
 {
@@ -17,6 +18,9 @@ class MentionController extends ApiController
 
     public function addMentionAction(Request $request){
 
+        $session = new Session();
+        
+        $session->set("current_page","Mention");
         $mention = $this->getObjectRepoFrom(self::ENTITY_MENTION, array());
         if(!$mention){
             $mention = new Mention();

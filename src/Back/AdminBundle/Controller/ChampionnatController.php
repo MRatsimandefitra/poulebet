@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Intl\Intl;
 use Symfony\Component\Intl\Locale;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class ChampionnatController extends ApiController
 {
@@ -16,7 +17,9 @@ class ChampionnatController extends ApiController
 
 
     public function listChampionatAction(Request $request){
-
+        $session = new Session();
+        
+        $session->set("current_page","Championnat");
         $championat = $this->getAllEntity(self::ENTITY_CHAMPIONAT);
         $droitAdmin = $this->getRolesAdmin()->getDroitAdmin('Matchs');
         return $this->render('BackAdminBundle:Championnat:list_championat.html.twig', array(
@@ -33,8 +36,8 @@ class ChampionnatController extends ApiController
 
         $form = $this->formPost(self::FORM_CHAMPIONAT, $championat);
         $form->handleRequest($request);
-        $countries = Intl::getRegionBundle()->getCountryName(strtoupper($form['pays']->getData()));
-        $championat->setPays($countries);
+        /*$countries = $request->get("pays");
+        $championat->setPays($countries);*/
         if($form->isValid()){
             $this->insert($championat, array('success' => 'success' , 'error' => 'error'));
             return $this->redirectToRoute('list_championat');
