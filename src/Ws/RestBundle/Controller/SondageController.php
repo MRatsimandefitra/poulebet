@@ -241,8 +241,8 @@ class SondageController extends ApiController
             $result['message'] = "Sucess";
         } else {
             $result['code_error'] = 2;
-            $result['success'] = false;
-            $result['error'] = true;
+            $result['success'] = true;
+            $result['error'] = false;
             $result['message'] = "Aucun resultat trouvé";
         }
 
