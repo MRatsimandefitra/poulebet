@@ -36,8 +36,8 @@ class ChampionnatController extends ApiController
 
         $form = $this->formPost(self::FORM_CHAMPIONAT, $championat);
         $form->handleRequest($request);
-        $countries = Intl::getRegionBundle()->getCountryName(strtoupper($form['pays']->getData()));
-        $championat->setPays($countries);
+        /*$countries = $request->get("pays");
+        $championat->setPays($countries);*/
         if($form->isValid()){
             $this->insert($championat, array('success' => 'success' , 'error' => 'error'));
             return $this->redirectToRoute('list_championat');
