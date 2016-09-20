@@ -6,6 +6,7 @@ use Api\CommonBundle\Controller\ApiController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class PronosticController extends ApiController
 {
@@ -17,6 +18,9 @@ class PronosticController extends ApiController
 
     public function indexAction(Request $request)
     {
+        $session = new Session();
+        
+        $session->set("current_page","Pronostic");
         //$matchs = $this->getAllEntity(self::ENTITY_MATCH);
 
         $championat = $this->getAllEntity(self::ENTITY_CHAMPIONAT);

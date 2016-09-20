@@ -11,6 +11,7 @@ namespace Back\AdminBundle\Controller;
 use Api\CommonBundle\Controller\ApiController;
 use Symfony\Component\HttpFoundation\Request;
 use Api\DBBundle\Entity\Notification;
+use Symfony\Component\HttpFoundation\Session\Session;
 /**
  * Description of PushNotificationController
  *
@@ -25,6 +26,10 @@ class NotificationController extends ApiController {
     
     public function notifyAction(Request $request){
         // utilistateurs
+        $session = new Session();
+        
+        $session->set("current_page","Notification");
+        
         $tri = $request->get('tri');
         $champ = $request->get('champ');
         $users_id = $request->get('users');

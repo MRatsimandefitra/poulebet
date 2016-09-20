@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Api\DBBundle\Entity\MvtCredit;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class UtilisateurController extends ApiController
 {
@@ -25,6 +26,9 @@ class UtilisateurController extends ApiController
     
     public function indexAction(Request $request)
     {
+        $session = new Session();
+        
+        $session->set("current_page","Utilisateur");
         //var_dump($request->request); die;
         $tri = $request->get('tri');
         $nbpage = 10; 

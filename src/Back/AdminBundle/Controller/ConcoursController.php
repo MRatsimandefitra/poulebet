@@ -15,7 +15,7 @@ use Api\DBBundle\Entity\Concours;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints\DateTime;
-
+use Symfony\Component\HttpFoundation\Session\Session;
 /**
  * Description of ConcoursController
  *
@@ -32,6 +32,10 @@ class ConcoursController extends ApiController {
     const FORM_CONCOURS = 'Api\DBBundle\Form\ConcoursType';
     
     public function indexAction(Request $request){
+        $session = new Session();
+        
+        $session->set("current_page","Championnat");
+        
         $concours = $this->getAllEntity(self::ENTITY_CONCOURS);
         $droitAdmin = $this->getDroitAdmin('Lots concours');
         $drt = null;

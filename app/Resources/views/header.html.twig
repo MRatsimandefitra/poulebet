@@ -9,47 +9,47 @@
                         <a href="#">{{ 'Accueil'|trans }}</a>
                     </li>#}
                     
-                    <li>
+                    <li {% if app.session.get('current_page')== 'Administrator'%} class="current-menu" {% endif %}>
                         <img src="{{ asset('images/admin.png') }}" alt=""/>
                         <a href="{{ path('index_administrator') }}">{{ 'Administrateurs'|trans }}</a>
                     </li>
-                    <li>
+                    <li {% if app.session.get('current_page')== 'Utilisateur'%} class="current-menu" {% endif %}>
                         <img src="{{ asset('images/user.png') }}" alt=""/>
                         <a href="{{ path('index_admin_utilisateur') }}">{{ 'Utilisateurs'|trans }}</a>
                     </li>
-                    <li>
+                    <li {% if app.session.get('current_page')== 'Email'%} class="current-menu" {% endif %}>
                         <img src="{{ asset('images/mail.png') }}" alt=""/>
                         <a href="{{ path('index_admin_parameter') }}">{{ "Gestion Email"|trans }}</a>
                     </li>
-                    <li>
+                    <li {% if app.session.get('current_page')== 'Mention'%} class="current-menu" {% endif %}>
                         <img src="{{ asset('images/param.png') }}" alt=""/>
                         <a href="{{ path('add_admin_mention') }}">{{ 'Parametres'|trans }}</a>
                     </li>
-                    <li>
+                    <li {% if app.session.get('current_page')== 'Notification'%} class="current-menu" {% endif %}>
                         <img src="{{ asset('images/push.png') }}" alt=""/>
                         <a href="{{ path('add_notification') }}">{{ 'Notifications'|trans }}</a>
                     </li>
-                    <li>
+                    <li {% if app.session.get('current_page')== 'Championnat'%} class="current-menu" {% endif %}>
                         <img src="{{ asset('images/championnat.png') }}" alt=""/>
                         <a href="{{ path('list_championat') }}">{{ "Championnats"|trans }}</a>
                     </li>
-                    <li>
+                    <li {% if app.session.get('current_page')== 'Matchs'%} class="current-menu" {% endif %}>
                         <img src="{{ asset('images/match.png') }}" alt=""/>
                         <a href="{{ path('index_admin_match') }}">{{ 'Matchs'|trans }}</a>
                     </li>
-                    <li>
+                    <li {% if app.session.get('current_page')== 'Pronostic'%} class="current-menu" {% endif %}>
                         <img src="{{ asset('images/master-prono.png') }}" alt=""/>
                         <a href="{{ path('index_admin_pronostic') }}">{{ 'Master prono'|trans }}</a>
                     </li>
-                    <li>
+                    <li {% if app.session.get('current_page')== 'Loto_foot'%} class="current-menu" {% endif %}>
                         <img src="{{ asset('images/loto.png') }}" alt=""/>
                         <a href="{{ path('list_loto_foot') }}">{{ 'Loto Foot'|trans }}</a>
                     </li>
-                    <li>
+                    <li {% if app.session.get('current_page')== 'Concours'%} class="current-menu" {% endif %}>
                         <img src="{{ asset('images/councours.png') }}" alt=""/>
                         <a href="{{ path('list_concours')}}">{{ 'Concours'|trans }}</a>
                     </li>
-                    <li>
+                    <li {% if app.session.get('current_page')== 'Lots'%} class="current-menu" {% endif %}>
                         <img src="{{ asset('images/lot.png') }}" alt=""/>
                         <a href="{{ path('index_lots')}}">{{ 'Lots à gagner'|trans }}</a>
                     </li>
@@ -59,7 +59,7 @@
                         <a href="#">{{ "Statistiques"|trans }}</a>
                     </li>#}
 
-                    <li>
+                    <li {% if app.session.get('current_page')== 'Classement'%} class="current-menu" {% endif %}>
                         <img src="{{ asset('images/classement.png') }}" alt=""/>
                         <a href="#">{{ 'Classement'|trans }}</a>
                     </li>

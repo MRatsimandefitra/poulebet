@@ -6,6 +6,7 @@ use Api\CommonBundle\Controller\ApiController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class TeamsController extends ApiController
 {
@@ -13,6 +14,9 @@ class TeamsController extends ApiController
 
     public function listTeamsAction(Request $request)
     {
+        $session = new Session();
+        
+        $session->set("current_page","Teams");
         if($request->get('logo') == 0){
             $data = $this->getAllEntity(self::ENTITY_TEAMS);
             foreach($data as $k => $v){

@@ -20,6 +20,7 @@ use Api\DBBundle\Entity\DroitAdmin;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 
 class LotsController extends ApiController
@@ -34,6 +35,9 @@ class LotsController extends ApiController
 
     public function indexAction(Request $request)
     {
+        $session = new Session();
+        
+        $session->set("current_page","Lots");
         $lots = $this->getAllEntity(self::ENTITY_LOTS);
         $currentDroitAdmin = $this->getDroitAdmin('Lots concours');
         return $this->render('BackAdminBundle:Lots:index.html.twig', array(
