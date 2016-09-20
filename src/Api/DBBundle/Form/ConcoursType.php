@@ -36,19 +36,20 @@ class ConcoursType extends AbstractType
             ->add('nomConcours', TextType::class, array(
 
             ))
-            ->add('dateDebut', TextType::class, array(
+            ->add('dateDebut', DateType::class, array(
                 'label' => 'Date début',
                 'attr' => array(
                     'class' => 'datepic'
                 ),
-                'data' => $dateDebut
+                'widget' => "single_text",
             ))
-            ->add('dateFinale', TextType::class, array(
+            ->add('dateFinale', DateType::class, array(
                 'label' => 'Date Fin',
                 'attr' => array(
                     'class' => 'datepic'
                 ),
-                'data' => $dateFinale
+                'widget' => "single_text",
+                
             ))
         ;
     }
