@@ -17,7 +17,7 @@ class ConcoursRepository extends \Doctrine\ORM\EntityRepository
             $dql .= " ORDER BY co.".$column. " ".$order;
         }
         if(!$column && !$order){
-            $dql .= " ORDER BY co.dateDebut ASC";
+            $dql .= " ORDER BY co.dateDebut DESC";
         }
         $query = $this->getEntityManager()->createQuery($dql);
         return $query->getResult();
