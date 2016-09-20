@@ -314,5 +314,5 @@ table tr.selected table {
     color: #555555;
 }
 .current-menu{
-    border-bottom: 2px solid blue;
+    border-bottom: 2px solid #0066FF;
 }
