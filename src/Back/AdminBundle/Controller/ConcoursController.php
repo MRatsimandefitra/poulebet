@@ -32,7 +32,18 @@ class ConcoursController extends ApiController {
     const FORM_CONCOURS = 'Api\DBBundle\Form\ConcoursType';
     
     public function indexAction(Request $request){
-        $concours = $this->getAllEntity(self::ENTITY_CONCOURS);
+        if($request->get('column')){
+            $column = $request->get('column');
+        }else{
+            $column = null;
+        }
+        if($request->get('order')){
+            $order = $request->get('order');
+        }else{
+            $order = null;
+        }
+        $concours = $this->getRepo(self::ENTITY_CONCOURS)->getAllConcours($column, $order);
+
         $droitAdmin = $this->getDroitAdmin('Lots concours');
         $drt = null;
         if ($droitAdmin){

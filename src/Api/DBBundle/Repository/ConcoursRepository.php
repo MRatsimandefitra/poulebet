@@ -10,4 +10,16 @@ namespace Api\DBBundle\Repository;
  */
 class ConcoursRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getAllConcours($column = null, $order = null){
+        $dql = "SELECT co from ApiDBBundle:Concours co ";
+        $order = strtoupper($order);
+        if($column && $order && is_string($column) && is_string($order) && ($order == 'ASC' or $order == 'DESC')){
+            $dql .= " ORDER BY co.".$column. " ".$order;
+        }
+        if(!$column && !$order){
+            $dql .= " ORDER BY co.dateDebut ASC";
+        }
+        $query = $this->getEntityManager()->createQuery($dql);
+        return $query->getResult();
+    }
 }
