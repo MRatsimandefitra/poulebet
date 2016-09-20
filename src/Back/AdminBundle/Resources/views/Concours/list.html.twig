@@ -9,19 +9,77 @@
     </div>#}
     <div class="col-lg-12">
     <div class="col-lg-12">
-        {% if droitAdmin.lecture is defined and droitAdmin.lecture %}
-        <span class="glyphicon glyphicon-plus green" aria-hidden="true"></span>
-        {% endif %}
+
         {% if droitAdmin.ajout is defined and droitAdmin.ajout %}
+            <div class="link">
+                {% if droitAdmin.lecture is defined and droitAdmin.lecture %}
+                    <span class="glyphicon glyphicon-plus green" aria-hidden="true"></span>
+                {% endif %}
             <a href="{{ path('add_concours') }}">{{ 'Ajout concours'|trans }}</a>&nbsp;  &nbsp;
+            </div>
         {% endif %}
         <div class="list">
             <table>
                 <tr>
-                    <td>{{ 'Numero'|trans }}</td>
-                    <td>{{ 'Nom du concours'|trans }}</td>
-                    <td>{{ 'Date Debut'|trans }}</td>
-                    <td>{{ 'Date Fin'|trans }}</td>
+                    <td>{{ 'Numero'|trans }}
+                        <div class="tri">
+                            {#{% set searchValueTriDateAsc= searchValue|merge({'column': 'm.dateMatch', 'tri': 'asc'}) %}
+                            {% set searchValueTriDateDesc= searchValue|merge({'column': 'm.dateMatch', 'tri': 'asc'}) %}#}
+
+                            <a href="{{ path('list_concours', {'column': 'numero', 'order': 'asc'} ) }}">
+                                <img class="tri" id="up" src="{{ asset('images/up.png') }}" width="16" height="16"
+                                     alt="">
+                            </a>
+                            <a href="{{ path('list_concours', {'column': 'numero', 'order': 'desc'}) }}">
+                                <img class="tri" id="up" src="{{ asset('images/down.png') }}" width="16" height="16"
+                                     alt="">
+                            </a>
+                        </div>
+                    </td>
+                    <td>{{ 'Nom du concours'|trans }} <div class="tri">
+                            {#{% set searchValueTriDateAsc= searchValue|merge({'column': 'm.dateMatch', 'tri': 'asc'}) %}
+                            {% set searchValueTriDateDesc= searchValue|merge({'column': 'm.dateMatch', 'tri': 'asc'}) %}#}
+
+                            <a href="{{ path('list_concours', {'column': 'nomConcours', 'order': 'asc'} ) }}">
+                                <img class="tri" id="up" src="{{ asset('images/up.png') }}" width="16" height="16"
+                                     alt="">
+                            </a>
+                            <a href="{{ path('list_concours', {'column': 'nomConcours', 'order': 'desc'}) }}">
+                                <img class="tri" id="up" src="{{ asset('images/down.png') }}" width="16" height="16"
+                                     alt="">
+                            </a>
+                        </div>
+                    </td>
+                    <td>{{ 'Date Debut'|trans }}
+                        <div class="tri">
+                            {#{% set searchValueTriDateAsc= searchValue|merge({'column': 'm.dateMatch', 'tri': 'asc'}) %}
+                            {% set searchValueTriDateDesc= searchValue|merge({'column': 'm.dateMatch', 'tri': 'asc'}) %}#}
+
+                            <a href="{{ path('list_concours', {'column': 'dateDebut', 'order': 'asc'})  }}">
+                                <img class="tri" id="up" src="{{ asset('images/up.png') }}" width="16" height="16"
+                                     alt="">
+                            </a>
+                            <a href="{{ path('list_concours', {'column': 'dateDebut', 'order': 'desc'}) }}">
+                                <img class="tri" id="up" src="{{ asset('images/down.png') }}" width="16" height="16"
+                                     alt="">
+                            </a>
+                        </div>
+                    </td>
+                    <td>{{ 'Date Fin'|trans }}
+                        <div class="tri">
+                            {#{% set searchValueTriDateAsc= searchValue|merge({'column': 'm.dateMatch', 'tri': 'asc'}) %}
+                            {% set searchValueTriDateDesc= searchValue|merge({'column': 'm.dateMatch', 'tri': 'asc'}) %}#}
+
+                            <a href="{{ path('list_concours', {'column': 'dateFinale', 'order': 'asc'} ) }}">
+                                <img class="tri" id="up" src="{{ asset('images/up.png') }}" width="16" height="16"
+                                     alt="">
+                            </a>
+                            <a href="{{ path('list_concours', {'column': 'dateFinale', 'order': 'desc'}) }}">
+                                <img class="tri" id="up" src="{{ asset('images/down.png') }}" width="16" height="16"
+                                     alt="">
+                            </a>
+                        </div>
+                    </td>
                     <td>{{ 'Actions'|trans }}</td>
                 </tr>
                 {% for row in concours %}

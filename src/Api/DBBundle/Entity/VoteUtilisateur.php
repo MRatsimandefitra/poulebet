@@ -13,8 +13,8 @@ use Doctrine\ORM\Mapping as ORM;
 class VoteUtilisateur
 {
     /**
-     * @ORM\ManyToOne(targetEntity="Matchs", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\ManyToOne(targetEntity="Matchs", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $matchs;
 
