@@ -35,7 +35,7 @@ class ConcoursController extends ApiController {
 
         $session = new Session();
         
-        $session->set("current_page","Championnat");
+        $session->set("current_page","Concours");
         
         $concours = $this->getAllEntity(self::ENTITY_CONCOURS);
 
