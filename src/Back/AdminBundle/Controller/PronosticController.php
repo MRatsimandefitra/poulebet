@@ -106,6 +106,8 @@ class PronosticController extends ApiController
 
 
     public function indexPronosticAction(Request $request){
+        $session = new Session();
+        $session->set("current_page","Pronostic");
         if($request->request->get('identifiant')){
             $identifiant = $request->request->get('identifiant');
             $cote1 = 'cote1_'.$identifiant;
