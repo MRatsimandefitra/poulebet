@@ -1,0 +1,56 @@
+{% extends 'BackAdminBundle::layout.html.twig' %}
+{% block title %} {{ parent() }} {% endblock %}
+{% block ariane %} {{ parent() }} {% endblock %}
+
+{% block page %}
+
+    {#<div class="box-header-response">
+        {{ 'Liste des concours'|trans }}
+    </div>#}
+    <div class="col-lg-12">
+        <div class="col-lg-12">
+            <div class="list">
+                <table>
+                    <thead>
+                        <td>{{ 'Date'|trans }}
+
+                        </td>
+                        <td>{{ 'Message'|trans }}</td> 
+
+                        <td>{{ 'Administrateur'|trans }}
+
+                        </td>
+                        <td>{{ 'Nb utilisateur'|trans }}
+
+                        </td>
+                        <td>{{ 'Actions'|trans }}</td>
+                    </thead>
+                    {% for row in pagination %}
+                        <tr>
+                            <td>
+                                {{ row.createdAt | date('d-m-Y h:m:s') }}
+                            </td>
+                            <td>
+                                {{ row.message }}
+                            </td>
+                            <td>
+                                {{ row.admin }}
+                            </td>
+                            <td>
+                                {{ row.utilisateurs | length }}
+                            </td>
+                            <td>
+                                    <a href="{{ path('list_utilistateur_notification', {'id': row.id }) }}">  {{ 'Liste des utilisateurs' }}</a> |
+                                
+                                {% if droitAdmin.suppression is defined and droitAdmin.suppression  %}
+                                    <a onclick="return supprimer('Etes vous sur de vouloir supprimer ?');" href="{{ path('remove_notification', {'id': row.id}) }}"><span class="glyphicon glyphicon-remove red" aria-hidden="true"></span> Supprimer  </a> 
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                {{ knp_pagination_render(pagination) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
