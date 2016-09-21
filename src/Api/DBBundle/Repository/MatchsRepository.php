@@ -87,9 +87,10 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
             $dql = "SELECT m from ApiDBBundle:Matchs m
                 LEFT JOIN m.championat ch
                 WHERE m.dateMatch BETWEEN CURRENT_DATE() AND DATE_ADD(CURRENT_DATE(), 7, 'day')
-                AND (m.cot1Pronostic is not null or m.cote2Pronostic is not null or m.coteNPronistic is not null)
+                AND (m.masterProno1 is not null or m.masterProno2 is not null or m.masterPronoN is not null)
                 AND ch.nomChampionat LIKE :championat
                 ORDER BY m.dateMatch ASC";
+            //AND (m.masterProno1 is not null or m.masterProno2 is not null or m.masterPronoN is not null)
         }else{
 
             $dql = "SELECT m from ApiDBBundle:Matchs m
