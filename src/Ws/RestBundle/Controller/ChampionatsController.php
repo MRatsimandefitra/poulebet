@@ -98,8 +98,8 @@ class ChampionatsController extends ApiController
             $result['message'] = 'success';
         } else {
             $result['code_error'] = 4;
-            $result['success'] = false;
-            $result['error'] = true;
+            $result['success'] = true;
+            $result['error'] = false;
             $result['message'] = 'Aucun resultat n\'a été trouvé';
         }
         return new JsonResponse($result);

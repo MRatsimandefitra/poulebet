@@ -16,34 +16,45 @@
                     <td>{{ 'Nom championnat (ID)' }}</td>
                     <td>
                         {{ form_widget(form.nomChampionat) }}
+                        {{ form_errors(form.nomChampionat) }}
+
                     </td>
                 </tr>
                 <tr>
                     <td>{{ 'Nom complet du championnat' }}</td>
                     <td>
                         {{ form_widget(form.fullNameChampionat) }}
+                        {{ form_errors(form.fullNameChampionat) }}
 
                     </td>
                 </tr>
                 <tr>
+                    <td>{{ 'Rang' }}</td>
+                    <td>
+                        {{ form_widget(form.rang) }}
+                        {{ form_errors(form.rang) }}
+                    </td>
+                </tr>
+              {#  <tr>
                     <td>{{ 'Type de championnat' }}</td>
                     <td>
                         {{ form_widget(form.typeChampionat) }}
 
                     </td>
-                </tr>
-                <tr>
+                </tr>#}
+               {# <tr>
                     <td>{{ 'Saison championnat' }}</td>
                     <td>
                         {{ form_widget(form.season) }}
 
                     </td>
-                </tr>
+                </tr>#}
                 <tr>
 
                     <td>{{ 'Date de début valide du championnat' }}</td>
                     <td>
                         {{ form_widget(form.dateDebutChampionat) }}
+                        {{ form_errors(form.dateDebutChampionat) }}
 
                     </td>
                 </tr>
@@ -51,6 +62,8 @@
                     <td>{{ 'Date fin valide du championnat' }}</td>
                     <td>
                         {{ form_widget(form.dateFinaleChampionat)  }}
+                        {{ form_errors(form.dateFinaleChampionat)  }}
+
 
                     </td>
                 </tr>
@@ -58,6 +71,7 @@
                     <td>{{ 'Pays' }}</td>
                     <td>
                         {{ form_widget(form.pays) }}
+                        {{ form_errors(form.pays) }}
 
                     </td>
                 </tr>

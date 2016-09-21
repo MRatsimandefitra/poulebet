@@ -76,7 +76,12 @@ class Championat
      * @ORM\Column(name="pays", type="string", length=255, nullable=true)
      */
     private $pays;
-    
+    /**
+     * @var Integer
+     *
+     * @ORM\Column(name="rang", type="integer", nullable=true)
+     */
+    private $rang;
     /**
      * Get id
      *
@@ -329,5 +334,29 @@ class Championat
     public function getPays()
     {
         return $this->pays;
+    }
+
+    /**
+     * Set rang
+     *
+     * @param integer $rang
+     *
+     * @return Championat
+     */
+    public function setRang($rang)
+    {
+        $this->rang = $rang;
+
+        return $this;
+    }
+
+    /**
+     * Get rang
+     *
+     * @return integer
+     */
+    public function getRang()
+    {
+        return $this->rang;
     }
 }

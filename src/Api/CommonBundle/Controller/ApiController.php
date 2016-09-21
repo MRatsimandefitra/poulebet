@@ -87,9 +87,18 @@ class ApiController extends Controller
      * @param $entity
      * @return \Symfony\Component\Form\Form
      */
-    public function formPost($form, $entity)
+    public function formPost($form, $entity, $options = array())
     {
-        return $this->createForm($form, $entity, array('method' => 'POST'));
+        if(empty($options)){
+
+            return $this->createForm($form, $entity, array('method' => 'POST'));
+        }
+        if($options){
+
+            $options['method'] = 'POST';
+            return $this->createForm($form, $entity,$options);
+        }
+
     }
 
     /**

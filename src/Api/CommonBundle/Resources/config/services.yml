@@ -22,3 +22,6 @@ services:
     items.manager:
         class: Api\CommonBundle\Utils\ItemsManager
         arguments: ["@service_container"]
+    items.manager:
+        class: Api\DBBundle\Form\ChampionatType
+        arguments: ["@service_container"]

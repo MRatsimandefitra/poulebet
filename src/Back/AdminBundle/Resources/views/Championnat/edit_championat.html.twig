@@ -25,6 +25,13 @@
                         </td>
                     </tr>
                     <tr>
+                        <td>{{ 'Rang' }}</td>
+                        <td>
+                            {{ form_widget(form.rang) }}
+                            {{ form_errors(form.rang) }}
+                        </td>
+                    </tr>
+                 {#   <tr>
                         <td>{{ 'Type de championnat' }}</td>
                         <td>
                             {{ form_widget(form.typeChampionat) }}
@@ -37,7 +44,7 @@
                             {{ form_widget(form.season) }}
 
                         </td>
-                    </tr>
+                    </tr>#}
                     <tr>
 
                         <td>{{ 'Date de début valide du championnat' }}</td>
