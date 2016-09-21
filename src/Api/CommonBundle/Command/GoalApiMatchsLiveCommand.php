@@ -119,8 +119,8 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand {
 
                                 $matchs->setChampionat($vChampionat);
                                 if(array_key_exists('current-state', $vItems)){
-                                    $matchs->setPeriod($vItems['current-state']['period']);
-                                    $matchs->setMinute($vItems['current-state']['minute']);
+                                    $matchs->setPeriod($vItems['current_state']['period']);
+                                    $matchs->setMinute($vItems['current_state']['minute']);
                                 }
 
                                 $nbLocalME = $em->getRepository(self::ENTITY_MATCH_EVENT)->findByMatchs($matchs);
