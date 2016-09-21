@@ -17,6 +17,21 @@ class ChampionnatController extends ApiController
 
 
     public function listChampionatAction(Request $request){
+        if($request->getContent()){
+            $content = $request->getContent();
+            $data = str_replace('championat_','',$content);
+            $data = str_replace('on','',$data);
+            //$data = str_replace('&','',$data);
+            $data = str_replace('=','',$data);
+            $data = explode('&', $data);
+            foreach($data as $k => $items){
+                $itemsChampionat = $this->getRepo(self::ENTITY_CHAMPIONAT)->find($items);
+                $itemsChampionat->setIsEnable(true);
+                $this->getEm()->flush();
+            }
+        }
+
+
         $session = new Session();
         
         $session->set("current_page","Championnat");
@@ -87,5 +102,12 @@ class ChampionnatController extends ApiController
     private function getRolesAdmin(){
         $wsDA = $this->get('roles.manager');
         return $wsDA;
+    }
+
+    public function disableChampionatAction($id){
+        $entity = $this->getRepoFormId(self::ENTITY_CHAMPIONAT, $id);
+        $entity->setIsEnable(false);
+        $this->getEm()->flush();
+        return $this->redirectToRoute('list_championat');
     }
 }

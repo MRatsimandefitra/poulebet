@@ -83,6 +83,12 @@ class Championat
      */
     private $rang;
     /**
+     * @var Boolean
+     *
+     * @ORM\Column(name="isEnable", type="boolean", nullable=true)
+     */
+    private $isEnable;
+    /**
      * Get id
      *
      * @return int
@@ -358,5 +364,29 @@ class Championat
     public function getRang()
     {
         return $this->rang;
+    }
+
+    /**
+     * Set isEnable
+     *
+     * @param boolean $isEnable
+     *
+     * @return Championat
+     */
+    public function setIsEnable($isEnable)
+    {
+        $this->isEnable = $isEnable;
+
+        return $this;
+    }
+
+    /**
+     * Get isEnable
+     *
+     * @return boolean
+     */
+    public function getIsEnable()
+    {
+        return $this->isEnable;
     }
 }

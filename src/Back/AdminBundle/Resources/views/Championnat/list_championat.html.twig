@@ -18,78 +18,99 @@
 
     <div class="col-lg-12">
         <div class="col-lg-12">
-        <div class="list">
-           <table>
-               <tr>
-                   <td>ID</td>
-                   <td>{{ 'Code Championnat' }}</td>
-                   <td>{{ 'Championnat ' }}</td>
-                   {#<td>{{ 'Type de championnat' }}</td>
-                   <td>{{ "Saison" }}</td>#}
-                   <td>{{ "Date début" }}</td>
-                   <td>{{ "Date Finale " }}</td>
-                   <td>{{ "Pays" }}</td>
-                   {#<td>{{ "Status" }}</td>#}
-                   <td>{{ "Actions" }}</td>
-               </tr>
-               {% for row in entities %}
-                <tr>
-                    <td>{{ row.id }}</td>
-                    <td>
-                        {{ row.nomChampionat }}
-                    </td>
-                    <td>
-                        {{ row.fullNameChampionat }}
-                    </td>
-                  {#  <td>
-                        {{ row.typeChampionat }}
-                    </td>
-                    <td>
-                        {% if row.season is defined and row.season %}
-                            {{ row.season }}
-                        {% endif %}
-                    </td>#}
-                   
-                    <td>
-                        {{ row.dateDebutChampionat|date('d-m-Y') }}
-                    </td>
-                    <td>
-                        {{ row.dateFinaleChampionat|date('d-m-Y') }}
-                    </td>
-                    <td>
-                       {# {% set today = "now"|date('Y-m-d') %}
-                        {% set dateDebutChampionat = row.dateDebutChampionat|date('Y-m-d') %}
-                        {% set dateFinaleChampionat = row.dateFinaleChampionat|date('Y-m-d') %}
+            <div class="list">
+                <form action="" method="post">
+                    <table>
+                        <tr>
+                            <td>{{ 'Active' }}</td>
+                            <td>{{ 'Code Championnat' }}</td>
+                            <td>{{ 'Championnat ' }}</td>
+                            {#<td>{{ 'Type de championnat' }}</td>
+                            <td>{{ "Saison" }}</td>#}
+                            <td>{{ "Date début" }}</td>
+                            <td>{{ "Date Finale " }}</td>
+                            <td>{{ "Pays" }}</td>
+                            {#<td>{{ "Status" }}</td>#}
+                            <td>{{ "Actions" }}</td>
+                        </tr>
+                        {% for row in entities %}
+                            {% if row.isEnable is defined and row.isEnable == true %}
+                                <tr class="selected">
+                            {% else %}
+                                <tr>
+                            {% endif %}
+                            <td>{#{{ row.id }}#}
+                                {% if row.isEnable is defined and row.isEnable == true %}
+                                    {#<input type="checkbox" name="championat_{{ row.id }}" checked="true"/>#}
+                                    <a href="{{ path('disable_championat', {'id': row.id }) }}">
+                                        <span class="glyphicon glyphicon-remove red" aria-hidden="true"></span>
+                                    </a>
+                                {% else %}
+                                    <input type="checkbox" name="championat_{{ row.id }}"/>
 
-                        {% if dateDebutChampionat <= today and dateFinaleChampionat >= today %}
-                            {% endif %}#}
-                        {% if row.typeChampionat == 'National' %}
-                            {{ row.pays }}
+                                {% endif %}
 
-                        {% endif %}
-                    </td>
-                  {#  <td>
+                            </td>
+                            <td>
+                                {{ row.nomChampionat }}
+                            </td>
+                            <td>
+                                {{ row.fullNameChampionat }}
+                            </td>
+                            {#  <td>
+                                  {{ row.typeChampionat }}
+                              </td>
+                              <td>
+                                  {% if row.season is defined and row.season %}
+                                      {{ row.season }}
+                                  {% endif %}
+                              </td>#}
 
-                    </td>#}
-                    <td>
-                        {% if droitAdmin.modification is defined and droitAdmin.modification %}
-                            <a href="{{ path('edit_championat', {'id': row.id }) }}">
-                                {#<span class="glyphicon glyphicon-pencil orange" aria-hidden="true"></span> #}Modifier
-                            </a> |
-                        {% endif %}
-                        {% if droitAdmin.suppression is defined and droitAdmin.suppression %}
-                            <a  class="suppression" href="{{ path('remove_championat', {'id': row.id }) }}">
-                                {#<span id="s" class="glyphicon glyphicon-remove red" aria-hidden="true"></span> #}Supprimer
+                            <td>
+                                {{ row.dateDebutChampionat|date('d-m-Y') }}
+                            </td>
+                            <td>
+                                {{ row.dateFinaleChampionat|date('d-m-Y') }}
+                            </td>
+                            <td>
+                                {# {% set today = "now"|date('Y-m-d') %}
+                                 {% set dateDebutChampionat = row.dateDebutChampionat|date('Y-m-d') %}
+                                 {% set dateFinaleChampionat = row.dateFinaleChampionat|date('Y-m-d') %}
 
-                            </a>
-                        {% endif %}
-                    </td>
+                                 {% if dateDebutChampionat <= today and dateFinaleChampionat >= today %}
+                                     {% endif %}#}
+                                {% if row.typeChampionat == 'National' %}
+                                    {{ row.pays }}
 
-                </tr>
+                                {% endif %}
+                            </td>
+                            {#  <td>
 
-                {% endfor %}
-           </table>
-        </div>
+                              </td>#}
+                            <td>
+                                {% if droitAdmin.modification is defined and droitAdmin.modification %}
+                                    <a href="{{ path('edit_championat', {'id': row.id }) }}">
+                                        {#<span class="glyphicon glyphicon-pencil orange" aria-hidden="true"></span> #}
+                                        Modifier
+                                    </a> |
+                                {% endif %}
+                                {% if droitAdmin.suppression is defined and droitAdmin.suppression %}
+                                    <a class="suppression" href="{{ path('remove_championat', {'id': row.id }) }}">
+                                        {#<span id="s" class="glyphicon glyphicon-remove red" aria-hidden="true"></span> #}
+                                        Supprimer
+
+                                    </a>
+                                {% endif %}
+                            </td>
+
+                            </tr>
+
+                        {% endfor %}
+                    </table>
+                    <br/>
+                    <input type="submit" class="btn btn-primary" value="{{ 'Ajouter' }}"/>
+                </form>
+            </div>
         </div>
     </div>
 {% endblock %}
