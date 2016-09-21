@@ -116,7 +116,9 @@ class SondageController extends ApiController
                 . "JOIN m.concours co "
                 . "JOIN m.championat ch "
                 . "WHERE co.dateDebut <= CURRENT_DATE() "
-                . "AND co.dateFinale >= CURRENT_DATE() ORDER BY m.dateMatch, m.id ";
+                . "AND co.dateFinale >= CURRENT_DATE() "
+                . " AND (m.cot1Pronostic is not null or m.cote2Pronostic is not null or m.coteNPronistic is not null or m.masterProno1 is not null or m.masterPronoN is not null or m.masterProno2 is not null)"
+                . " ORDER BY m.dateMatch, m.id ";
         $queryMatch = $this->get('doctrine.orm.entity_manager')->createQuery($dqlMatch);
         $data = $queryMatch->getResult();
 
@@ -138,7 +140,7 @@ class SondageController extends ApiController
                     . "JOIN m.championat ch "
                     . "WHERE co.dateDebut <= CURRENT_DATE() "
                     . "AND co.dateFinale >= CURRENT_DATE() "
-                    . "GROUP BY ch.nomChampionat ";
+                    . "GROUP BY ch.nomChampionat ORDER BY m.dateMatch ASC";
             $queryChampionat = $this->get('doctrine.orm.entity_manager')->createQuery($dqlChampionat);
             $dataChampionat = $queryChampionat->getResult();
             if ($dataChampionat) {
