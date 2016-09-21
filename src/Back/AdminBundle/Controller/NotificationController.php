@@ -22,7 +22,10 @@ class NotificationController extends ApiController {
     
     const ENTITY_DEVICE = 'ApiDBBundle:Device';
     const ENTITY_UTILISATEUR = 'ApiDBBundle:Utilisateur';
+    const ENTITY_NOTIFICATION = 'ApiDBBundle:Notification';
     const FORM_NOTIFICATION = 'Api\DBBundle\Form\NotificationType';
+    const ENTITY_DROIT_ADMIN = 'ApiDBBundle:DroitAdmin';
+    const ENTITY_DROIT = 'ApiDBBundle:Droit';
     
     public function notifyAction(Request $request){
         // utilistateurs
@@ -64,6 +67,8 @@ class NotificationController extends ApiController {
         //var_dump($notification->getUtilisateurs());
         
         if ($form->isValid()) {
+            $admin = $this->getUser();
+            $notification->setAdmin($admin);
             $all=false;
             if($all_user){
                 $all= true;
@@ -111,6 +116,43 @@ class NotificationController extends ApiController {
         ));
         
        
+        
+    }
+    public function historiqueAction(Request $request){
+        $nbpage = 20;
+        $notifications = $this->getRepo(self::ENTITY_NOTIFICATION)->findAll();
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $notifications, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            $nbpage/*limit per page*/
+        );
+        $droitAdmin = $this->get('roles.manager')->getDroitAdmin('Notifications');
+        return $this->render('BackAdminBundle:Notification:historique.html.twig', array(
+            'pagination'=> $pagination,
+            'droitAdmin'=> $droitAdmin[0]
+        ));
+    }
+    public function listeUtilisateurAction(Request $request){
+        $nbpage = 10;
+        $id = $request->get('id');
+        $notification =  $this->getRepo(self::ENTITY_NOTIFICATION)->find($id);
+        $utilisateurs = $notification->getUtilisateurs();
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $utilisateurs, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            $nbpage/*limit per page*/
+        );
+        return $this->render('BackAdminBundle:Notification:listeUtilisateur.html.twig', array(
+            'pagination'=> $pagination,
+        ));
+    }
+    public function removeAction(Request $request){
+        $id = $request->get("id");
+        $notification = $this->getRepo(self::ENTITY_NOTIFICATION)->find($id);
+        $this->remove($notification);
+        return $this->redirectToRoute("historique_notification");
         
     }
 }
