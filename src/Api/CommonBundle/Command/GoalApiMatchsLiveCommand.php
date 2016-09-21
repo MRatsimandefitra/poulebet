@@ -167,7 +167,7 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand {
                                             }
                                             $messageData = array(
                                                 "message"=>$vEventItems['player']." a marqué un but à la ".$vEventItems['minute']."° minute. Score:". $vEventItems['score'],
-                                                "type"=>"Live score"
+                                                "type"=>"livescore"
                                             );
                                             $data = array(
                                                 'registration_ids' => $device_token,
