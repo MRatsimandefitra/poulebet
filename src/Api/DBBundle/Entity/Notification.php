@@ -42,6 +42,12 @@ class Notification
     private $utilisateurs;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Admin")
+     * @ORM\JoinColumn(name="admin_id")
+     * 
+     */
+    private $admin; 
+    /**
      * Get id
      *
      * @return int
@@ -171,5 +177,29 @@ class Notification
     public function getUtilisateursCollection()
     {
         return $this->utilisateurs;
+    }
+
+    /**
+     * Set admin
+     *
+     * @param \Api\DBBundle\Entity\Admin $admin
+     *
+     * @return Notification
+     */
+    public function setAdmin(\Api\DBBundle\Entity\Admin $admin = null)
+    {
+        $this->admin = $admin;
+
+        return $this;
+    }
+
+    /**
+     * Get admin
+     *
+     * @return \Api\DBBundle\Entity\Admin
+     */
+    public function getAdmin()
+    {
+        return $this->admin;
     }
 }

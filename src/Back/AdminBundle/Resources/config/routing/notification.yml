@@ -1,3 +1,13 @@
 add_notification:
     path:     /
     defaults: { _controller: BackAdminBundle:Notification:notify }
+historique_notification:
+    path:     /historique
+    defaults: { _controller: BackAdminBundle:Notification:historique }
+list_utilistateur_notification:
+    path:   /historique/utilisateurs/{id}
+    defaults: { _controller: BackAdminBundle:Notification:listeUtilisateur }
+    
+remove_notification:
+    path:   /historique/remove/{id}
+    defaults: { _controller: BackAdminBundle:Notification:remove }
