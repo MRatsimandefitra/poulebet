@@ -220,6 +220,10 @@ tr.selected{
     background-color: #8c9ac7;
     color: #FFF;
 }
+tr.selected a{
+    background-color: #8c9ac7;
+    color: #ffffff;
+}
 table.table-matchs{
     width: 100%;
 }
