@@ -34,7 +34,8 @@ class ChampionnatController extends ApiController
     public function editChampionatAction(Request $request, $id){
         $championat = $this->getRepoFormId(self::ENTITY_CHAMPIONAT, $id);
 
-        $form = $this->formPost(self::FORM_CHAMPIONAT, $championat);
+        $nbChampionat = count($this->getAllEntity(self::ENTITY_CHAMPIONAT)) + 1;
+        $form = $this->formPost(self::FORM_CHAMPIONAT, $championat, array('nbChampionat' => $nbChampionat));
         $form->handleRequest($request);
         /*$countries = $request->get("pays");
         $championat->setPays($countries);*/
@@ -53,8 +54,8 @@ class ChampionnatController extends ApiController
     public function addChampionatAction(Request $request){
 
         $championat = new Championat();
-
-        $form = $this->formPost(self::FORM_CHAMPIONAT, $championat);
+        $nbChampionat = count($this->getAllEntity(self::ENTITY_CHAMPIONAT)) + 1;
+        $form = $this->formPost(self::FORM_CHAMPIONAT, $championat, array('nbChampionat' => $nbChampionat));
         $form->handleRequest($request);
         /*$dateDebut = $form['dateDebutChampionat']->getData();
         $dateD = new \Date($dateDebut);

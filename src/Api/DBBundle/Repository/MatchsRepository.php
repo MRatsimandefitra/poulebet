@@ -89,7 +89,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
                 WHERE m.dateMatch BETWEEN CURRENT_DATE() AND DATE_ADD(CURRENT_DATE(), 7, 'day')
                 AND ((m.masterProno1 is not null and m.masterProno1 = true) or (m.masterProno2 is not null and m.masterProno2 = true) or (m.masterPronoN is not null and m.masterPronoN = true))
                 AND ch.nomChampionat LIKE :championat
-                ORDER BY m.dateMatch ASC";
+                ORDER BY ch.rang ASC, m.dateMatch ASC";
             //AND (m.masterProno1 is not null or m.masterProno2 is not null or m.masterPronoN is not null)
         }else{
 
@@ -98,7 +98,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
                 WHERE  m.dateMatch BETWEEN :datepost AND DATE_ADD(CURRENT_DATE(), 7, 'day')
                 AND ((m.masterProno1 is not null and m.masterProno1 = true) or (m.masterProno2 is not null and m.masterProno2 = true) or (m.masterPronoN is not null and m.masterPronoN = true))
                 AND ch.nomChampionat LIKE :championat
-                ORDER BY m.dateMatch ASC";
+                ORDER BY ch.rang ASC, m.dateMatch ASC";
         }
 
         $query = $this->getEntityManager()->createQuery($dql);
@@ -120,7 +120,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
                LEFT JOIN  m.championat ch
                LEFT JOIN  m.teamsVisiteur tv
                LEFT JOIN m.teamsDomicile td
-               GROUP BY ch.nomChampionat ";
+               GROUP BY ch.nomChampionat ORDER BY ch.rang ASC  ";
         $query = $this->getEntityManager()->createQuery($dql);
         //$query->setParameter('pays', $pays);
         return $query->getResult();
@@ -135,7 +135,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
                 LEFT JOIN ch.teamsPays tp
                 WHERE CURRENT_DATE() BETWEEN ch.dateDebutChampionat and ch.dateFinaleChampionat
                 AND tp.name LIKE :pays
-                OR tp.fullName LIKE :pays";
+                OR tp.fullName LIKE :pays ORDER BY ch.rang ASC";
         $query = $this->getEntityManager()->createQuery($dql);
         $query->setParameter('pays', $pays);
         return $query->getResult();
@@ -151,7 +151,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
     {
         $dql = "SELECT m from ApiDBBundle:Matchs m
                 LEFT JOIN m.championat ch
-                WHERE ch.pays is not null";
+                WHERE ch.pays is not null ORDER BY ch.rang ASC";
         $query = $this->getEntityManager()->createQuery($dql);
         return $query->getResult();
     }

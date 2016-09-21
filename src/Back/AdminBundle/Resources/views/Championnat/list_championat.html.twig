@@ -24,8 +24,8 @@
                    <td>ID</td>
                    <td>{{ 'Code Championnat' }}</td>
                    <td>{{ 'Championnat ' }}</td>
-                   <td>{{ 'Type de championnat' }}</td>
-                   <td>{{ "Saison" }}</td>
+                   {#<td>{{ 'Type de championnat' }}</td>
+                   <td>{{ "Saison" }}</td>#}
                    <td>{{ "Date début" }}</td>
                    <td>{{ "Date Finale " }}</td>
                    <td>{{ "Pays" }}</td>
@@ -41,14 +41,14 @@
                     <td>
                         {{ row.fullNameChampionat }}
                     </td>
-                    <td>
+                  {#  <td>
                         {{ row.typeChampionat }}
                     </td>
                     <td>
                         {% if row.season is defined and row.season %}
                             {{ row.season }}
                         {% endif %}
-                    </td>
+                    </td>#}
                    
                     <td>
                         {{ row.dateDebutChampionat|date('d-m-Y') }}

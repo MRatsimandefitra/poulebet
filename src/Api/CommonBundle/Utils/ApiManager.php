@@ -11,7 +11,7 @@ namespace Api\CommonBundle\Utils;
 
 use Symfony\Component\DependencyInjection\Container;
 
-class ApiManager {
+class ApiManager implements \InterfaceApi {
 
     private $container;
 
