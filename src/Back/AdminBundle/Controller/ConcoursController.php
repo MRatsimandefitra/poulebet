@@ -70,16 +70,28 @@ class ConcoursController extends ApiController {
         $concours = new Concours();
         $form = $this->formPost(self::FORM_CONCOURS, $concours);
         $form->handleRequest($request);
-        $dateDebut = new DateTime('now');
-        $dateDebut = $dateDebut->modify('next monday');
+
+
         if($form->isValid()){
             $concours->setDateDebut(new \DateTime(date('Y-m-d H:i:s', strtotime($form['dateDebut']->getData()))));
             $concours->setDateFinale(new \DateTime(date('Y-m-d H:i:s', strtotime($form['dateFinale']->getData()))));
             $this->insert($concours, array('success' => 'success', 'error' => 'error'));
             return $this->redirectToRoute("list_concours");
         }
+
+        $dateDebutTmp = new \DateTime('now');
+        $dateDebutTmp = $dateDebutTmp->modify("next monday");
+        $dateDebut = $dateDebutTmp;
+
+        $dateFinaleTmp = new \DateTime('now');
+        $dateFinaleTmp = $dateFinaleTmp->modify('next monday');
+        $dateFinaleTmp->modify('next sunday');
+        $dateFinale = $dateFinaleTmp;
+
         return $this->render('BackAdminBundle:Concours:add_concours.html.twig', array(
                 'form' => $form->createView(),
+                'dateDebut' => $dateDebut->format('Y-m-d'),
+                'dateFinale' => $dateFinale->format('Y-m-d')
         ));
     }
     public function editConcoursAction(Request $request){
@@ -88,13 +100,14 @@ class ConcoursController extends ApiController {
         $form = $this->formPost(self::FORM_CONCOURS, $concours);
         $form->handleRequest($request);
         if($form->isValid()){
-            $concours->setDateDebut(new \DateTime(date('Y-m-d H:i:s', strtotime($form['dateDebut']->getData()))));
-            $concours->setDateFinale(new \DateTime(date('Y-m-d H:i:s', strtotime($form['dateFinale']->getData()))));
+            $concours->setDateDebut(new \DateTime(date('Y-m-d H:i:s', strtotime($form['dateDebut']->getData()->format('Y-m-d H:i:s')))));
+            $concours->setDateFinale(new \DateTime(date('Y-m-d H:i:s', strtotime($form['dateFinale']->getData()->format('Y-m-d H:i:s')))));
             $this->insert($concours);
             return $this->redirectToRoute("list_concours");
         }
         return $this->render('BackAdminBundle:Concours:edit_concours.html.twig', array(
                 'form' => $form->createView(),
+                'concours' => $concours
         ));
     }
     public function removeConcoursAction(Request $request){
