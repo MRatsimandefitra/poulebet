@@ -98,7 +98,9 @@ class MatchController extends ApiController
             $this->get('doctrine.orm.entity_manager')->flush();
         }
 
-        $dql = "SELECT m from ApiDBBundle:Matchs m";
+        $dql = "SELECT m from ApiDBBundle:Matchs m
+                LEFT JOIN m.championat ch
+               LEFT JOIN ch.teamsPays tp";
         $where = array();
         $params = array();
         $searchValue = array();
@@ -162,7 +164,7 @@ class MatchController extends ApiController
         if ($request->get('championat_match') && !$request->get('pays_match')) {
 
             $championat = $request->get('championat_match');
-            $dql .= " LEFT JOIN m.championat c";
+            //$dql .= " LEFT JOIN m.championat c";
             $where[] = " c.fullNameChampionat LIKE :championat ";
             $params["championat"] = '%' . $championat . '%';
             $searchValue['championat_match'] = $championat;
@@ -171,7 +173,7 @@ class MatchController extends ApiController
 
         if ($request->get('pays_match') && !$request->get('championat_match')) {
             $pays = $request->get('pays_match');
-            $dql .= " LEFT JOIN m.championat c";
+            //$dql .= " LEFT JOIN m.championat c";
             $where[] = " c.pays LIKE :pays ";
             $params['pays'] = "%" . $pays . "%";
             $searchValue['pays_match'] = $pays;
@@ -179,7 +181,7 @@ class MatchController extends ApiController
 
         if ($request->get('championat_match') && $request->get('pays_match')) {
             $championat = $request->get('championat_match');
-            $dql .= " LEFT JOIN m.championat c ";
+            //$dql .= " LEFT JOIN m.championat c ";
 
             $pays = $request->get('pays_match');
             /*$dql .= " LEFT JOIN c.teamsPays tp";*/
@@ -240,7 +242,8 @@ class MatchController extends ApiController
 
         if ($request->get('filter') == 'nofilter') {
 
-            $dql = "SELECT m from ApiDBBundle:Matchs m ";
+            $dql = "SELECT m from ApiDBBundle:Matchs m LEFT JOIN m.championat ch
+               LEFT JOIN ch.teamsPays tp ";
             $searchValue['dateDebut'] = "";
             $searchValue['dateFinale'] = "";
 
@@ -254,7 +257,7 @@ class MatchController extends ApiController
         if ($orderByChampionat) {
             $dql .= " ORDER BY " . $request->query->get('column') . " " . strtoupper($request->query->get('tri'));
         } else {
-            $dql .= ' ORDER BY m.dateMatch asc';
+            $dql .= ' ORDER BY m.dateMatch asc, ch.rang asc, m.id asc';
         }
         if (empty($params)) {
 
