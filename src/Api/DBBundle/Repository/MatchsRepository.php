@@ -45,7 +45,8 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
     function findChampionatWitwMatchValide(){
         $dql = "SELECT m,ch from ApiDBBundle:Matchs m
                 LEFT JOIN m.championat ch
-                WHERE CURRENT_DATE() BETWEEN ch.dateDebutChampionat and ch.dateFinaleChampionat";
+                WHERE ch.isEnable = true ";
+        /*CURRENT_DATE() BETWEEN ch.dateDebutChampionat and ch.dateFinaleChampionat*/
         $query = $this->getEntityManager()->createQuery($dql);
         return $query->getResult();
     }
@@ -133,7 +134,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
     {
         $dql = "SELECT ch, tp from ApiDBBundle:Championat ch
                 LEFT JOIN ch.teamsPays tp
-                WHERE CURRENT_DATE() BETWEEN ch.dateDebutChampionat and ch.dateFinaleChampionat
+                WHERE isEnable = true
                 AND tp.name LIKE :pays
                 OR tp.fullName LIKE :pays ORDER BY ch.rang ASC";
         $query = $this->getEntityManager()->createQuery($dql);
