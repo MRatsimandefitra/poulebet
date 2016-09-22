@@ -27,8 +27,8 @@
                             <td>{{ 'Championnat ' }}</td>
                             {#<td>{{ 'Type de championnat' }}</td>
                             <td>{{ "Saison" }}</td>#}
-                            <td>{{ "Date début" }}</td>
-                            <td>{{ "Date Finale " }}</td>
+                           {# <td>{{ "Date début" }}</td>
+                            <td>{{ "Date Finale " }}</td>#}
                             <td>{{ "Pays" }}</td>
                             {#<td>{{ "Status" }}</td>#}
                             <td>{{ "Actions" }}</td>
@@ -66,12 +66,12 @@
                                   {% endif %}
                               </td>#}
 
-                            <td>
+                        {#    <td>
                                 {{ row.dateDebutChampionat|date('d-m-Y') }}
                             </td>
                             <td>
                                 {{ row.dateFinaleChampionat|date('d-m-Y') }}
-                            </td>
+                            </td>#}
                             <td>
                                 {# {% set today = "now"|date('Y-m-d') %}
                                  {% set dateDebutChampionat = row.dateDebutChampionat|date('Y-m-d') %}
@@ -108,7 +108,7 @@
                         {% endfor %}
                     </table>
                     <br/>
-                    <input type="submit" class="btn btn-primary" value="{{ 'Ajouter' }}"/>
+                    <input type="submit" class="btn btn-primary" value="{{ 'Activer les championnats sélectionner' }}"/>
                 </form>
             </div>
         </div>

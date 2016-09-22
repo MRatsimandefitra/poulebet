@@ -45,7 +45,8 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
     function findChampionatWitwMatchValide(){
         $dql = "SELECT m,ch from ApiDBBundle:Matchs m
                 LEFT JOIN m.championat ch
-                WHERE CURRENT_DATE() BETWEEN ch.dateDebutChampionat and ch.dateFinaleChampionat";
+                WHERE ch.isEnable = true ";
+        /*CURRENT_DATE() BETWEEN ch.dateDebutChampionat and ch.dateFinaleChampionat*/
         $query = $this->getEntityManager()->createQuery($dql);
         return $query->getResult();
     }
@@ -85,11 +86,11 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         // a verifier
         if(!$date){
             $dql = "SELECT m from ApiDBBundle:Matchs m
-                LEFT JOIN m.championat ch
-                WHERE m.dateMatch BETWEEN CURRENT_DATE() AND DATE_ADD(CURRENT_DATE(), 7, 'day')
-                AND ((m.masterProno1 is not null and m.masterProno1 = true) or (m.masterProno2 is not null and m.masterProno2 = true) or (m.masterPronoN is not null and m.masterPronoN = true))
-                AND ch.nomChampionat LIKE :championat
-                ORDER BY ch.rang ASC, m.dateMatch ASC";
+                    LEFT JOIN m.championat ch
+                    WHERE m.dateMatch BETWEEN CURRENT_DATE() AND DATE_ADD(CURRENT_DATE(), 7, 'day')
+                    AND ((m.masterProno1 is not null and m.masterProno1 = true) or (m.masterProno2 is not null and m.masterProno2 = true) or (m.masterPronoN is not null and m.masterPronoN = true))
+                    AND   ch.nomChampionat LIKE :championat
+                    ORDER BY m.dateMatch ASC, m.id ASC";
             //AND (m.masterProno1 is not null or m.masterProno2 is not null or m.masterPronoN is not null)
         }else{
 
@@ -133,7 +134,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
     {
         $dql = "SELECT ch, tp from ApiDBBundle:Championat ch
                 LEFT JOIN ch.teamsPays tp
-                WHERE CURRENT_DATE() BETWEEN ch.dateDebutChampionat and ch.dateFinaleChampionat
+                WHERE isEnable = true
                 AND tp.name LIKE :pays
                 OR tp.fullName LIKE :pays ORDER BY ch.rang ASC";
         $query = $this->getEntityManager()->createQuery($dql);

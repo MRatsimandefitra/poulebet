@@ -48,6 +48,7 @@ class MatchController extends ApiController
 
     public function indexMatchsAction(Request $request)
     {
+
         $session = new Session();
         
         $session->set("current_page","Matchs");
@@ -255,10 +256,10 @@ class MatchController extends ApiController
         } else {
             $dql .= ' ORDER BY m.dateMatch asc';
         }
-
         if (empty($params)) {
 
             $matchs = $this->get('doctrine.orm.entity_manager')->createQuery($dql)->getResult();
+
         } else {
 
             $matchs = $this->get('doctrine.orm.entity_manager')->createQuery($dql)->setParameters($params)->getResult();

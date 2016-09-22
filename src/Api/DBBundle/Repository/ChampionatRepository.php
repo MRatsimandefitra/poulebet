@@ -24,8 +24,9 @@ class ChampionatRepository extends \Doctrine\ORM\EntityRepository
         $dql = "SELECT m, ch, tp from ApiDBBundle:Matchs m
                 LEFT JOIN m.championat ch
                 LEFT JOIN ch.teamsPays tp
-                WHERE CURRENT_DATE() BETWEEN ch.dateDebutChampionat and ch.dateFinaleChampionat
+                WHERE ch.isEnable = true
                 ";
+        /*CURRENT_DATE() BETWEEN ch.dateDebutChampionat and ch.dateFinaleChampionat*/
         $query = $this->getEntityManager()->createQuery($dql);
         return $query->getResult();
 
@@ -35,7 +36,7 @@ class ChampionatRepository extends \Doctrine\ORM\EntityRepository
     {
         $dql = "SELECT ch from ApiDBBundle:Championat ch
                 LEFT JOIN ch.teamsPays tp
-                WHERE CURRENT_DATE() BETWEEN ch.dateDebutChampionat and ch.dateFinaleChampionat";
+                WHERE ch.isEnable = true";
         $query = $this->getEntityManager()->createQuery($dql);
         return $query->getResult();
     }
