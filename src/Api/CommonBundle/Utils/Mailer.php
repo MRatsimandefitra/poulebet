@@ -184,13 +184,12 @@ class Mailer
             ->setFrom($this->getFrom())
             ->setTo($this->getTo())
             ->setBody(
-
-                    $this->params['body']
-
-
-                
-                /*array('name' => $name)*/
-                ,
+                $this->container->get("templating")->render(
+                        self::TEMPLATE,
+                        array('body' =>$this->params['body'])
+   
+                        ),
+    
                 'text/html'
             );
             $mailer->send($message);
