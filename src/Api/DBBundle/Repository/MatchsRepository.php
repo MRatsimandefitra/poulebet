@@ -90,7 +90,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
                 WHERE m.dateMatch BETWEEN CURRENT_DATE() AND DATE_ADD(CURRENT_DATE(), 7, 'day')
                 AND ((m.masterProno1 is not null and m.masterProno1 = true) or (m.masterProno2 is not null and m.masterProno2 = true) or (m.masterPronoN is not null and m.masterPronoN = true))
                 AND ch.nomChampionat LIKE :championat
-                ORDER BY ch.rang ASC, m.dateMatch ASC";
+                ORDER BY m.rang ASC, m.dateMatch ASC, m.id ASC";
             //AND (m.masterProno1 is not null or m.masterProno2 is not null or m.masterPronoN is not null)
         }else{
 
