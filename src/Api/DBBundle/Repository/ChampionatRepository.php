@@ -61,4 +61,9 @@ class ChampionatRepository extends \Doctrine\ORM\EntityRepository
         $query->setParameter('nomChampionat', $championat);
         return $query->getResult();
     }
+    function findChamponatRang(){
+        $dql = "SELECT ch from ApiDBBundle:Championat ch ORDER BY ch.rang ASC";
+        $query = $this->getEntityManager()->createQuery($dql);
+        return $query->getResult();
+    }
 }

@@ -35,7 +35,7 @@ class ChampionnatController extends ApiController
         $session = new Session();
         
         $session->set("current_page","Championnat");
-        $championat = $this->getAllEntity(self::ENTITY_CHAMPIONAT);
+        $championat = $this->getRepo(self::ENTITY_CHAMPIONAT)->findChamponatRang();
         $droitAdmin = $this->getRolesAdmin()->getDroitAdmin('Matchs');
         return $this->render('BackAdminBundle:Championnat:list_championat.html.twig', array(
             'entities' => $championat,
