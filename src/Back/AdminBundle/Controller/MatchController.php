@@ -99,9 +99,10 @@ class MatchController extends ApiController
         }
 
         $dql = "SELECT m from ApiDBBundle:Matchs m
-                LEFT JOIN m.championat ch
-               LEFT JOIN ch.teamsPays tp";
+                LEFT JOIN m.championat c
+               LEFT JOIN c.teamsPays tp";
         $where = array();
+        $where[] = " c.isEnable = true ";
         $params = array();
         $searchValue = array();
         if ($request->get('dateDebut') && !$request->get('dateFinale')) {
@@ -243,7 +244,7 @@ class MatchController extends ApiController
         if ($request->get('filter') == 'nofilter') {
 
             $dql = "SELECT m from ApiDBBundle:Matchs m LEFT JOIN m.championat ch
-               LEFT JOIN ch.teamsPays tp ";
+               LEFT JOIN c.teamsPays tp WHERE c.isEnable =true";
             $searchValue['dateDebut'] = "";
             $searchValue['dateFinale'] = "";
 
@@ -257,7 +258,7 @@ class MatchController extends ApiController
         if ($orderByChampionat) {
             $dql .= " ORDER BY " . $request->query->get('column') . " " . strtoupper($request->query->get('tri'));
         } else {
-            $dql .= ' ORDER BY m.dateMatch asc, ch.rang asc, m.id asc';
+            $dql .= ' ORDER BY m.dateMatch asc, c.rang asc, m.id asc';
         }
         if (empty($params)) {
 

@@ -203,7 +203,7 @@ class PronosticController extends ApiController
         if($request->get('championat_match')&& !$request->get('pays_match')){
             $championat = $request->get('championat_match');
          //   $dql .= " LEFT JOIN m.championat c";
-            $where[] = " c.fullNameChampionat LIKE :championat ";
+            $where[] = " ch.fullNameChampionat LIKE :championat ";
             $params["championat"] = '%'.$championat.'%';
             $searchValue['championat_match'] = $championat;
         }
@@ -211,7 +211,7 @@ class PronosticController extends ApiController
         if($request->get('pays_match') && !$request->get('championat_match')){
             $pays= $request->get('pays_match');
          //   $dql .= " LEFT JOIN m.championat c";
-            $where[] = " c.pays LIKE :pays ";
+            $where[] = " ch.pays LIKE :pays ";
             $params['pays'] = "%".$pays."%";
             $searchValue['pays_match'] = $pays;
         }
@@ -223,8 +223,8 @@ class PronosticController extends ApiController
             $pays= $request->get('pays_match');
             /*$dql .= " LEFT JOIN c.teamsPays tp";*/
 
-            $where[] = " c.fullNameChampionat LIKE :championat ";
-            $where[] = " c.pays LIKE :pays";
+            $where[] = " ch.fullNameChampionat LIKE :championat ";
+            $where[] = " ch.pays LIKE :pays";
 
             $params['pays'] = "%".$pays."%";
             $params["championat"] = '%'.$championat.'%';
