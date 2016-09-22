@@ -265,7 +265,7 @@ class PronosticController extends ApiController
         if ($orderByChampionat) {
             $dql .= " ORDER BY " . $request->query->get('column') . " " . strtoupper($request->query->get('tri'));
         } else {
-            $dql .= ' ORDER BY m.dateMatch asc';
+            $dql .= ' ORDER BY m.dateMatch asc, m.id ASC';
         }
         if(empty($params)){
 
