@@ -86,11 +86,11 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         // a verifier
         if(!$date){
             $dql = "SELECT m from ApiDBBundle:Matchs m
-                LEFT JOIN m.championat ch
-                WHERE m.dateMatch BETWEEN CURRENT_DATE() AND DATE_ADD(CURRENT_DATE(), 7, 'day')
-                AND ((m.masterProno1 is not null and m.masterProno1 = true) or (m.masterProno2 is not null and m.masterProno2 = true) or (m.masterPronoN is not null and m.masterPronoN = true))
-                AND ch.nomChampionat LIKE :championat
-                ORDER BY m.rang ASC, m.dateMatch ASC, m.id ASC";
+                    LEFT JOIN m.championat ch
+                    WHERE m.dateMatch BETWEEN CURRENT_DATE() AND DATE_ADD(CURRENT_DATE(), 7, 'day')
+                    AND ((m.masterProno1 is not null and m.masterProno1 = true) or (m.masterProno2 is not null and m.masterProno2 = true) or (m.masterPronoN is not null and m.masterPronoN = true))
+                    AND   ch.nomChampionat LIKE :championat
+                    ORDER BY m.dateMatch ASC, m.id ASC, ch.rang ASC";
             //AND (m.masterProno1 is not null or m.masterProno2 is not null or m.masterPronoN is not null)
         }else{
 
