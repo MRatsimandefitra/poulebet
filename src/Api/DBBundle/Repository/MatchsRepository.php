@@ -69,8 +69,8 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
     {
         $dql = "SELECT DISTINCT m, ch from ApiDBBundle:Matchs m
                 LEFT JOIN m.championat ch
-                WHERE CURRENT_DATE() BETWEEN ch.dateDebutChampionat and ch.dateFinaleChampionat
-                GROUP BY ch.nomChampionat";
+                WHERE ch.isEnable = true
+                GROUP BY ch.nomChampionat ORDER BY ch.rang ASC";
         $query = $this->getEntityManager()->createQuery($dql);
         return $query->getResult();
     }
