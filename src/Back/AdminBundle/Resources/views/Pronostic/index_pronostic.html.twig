@@ -324,13 +324,14 @@
                         <td>
                             {#<a href="{{ path('modifier_admin_match', {'id': row.id }) }}">&#123;&#35;<span
                                         class="glyphicon glyphicon-pencil orange" aria-hidden="true"></span>&#35;&#125; {{ 'Modifier ' }}</a><br/>#}
+
                             {% if droitAdmin.suppression is defined and droitAdmin.suppression %}
-                                {% if row.masterProno1 is  defined and row.masterProno
-                                or row.masterPronoN is defined and row.masterPronoN
-                                or row.masterProno2 is defined and row.masterProno2
-                                or row.cot1Pronostic is defined and row.cot1Pronostic
-                                or row.cote2pronistic is defined and row.cote2pronistic
-                                or row.coteNPronostic is defined and row.coteNPronostic %}
+                                {% if (row.masterProno1 is defined and row.masterProno1)
+                                or (row.masterPronoN is defined and row.masterPronoN)
+                                or (row.masterProno2 is defined and row.masterProno2)
+                                or (row.cot1Pronostic is defined and row.cot1Pronostic)
+                                or (row.cote2pronistic is defined and row.cote2pronistic)
+                                or (row.coteNPronostic is defined and row.coteNPronostic) %}
                                     <a id="supprimer-masterprono" href="{{ path('remove_admin_pronostic', {'id': row.id }) }}"
                                        onclick="deleteProno('Etes vous sur de vouloir supprimer ce pronostic ?');"> <span
                                                 class="glyphicon glyphicon-remove red"

@@ -225,7 +225,7 @@ class MatchController extends ApiController
                 $dql .= " ORDER BY " . $request->query->get('column') . " " . strtoupper($request->query->get('tri'));
             } else {
                 if ($request->query->get('column') == 'ch.fullNameChampionat') {
-                    $dql .= " LEFT JOIN m.championat ch ";
+                    //$dql .= " LEFT JOIN m.championat ch ";
                     $orderByChampionat = true;
 
                 } else {
