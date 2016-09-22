@@ -23,6 +23,7 @@
                     <table>
                         <tr>
                             <td>{{ 'Active' }}</td>
+                            <td>{{ 'Rang' }}</td>
                             <td>{{ 'Code Championnat' }}</td>
                             <td>{{ 'Championnat ' }}</td>
                             {#<td>{{ 'Type de championnat' }}</td>
@@ -50,6 +51,9 @@
 
                                 {% endif %}
 
+                            </td>
+                            <td>
+                                {{ row.rang }}
                             </td>
                             <td>
                                 {{ row.nomChampionat }}
