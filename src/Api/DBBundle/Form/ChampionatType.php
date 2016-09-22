@@ -41,24 +41,20 @@ class ChampionatType extends AbstractType
                 'empty_data'  => null
 
             ))*/
-            ->add('dateDebutChampionat', DateType::class, array(
-                    //'data' => new \DateTime('2016-01-01'),
-                    /*'html5' => false,*/
+           /* ->add('dateDebutChampionat', DateType::class, array(
+                    'data' => new \DateTime('2016-01-01'),
+                    'html5' => false,
                     'widget' => 'single_text',
                     'attr' => ['class' => 'datepic', 'style' => "width:200px"]
-                /*'format' => 'yyyy-MM-dd'*/
-            ))
-            ->add('dateFinaleChampionat', DateType::class, array(
-                    //'data' => new \DateTime('2016-12-31'),
-                    /*'html5' => false,*/
+                'format' => 'yyyy-MM-dd'
+            ))*/
+           /* ->add('dateFinaleChampionat', DateType::class, array(
+                    'data' => new \DateTime('2016-12-31'),
+                    'html5' => false,
                     'attr' => ['class' => 'datepic', 'style' => "width:200px"],
                     'widget' => 'single_text',
-                    // do not render as type="date", to avoid HTML5 date pickers
-                    //'html5' => false,
-                    // add a class that can be selected in JavaScript
-                    //'attr' => ['class' => 'datepic'],*/
-                    /*'format' => 'yyyy-MM-dd'*/
-            ))
+
+            ))*/
            /* ->add('teamsPays', EntityType::class, array(
                 'class' => 'ApiDBBundle:TeamsPays',
                 'choice_label' => 'fullName',
