@@ -60,7 +60,7 @@ class ChampionatType extends AbstractType
                 'choice_label' => 'fullName',
                 'multiple' => true
             ))*/
-            ->add('pays', TextType::class, array())
+            ->add('pays', TextType::class, array('required' => false))
             ->add('rang', ChoiceType::class, array(
                 'choices' => $this->dataNb
             ))
