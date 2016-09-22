@@ -267,7 +267,7 @@ class PronosticController extends ApiController
         } else {
             $dql .= ' ORDER BY m.dateMatch asc';
         }
-      //  var_dump($dql); die;
+        var_dump($dql); die;
         if(empty($params)){
 
             $matchs = $this->get('doctrine.orm.entity_manager')->createQuery($dql)->getResult();

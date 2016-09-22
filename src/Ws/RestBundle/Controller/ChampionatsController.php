@@ -210,8 +210,9 @@ class ChampionatsController extends ApiController
         $dql = "SELECT m from ApiDBBundle:Matchs m
                LEFT JOIN m.championat ch
                LEFT JOIN ch.teamsPays tp
-               WHERE  ch.isEnable = true";
+               WHERE  ch.isEnable = true order by m.dataMatch ASC";
         /*CURRENT_DATE() BETWEEN ch.dateDebutChampionat and ch.dateFinaleChampionat*/
+
         $query = $this->get('doctrine.orm.entity_manager')->createQuery($dql);
         $data = $query->getResult();
         if ($data) {

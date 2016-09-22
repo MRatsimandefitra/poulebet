@@ -70,6 +70,8 @@ class ConcoursController extends ApiController {
         $concours = new Concours();
         $form = $this->formPost(self::FORM_CONCOURS, $concours);
         $form->handleRequest($request);
+        $dateDebut = new DateTime('now');
+        $dateDebut = $dateDebut->modify('next monday');
         if($form->isValid()){
             $concours->setDateDebut(new \DateTime(date('Y-m-d H:i:s', strtotime($form['dateDebut']->getData()))));
             $concours->setDateFinale(new \DateTime(date('Y-m-d H:i:s', strtotime($form['dateFinale']->getData()))));
