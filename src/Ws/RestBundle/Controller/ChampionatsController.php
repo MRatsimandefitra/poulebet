@@ -61,8 +61,6 @@ class ChampionatsController extends ApiController
         $date = $request->request->get('date');
 
         $data = $this->getRepo(self::ENTITY_MATCHS)->getListeMatchsBySelectedChampionat($championat, $date);
-        var_dump($data); die;
-        die('okok');
         $result = array();
         if ($data) {
             foreach ($data as $vData) {
