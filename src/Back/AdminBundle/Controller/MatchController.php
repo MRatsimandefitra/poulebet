@@ -720,9 +720,11 @@ class MatchController extends ApiController
 
 
         $dql = "SELECT m, lf7, lf15 from ApiDBBundle:Matchs m
+              LEFT JOIN m.championat ch
               LEFT JOIN m.lotoFoot7 lf7
               LEFT JOIN m.lotoFoot15 lf15 ";
         $where = array();
+        $where[] = " ch.isEnable = true";
         $params = array();
         $searchValue = array();
 
@@ -741,23 +743,23 @@ class MatchController extends ApiController
         if ($request->get('championat_match') && !$request->get('pays_match')) {
 
             $championat = $request->get('championat_match');
-            $dql .= " LEFT JOIN m.championat c";
-            $where[] = " c.fullNameChampionat LIKE :championat ";
+            //$dql .= " LEFT JOIN m.championat c";
+            $where[] = " ch.fullNameChampionat LIKE :championat ";
             $params["championat"] = '%' . $championat . '%';
             $searchValue['championat_match'] = $championat;
         }
         if ($request->get('pays_match') && !$request->get('championat_match')) {
             $pays = $request->get('pays_match');
-            $dql .= " LEFT JOIN m.championat c  ";
-            $where[] = " c.pays LIKE :pays ";
+            //$dql .= " LEFT JOIN m.championat c  ";
+            $where[] = " ch.pays LIKE :pays ";
             $params['pays'] = "%" . $pays . "%";
             $searchValue['pays_match'] = $pays;
         }
         if ($request->get('pays_match') && $request->get('championat_match')) {
             $pays = $request->get('pays_match');
             $championat = $request->get('championat_match');
-            $dql .= " LEFT JOIN m.championat c  ";
-            $where[] = " c.pays LIKE :pays AND c.fullNameChampionat LIKE :championat";
+            // $dql .= " LEFT JOIN m.championat c  ";
+            $where[] = " ch.pays LIKE :pays AND ch.fullNameChampionat LIKE :championat";
             $params['pays'] = "%" . $pays . "%";
             $params["championat"] = '%' . $championat . '%';
             $searchValue['pays_match'] = $pays;
@@ -767,7 +769,7 @@ class MatchController extends ApiController
         if (!empty($where)) {
             $dql .= ' WHERE ' . implode(' AND ', $where);
         }
-
+        $dql .= " ORDER BY m.dateMatch ASC, ch.rang asc,  m.id ASC ";
         if (empty($params)) {
             $matchs = $this->get('doctrine.orm.entity_manager')->createQuery($dql)->getResult();
         } else {

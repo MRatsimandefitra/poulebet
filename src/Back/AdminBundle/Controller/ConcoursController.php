@@ -160,6 +160,7 @@ class ConcoursController extends ApiController {
         $result = $query->getResult();
 
         $where = array();
+        $wher[] = " c.isEnable = true";
         $params = array();
         $searchValue = array();
 
@@ -273,7 +274,7 @@ class ConcoursController extends ApiController {
         if (!empty($where)) {
             $dql .= ' WHERE ' . implode(' AND ', $where);
         }
-        $dql .= " ORDER BY m.dateMatch ASC";
+        $dql .= " ORDER BY m.dateMatch ASC, c.rang asc, m.id asc";
 
         if(empty($params)){
             $matchs = $this->get('doctrine.orm.entity_manager')->createQuery($dql)->getResult();
