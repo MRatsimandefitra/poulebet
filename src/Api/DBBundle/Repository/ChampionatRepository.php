@@ -66,4 +66,11 @@ class ChampionatRepository extends \Doctrine\ORM\EntityRepository
         $query = $this->getEntityManager()->createQuery($dql);
         return $query->getResult();
     }
+
+    function findCountryValid(){
+        $dqlC = "SELECT ch from ApiDBBundle:Championat ch where ch.pays is not NULL";
+        $query = $this->getEntityManager()->createQuery($dqlC);
+        $country = $query->getResult();
+        return $country;
+    }
 }

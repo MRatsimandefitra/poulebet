@@ -15,13 +15,13 @@ list_loto_foot:
     path:     /lotofoot
     defaults: { _controller: BackAdminBundle:Match:listLotofoot }
 edit_loto_foot:
-    path:     /lotofoot/{idLotoFoot}/edit/{id}
+    path:     /lotofoot/edit/{id}
     defaults: { _controller: BackAdminBundle:Match:editLotofoot }
 remove_loto_foot:
     path:     /lotofoot/{idLotoFoot}/remove/{id}
     defaults: { _controller: BackAdminBundle:Match:removeLotoFoot }
 add_match_loto_foot:
-    path:     /lotofoot/{idLotoFoot}/add-match/{id}
+    path:     /lotofoot/add-match/{id}
     defaults: { _controller: BackAdminBundle:Match:addMatchInLotoFoot }
 remove_match_loto_foot:
     path:     /lotofoot/{idLotoFoot}/{lotoId}/remove-match/{id}

@@ -14,28 +14,27 @@
     <div class="col-lg-12">
        <div class="col-lg-3"></div>
         <div class="col-lg-6">
-            <form action="{{ path('add_loto_foot') }}" method="post">
+            {#<form action="{{ path('add_loto_foot') }}" method="post">#}
+            {{ form_start(form) }}
                 <table>
                     <tr>
                         <td>{{ 'Numéro'|trans }}</td>
                         <td>
-                            <input type="number" name="numero" required="true" />
+                           {{ form_widget(form.numero) }}
+                            {{ form_errors(form.numero) }}
                         </td>
                     </tr>
                     <tr>
                         <td>{{ 'Loto Foot'|trans }}</td>
                         <td>
-                            <select name="lotofoot" id="" required="true">
-                                <option value=""></option>
-                                <option value="lf7">LotoFoot7</option>
-                                <option value="lf15">LotoFoot15</option>
-
-                            </select>
+                            {{ form_widget(form.typeLotoFoot) }}
+                            {{ form_errors(form.typeLotoFoot) }}
                         </td>
                     <tr>
                         <td>{{ 'Fin de validation'|trans }}</td>
                         <td>
-                            <input type="text" name="finvalidation" id="datepic" required="true" />
+                            {{ form_widget(form.finValidation) }}
+                            {{ form_errors(form.finValidation) }}
                         </td>
                     </tr
                     </tr>
@@ -45,7 +44,8 @@
                         </td>
                     </tr>
                 </table>
-            </form>
+            {{ form_end(form) }}
+            {#</form>#}
         </div>
         <div class="col-lg-3"></div>
     </div>

@@ -25,8 +25,10 @@
                         <span class="glyphicon glyphicon-plus green" aria-hidden="true"></span>
                     {% endif %}#}
                     {% if droitAdmin.ajout is defined and droitAdmin.ajout %}
-                        <a href="{{ path('add_loto_foot') }}"><span class="glyphicon glyphicon-plus green" aria-hidden="true"></span>{{ 'Ajout Loto Foot'|trans }}</a>&nbsp;  &nbsp;
-                        {% endif %}
+                        <a href="{{ path('add_loto_foot') }}"><span class="glyphicon glyphicon-plus green"
+                                                                    aria-hidden="true"></span>{{ 'Ajout Loto Foot'|trans }}
+                        </a>&nbsp;  &nbsp;
+                    {% endif %}
                 </div>
                 <div class="space"></div>
             </div>
@@ -43,70 +45,80 @@
                         <td>{{ 'Fin de validation'|trans }}</td>
                         <td>{{ 'Actions'|trans }}</td>
                     </tr>
-                    {% for row in lotoFoot7 %}
-                        <tr>
-                            <td>
-                                {{ row.numero }}
-                            </td>
-                            <td>
-                                {{ 'Loto Foot 7'|trans }}
-                            </td>
-                            <td>
-                                {{ row.finValidation|date('d-m-Y') }}
-                            </td>
-                            <td>
-                                {% if droitAdmin.modification is defined and droitAdmin.modification %}
-                                    <a href="{{ path('edit_loto_foot', {'idLotoFoot': 7, 'id': row.id }) }}"> <span
-                                            class="glyphicon glyphicon-pencil orange" aria-hidden="true"></span>
-                                        Modifier </a> |
+                    {% if lotoFoot is defined and lotoFoot %}
+                        {% for row in lotoFoot %}
+                            <tr>
+                                <td>
+                                    {{ row.numero }}
+                                </td>
+                                <td>
+                                    {% if row.typeLotoFoot == 7 %}
+                                        {{ 'Loto Foot 7'|trans }}
+                                    {% elseif row.typeLotoFoot == 15 %}
+                                        {{ 'Loto Foot 15'|trans }}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {{ row.finValidation|date('d-m-Y') }}
+                                </td>
+                                <td>
+                                    {% if droitAdmin.modification is defined and droitAdmin.modification %}
+                                        <a href="{{ path('edit_loto_foot', { 'id': row.id }) }}"> <span
+                                                    class="glyphicon glyphicon-pencil orange" aria-hidden="true"></span>
+                                            Modifier </a> |
                                     {% endif %}
                                     {% if droitAdmin.suppression is defined and droitAdmin.suppression %}
-                                    <a onclick="supprimer('Etes vous sur de vouloir supprimer ?');"
-                                       href="{{ path('remove_loto_foot', {'idLotoFoot': 7 , 'id': row.id}) }}"><span
-                                            class="glyphicon glyphicon-remove red" aria-hidden="true"></span>
-                                        Supprimer </a>
+                                        <a onclick="supprimer('Etes vous sur de vouloir supprimer ?');"
+                                           href="{{ path('remove_loto_foot', {'idLotoFoot': 7 , 'id': row.id}) }}"><span
+                                                    class="glyphicon glyphicon-remove red" aria-hidden="true"></span>
+                                            Supprimer </a>
                                     {% endif %}
                                     {% if droitAdmin.ajout is defined and droitAdmin.ajout %}
-                                    <a href="{{ path('add_match_loto_foot', {'idLotoFoot': 7, 'id': row.id }) }}"><span
-                                            class="glyphicon glyphicon-plus green"
-                                            aria-hidden="true"></span>  {{ 'Ajouter Match' }}</a>
+                                        <a href="{{ path('add_match_loto_foot', {'idLotoFoot': 7, 'id': row.id }) }}"><span
+                                                    class="glyphicon glyphicon-plus green"
+                                                    aria-hidden="true"></span>  {{ 'Ajouter Match' }}</a>
                                     {% endif %}
 
 
-                            </td>
-                        </tr>
-                    {% endfor %}
-                    {% for row in lotoFoot15 %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
                         <tr>
-                            <td>
-                                {{ row.numero }}
-                            </td>
-                            <td>
-                                {{ 'Loto Foot 15'|trans }}
-                            </td>
-                            <td>
-                                {{ row.finValidation|date('d-m-Y') }}
-                            </td>
-                            <td>
-                                {% if droitAdmin.modification is defined and droitAdmin.modification %}
-                                    <a href="{{ path('edit_loto_foot', {'idLotoFoot': 15, 'id': row.id }) }}"><span
-                                            class="glyphicon glyphicon-pencil orange" aria-hidden="true"></span>
-                                        Modifier </a> |
-                                    {% endif %}
-                                    {% if droitAdmin.suppression is defined and droitAdmin.suppression %}
-                                    <a onclick="supprimer('Etes vous sur de vouloir supprimer ?');"
-                                       href="{{ path('remove_loto_foot', {'idLotoFoot': 7 , 'id': row.id}) }}"> <span
-                                            class="glyphicon glyphicon-remove red" aria-hidden="true"></span>
-                                        supprimer </a>
-                                    {% endif %}
-                                    {% if droitAdmin.ajout is defined and droitAdmin.ajout %}
-                                    <a href="{{ path('add_match_loto_foot', {'idLotoFoot': 15, 'id': row.id }) }}"><span
-                                            class="glyphicon glyphicon-plus green"
-                                            aria-hidden="true"></span>  {{ 'Ajouter Match' }}</a>
-                                    {% endif %}
-                            </td>
+                            <td colspan="4"> {{ 'Aucun résulat trouvés'|trans }}</td>
                         </tr>
-                    {% endfor %}
+                    {% endif %}
+                    {# {% for row in lotoFoot15 %}
+                         <tr>
+                             <td>
+                                 {{ row.numero }}
+                             </td>
+                             <td>
+                                 {{ 'Loto Foot 15'|trans }}
+                             </td>
+                             <td>
+                                 {{ row.finValidation|date('d-m-Y') }}
+                             </td>
+                             <td>
+                                 {% if droitAdmin.modification is defined and droitAdmin.modification %}
+                                     <a href="{{ path('edit_loto_foot', {'idLotoFoot': 15, 'id': row.id }) }}"><span
+                                             class="glyphicon glyphicon-pencil orange" aria-hidden="true"></span>
+                                         Modifier </a> |
+                                     {% endif %}
+                                     {% if droitAdmin.suppression is defined and droitAdmin.suppression %}
+                                     <a onclick="supprimer('Etes vous sur de vouloir supprimer ?');"
+                                        href="{{ path('remove_loto_foot', {'idLotoFoot': 7 , 'id': row.id}) }}"> <span
+                                             class="glyphicon glyphicon-remove red" aria-hidden="true"></span>
+                                         supprimer </a>
+                                     {% endif %}
+                                     {% if droitAdmin.ajout is defined and droitAdmin.ajout %}
+                                     <a href="{{ path('add_match_loto_foot', {'idLotoFoot': 15, 'id': row.id }) }}"><span
+                                             class="glyphicon glyphicon-plus green"
+                                             aria-hidden="true"></span>  {{ 'Ajouter Match' }}</a>
+                                     {% endif %}
+                             </td>
+                         </tr>
+                     {% endfor %}#}
                 </table>
             </div>
         </div>

@@ -35,11 +35,16 @@ class LotoFoot
      */
     private $finValidation;
     /**
-     * @var string
+     * @var Integer
      *
-     * @ORM\Column(name="typeLotoFoot", type="string", length=255)
+     * @ORM\Column(name="typeLotoFoot", type="integer")
      */
     private $typeLotoFoot;
+    /**
+     * @ORM\OneToMany(targetEntity="Api\DBBundle\Entity\Matchs", mappedBy="LotoFoot", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $matchs;
 
 
     /**
@@ -100,10 +105,11 @@ class LotoFoot
         return $this->finValidation;
     }
 
+
     /**
      * Set typeLotoFoot
      *
-     * @param string $typeLotoFoot
+     * @param integer $typeLotoFoot
      *
      * @return LotoFoot
      */
@@ -117,10 +123,51 @@ class LotoFoot
     /**
      * Get typeLotoFoot
      *
-     * @return string
+     * @return integer
      */
     public function getTypeLotoFoot()
     {
         return $this->typeLotoFoot;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->matchs = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add match
+     *
+     * @param \Api\DBBundle\Entity\Matchs $match
+     *
+     * @return LotoFoot
+     */
+    public function addMatch(\Api\DBBundle\Entity\Matchs $match)
+    {
+        $this->matchs[] = $match;
+
+        return $this;
+    }
+
+    /**
+     * Remove match
+     *
+     * @param \Api\DBBundle\Entity\Matchs $match
+     */
+    public function removeMatch(\Api\DBBundle\Entity\Matchs $match)
+    {
+        $this->matchs->removeElement($match);
+    }
+
+    /**
+     * Get matchs
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMatchs()
+    {
+        return $this->matchs;
     }
 }

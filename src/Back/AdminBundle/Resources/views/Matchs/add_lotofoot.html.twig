@@ -4,123 +4,151 @@
 
 {% block page %}
 
-   {# <div class="box-header-response">
-        {{ 'Listes des Matchs du jour'|trans }}
-        {% include '@BackAdmin/Matchs/sous_menu.html.twig' %}
-    </div>#}
+    {# <div class="box-header-response">
+         {{ 'Listes des Matchs du jour'|trans }}
+         {% include '@BackAdmin/Matchs/sous_menu.html.twig' %}
+     </div>#}
 
     <div class="sous-menu-page">
         {% include "BackAdminBundle:Matchs:sous_menu_lotofoot.html.twig" %}
     </div>
     <div class="col-lg-12">
-    <div class="list">
-    <div class="form-filter">
+        <div class="list">
+            <div class="form-filter">
 
-    </div>
-    <div class="list">
-    <table>
-        <tr>
-            <td>Numero</td>
-            <td>LOTO FOOT</td>
-            <td>Date Fin validation</td>
-            <td>Nb Matchs</td>
-        </tr>
-        <tr>
-            <td>{{ entity.numero }}</td>
-            <td>
-                {% if idLotoFoot == 7 %}
-                    {{ 'LOTO FOOT 7' }}
-                {% endif %}
-                {% if idLotoFoot == 15 %}
-                    {{ 'LOTO FOOT 15' }}
-                {% endif %}
-            </td>
-            <td>
-                {{ entity.finValidation|date('d/m/Y') }}
+            </div>
+            <div class="list">
+                {# <table>
+                     <tr>
+                         <td>Numero</td>
+                         <td>LOTO FOOT</td>
+                         <td>Date Fin validation</td>
+                         <td>Nb Matchs</td>
+                     </tr>
+                     <tr>
+                         <td>{{ entity.numero }}</td>
+                         <td>
+                         &#123;&#35;    {% if idLotoFoot == 7 %}
+                                 {{ 'LOTO FOOT 7' }}
+                             {% endif %}
+                             {% if idLotoFoot == 15 %}
+                                 {{ 'LOTO FOOT 15' }}
+                             {% endif %}&#35;&#125;
+                         </td>
+                         <td>
+                             {{ entity.finValidation|date('d/m/Y') }}
 
-            </td>
-            <td>
-                {% if idLotoFoot == 7 %}
-                    {{ nbMatchs7 }}
-                {% endif %}
-                {% if idLotoFoot == 15 %}
-                    {{ nbMatchs15 }}
-                {% endif %}
+                         </td>
+                         <td>
+                           &#123;&#35;  {% if idLotoFoot == 7 %}
+                                 {{ nbMatchs7 }}
+                             {% endif %}
+                             {% if idLotoFoot == 15 %}
+                                 {{ nbMatchs15 }}
+                             {% endif %}&#35;&#125;
 
-            </td>
-        </tr>
-    </table>
-    <br/><br/>
+                         </td>
+                     </tr>
+                 </table>#}
+                <div class="col-lg-4">
+                    <table class="status-lotofoot">
+                       {# <tr>
+                            <td>Numero</td>
+                            <td>LOTO FOOT</td>
+                            <td>Date Fin validation</td>
+                            <td>Nb Matchs</td>
+                        </tr>#}
+                        <tr>
+                            <td>{{ 'Numero' }}: {{ entity.numero }}</td>
+                            <td>
+                                {% if entity.typeLotoFoot == 7 %}
+                                    {{ 'Loto Foot 7' }}
+                                {% elseif entity.typeLotoFoot == 15 %}
+                                  {{ 'Loto Foot 15' }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {{ 'Date Fin' }}
+                                {{ entity.finValidation|date('d/m/Y') }}
 
-    <div class="search">
-    <form action="" method="post">
-    {% if searchValue is defined and searchValue is not empty and searchValue.date_match is defined %}
-        {{ 'Date' }} <input type="text" name="date_match" id="datepic"
-                            value="{{ searchValue.date_match }}"/>
-    {% else %}
-        {{ 'Date' }} <input type="text" name="date_match" id="datepic"/>
+                            </td>
+                            <td>
 
-    {% endif %}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-lg-8">
+                    <form id="search" action="">
+                        {% if searchValue is defined and searchValue is not empty and searchValue.date_match is defined %}
+                            {{ 'Date' }} <input type="text" name="date_match" id="datepic"
+                                                value="{{ searchValue.date_match }}"/>
+                        {% else %}
+                            {{ 'Date' }} <input type="text" name="date_match" id="datepic"/>
 
-    {{ 'Championnats'|trans }}
-    <select name="championat_match" id="">
+                        {% endif %}
+
+                        {#{{ 'Championnats'|trans }}#}
+                        <select name="championat_match" id="">
 
 
-        {% if searchValue.championat_match is defined %}
+                            {% if searchValue.championat_match is defined %}
 
-            <option value="{{ searchValue.championat_match }}">{{ searchValue.championat_match }}</option>
-            <option value=""></option>
-            {% for rowChamp in champi %}
-                <option value="{{ rowChamp.fullNameChampionat }}"> {{ rowChamp.fullNameChampionat }}</option>
-            {% endfor %}
+                                <option value="{{ searchValue.championat_match }}">{{ searchValue.championat_match }}</option>
+                                <option value=""></option>
+                                {% for rowChamp in champi %}
+                                    <option value="{{ rowChamp.fullNameChampionat }}"> {{ rowChamp.fullNameChampionat }}</option>
+                                {% endfor %}
 
-        {% else %}
-            <option value="" disabled selected>{{ 'Choisir championnat' }}</option>
-            {% for rowchampinat in championat %}
+                            {% else %}
+                                <option value="" disabled selected>{{ 'Choisir championnat' }}</option>
+                                {% for rowchampinat in championat %}
 
-                <option value="{{ rowchampinat.fullNameChampionat }}">{{ rowchampinat.fullNameChampionat }}</option>
+                                    <option value="{{ rowchampinat.fullNameChampionat }}">{{ rowchampinat.fullNameChampionat }}</option>
 
-            {% endfor %}
-        {% endif %}
-    </select>
-    {{ 'Pays' }}
-        <select class="pays_match" name="pays_match" id="">
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                      {#  {{ 'Pays' }}#}
+                        <select class="pays_match" name="pays_match" id="">
 
-            {% if searchValue.pays_match is defined %}
-                <option value="{{ searchValue.pays_match }}">{{ searchValue.pays_match }}</option>
-                {% for rowCountry in country %}
+                            {% if searchValue.pays_match is defined %}
+                                <option value="{{ searchValue.pays_match }}">{{ searchValue.pays_match }}</option>
+                                {% for rowCountry in country %}
 
-                    {% if rowCountry.pays != searchValue.pays_match %}
-                        <option value="{{ rowCountry.pays }}"> {{ rowCountry.pays }}  </option>
-                    {% endif %}
-                {% endfor %}
+                                    {% if rowCountry.pays != searchValue.pays_match %}
+                                        <option value="{{ rowCountry.pays }}"> {{ rowCountry.pays }}  </option>
+                                    {% endif %}
+                                {% endfor %}
 
-            {% else %}
-                <option value="" disabled selected>{{ 'Choisir un pays' }}</option>
-                {% for rowCountry in country %}
-                    <option value="{{ rowCountry.pays }}"> {{ rowCountry.pays }}  </option>
-                {% endfor %}
-            {% endif %}
-        </select>
+                            {% else %}
+                                <option value="" disabled selected>{{ 'Choisir un pays' }}</option>
+                                {% for rowCountry in country %}
+                                    <option value="{{ rowCountry.pays }}"> {{ rowCountry.pays }}  </option>
+                                {% endfor %}
+                            {% endif %}
+                        </select>
 
-    <input type="submit" value="{{ 'Chercher les matchs' }}"/>
-        <a href="#" title="annuler filtre">{{ 'Annuler' }}</a>
+                        <input type="submit" class="searh-btn-match" value="{{ 'Chercher les matchs' }}"/>
+                        <a href="#" title="annuler filtre">{{ 'Annuler' }}</a>
+                    </form>
+                </div>
+                <div class="search">
+                    <form action="" method="post">
+                        {% if matchs is defined and matchs is not null %}
 
-    <br/><br/>
-    {% if matchs is defined and matchs is not null %}
+                        <table>
+                            <tr>
+                                <td>Selection</td>
+                                <td>Date</td>
+                                <td>Equipe 1</td>
+                                <td>Score</td>
+                                <td>Equipe 2</td>
+                                <td>Status</td>
+                            </tr>
+                            {% for rowMatchs in matchs %}
 
-    <table>
-        <tr>
-            <td>Selection</td>
-            <td>Date</td>
-            <td>Equipe 1</td>
-            <td>Score</td>
-            <td>Equipe 2</td>
-            <td>Status</td>
-        </tr>
-        {% for rowMatchs in matchs %}
-
-            {% if idLotoFoot == 7 %}
+          {#  {% if idLotoFoot == 7 %}
                 {% if rowMatchs.lotoFoot7 is not null and rowMatchs.lotofoot7.id is not null   %}
                     {% if rowMatchs.lotofoot7.id == idLotoFoot %}
                     <tr class="selected">
@@ -134,8 +162,8 @@
                         {% endif %}
 
                 {% endif %}
-            {% endif %}
-            {% if idLotoFoot == 15 %}
+            {% endif %}#}
+         {#   {% if idLotoFoot == 15 %}
                 {% if rowMatchs.lotoFoot15 is not null and rowMatchs.lotoFoot15.id is not null and rowMatchs.lotoFoot15.id is defined and rowMatchs.lotoFoot15.id == idLotoFoot %}
                     {% if rowMatchs.lotofoot15.id == idLotoFoot %}
                         <tr class="selected">
@@ -150,9 +178,9 @@
 
                 {% endif %}
             {% endif %}
-
+#}
             <td>
-                {% if idLotoFoot == 7 %}
+             {#   {% if idLotoFoot == 7 %}
                     {% if rowMatchs.lotoFoot7 is not null and rowMatchs.lotoFoot7 is defined and rowMatchs.lotoFoot7.id == idLotoFoot %}
                         <input class="selection_match" type="checkbox" name="select_{{ rowMatchs.id }}" checked="true"/>
                         <a onclick="supprimer('Etes vous sur de vouloir supprimer ce match ?')" href="{{ path('remove_match_loto_foot',{'idLotoFoot': idLotoFoot, 'lotoId':entity.id, 'id':rowMatchs.id} ) }}">
@@ -171,12 +199,12 @@
 
                     {% else %}
                         <input class="selection_match" type="checkbox" name="select_{{ rowMatchs.id }}" />
-                        {#{% if rowMatchs.lotoFoot15.numero is defined %}
+                        &#123;&#35;{% if rowMatchs.lotoFoot15.numero is defined %}
                             {{ rowMatchs.lotoFoot15.numero }}
-                        {% endif %}#}
+                        {% endif %}&#35;&#125;
                     {% endif %}
                 {% endif %}
-
+#}
 
             </td>
             <td>
@@ -192,67 +220,65 @@
             <td>
                 {{ rowMatchs.statusMatch }}
                 <input type="hidden" name="idMatch" value="{{ rowMatchs.id }}"/>
-                <input type="hidden" name="idLotoFoot" value="{{ idLotoFoot }}"/>
+                <input type="hidden" name="idLotoFoot" value="{#{{ idLotoFoot }}#}"/>
             </td>
 
             </tr>
         {% endfor %}
-    </table>
-    <br/>
-    <input id="addMatch" class="btn btn-primary" type="submit" value="{{ 'Insérer matchs' }}"/>
-    <br/><br/>
-    </form>
+                        </table>
+                        <br/>
+                        <input id="addMatch" class="btn btn-primary" type="submit" value="{{ 'Insérer matchs' }}"/>
+                        <br/><br/>
+                    </form>
 
-    {% else %}
-        {{ 'Vous devez effectué une recherche des matchs ' }}
-    {% endif %}
+                    {% else %}
+                        {{ 'Vous devez effectué une recherche des matchs ' }}
+                    {% endif %}
 
-        {% block javascripts %}
-            {{ parent() }}
-            {% if idLotoFoot == 7 %}
+                    {% block javascripts %}
+                        {{ parent() }}
+                        {#{% if idLotoFoot == 7 %}
 
-                <script>
-                    if ($('input.selection_match').length == 7) {
-                        $('input#addMatch').prop('disable', true);
-                    } else {
-                        $('input#addMatch').prop('disable', false);
-                    }
-
-                    $('input.selection_match').each(function(){
-                                var i = 0;
-                                if($(this).is(':checked')){
-                                    i = i + 1;
-                                    if(i!=7){
-                                        $('input#addMatch').prop('disable', true);
-                                    }
+                            <script>
+                                if ($('input.selection_match').length == 7) {
+                                    $('input#addMatch').prop('disable', true);
+                                } else {
+                                    $('input#addMatch').prop('disable', false);
                                 }
-                    }
-                   );
-                </script>
 
-            {% endif %}
-            {% if idLotoFoot == 15 %}
-                <script>
-                    if ($('input.selection_match').length == 15 ) {
-                        $('input#addMatch').prop('disable', true);
-                    } else {
-                        $('input#addMatch').prop('disable', false);
-                    }
-                    if ($('input.selection_match').length == 14 ) {
-                        $('input#addMatch').prop('disable', true);
-                    } else {
-                        $('input#addMatch').prop('disable', false);
-                    }
-                </script>
-            {% endif %}
+                                $('input.selection_match').each(function(){
+                                            var i = 0;
+                                            if($(this).is(':checked')){
+                                                i = i + 1;
+                                                if(i!=7){
+                                                    $('input#addMatch').prop('disable', true);
+                                                }
+                                            }
+                                }
+                               );
+                            </script>
 
-        {% endblock %}
+                        {% endif %}#}
+                        {#  {% if idLotoFoot == 15 %}
+                              <script>
+                                  if ($('input.selection_match').length == 15 ) {
+                                      $('input#addMatch').prop('disable', true);
+                                  } else {
+                                      $('input#addMatch').prop('disable', false);
+                                  }
+                                  if ($('input.selection_match').length == 14 ) {
+                                      $('input#addMatch').prop('disable', true);
+                                  } else {
+                                      $('input#addMatch').prop('disable', false);
+                                  }
+                              </script>
+                          {% endif %}#}
+
+                    {% endblock %}
 
 
-
-
+                </div>
+            </div>
         </div>
-        </div>
-        </div>
-        </div>
-        {% endblock %}
+    </div>
+{% endblock %}

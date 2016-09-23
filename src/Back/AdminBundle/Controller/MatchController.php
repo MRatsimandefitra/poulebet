@@ -8,6 +8,7 @@ use Api\CommonBundle\Command\GoalApiMatchsManuelCommand;
 use Api\CommonBundle\Command\GoalApiMatchsParChampionatCommand;
 use Api\CommonBundle\Controller\ApiController;
 use Api\DBBundle\Entity\Championat;
+use Api\DBBundle\Entity\LotoFoot;
 use Api\DBBundle\Entity\LotoFoot15;
 use Api\DBBundle\Entity\LotoFoot7;
 use Api\DBBundle\Entity\Match;
@@ -34,6 +35,9 @@ class MatchController extends ApiController
     const ENTITY_CHAMPIONAT = 'ApiDBBundle:Championat';
     const ENTITY_COUNTRY = 'ApiDBBundle:TeamsPays';
     const ENTITY_MATCH = 'ApiDBBundle:Matchs';
+    const ENTITY_LOTOFOOT = 'ApiDBBundle:LotoFoot';
+    const FORM_LOTOFOOT = 'Api\DBBundle\Form\LotoFootType';
+
     const ENTITY_LOTOFOOT7 = 'ApiDBBundle:LotoFoot7';
     const ENTITY_LOTOFOOT15 = 'ApiDBBundle:LotoFoot15';
     const ENTITY_DROIT_ADMIN = 'ApiDBBundle:DroitAdmin';
@@ -43,8 +47,8 @@ class MatchController extends ApiController
     const FORM_CHAMPIONAT = 'Api\DBBundle\Form\ChampionatType';
     const ENTITY_TEAMS_PAYS = 'ApiDBBundle:TeamsPays';
 
-    const ENTITY_LOTOFOOT = 'ApiDBBundle:LotoFoot';
-    const FORM_LOTOFOOT = 'Api\DBBundle\Form\LotoFootType';
+   /* const ENTITY_LOTOFOOT = 'ApiDBBundle:LotoFoot';
+    const FORM_LOTOFOOT = 'Api\DBBundle\Form\LotoFootType';*/
 
     public function indexMatchsAction(Request $request)
     {
@@ -560,7 +564,7 @@ class MatchController extends ApiController
         ));
     }
 
-    public function addLotoFootAction(Request $request)
+/*    public function addLotoFootAction(Request $request)
     {
 
         if ($request->get('numero')) {
@@ -593,20 +597,37 @@ class MatchController extends ApiController
         return $this->render('BackAdminBundle:Matchs:add_loto_foot.html.twig', array(
             'droitAdmin' => $this->get('roles.manager')->getDroitAdmin('Matchs')[0]
         ));
+    }*/
+
+    public function addLotoFootAction(Request $request){
+
+        $lotoFoot = new LotoFoot();
+        $form = $this->formPost(self::FORM_LOTOFOOT, $lotoFoot);
+        $form->handleRequest($request);
+
+        if($form->isValid()){
+            $finValidation = new \DateTime($form['finValidation']->getData());
+            $lotoFoot->setFinValidation($finValidation);
+            $this->insert($lotoFoot, array('success' => 'success' , 'error' => 'error') );
+            return $this->redirectToRoute('list_loto_foot');
+        }
+        return $this->render('BackAdminBundle:Matchs:add_loto_foot.html.twig', array(
+            'droitAdmin' => $this->get('roles.manager')->getDroitAdmin('Matchs')[0],
+            'form' => $form->createView()
+        ));
     }
+
 
     public function listLotofootAction(Request $request)
     {
         $session = new Session();
         
         $session->set("current_page","Loto_foot");
-        $lotoFoot7 = $this->getAllEntity(self::ENTITY_LOTOFOOT7);
-        $lotoFoot15 = $this->getAllEntity(self::ENTITY_LOTOFOOT15);
+        $lotoFoot = $this->getAllEntity(self::ENTITY_LOTOFOOT);
         $droitAdmin = $this->get('roles.manager')->getDroitAdmin('Matchs');
         return $this->render('BackAdminBundle:Matchs:list_lotofoot.html.twig', array(
-            'lotoFoot7' => $lotoFoot7,
-            'lotoFoot15' => $lotoFoot15,
-            'droitAdmin' => $droitAdmin[0]
+            'droitAdmin' => $droitAdmin[0],
+            'lotoFoot' => $lotoFoot
         ));
     }
 
@@ -639,7 +660,7 @@ class MatchController extends ApiController
         ));
     }
 
-    public function editLotofootAction(Request $request, $id, $idLotoFoot)
+    public function editLotofootOldAction(Request $request, $id, $idLotoFoot)
     {
 
         if ($idLotoFoot == 7) {
@@ -682,7 +703,26 @@ class MatchController extends ApiController
         ));
     }
 
+    public function editLotofootAction(Request $request, $id){
 
+        $currentLotoFoot = $this->getRepoFormId(self::ENTITY_LOTOFOOT, $id);
+        $form = $this->formPost(self::FORM_LOTOFOOT, $currentLotoFoot);
+        $form->handleRequest($request);
+        //var_dump($currentLotoFoot->getFinValidation()->format('Y-m-d')); die;
+        if($form->isValid()){
+            $finValidation = new \DateTime($form['finValidation']->getData());
+            $currentLotoFoot->setFinValidation($finValidation);
+            $this->insert($currentLotoFoot, array('success' => 'success', 'error' => 'error'));
+
+            return $this->redirectToRoute('list_loto_foot');
+        }
+        return $this->render('BackAdminBundle:Matchs:edit_lotofoot.html.twig', array(
+            'currentLotoFoot' => $currentLotoFoot,
+            'form' => $form->createView(),
+            'finValidation' => $currentLotoFoot->getFinValidation()->format('Y-m-d'),
+            'droitAdmin' => $this->get('roles.manager')->getDroitAdmin('Matchs')[0]
+        ));
+    }
     public function removeLotoFootAction($id, $idLotoFoot)
     {
         if ($idLotoFoot == 7) {
@@ -703,26 +743,19 @@ class MatchController extends ApiController
      * @param $idLotoFoot
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function addMatchInLotoFootAction(Request $request, $idLotoFoot, $id)
+    public function addMatchInLotoFootAction(Request $request, $id)
     {
-        if ($idLotoFoot == 7) {
-            $lotoFoot = $this->getRepoFormId(self::ENTITY_LOTOFOOT7, $id);
-        }
-        if ($idLotoFoot == 15) {
-            $lotoFoot = $this->getRepoFormId(self::ENTITY_LOTOFOOT15, $id);
-        }
+
+        $lotoFoot = $this->getRepoFormId(self::ENTITY_LOTOFOOT, $id);
+
+
         $championat = $this->getAllEntity(self::ENTITY_CHAMPIONAT);
 
-        $dqlC = "SELECT ch from ApiDBBundle:Championat ch where ch.pays is not NULL";
-        $query = $this->get('doctrine.orm.entity_manager')->createQuery($dqlC);
-        $country = $query->getResult();
-        /*$pays = $this->getAllEntity(self::ENTITY_CHAMPIONAT);*/
+        $country = $this->getRepo(self::ENTITY_CHAMPIONAT)->findCountryValid();
 
-
-        $dql = "SELECT m, lf7, lf15 from ApiDBBundle:Matchs m
+        $dql = "SELECT m, lf, ch from ApiDBBundle:Matchs m
               LEFT JOIN m.championat ch
-              LEFT JOIN m.lotoFoot7 lf7
-              LEFT JOIN m.lotoFoot15 lf15 ";
+              LEFT JOIN m.lotoFoot lf";
         $where = array();
         $where[] = " ch.isEnable = true";
         $params = array();
@@ -775,33 +808,23 @@ class MatchController extends ApiController
         } else {
             $matchs = $this->get('doctrine.orm.entity_manager')->createQuery($dql)->setParameters($params)->getResult();
         }
-        //var_dump($matchs); die;
-
         if ($request->get('idMatch')) {
             $idMatch = $request->get('idMatch');
-            //$matchs = $this->getRepoFormId(self::ENTITY_MATCH, $idMatch);
         }
-        /*var_dump()*/
-        /* if($request->get('idLotoFoot')){
-             $idLotoFoot = $request->get('idLotoFoot');
-         }*/
+
 
         $data = explode('&', $request->getContent());
         $arrayData = array();
         //$i = 0;
         $idarray = array();
         foreach ($data as $vData) {
-            /* $i = $i + 3;
-             if($i > 9){
-                 var_dump()); die;
-             }*/
             if (substr($vData, 0, 7) == 'select_') {
                 $arrayData[] = $vData;
                 $idarray[] = str_replace('=on', '', str_replace('select_', '', $vData));
             }
         }
 
-        if ($idLotoFoot == 7) {
+/*        if ($idLotoFoot == 7) {
 
             if (count($arrayData) < 7) {
                 //  die('erreur < 7');
@@ -877,19 +900,15 @@ class MatchController extends ApiController
 
             $nbMatchs15 = $i;
         }
-        $champi = $this->getRepo(self::ENTITY_CHAMPIONAT)->findAll();
+        $champi = $this->getRepo(self::ENTITY_CHAMPIONAT)->findAll();*/
         // var_dump($matchs[0]->getLotoFoot7()); die;
         return $this->render('BackAdminBundle:Matchs:add_lotofoot.html.twig', array(
             'entity' => $lotoFoot,
-            'idLotoFoot' => $idLotoFoot,
             'championat' => $championat,
-            'champi' => $champi,
             'country' => $country,
             'pays' => $country,
             'matchs' => $matchs,
             'searchValue' => $searchValue,
-            'nbMatchs7' => $nbMatchs7,
-            'nbMatchs15' => $nbMatchs15,
             'droitAdmin' => $this->get('roles.manager')->getDroitAdmin('Matchs')[0]
         ));
 

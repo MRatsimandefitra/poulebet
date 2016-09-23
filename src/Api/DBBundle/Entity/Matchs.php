@@ -1,9 +1,4 @@
 <?php
-
-
-
-
-
 namespace Api\DBBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -37,18 +32,12 @@ class Matchs
      * @ORM\JoinTable(name="matchs_concours")
      **/
     private $concours;
-
     /**
-     * @ORM\ManyToOne(targetEntity="LotoFoot7", cascade={"persist"})
-     * @ORM\JoinColumn(name="lotofoot7_id")
+     * @ORM\ManyToOne(targetEntity="LotoFoot", cascade={"persist", "remove"})
+     * @ORM\JoinColumn(name="lotofoot_id", nullable=true)
      */
-    private $lotoFoot7;
+    private $lotoFoot;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="LotoFoot15", cascade={"persist"})
-     * @ORM\JoinColumn(name="lotofoot15_id")
-     */
-    private $lotoFoot15;
 
     /**
      * @var String
@@ -646,56 +635,6 @@ class Matchs
     }
 
     
-
-    /**
-     * Set lotoFoot7
-     *
-     * @param \Api\DBBundle\Entity\LotoFoot7 $lotoFoot7
-     *
-     * @return Matchs
-     */
-    public function setLotoFoot7(\Api\DBBundle\Entity\LotoFoot7 $lotoFoot7 = null)
-    {
-        $this->lotoFoot7 = $lotoFoot7;
-
-        return $this;
-    }
-
-    /**
-     * Get lotoFoot7
-     *
-     * @return \Api\DBBundle\Entity\LotoFoot7
-     */
-    public function getLotoFoot7()
-    {
-        return $this->lotoFoot7;
-    }
-
-    /**
-     * Set lotoFoot15
-     *
-     * @param \Api\DBBundle\Entity\LotoFoot15 $lotoFoot15
-     *
-     * @return Matchs
-     */
-    public function setLotoFoot15(\Api\DBBundle\Entity\LotoFoot15 $lotoFoot15 = null)
-    {
-        $this->lotoFoot15 = $lotoFoot15;
-
-        return $this;
-    }
-
-    /**
-     * Get lotoFoot15
-     *
-     * @return \Api\DBBundle\Entity\LotoFoot15
-     */
-    public function getLotoFoot15()
-    {
-        return $this->lotoFoot15;
-    }
-
-
     /**
      * Set statusMatch
      *
@@ -1107,5 +1046,29 @@ class Matchs
     public function getTimestampCheckGoalApi()
     {
         return $this->timestampCheckGoalApi;
+    }
+
+    /**
+     * Set lotoFoot
+     *
+     * @param \Api\DBBundle\Entity\LotoFoot $lotoFoot
+     *
+     * @return Matchs
+     */
+    public function setLotoFoot(\Api\DBBundle\Entity\LotoFoot $lotoFoot = null)
+    {
+        $this->lotoFoot = $lotoFoot;
+
+        return $this;
+    }
+
+    /**
+     * Get lotoFoot
+     *
+     * @return \Api\DBBundle\Entity\LotoFoot
+     */
+    public function getLotoFoot()
+    {
+        return $this->lotoFoot;
     }
 }

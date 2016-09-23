@@ -320,3 +320,37 @@ table tr.selected table {
 .current-menu{
     border-bottom: 2px solid #0066FF;
 }
+input#concours_dateDebut{
+    width: 160px;
+}
+input#concours_dateFinale{
+    width: 160px;
+}
+table.status-lotofoot {
+    font-size: 11px;
+    border: none;
+}
+table.status-lotofoot tr{
+
+}
+table.status-lotofoot td {
+    font-size: 11px;
+    /*border-bottom: 1px solid #eeeeee;*/
+    border: none;
+}
+form#search{
+    padding: 3px;
+
+}
+form#search input[type=text]{
+    height: 20px;
+    width: 100px;
+}
+form#search select{
+    height: 20px;
+    width: 100px;
+}
+form#search select{
+    height: 20px;
+    width: 150px;
+}
