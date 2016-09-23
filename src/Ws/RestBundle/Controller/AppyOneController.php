@@ -19,6 +19,7 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
  * @author miora.manitra
  */
 class AppyOneController extends ApiRestController{
+    const ENTITY_MENTION = 'ApiDBBundle:Mention';
     /**
      * @ApiDoc(
      *      description = "Recuperer les information via appyOne",
@@ -28,13 +29,24 @@ class AppyOneController extends ApiRestController{
     public function getDataAction(){
         // traitement WS  appyOne
         // chargement des paramètres
-        $appyone_url_login = $this->getParameter("appyone_url_login");
+        $mentions = $this->getEm()->getRepository(self::ENTITY_MENTION)->findAll();
+        $mention = $mentions[0];
+        
+        /*$appyone_url_login = $this->getParameter("appyone_url_login");
         $appyone_username = $this->getParameter("appyone_username");
         $appyone_password = $this->getParameter("appyone_password");
         $appyone_url_liste_application = $this->getParameter("appyone_url_liste_application");
         $nid = $this->getParameter("appyone_nid");
-        $appyone_url_details = $this->getParameter("appyone_url_details");
+        $appyone_url_details = $this->getParameter("appyone_url_details");*/
 
+        
+        $appyone_url_login = $mention->getAppyoneUrlLogin();
+        $appyone_username =$mention->getAppyoneUsername();
+        $appyone_password = $mention->getAppyonePassword();
+        $appyone_url_liste_application = $mention->getAppyoneUrlListeApplication();
+        $nid = $mention->getAppyoneNid();
+        $appyone_url_details =$mention->getAppyoneUrlDetails();
+        
         // login appyOne
         $data = array("username"=>$appyone_username, "password"=>$appyone_password);
         $dataJson = json_encode($data);
