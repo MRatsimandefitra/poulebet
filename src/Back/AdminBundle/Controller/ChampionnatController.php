@@ -72,15 +72,6 @@ class ChampionnatController extends ApiController
         $nbChampionat = count($this->getAllEntity(self::ENTITY_CHAMPIONAT)) + 1;
         $form = $this->formPost(self::FORM_CHAMPIONAT, $championat, array('nbChampionat' => $nbChampionat));
         $form->handleRequest($request);
-        /*$dateDebut = $form['dateDebutChampionat']->getData();
-        $dateD = new \Date($dateDebut);
-        $dateFinale = $form['dateFinaleChampionat']->getData();
-        $dateF = new \DateTime($dateDebut);
-        $championat->setDateDebutChampionat($dateD);
-        $championat->setDateFinaleChampionat($dateF);*/
-        //$countries = Intl::getRegionBundle()->getCountryName(strtoupper($form['pays']->getData()));
-        //$countries = strtoupper($form['pays']->getData());
-        //$championat->setPays($countries);
 
         if($form->isValid()){
             $this->insert($championat, array('success' => 'success' , 'error' => 'error'));
@@ -89,6 +80,7 @@ class ChampionnatController extends ApiController
         $droitAdmin = $this->getRolesAdmin()->getDroitAdmin('Matchs');
         return $this->render('@BackAdmin/Championnat/add_championat.html.twig', array(
             'form' => $form->createView(),
+            'rangMax' => $nbChampionat,
             'championat' => $championat,
             'droitAdmin' => $droitAdmin[0]
         ));

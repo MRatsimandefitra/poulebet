@@ -31,6 +31,14 @@
                             {{ form_errors(form.rang) }}
                         </td>
                     </tr>
+                    <tr>
+                        <td>{{ 'Active' }}</td>
+                        <td>
+                            {{ form_widget(form.isEnable) }}
+                            {{ form_errors(form.isEnable) }}
+
+                        </td>
+                    </tr>
                  {#   <tr>
                         <td>{{ 'Type de championnat' }}</td>
                         <td>

@@ -62,7 +62,7 @@ class ChampionatRepository extends \Doctrine\ORM\EntityRepository
         return $query->getResult();
     }
     function findChamponatRang(){
-        $dql = "SELECT ch from ApiDBBundle:Championat ch ORDER BY ch.rang ASC";
+        $dql = "SELECT ch from ApiDBBundle:Championat ch ORDER BY ch.isEnable DESC,  ch.rang ASC";
         $query = $this->getEntityManager()->createQuery($dql);
         return $query->getResult();
     }

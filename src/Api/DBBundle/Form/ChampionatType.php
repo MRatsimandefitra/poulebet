@@ -6,6 +6,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -29,6 +30,10 @@ class ChampionatType extends AbstractType
     {
         $this->getDataNb($options['nbChampionat']);
         $builder
+            ->add('isEnable', CheckboxType::class, array(
+                'required' => false,
+                'data' => true
+            ))
             ->add('nomChampionat', TextType::class)
             ->add('fullNameChampionat', TextType::class)
           /*  ->add('typeChampionat', ChoiceType::class, array(
@@ -62,7 +67,8 @@ class ChampionatType extends AbstractType
             ))*/
             ->add('pays', TextType::class, array('required' => false))
             ->add('rang', ChoiceType::class, array(
-                'choices' => $this->dataNb
+                'choices' => $this->dataNb,
+                'data' => max($this->dataNb)
             ))
             //->add('season', TextType::class, array())
 
