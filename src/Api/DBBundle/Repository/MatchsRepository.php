@@ -84,31 +84,34 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
     function getListeMatchsBySelectedChampionat($championat, $date = null)
     {
         // a verifier
+        $params = array();
         if(!$date){
             $dql = "SELECT m from ApiDBBundle:Matchs m
                     LEFT JOIN m.championat ch
                     WHERE m.dateMatch BETWEEN CURRENT_DATE() AND DATE_ADD(CURRENT_DATE(), 7, 'day')
                     AND ((m.masterProno1 is not null and m.masterProno1 = true) or (m.masterProno2 is not null and m.masterProno2 = true) or (m.masterPronoN is not null and m.masterPronoN = true))
                     AND   ch.nomChampionat LIKE :championat
-                    ORDER BY m.dateMatch ASC, m.id ASC";
+                    ORDER BY ch.rang ASC, m.dateMatch ASC, m.id ASC";
             //AND (m.masterProno1 is not null or m.masterProno2 is not null or m.masterPronoN is not null)
+
         }else{
 
             $dql = "SELECT m from ApiDBBundle:Matchs m
                 LEFT JOIN m.championat ch
-                WHERE  m.dateMatch BETWEEN :datepost AND DATE_ADD(CURRENT_DATE(), 7, 'day')
+                WHERE  m.dateMatch BETWEEN :date1 and :date2
                 AND ((m.masterProno1 is not null and m.masterProno1 = true) or (m.masterProno2 is not null and m.masterProno2 = true) or (m.masterPronoN is not null and m.masterPronoN = true))
                 AND ch.nomChampionat LIKE :championat
-                ORDER BY ch.rang ASC, m.dateMatch ASC";
+                ORDER BY ch.rang ASC, m.dateMatch ASC, m.id ASC";
+            $params['date1'] = $date. ' 00:00:00';
+            $params['date2'] = $date. ' 23:59:59';
         }
-
-        $query = $this->getEntityManager()->createQuery($dql);
-        $query->setParameter('championat', $championat);
-        if($date){
-            $query->setParameter('datepost', $date);
-        }
-     //   var_dump($query->getDQL()); die;
-        return $query->getResult();
+        $params['championat'] = $championat;
+        if(!empty($params)){
+           $query = $this->getEntityManager()->createQuery($dql)->setParameters($params);
+       }else{
+           $query = $this->getEntityManager()->createQuery($dql);
+       }
+       return $query->getResult();
     }
 
     /**

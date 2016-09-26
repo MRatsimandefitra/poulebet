@@ -53,6 +53,7 @@ class ChampionatsController extends ApiController
         $date = $request->request->get('date');
 
         $data = $this->getRepo(self::ENTITY_MATCHS)->getListeMatchsBySelectedChampionat($championat, $date);
+       // $data = $this->getRepo(self::ENTITY_MATCHS)->findMatchPronosticByParameter($championat, $date, true);
         $result = array();
         if ($data) {
             foreach ($data as $vData) {
