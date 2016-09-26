@@ -216,6 +216,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         if(!empty($params)){
             $query = $this->getEntityManager()->createQuery($dql)->setParameters($params);
         }
+
         return $query->getResult();
     }
 

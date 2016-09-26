@@ -61,6 +61,9 @@ class PronosticController extends ApiController
         $championnat = $this->getRepo(self::ENTITY_MATCHS)->findMatchPronosticByParameter($championnat, $date, true);
 
         $result = array();
+        $result['nb_championat'] = count($championnat);
+        $result['nb_matchs'] = count($maths);
+
         if($championnat){
             foreach($championnat as $kChampionat => $itemsChampionat){
                 $result['list_championat'][] = array(
