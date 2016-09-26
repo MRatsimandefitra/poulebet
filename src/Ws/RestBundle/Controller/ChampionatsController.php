@@ -105,6 +105,66 @@ class ChampionatsController extends ApiController
         return new JsonResponse($result);
     }
 
+
+    /**
+     * Ws, recuperer la liste des matchs avec tous les chamiponat + les pronostic et cote
+     * @ApiDoc(
+     *      description="Ws, recuperer la liste des matchs avec tous les chamiponat + les pronostic et cote"
+     *      parameters = {
+     *          {"name" = "date", "dataType"="date" ,"required"=false, "description"= "date of matchs lets mec ...."},
+     *      }
+     * )
+     * @return JsonResponse
+     */
+    public function postListeMatchsByAllChampionatAction(Request $request){
+
+        die('okok');
+       /* $date = $request->request->get('date');
+
+       // $data = $this->getRepo(self::ENTITY_MATCHS)->getListMatchWithAllChampionat($date);
+        $result = array();
+        if ($data) {
+            foreach ($data as $vData) {
+                $result['championat'] = $vData->getChampionat()->getFullNameChampionat();
+                $result['list_match'][] = array(
+                    'id' => $vData->getId(),
+                    'dateMatch' => $vData->getDateMatch(),
+                    'equipeDomicile' => $vData->getEquipeDomicile(),
+                    'equipeVisiteur' => $vData->getEquipeVisiteur(),
+
+                    'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $vData->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
+                    'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $vData->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
+                    'score' => $vData->getScore(),
+                    'scoreDomicile' => substr($vData->getScore(), 0, 1),
+                    'scoreVisiteur' => substr($vData->getScore(), -1, 1),
+                    'status' => $vData->getStatusMatch(),
+                    'cote_pronostic_1' => $vData->getCot1Pronostic(),
+                    'cote_pronostic_n' => $vData->getCoteNPronistic(),
+                    'cote_pronostic_2' => $vData->getCote2Pronostic(),
+                    'master_prono_1' => $vData->getMasterProno1(),
+                    'master_prono_n' => $vData->getMasterPronoN(),
+                    'master_prono_2' => $vData->getMasterProno2(),
+                    'tempsEcoules' => $vData->getTempsEcoules(),
+                    'live' => ($vData->getStatusMatch() == 'active') ? true : false,
+                    'current-state' => array(
+                        'period' => $vData->getPeriod(),
+                        'minute' => $vData->getMinute()
+                    ),
+                    'voteTotal' => $this->getTotalVoteParMatch($vData->getId()),
+                );
+            }
+            $result['code_error'] = 0;
+            $result['success'] = true;
+            $result['error'] = false;
+            $result['message'] = 'success';
+        } else {
+            $result['code_error'] = 4;
+            $result['success'] = true;
+            $result['error'] = false;
+            $result['message'] = 'Aucun resultat n\'a été trouvé';
+        }
+        return new JsonResponse($result);*/
+    }
     /**
      * GET liste pays with champonat with match
      * @ApiDoc(
