@@ -83,7 +83,7 @@ class PronosticController extends ApiController
                             'equipeDomicile' => $itemsMatchs->getEquipeDomicile(),
                             'equipeVisiteur' => $itemsMatchs->getEquipeVisiteur(),
                             'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $itemsMatchs->getCheminLogoDomicile() . '.png',
-                            'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $itemsMatchs->getCheminLogoDomicile() . '.png',
+                            'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $itemsMatchs->getCheminLogoVisiteur() . '.png',
                             'score' => $itemsMatchs->getScore(),
                             'status' => $itemsMatchs->getStatusMatch(),
                             'cote_pronostic_1' => $itemsMatchs->getCot1Pronostic(),
