@@ -8,5 +8,7 @@
 
 interface InterfaceApi {
 
-    public function getEm();
+    const ENTITY_MATCHS  = 'ApiDBBundle:Matchs';
+    const ENTITY_CHAMPIONATS = "ApiDBBundle:Championat";
+
 }

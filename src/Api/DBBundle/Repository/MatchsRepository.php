@@ -187,4 +187,36 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         return $query->getResult();
     }
 
+    function findMatchPronosticByParameter($championnat = null, $date = null, $groupChampionat = null){
+
+        $dql  = "SELECT m, ch from ApiDBBundle:Matchs m  LEFT JOIN m.championat ch ";
+        $where = array();
+        if($championnat){
+            $where[] = " ch.nomChampionat = :championat ";
+            $params['championat'] = $championnat;
+        }
+        if($date && $date != ''){
+            $where[]  = " m.dateMatch BETWEEN :date1 and :date2";
+            $params['date1'] = $date.' 00:00:01 ';
+            $params['date2'] = $date.' 23:59:59 ';
+        }else{
+
+            $where[] = "   m.dateMatch BETWEEN CURRENT_DATE() AND DATE_ADD(CURRENT_DATE(), 7, 'day')";
+        }
+        $where[] = " ((m.masterProno1 is not null and m.masterProno1 = TRUE) or (m.masterPronoN is not null and m.masterPronoN = TRUE) or (m.masterProno2 is not null and m.masterProno2 = TRUE)) ";
+        $where[] = " ch.isEnable = true";
+        if (!empty($where)) {
+            $dql .= ' WHERE ' . implode(' AND ', $where);
+        }
+        if($groupChampionat){
+            $dql .= " GROUP BY ch.nomChampionat ";
+        }
+        $dql .= " ORDER BY ch.rang ASC, m.dateMatch ASC, m.id ASC ";
+        $query = $this->getEntityManager()->createQuery($dql);
+        if(!empty($params)){
+            $query = $this->getEntityManager()->createQuery($dql)->setParameters($params);
+        }
+        return $query->getResult();
+    }
+
 }

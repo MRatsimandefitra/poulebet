@@ -45,14 +45,6 @@ class ChampionatsController extends ApiController
     }
 
     /**
-     * Ws, récupérer la liste des matchs pour le championnat sélectionné.(tri décroissant).
-     * @ApiDoc(
-     *      description="Ws, récupérer la liste des matchs pour le championnat sélectionné.(tri décroissant).",
-     *      parameters = {
-     *          {"name" = "championat", "dataType"="string" ,"required"=true, "description"= "code championat ex: fra_l1 ou eng_pl ...."},
-     *          {"name" = "date", "dataType"="date" ,"required"=false, "description"= " Date critere de recherche d'un match ...."}
-     *      }
-     * )
      *
      */
     public function postListeMatchsBySelectedChampionatAction(Request $request)
@@ -109,19 +101,17 @@ class ChampionatsController extends ApiController
     /**
      * Ws, recuperer la liste des matchs avec tous les chamiponat + les pronostic et cote
      * @ApiDoc(
-     *      description="Ws, recuperer la liste des matchs avec tous les chamiponat + les pronostic et cote"
+     *      description="Ws, recuperer la liste des matchs avec tous les chamiponat + les pronostic et cote",
      *      parameters = {
-     *          {"name" = "date", "dataType"="date" ,"required"=false, "description"= "date of matchs lets mec ...."},
+     *          {"name" = "date", "dataType"="date" ,"required"=false, "description"= "date of matchs lets mec ...."}
      *      }
      * )
-     * @return JsonResponse
      */
     public function postListeMatchsByAllChampionatAction(Request $request){
 
-        die('okok');
-       /* $date = $request->request->get('date');
+        $date = $request->request->get('date');
 
-       // $data = $this->getRepo(self::ENTITY_MATCHS)->getListMatchWithAllChampionat($date);
+        $data = $this->getRepo(self::ENTITY_MATCHS)->getListMatchWithAllChampionat($date);
         $result = array();
         if ($data) {
             foreach ($data as $vData) {
@@ -163,8 +153,9 @@ class ChampionatsController extends ApiController
             $result['error'] = false;
             $result['message'] = 'Aucun resultat n\'a été trouvé';
         }
-        return new JsonResponse($result);*/
+        return new JsonResponse($result);
     }
+
     /**
      * GET liste pays with champonat with match
      * @ApiDoc(

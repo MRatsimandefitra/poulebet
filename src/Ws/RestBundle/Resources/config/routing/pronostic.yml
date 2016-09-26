@@ -3,12 +3,19 @@ ws_rest_inscription:
     defaults: { _controller: WsRestBundle:Pronostic:getUtilisateurAchatPromo }
     methods: GET
     
-ws_rest_getChampionnat:
-    path:     /getChampionnat
-    defaults: { _controller: WsRestBundle:Pronostic:getChampionnat }
-    methods: POST
-    
-ws_rest_getMatch:
-    path:     /getMatchsByChampionnat
-    defaults: { _controller: WsRestBundle:Pronostic:getMatchsByChampionnat }
-    methods: POST
+ws_rest_get_match_pronostic_by_championat:
+    path:     /get-match-with-pronostic-by-parameter
+    defaults: { _controller: WsRestBundle:Pronostic:getMatchPronosticByParameter }
+    methods: POST # championat: string ex: eng_pl | date: date ex: 2016-09-16
+ws_rest_get_all_match_pronostic:
+    path:     /get-all-match-pronostic
+    defaults: { _controller: WsRestBundle:Pronostic:getAllMatchsPronostic }
+    methods: GET
+ws_rest_get_match_pronostic_today:
+    path:     /get-match-pronostic-today
+    defaults: { _controller: WsRestBundle:Pronostic:getMatchsPronosticToday }
+    methods: GET
+ws_rest_get_match_pronostic_today:
+    path:     /get-match-pronostic-today
+    defaults: { _controller: WsRestBundle:Pronostic:getMatchsPronosticToday }
+    methods: GET
