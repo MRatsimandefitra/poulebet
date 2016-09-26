@@ -93,8 +93,8 @@ class PronosticController extends ApiController
                             'master_prono_n' => $itemsMatchs->getMasterPronoN(),
                             'master_prono_2' => $itemsMatchs->getMasterProno2(),
                             'tempsEcoules' => $itemsMatchs->getTempsEcoules(),
-                            'idChampionat' => $itemsMatchs->getChampionat()->getId()
-
+                            'idChampionat' => $itemsMatchs->getChampionat()->getId(),
+                            'voteTotal' => $this->getTotalVoteParMatch($itemsMatchs->getId())
                         );
                 }
                 $result['code_error'] = 0;
@@ -113,7 +113,15 @@ class PronosticController extends ApiController
     }
 
 
-
+    private function getTotalVoteParMatch($idMatch)
+    {
+        $dqlVoteUtilisateur = "SELECT v, m from ApiDBBundle:VoteUtilisateur v LEFT JOIN v.matchs m WHERE m.id = :idmatch";
+        $queryVoteUtilisateur = $this->get('doctrine.orm.entity_manager')->createQuery($dqlVoteUtilisateur);
+        $queryVoteUtilisateur->setParameter('idmatch', $idMatch);
+        $dataVote = $queryVoteUtilisateur->getResult();
+        $result = count($dataVote);
+        return $result;
+    }
 }
 
 
