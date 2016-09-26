@@ -63,7 +63,7 @@ class PronosticController extends ApiController
         $result = array();
         $result['nb_championat'] = count($championnat);
         $result['nb_matchs'] = count($maths);
-
+        $result['date_request']  = date('Y-m-d H:i');
         if($championnat){
             foreach($championnat as $kChampionat => $itemsChampionat){
                 $result['list_championat'][] = array(
