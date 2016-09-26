@@ -97,6 +97,9 @@ class PronosticController extends ApiController
 
                         );
                 }
+                $result['code_error'] = 0;
+                $result['error'] = false;
+                $result['success'] = true;
 
             }
         }else{
