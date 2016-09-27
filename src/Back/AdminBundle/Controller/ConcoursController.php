@@ -73,8 +73,8 @@ class ConcoursController extends ApiController {
 
 
         if($form->isValid()){
-            $concours->setDateDebut(new \DateTime(date('Y-m-d H:i:s', strtotime($form['dateDebut']->getData()))));
-            $concours->setDateFinale(new \DateTime(date('Y-m-d H:i:s', strtotime($form['dateFinale']->getData()))));
+            $concours->setDateDebut($form['dateDebut']->getData());
+            $concours->setDateFinale($form['dateFinale']->getData());
             $this->insert($concours, array('success' => 'success', 'error' => 'error'));
             return $this->redirectToRoute("list_concours");
         }
