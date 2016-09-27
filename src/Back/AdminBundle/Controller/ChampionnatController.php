@@ -17,6 +17,7 @@ class ChampionnatController extends ApiController
 
 
     public function listChampionatAction(Request $request){
+
         if($request->getContent()){
             $content = $request->getContent();
             $data = str_replace('championat_','',$content);
