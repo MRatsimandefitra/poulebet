@@ -41,11 +41,14 @@ class GoalApiNotificationLiveExistCommand extends ContainerAwareCommand
                 $data = $this->getUrlByChampionat($itemsChampionat->getId());
                 if($data){
                     foreach($data['items'] as $kItems => $items){
-                        if($items['status'] === 'active'){
+                        if($items['status'] === 'not_started'){
+
                             $date = \DateTime::createFromFormat('Y-m-d H:i', date('Y-m-d H:i', $items['timestamp_starts']));
+                            $tmpDate = \DateTime::createFromFormat('Y-m-d H:i', date('Y-m-d H:i', $items['timestamp_starts']));
                             $now = new \DateTime('now');
-                            $near = $date->modify("-1 hours");
-                            if($near >= $now ){
+                            $near = $tmpDate->modify("-1 hours");
+
+                            if( $now >= $near && $now <= $date ){
                                 $users = $em->getRepository(self::ENTITY_UTILISATEUR)->findAll();
                                 $device_token = array();
 
