@@ -49,7 +49,6 @@ class GoalApiNotificationLiveExistCommand extends ContainerAwareCommand
                             $near = $tmpDate->modify("-1 hours");
 
                             if( $now >= $near && $now <= $date ){
-                                die('okok');
                                 $users = $em->getRepository(self::ENTITY_UTILISATEUR)->findAll();
                                 $device_token = array();
 
