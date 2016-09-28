@@ -18,7 +18,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class GoalApiMatchsLiveCommand extends ContainerAwareCommand {
+class GoalApiMatchsLiveScoreCommand extends ContainerAwareCommand {
     const ENTITY_CHAMPIONAT = 'ApiDBBundle:Championat';
     const ENTITY_COUNTRY = 'ApiDBBundle:Country';
     const ENTITY_MATCH = 'ApiDBBundle:Matchs';
@@ -31,7 +31,7 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand {
     protected function configure()
     {
         $this
-            ->setName('goalapi:check:matchs-live')
+            ->setName('goalapi:check:livescore')
             // the short description shown while running "php bin/console list"
             ->setDescription('Check match Live');
     }
@@ -39,13 +39,14 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand {
     protected function execute(InputInterface $input, OutputInterface $output)
     {
             $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        /*
             $championat = $em->getRepository(self::ENTITY_CHAMPIONAT)->findBy(array('isEnable' => true));
             $count = 0;
-            foreach($championat as $vChampionat){
-                $count = $count + 1;
-                $output->writeln(' ---  championat --- '.$vChampionat->getFullNameChampionat());
-                $data = $this->getUrlByChampionat($vChampionat->getId());
-                $output->writeln("we found " . count($data['items']). " matchs for ".$vChampionat->getFullNameChampionat());
+            foreach($championat as $vChampionat){*/
+                $url = $this->getContainer()->get('kernel')->getRootDir().'/../web/json/live1.json';
+                //var_dump($url); die;
+                $content = file_get_contents($url);
+                $data = json_decode($content, true);
                 if($data){
                     $count=  0;
                     foreach($data['items'] as $vItems){
@@ -55,12 +56,7 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand {
                         /*$dateDebut = \DateTime::createFromFormat('Y-m-d H:i', date('Y-m-d 00:00'));*/
                         $dateDebut = \DateTime::createFromFormat('Y-m-d H:i', date('2016-09-15 00:00'));
                         $dataEnd = \DateTime::createFromFormat('Y-m-d H:i', date('2016-09-15 H:i', mktime(0, 0,0, date('m'),date('d') + 1, date('Y') )));
-                        $users = $this->getContainer()->get('security.token_storage')->getToken()->getUser();
-                        $device = $em->getRepository(self::ENTITY_DEVICE)->findBy(array('utilisateur' => $users));
-                        foreach($device as $k => $items){
-                            $device_token[] = $device->getToken();
-                            array_push($device_token, $device->getToken());
-                        }
+
                         if($vItems['status'] === 'active'){
 
                             $output->writeln("Treatement ->  Matchs With ID :". $vItems['id']);
@@ -121,7 +117,7 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand {
                                 $matchs->setSeason($vItems['details']['contest']['season']);
                             }
 
-                            $matchs->setChampionat($vChampionat);
+                         //   $matchs->setChampionat($vChampionat);
                             if(array_key_exists('current-state', $vItems)){
                                 $matchs->setPeriod($vItems['current_state']['period']);
                                 $matchs->setMinute($vItems['current_state']['minute']);
@@ -130,6 +126,25 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand {
                             $nbLocalME = $em->getRepository(self::ENTITY_MATCH_EVENT)->findByMatchs($matchs);
                             $nbGoalApiME = $vItems['events'];
 
+
+                            $users = $this->getContainer()->get('security.token_storage')->getToken();
+                            var_dump($users); die;
+                            $device = $em->getRepository(self::ENTITY_DEVICE)->findBy(array('utilisateur' => $users));
+                            foreach($device as $k => $items){
+                                $device_token[] = $device->getToken();
+                                array_push($device_token, $device->getToken());
+                            }
+                            $messageData = array(
+                                "message"=> "egagegagaeaeg",
+                                "type"=>"livescore"
+                            );
+                            $data = array(
+                                'registration_ids' => $device_token,
+                                'data' => $messageData
+                            );
+                            $http = $this->getContainer()->get('http');
+                            //die('okok');
+                            $res = $http->sendGCMNotification($data);
                             if(count($nbLocalME) < count($nbGoalApiME) && count($nbGoalApiME)>0){
 
                                 if(count($nbLocalME) == 0){
@@ -157,10 +172,9 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand {
                                         }
                                         $this->getEm()->persist($matchsEvent);
                                         $this->getEm()->flush();
-                                        $output->writeln("insert event ".$matchsEvent->getId());
+                                      //  $output->writeln("insert event ".$matchsEvent->getId());
                                     }
                                 }else {
-
                                     $vEventItems = end($vItems['events']);
                                     $output->writeln(count($nbLocalME)." #".count($nbGoalApiME));
                                     if($matchs->getScore()!= $vItems['score']){
@@ -222,7 +236,7 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand {
                                     $matchs->setTimestampDateMatch($vItems['timestamp_starts']);
                                     $this->getEm()->persist($matchsEvent);
                                     $this->getEm()->flush();
-                                    $output->writeln("insert event ".$matchsEvent->getId());
+                                  //  $output->writeln("insert event ".$matchsEvent->getId());
                                 }
 
 
@@ -238,31 +252,27 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand {
                             $matchs->setStateGoalApi(true);
                             $em->flush();
                             $mmatchs = $em->getRepository(self::ENTITY_MATCH)->find($matchs->getId());
-                            if(!$mmatchs){
+                       /*     if(!$mmatchs){
                                 $this->sendErrorEmail('Error to set flux from goal api with matchs'.$mmatchs->getId());
                             }
                             if($mmatchs->getStateGoalApi() == false){
                                 $this->sendErrorEmail('Error to set flux from goal api with matchs'.$mmatchs->getId());
-                            }
+                            }*/
                             $matchs->setScore($mScore);
                             $em->persist($matchs);
                             $em->flush();
 
 
-                        }
+                        //}
                         // var_dump($vItems['teams']); die;
 
                     }
-                }else{
+                }/*else{
                     $output->writeln("No Matchs for ".$vChampionat->getFullNameChampionat().".....");
                 }
-               // var_dump($count); die;
-                $output->writeln(" --- End of Championat treatement --- ".$vChampionat->getId());
-
-
-
+                $output->writeln(" --- End of Championat treatement --- ".$vChampionat->getId());*/
             }
-
+            $output->writeln('Command was finish');
     }
 
     private function getUrlByChampionat($idChampionat){
@@ -288,35 +298,6 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand {
         return $arrayJson;
     }
 
-
-   /* private function getJson()
-    {
-        $em = $this->getEm();
-        $data = $em->getRepository('ApiDBBundle:Championat')->findAll();
-        if (!$data) {
-            return false;
-        }
-
-        foreach ($data as $k => $v) {
-            $nameChampionat[] = $v->getNomChampionat();
-        }
-        $apiKey = $em->getRepository('ApiDBBundle:ApiKey')->findAll();
-        foreach($apiKey as $vApiKey){
-            $apiKey = $vApiKey->getApikey();
-        }
-
-      //  $url = "http://api.xmlscores.com/matches/?c[]=" . implode('&c[]=', $nameChampionat) . "&f=json&e=1&s=0&l=128&open=".$apiKey;
-        $url = $this->getContainer()->get('kernel')->getRootDir().'/../web/json/matches.json';
-        $content = file_get_contents($url);
-
-        if(!$content){
-            $this->sendErrorEmail("Error when get url of goalapi");
-        }
-
-        $arrayJson = json_decode($content, true);
-        return $arrayJson;
-
-    }*/
     private function getEm(){
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         return $em;
@@ -333,6 +314,6 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand {
             $wm->setBody($body);
             $wm->send();
         }
-
     }
+
 }
