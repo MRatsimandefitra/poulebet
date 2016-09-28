@@ -136,7 +136,7 @@ class GoalApiCommand extends ContainerAwareCommand
             $em->persist($match);
             $em->flush();
 
-            $output->writeln("Mtach insert : " . $mId);
+            $output->writeln("Match insert : " . $mId);
         }
 
     }

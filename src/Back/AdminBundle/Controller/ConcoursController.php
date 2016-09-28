@@ -22,6 +22,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
  * @author miora.manitra
  */
 class ConcoursController extends ApiController {
+
     const ENTITY_CONCOURS = 'Api\DBBundle\Entity\Concours';
     const ENTITY_DROIT_ADMIN = 'ApiDBBundle:DroitAdmin';
     const ENTITY_DROIT = 'ApiDBBundle:Droit';
