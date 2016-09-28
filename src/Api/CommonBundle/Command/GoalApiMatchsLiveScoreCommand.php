@@ -18,7 +18,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class GoalApiMatchsLiveCommand extends ContainerAwareCommand {
+class GoalApiMatchsLiveScoreCommand extends ContainerAwareCommand {
     const ENTITY_CHAMPIONAT = 'ApiDBBundle:Championat';
     const ENTITY_COUNTRY = 'ApiDBBundle:Country';
     const ENTITY_MATCH = 'ApiDBBundle:Matchs';

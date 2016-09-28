@@ -133,7 +133,8 @@
                                 {% endif %}#}
                                 {% if row.statusMatch == 'active' %}
                                     <span class="label label-success">Live</span>
-
+                                {#{% elseif row.dateMatch|date_modify('-2 hours') >= row.dateMatch %}
+                                    <span class="label label-primary">Bientôt </span>#}
                                 {% endif %}
                                 {{ row.dateMatch|date('d/m/Y  - H:i') }}</td>
                             <td>{{ row.championat.fullNameChampionat }}</td>
