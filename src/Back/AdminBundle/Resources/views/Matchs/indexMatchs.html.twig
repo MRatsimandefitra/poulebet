@@ -23,15 +23,15 @@
                     {#{{ 'Nombre de match'|trans }} : {{ totalMatch }}#}
                     <div class="count">
                         <span class="label black">{{ 'Total recherche'|trans }}
-                            :    {{ pagination.getTotalItemCount }}</span>&nbsp;&nbsp; | &nbsp;&nbsp;
+                            : {{ pagination.getTotalItemCount }}</span>&nbsp;&nbsp; | &nbsp;&nbsp;
                         <span class="label black">{{ 'Total Matchs Finis'|trans }}
-                            :    {{ totalItemsFinished }}</span>&nbsp;&nbsp;| &nbsp;&nbsp;
+                            : {{ totalItemsFinished }}</span>&nbsp;&nbsp;| &nbsp;&nbsp;
                         <span class="label black">{{ 'Total Matchs Active'|trans }}
-                            :    {{ totalItemsActif }}</span>&nbsp;&nbsp;| &nbsp;&nbsp;
+                            : {{ totalItemsActif }}</span>&nbsp;&nbsp;| &nbsp;&nbsp;
                         <span class="label black">{{ 'Total Matchs Non commencé'|trans }}
-                            :    {{ totalItemsNotStarted }}</span>&nbsp;&nbsp;| &nbsp;&nbsp;
+                            : {{ totalItemsNotStarted }}</span>&nbsp;&nbsp;| &nbsp;&nbsp;
                         <span class="label black">{{ 'Total de tous les Matchs'|trans }}
-                            :    {{ totalItemsMatchs }}</span>&nbsp;&nbsp;
+                            : {{ totalItemsMatchs }}</span>&nbsp;&nbsp;
 
 
                     </div>
@@ -88,9 +88,9 @@
                         <th>
                             {{ 'Score'|trans }}
                         </th>
-                      {#  <th>
-                            {{ 'Saison'|trans }}
-                        </th>#}
+                        {#  <th>
+                              {{ 'Saison'|trans }}
+                          </th>#}
 
                         <th>
                             {{ 'Visiteur'|trans }}
@@ -127,7 +127,15 @@
                             {% else %}
                                 <tr>
                             {% endif %}
-                            <td>{{ row.dateMatch|date('d/m/Y  - H:i') }}</td>
+                            <td>
+                                {% if row.dateMatch|date_modify('-2 hours') %}
+                                  <exp><span class="label label-primary">Bientôt </span></exp> &nbsp;&nbsp;
+                                {% endif %}
+                                {% if row.statusMatch == 'active' %}
+                                    <span class="label label-success">Live</span>
+
+                                {% endif %}
+                                {{ row.dateMatch|date('d/m/Y  - H:i') }}</td>
                             <td>{{ row.championat.fullNameChampionat }}</td>
                             <td>
                                 {#  <div class="flag flag-{{ row.equipeDomicile|lower|slice(0, 2) }}"

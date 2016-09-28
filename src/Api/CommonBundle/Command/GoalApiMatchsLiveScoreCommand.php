@@ -128,7 +128,7 @@ class GoalApiMatchsLiveScoreCommand extends ContainerAwareCommand {
 
 
                             $users = $this->getContainer()->get('security.token_storage')->getToken();
-                            var_dump($users); die;
+                           // var_dump($users); die;
                             $device = $em->getRepository(self::ENTITY_DEVICE)->findBy(array('utilisateur' => $users));
                             foreach($device as $k => $items){
                                 $device_token[] = $device->getToken();
