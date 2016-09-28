@@ -128,9 +128,9 @@
                                 <tr>
                             {% endif %}
                             <td>
-                                {% if row.dateMatch|date_modify('-2 hours') %}
+                                {#{% if row.dateMatch|date_modify('-2 hours') %}
                                   <exp><span class="label label-primary">Bientôt </span></exp> &nbsp;&nbsp;
-                                {% endif %}
+                                {% endif %}#}
                                 {% if row.statusMatch == 'active' %}
                                     <span class="label label-success">Live</span>
 
