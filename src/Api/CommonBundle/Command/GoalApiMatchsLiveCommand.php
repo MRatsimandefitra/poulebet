@@ -55,12 +55,6 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand {
                         /*$dateDebut = \DateTime::createFromFormat('Y-m-d H:i', date('Y-m-d 00:00'));*/
                         $dateDebut = \DateTime::createFromFormat('Y-m-d H:i', date('2016-09-15 00:00'));
                         $dataEnd = \DateTime::createFromFormat('Y-m-d H:i', date('2016-09-15 H:i', mktime(0, 0,0, date('m'),date('d') + 1, date('Y') )));
-                        $users = $this->getContainer()->get('security.token_storage')->getToken()->getUser();
-                        $device = $em->getRepository(self::ENTITY_DEVICE)->findBy(array('utilisateur' => $users));
-                        foreach($device as $k => $items){
-                            $device_token[] = $device->getToken();
-                            array_push($device_token, $device->getToken());
-                        }
                         if($vItems['status'] === 'active'){
 
                             $output->writeln("Treatement ->  Matchs With ID :". $vItems['id']);
