@@ -62,8 +62,13 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand {
                             if(!$matchs){
                                 $matchs = new Matchs();
                             }
-                            $dateCheckGoalapi = new \DateTime(strtotime($data['timestamp_created']));
-                            $matchs->setTimestampCheckGoalApi($data['timestamp_created']);
+                            if(array_key_exists('timestamp_created', $data)){
+                                $dateCheckGoalapi = new \DateTime(strtotime($data['timestamp_created']));
+
+                            }
+                            if(array_key_exists('timestamp_created', $data)) {
+                                $matchs->setTimestampCheckGoalApi($data['timestamp_created']);
+                            }
                             $matchs->setDateCheckGoalApi($dateCheckGoalapi);
                             $matchs->setStateGoalApi(false);
                             $matchs->setId($vItems['id']);

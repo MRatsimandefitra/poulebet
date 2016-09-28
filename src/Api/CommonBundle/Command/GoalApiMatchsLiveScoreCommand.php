@@ -31,7 +31,7 @@ class GoalApiMatchsLiveScoreCommand extends ContainerAwareCommand {
     protected function configure()
     {
         $this
-            ->setName('goalapi:check:matchs-live')
+            ->setName('goalapi:check:livescore')
             // the short description shown while running "php bin/console list"
             ->setDescription('Check match Live');
     }
