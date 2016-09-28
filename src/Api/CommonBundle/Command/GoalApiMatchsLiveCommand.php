@@ -167,12 +167,14 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand {
                                         $this->getEm()->flush();
                                         $output->writeln("insert event ".$matchsEvent->getId());
                                     }
-                                }else {
+                                }
+                                else
+                                {
 
                                     $vEventItems = end($vItems['events']);
                                     $output->writeln(count($nbLocalME)." #".count($nbGoalApiME));
-                                    if(array_key_exists('score', $vItems)){
-                                        if($matchs->getScore()!= $vItems['score']){
+                                    if(array_key_exists('score', $vEventItems)){
+                                        if($matchs->getScore()!= $vEventItems['score']){
                                             // Si score différent alors push notification
                                             $output->writeln("A notification will be sent");
 
