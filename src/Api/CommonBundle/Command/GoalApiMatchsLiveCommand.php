@@ -167,22 +167,18 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand {
                                         // Si score différent alors push notification
                                         $output->writeln("A notification will be sent");
 
-                                        $users = $this->getContainer()->get('security.token_storage')->getToken()->getUser();
-                                        $device = $em->getRepository(self::ENTITY_DEVICE)->findBy(array('utilisateur' => $users));
-                                        foreach($device as $k => $items){
-                                            $device_token[] = $device->getToken();
-                                            array_push($device_token, $device->getToken());
-                                        }
+                                        $users = $em->getRepository(self::ENTITY_UTILISATEUR)->findAll();
 
-                                        //$device_token = array();
 
-                                        /*foreach($users as $user){
+                                        $device_token = array();
+
+                                        foreach($users as $user){
                                             $devices = $user->getDevices();
                                             foreach ($devices as $device){
                                                 //$device_token[] = $device->getToken();
                                                 array_push($device_token, $device->getToken());
                                             }
-                                        }*/
+                                        }
                                         $messageData = array(
                                             "message"=>$vEventItems['player']." a marqué un but à la ".$vEventItems['minute']."° minute. Score:". $vEventItems['score'],
                                             "type"=>"livescore"
