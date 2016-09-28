@@ -39,7 +39,6 @@ class GoalApiNotificationLiveExistCommand extends ContainerAwareCommand
             foreach($championat as $kChampionat => $itemsChampionat){
 
                 $data = $this->getUrlByChampionat($itemsChampionat->getId());
-
                 if($data){
                     foreach($data['items'] as $kItems => $items){
                         if($items['status'] === 'not_started'){
@@ -50,6 +49,7 @@ class GoalApiNotificationLiveExistCommand extends ContainerAwareCommand
                             $near = $tmpDate->modify("-1 hours");
 
                             if( $now >= $near && $now <= $date ){
+                                die('okok');
                                 $users = $em->getRepository(self::ENTITY_UTILISATEUR)->findAll();
                                 $device_token = array();
 
@@ -64,23 +64,21 @@ class GoalApiNotificationLiveExistCommand extends ContainerAwareCommand
                                     "message"=> "Matchs bientot",
                                     "type"=>"livescore"
                                 );
-                                $dataS = array(
+                                $data = array(
                                     'registration_ids' => $device_token,
                                     'data' => $messageData
                                 );
-                                    $http = $this->getContainer()->get('http');
-                                    //die('okok');
-                                    $res = $http->sendGCMNotification($dataS);
-                                    $output->writeln($res);
+                                $http = $this->getContainer()->get('http');
+                                //die('okok');
+                                $res = $http->sendGCMNotification($data);
 
-
+                                $output->writeln($res);
                             }
                         }
                     }
                 }
 
             }
-
         }
 
 
