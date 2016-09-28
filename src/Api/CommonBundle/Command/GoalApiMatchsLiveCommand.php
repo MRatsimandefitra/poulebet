@@ -110,9 +110,18 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand {
                             $matchs->setCheminLogoDomicile($teamsDomicile->getIdNameClub());
 
                             // score
-                            $mScore = $vItems['score'];
-                            $resultatDomicile = substr($vItems['score'], 0, 1);
-                            $resultatVisiteur = substr($vItems['score'], -1);
+                            if(array_key_exists('score', $vItems)){
+                                $mScore = $vItems['score'];
+
+                            }
+                            if(array_key_exists('score', $vItems)){
+                                $resultatDomicile = substr($vItems['score'], 0, 1);
+                            }
+                            if(array_key_exists('score', $vItems)){
+                                $resultatVisiteur = substr($vItems['score'], -1);
+                            }
+
+
                             $matchs->setResultatVisiteur($resultatVisiteur);
                             $matchs->setResultatDomicile($resultatDomicile);
 
