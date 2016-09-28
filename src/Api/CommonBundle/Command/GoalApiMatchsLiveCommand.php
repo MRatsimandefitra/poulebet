@@ -171,37 +171,40 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand {
 
                                     $vEventItems = end($vItems['events']);
                                     $output->writeln(count($nbLocalME)." #".count($nbGoalApiME));
-                                    if($matchs->getScore()!= $vItems['score']){
-                                        // Si score différent alors push notification
-                                        $output->writeln("A notification will be sent");
+                                    if(array_key_exists('score', $vItems)){
+                                        if($matchs->getScore()!= $vItems['score']){
+                                            // Si score différent alors push notification
+                                            $output->writeln("A notification will be sent");
 
-                                        $users = $em->getRepository(self::ENTITY_UTILISATEUR)->findAll();
+                                            $users = $em->getRepository(self::ENTITY_UTILISATEUR)->findAll();
 
 
-                                        $device_token = array();
+                                            $device_token = array();
 
-                                        foreach($users as $user){
-                                            $devices = $user->getDevices();
-                                            foreach ($devices as $device){
-                                                //$device_token[] = $device->getToken();
-                                                array_push($device_token, $device->getToken());
+                                            foreach($users as $user){
+                                                $devices = $user->getDevices();
+                                                foreach ($devices as $device){
+                                                    //$device_token[] = $device->getToken();
+                                                    array_push($device_token, $device->getToken());
+                                                }
                                             }
+                                            $messageData = array(
+                                                "message"=>$vEventItems['player']." a marqué un but à la ".$vEventItems['minute']."° minute. Score:". $vEventItems['score'],
+                                                "type"=>"livescore"
+                                            );
+                                            $data = array(
+                                                'registration_ids' => $device_token,
+                                                'data' => $messageData
+                                            );
+                                            $http = $this->getContainer()->get('http');
+                                            //die('okok');
+                                            $res = $http->sendGCMNotification($data);
+
+                                            $output->writeln($res);
+
                                         }
-                                        $messageData = array(
-                                            "message"=>$vEventItems['player']." a marqué un but à la ".$vEventItems['minute']."° minute. Score:". $vEventItems['score'],
-                                            "type"=>"livescore"
-                                        );
-                                        $data = array(
-                                            'registration_ids' => $device_token,
-                                            'data' => $messageData
-                                        );
-                                        $http = $this->getContainer()->get('http');
-                                        //die('okok');
-                                        $res = $http->sendGCMNotification($data);
-
-                                        $output->writeln($res);
-
                                     }
+
                                     $matchsEvent = new MatchsEvent();
                                     $matchsEvent->setMinute($vEventItems['minute']);
                                     $matchsEvent->setMatchs($matchs);
