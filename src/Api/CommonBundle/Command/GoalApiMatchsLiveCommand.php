@@ -164,7 +164,11 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand {
 
                                         $users = $this->getContainer()->get('security.token_storage')->getToken()->getUser();
                                         $device = $em->getRepository(self::ENTITY_DEVICE)->findBy(array('utilisateur' => $users));
-                                        $device_token = $device->getToken();
+                                        foreach($device as $k => $items){
+                                            $device_token[] = $device->getToken();
+                                            array_push($device_token, $device->getToken());
+                                        }
+
                                         //$device_token = array();
 
                                         /*foreach($users as $user){
