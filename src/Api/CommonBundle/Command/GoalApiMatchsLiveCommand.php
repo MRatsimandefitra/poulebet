@@ -26,7 +26,7 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand {
     const ENTITY_UTILISATEUR = 'ApiDBBundle:Utilisateur';
     const ENTITY_ADMIN = 'ApiDBBundle:Admin';
     const ENTITY_MATCH_EVENT = 'ApiDBBundle:MatchsEvent';
-
+    const ENTITY_DEVICE = 'ApiDBBundle:Device';
 
     protected function configure()
     {
@@ -155,22 +155,25 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand {
                                         $output->writeln("insert event ".$matchsEvent->getId());
                                     }
                                 }else {
+
                                     $vEventItems = end($vItems['events']);
                                     $output->writeln(count($nbLocalME)." #".count($nbGoalApiME));
                                     if($matchs->getScore()!= $vItems['score']){
                                         // Si score différent alors push notification
                                         $output->writeln("A notification will be sent");
 
-                                        $users = $em->getRepository(self::ENTITY_UTILISATEUR)->findAll();
-                                        $device_token = array();
+                                        $users = $this->getContainer()->get('security.token_storage')->getToken()->getUser();
+                                        $device = $em->getRepository(self::ENTITY_DEVICE)->findBy(array('utilisateur' => $users));
+                                        $device_token = $device->getToken();
+                                        //$device_token = array();
 
-                                        foreach($users as $user){
+                                        /*foreach($users as $user){
                                             $devices = $user->getDevices();
                                             foreach ($devices as $device){
                                                 //$device_token[] = $device->getToken();
                                                 array_push($device_token, $device->getToken());
                                             }
-                                        }
+                                        }*/
                                         $messageData = array(
                                             "message"=>$vEventItems['player']." a marqué un but à la ".$vEventItems['minute']."° minute. Score:". $vEventItems['score'],
                                             "type"=>"livescore"
@@ -180,7 +183,9 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand {
                                             'data' => $messageData
                                         );
                                         $http = $this->getContainer()->get('http');
+                                        //die('okok');
                                         $res = $http->sendGCMNotification($data);
+
                                         $output->writeln($res);
 
                                     }
@@ -242,7 +247,7 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand {
                 }else{
                     $output->writeln("No Matchs for ".$vChampionat->getFullNameChampionat().".....");
                 }
-
+               // var_dump($count); die;
                 $output->writeln(" --- End of Championat treatement --- ".$vChampionat->getId());
 
 
