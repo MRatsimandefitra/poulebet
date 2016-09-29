@@ -172,7 +172,7 @@ class GoalApiMatchsLiveScoreCommand extends ContainerAwareCommand
                                             $connected = $em->getRepository('ApiDBBundle:Connected')->findAll();
                                             $device_token = array();
                                             foreach ($connected as $connectedItems) {
-                                                if(in_array($connectedItems->getDevice(), $device_token)){
+                                                if(!in_array($connectedItems->getDevice(), $device_token)){
                                                     $device_token[] = $connectedItems->getDevice();
                                                 }
                                               /*  $devices = $connectedItems->getDevice();
@@ -213,7 +213,7 @@ class GoalApiMatchsLiveScoreCommand extends ContainerAwareCommand
                                         $device_token = array();
                                         foreach ($connected as $connectedItems) {
                                             //array_push($device_token, $connectedItems->getDevice());
-                                            if(in_array($connectedItems->getDevice(), $device_token)){
+                                            if(!in_array($connectedItems->getDevice(), $device_token)){
                                                 $device_token[] = $connectedItems->getDevice();
                                             }
                                             /*  $devices = $connectedItems->getDevice();
