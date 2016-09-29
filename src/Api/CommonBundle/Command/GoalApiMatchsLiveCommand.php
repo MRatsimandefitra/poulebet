@@ -42,11 +42,14 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         $championat = $em->getRepository(self::ENTITY_CHAMPIONAT)->findBy(array('isEnable' => true));
         $count = 0;
+
         foreach ($championat as $vChampionat) {
+
             $count = $count + 1;
             $output->writeln(' ---  championat --- ' . $vChampionat->getFullNameChampionat());
             $data = $this->getUrlByChampionat($vChampionat->getId());
             $output->writeln("we found " . count($data['items']) . " matchs for " . $vChampionat->getFullNameChampionat());
+
             if ($data) {
                 $count = 0;
                 foreach ($data['items'] as $vItems) {
@@ -56,9 +59,10 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand
                     /*$dateDebut = \DateTime::createFromFormat('Y-m-d H:i', date('Y-m-d 00:00'));*/
                     $dateDebut = \DateTime::createFromFormat('Y-m-d H:i', date('2016-09-15 00:00'));
                     $dataEnd = \DateTime::createFromFormat('Y-m-d H:i', date('2016-09-15 H:i', mktime(0, 0, 0, date('m'), date('d') + 1, date('Y'))));
-                    if ($vItems['status'] === 'active') {
 
+                    if ($vItems['status'] === 'active') {
                         $output->writeln("Treatement ->  Matchs With ID :" . $vItems['id']);
+
                         $matchs = $em->getRepository(self::ENTITY_MATCH)->find($vItems['id']);
                         if (!$matchs) {
                             $matchs = new Matchs();
@@ -273,14 +277,17 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand
                             $output->writeln("insert event " . $matchsEvent->getId());
 
                         }
+                        $output->writeln("Treatements of matchs " . $matchs->getId() . "was successfull");
+                        $matchs->setStateGoalApi(true);
+                        $em->flush();
 
-
+                    }
+                    else{
+                       $output->writeln('Matchs is finished');
                     }
                     /* $matchsEvent->set
                      $matchsEvent->setTeamsScore();*/
-                    $output->writeln("Treatements of matchs " . $matchs->getId() . "was successfull");
-                    $matchs->setStateGoalApi(true);
-                    $em->flush();
+
 
                 }
 
