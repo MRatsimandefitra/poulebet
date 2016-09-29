@@ -174,6 +174,7 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand {
                                                 array_push($device_token, $device->getToken());
                                             }
                                         }*/
+
                                         $messageData = array(
                                             "message"=>$vEventItems['player']." a marqué un but à la ".$vEventItems['minute']."° minute. Score:". $vEventItems['score'],
                                             "type"=>"livescore"
@@ -229,12 +230,12 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand {
                             $matchs->setStateGoalApi(true);
                             $em->flush();
                             $mmatchs = $em->getRepository(self::ENTITY_MATCH)->find($matchs->getId());
-                            if(!$mmatchs){
-                                $this->sendErrorEmail('Error to set flux from goal api with matchs'.$mmatchs->getId());
+                           /* if(!$mmatchs){
+                               // $this->sendErrorEmail('Error to set flux from goal api with matchs'.$mmatchs->getId());
                             }
                             if($mmatchs->getStateGoalApi() == false){
-                                $this->sendErrorEmail('Error to set flux from goal api with matchs'.$mmatchs->getId());
-                            }
+                              //  $this->sendErrorEmail('Error to set flux from goal api with matchs'.$mmatchs->getId());
+                            }*/
                             $matchs->setScore($mScore);
                             $em->persist($matchs);
                             $em->flush();
