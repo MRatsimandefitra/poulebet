@@ -24,20 +24,20 @@ class Connected
     /**
      * @var string
      *
-     * @ORM\Column(name="tokenSession", type="string", length=255)
+     * @ORM\Column(name="tokenSession", type="string", length=255, nullable=true)
      */
     private $tokenSession;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="username", type="string", length=255)
+     * @ORM\Column(name="username", type="string", length=255, nullable=true)
      */
     private $username;
     /**
      * @var string
      *
-     * @ORM\Column(name="device", type="string", length=255)
+     * @ORM\Column(name="device", type="string", length=255, nullable=true)
      */
     private $device;
 

@@ -2,6 +2,7 @@
 
 namespace Ws\RestBundle\Controller;
 
+use Api\DBBundle\Entity\Connected;
 use Api\DBBundle\Entity\Utilisateur;
 use Api\DBBundle\Entity\Device;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -9,6 +10,8 @@ use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\Validator\Constraints\DateTime;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
@@ -68,6 +71,7 @@ class InscriptionController extends ApiRestController
                  $device->setUtilisateur($utilisateur);
                  $this->insert($device);
              }
+
              $userObject = $this->getEm()->getRepository(self::ENTITY_UTILISATEUR)->findOneByEmail($utilisateur->getEmail());
              if($userObject){
 
