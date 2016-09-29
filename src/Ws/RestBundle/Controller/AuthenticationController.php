@@ -34,31 +34,54 @@ class AuthenticationController extends ApiRestController{
             $email = $request->get('email');
             $password = $request->get('password');
             $user = $this->getEm()->getRepository(self::ENTITY_UTILISATEUR)->findByEmailArray($email);
-            // authentification
-            $tokenSession = new UsernamePasswordToken($user, $user->getPassword(), "main", $user->getRoles());
-            $this->get("security.token_storage")->setToken($tokenSession);
-            // Fire the login event
-            // Logging the user in above the way we do it doesn't do this automatically
-            $event = new InteractiveLoginEvent($request, $tokenSession);
-            $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
-            $connected = new Connected();
-            $connected->setTokenSession($tokenSession);
-            $connected->setUsername($user->getEmail());
-            $this->insert($connected, array('success' => 'suucess', 'error' => 'error'));
+            $userObject = $this->getEm()->getRepository(self::ENTITY_UTILISATEUR)->findOneByEmail($email);
 
             $userEntity = $this->getEm()->getRepository(self::ENTITY_UTILISATEUR)->findOneByEmail($email);
             // récupération de token google cloud message du device
             $gcm_device_token=$request->get("gcm_device_token");
+
             $device = $this->getEm()->getRepository(self::ENTITY_DEVICE)->findByToken($gcm_device_token);
             if($user){
+
                 if(!$device){
+
                     $device = new Device();
                     $device->setToken($gcm_device_token);
-                    $user->setDeviceToken($gcm_device_token);
                     $userEntity = $this->getEm()->getRepository(self::ENTITY_UTILISATEUR)->find($user['id']);
+
                     $device->setUtilisateur($userEntity);
                     $this->insert($device);
                 }
+                // authentification
+                if($userObject){
+
+                    // authentification
+                    $tokenSession = new UsernamePasswordToken($userObject, $userObject->getPassword(), "main", $userObject->getRoles());
+                    $this->get("security.token_storage")->setToken($tokenSession);
+                    // Fire the login event
+                    // Logging the user in above the way we do it doesn't do this automatically
+
+                    $event = new InteractiveLoginEvent($request, $tokenSession);
+                    $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
+                    if($tokenSession){
+                        $connected = $this->get('doctrine.orm.entity_manager')->getRepository('ApiDBBundle:Connected')->findOneBy(array('username' => $tokenSession->getUser()->getEmail()));
+                        $newConnected = false;
+                        if(!$connected){
+                            $connected = new Connected();
+                            $newConnected = true;
+                        }
+                        $connected->setTokenSession($this->get("security.token_storage")->getToken()->getCredentials());
+                        $connected->setUsername($tokenSession->getUser()->getEmail());
+                        $connected->setDevice($gcm_device_token);
+                        if($newConnected){
+                            $this->getEm()->persist($connected);
+
+                        }
+                        $this->getEm()->flush();
+                    }
+                }
+
+
                 $pass_result = $this->encodePassword($password);
                 if($user['password'] == $pass_result){
                     $token = $this->generateToken($user['userToken']);

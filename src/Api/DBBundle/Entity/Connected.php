@@ -34,6 +34,12 @@ class Connected
      * @ORM\Column(name="username", type="string", length=255)
      */
     private $username;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="device", type="string", length=255)
+     */
+    private $device;
 
 
     /**
@@ -93,5 +99,28 @@ class Connected
     {
         return $this->username;
     }
-}
 
+    /**
+     * Set device
+     *
+     * @param string $device
+     *
+     * @return Connected
+     */
+    public function setDevice($device)
+    {
+        $this->device = $device;
+
+        return $this;
+    }
+
+    /**
+     * Get device
+     *
+     * @return string
+     */
+    public function getDevice()
+    {
+        return $this->device;
+    }
+}

@@ -169,16 +169,15 @@ class GoalApiMatchsLiveScoreCommand extends ContainerAwareCommand
                                         if ($matchs->getScore() != $vEventItems['score']) {
                                             // Si score différent alors push notification
                                             $output->writeln("A notification will be sent");
-
-                                           // $users = $this->getContainer()->get('security.token_storage')->getToken();
-                                            $users = $em->getRepository(self::ENTITY_UTILISATEUR)->findAll();
+                                            $connected = $em->getRepository('ApiDBBundle:Connected')->findAll();
                                             $device_token = array();
-                                            foreach ($users as $user) {
-                                                $devices = $user->getDevices();
+                                            foreach ($connected as $connectedItems) {
+                                                array_push($device_token, $connectedItems->getDevice());
+                                              /*  $devices = $connectedItems->getDevice();
                                                 foreach ($devices as $device) {
                                                     //$device_token[] = $device->getToken();
                                                     array_push($device_token, $device->getToken());
-                                                }
+                                                }*/
                                             }
                                         }
 
@@ -191,11 +190,9 @@ class GoalApiMatchsLiveScoreCommand extends ContainerAwareCommand
                                             'data' => $messageData
                                         );
                                         $http = $this->getContainer()->get('http');
-                                        //die('okok');
                                         $res = $http->sendGCMNotification($data);
 
                                         $output->writeln($res);
-
                                     }
                                     $output->writeln("insert event " . $matchsEvent->getId());
 
@@ -210,17 +207,15 @@ class GoalApiMatchsLiveScoreCommand extends ContainerAwareCommand
                                         // Si score différent alors push notification
                                         $output->writeln("A notification will be sent");
 
-                                        $users = $em->getRepository(self::ENTITY_UTILISATEUR)->findAll();
-
-
+                                        $connected = $em->getRepository('ApiDBBundle:Connected')->findAll();
                                         $device_token = array();
-
-                                        foreach ($users as $user) {
-                                            $devices = $user->getDevices();
-                                            foreach ($devices as $device) {
-                                                //$device_token[] = $device->getToken();
-                                                array_push($device_token, $device->getToken());
-                                            }
+                                        foreach ($connected as $connectedItems) {
+                                            array_push($device_token, $connectedItems->getDevice());
+                                            /*  $devices = $connectedItems->getDevice();
+                                              foreach ($devices as $device) {
+                                                  //$device_token[] = $device->getToken();
+                                                  array_push($device_token, $device->getToken());
+                                              }*/
                                         }
                                     }
 
