@@ -172,7 +172,9 @@ class GoalApiMatchsLiveScoreCommand extends ContainerAwareCommand
                                             $connected = $em->getRepository('ApiDBBundle:Connected')->findAll();
                                             $device_token = array();
                                             foreach ($connected as $connectedItems) {
-                                                array_push($device_token, $connectedItems->getDevice());
+                                                if(in_array($connectedItems->getDevice(), $device_token)){
+                                                    $device_token[] = $connectedItems->getDevice();
+                                                }
                                               /*  $devices = $connectedItems->getDevice();
                                                 foreach ($devices as $device) {
                                                     //$device_token[] = $device->getToken();
@@ -210,7 +212,10 @@ class GoalApiMatchsLiveScoreCommand extends ContainerAwareCommand
                                         $connected = $em->getRepository('ApiDBBundle:Connected')->findAll();
                                         $device_token = array();
                                         foreach ($connected as $connectedItems) {
-                                            array_push($device_token, $connectedItems->getDevice());
+                                            //array_push($device_token, $connectedItems->getDevice());
+                                            if(in_array($connectedItems->getDevice(), $device_token)){
+                                                $device_token[] = $connectedItems->getDevice();
+                                            }
                                             /*  $devices = $connectedItems->getDevice();
                                               foreach ($devices as $device) {
                                                   //$device_token[] = $device->getToken();
