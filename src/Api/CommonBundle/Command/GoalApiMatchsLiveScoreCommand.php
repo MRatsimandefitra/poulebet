@@ -165,34 +165,37 @@ class GoalApiMatchsLiveScoreCommand extends ContainerAwareCommand
                                     }
                                     $this->getEm()->persist($matchsEvent);
                                     $this->getEm()->flush();
-                                    if ($matchs->getScore() != $vEventItems['score']) {
-                                        // Si score différent alors push notification
-                                        $output->writeln("A notification will be sent");
+                                    if(array_key_exists('score', $vEventItems)){
+                                        if ($matchs->getScore() != $vEventItems['score']) {
+                                            // Si score différent alors push notification
+                                            $output->writeln("A notification will be sent");
 
-                                        $users = $em->getRepository(self::ENTITY_UTILISATEUR)->findAll();
-                                        $device_token = array();
-                                        foreach ($users as $user) {
-                                            $devices = $user->getDevices();
-                                            foreach ($devices as $device) {
-                                                //$device_token[] = $device->getToken();
-                                                array_push($device_token, $device->getToken());
+                                            $users = $em->getRepository(self::ENTITY_UTILISATEUR)->findAll();
+                                            $device_token = array();
+                                            foreach ($users as $user) {
+                                                $devices = $user->getDevices();
+                                                foreach ($devices as $device) {
+                                                    //$device_token[] = $device->getToken();
+                                                    array_push($device_token, $device->getToken());
+                                                }
                                             }
                                         }
+
+                                        $messageData = array(
+                                            "message" => $vEventItems['player'] . " a marqué un but à la " . $vEventItems['minute'] . "° minute. Score:" . $vEventItems['score'],
+                                            "type" => "livescore"
+                                        );
+                                        $data = array(
+                                            'registration_ids' => $device_token,
+                                            'data' => $messageData
+                                        );
+                                        $http = $this->getContainer()->get('http');
+                                        //die('okok');
+                                        $res = $http->sendGCMNotification($data);
+
+                                        $output->writeln($res);
+
                                     }
-
-                                    $messageData = array(
-                                        "message" => $vEventItems['player'] . " a marqué un but à la " . $vEventItems['minute'] . "° minute. Score:" . $vEventItems['score'],
-                                        "type" => "livescore"
-                                    );
-                                    $data = array(
-                                        'registration_ids' => $device_token,
-                                        'data' => $messageData
-                                    );
-                                    $http = $this->getContainer()->get('http');
-                                    //die('okok');
-                                    $res = $http->sendGCMNotification($data);
-
-                                    $output->writeln($res);
                                     $output->writeln("insert event " . $matchsEvent->getId());
 
                                 }
