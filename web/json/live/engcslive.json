@@ -1,0 +1,83 @@
+{
+  "total": "1",
+  "first": 1,
+  "last": "1",
+  "timestamp_created": 1475091648,
+  "items": {
+    "f50e0470b5e0194d04c6cb4a16cac345": {
+      "id": "f50e0470b5e0194d04c6cb4a16cac345",
+      "status": "active",
+      "timestamp_starts": "1475088300",
+      "teams": {
+        "hosts": {
+          "id": "nufc_en",
+          "name": "Newcastle Utd",
+          "fullname": "Newcastle United FC"
+        },
+        "guests": {
+          "id": "norcfc_en",
+          "name": "Norwich",
+          "fullname": "Norwich City FC"
+        }
+      },
+      "details": {
+        "contest": {
+          "competition": {
+            "id": "eng_cs",
+            "title": "eng_cs"
+          },
+          "season": "2016\/2017"
+        },
+        "fixture_info": "10"
+      },
+      "score": "1 - 1",
+      "current_state": {"period": "break"},
+      "events": [
+        {
+          "player": "Colback J.",
+          "minute": 9,
+          "team": "hosts",
+          "order": 1,
+          "type": "yellow_card"
+        },
+        {
+          "player": "Gayle D.",
+          "minute": 24,
+          "team": "hosts",
+          "order": 2,
+          "score": "1 - 0",
+          "type": "goal"
+        },
+        {
+          "player": "Ritchie M.",
+          "minute": 40,
+          "team": "hosts",
+          "order": 3,
+          "type": "yellow_card"
+        },
+        {
+          "player": "Dummett P.",
+          "minute": 43,
+          "team": "hosts",
+          "order": 4,
+          "type": "yellow_card"
+        },
+        {
+          "player": "Dorrans G.",
+          "minute": 44,
+          "team": "guests",
+          "order": 5,
+          "score": "1 - 1",
+          "type": "penalty"
+        },
+        {
+          "player": "Brady R.",
+          "minute": 45,
+          "team": "guests",
+          "order": 6,
+          "type": "yellow_card"
+        }
+      ]
+    }
+  }
+}
