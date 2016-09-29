@@ -68,6 +68,34 @@ class InscriptionController extends ApiRestController
                  $device->setUtilisateur($utilisateur);
                  $this->insert($device);
              }
+             $userObject = $this->getEm()->getRepository(self::ENTITY_UTILISATEUR)->findOneByEmail($utilisateur->getEmail());
+             if($userObject){
+
+                 // authentification
+                 $tokenSession = new UsernamePasswordToken($userObject, $userObject->getPassword(), "main", $userObject->getRoles());
+                 $this->get("security.token_storage")->setToken($tokenSession);
+                 // Fire the login event
+                 // Logging the user in above the way we do it doesn't do this automatically
+
+                 $event = new InteractiveLoginEvent($request, $tokenSession);
+                 $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
+                 if($tokenSession){
+                     $connected = $this->get('doctrine.orm.entity_manager')->getRepository('ApiDBBundle:Connected')->findOneBy(array('username' => $tokenSession->getUser()->getEmail()));
+                     $newConnected = false;
+                     if(!$connected){
+                         $connected = new Connected();
+                         $newConnected = true;
+                     }
+                     $connected->setTokenSession($this->get("security.token_storage")->getToken()->getCredentials());
+                     $connected->setUsername($tokenSession->getUser()->getEmail());
+                     $connected->setDevice($deviceToken);
+                     if($newConnected){
+                         $this->getEm()->persist($connected);
+
+                     }
+                     $this->getEm()->flush();
+                 }
+             }
              // mail
             $parameter = $this->getParameterMail();
             $pass = $this->generatePassword();
