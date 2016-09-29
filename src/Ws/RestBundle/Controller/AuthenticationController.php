@@ -2,6 +2,7 @@
 
 namespace Ws\RestBundle\Controller;
 
+use Api\DBBundle\Entity\Connected;
 use Api\DBBundle\Entity\Utilisateur;
 use Api\DBBundle\Entity\Device;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -33,15 +34,17 @@ class AuthenticationController extends ApiRestController{
             $email = $request->get('email');
             $password = $request->get('password');
             $user = $this->getEm()->getRepository(self::ENTITY_UTILISATEUR)->findByEmailArray($email);
-            $token = new UsernamePasswordToken($user, $user->getPassword(), "main", $user->getRoles());
-
-            // For older versions of Symfony, use security.context here
-            $this->get("security.token_storage")->setToken($token);
-
+            // authentification
+            $tokenSession = new UsernamePasswordToken($user, $user->getPassword(), "main", $user->getRoles());
+            $this->get("security.token_storage")->setToken($tokenSession);
             // Fire the login event
             // Logging the user in above the way we do it doesn't do this automatically
-            $event = new InteractiveLoginEvent($request, $token);
+            $event = new InteractiveLoginEvent($request, $tokenSession);
             $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
+            $connected = new Connected();
+            $connected->setTokenSession($tokenSession);
+            $connected->setUsername($user->getEmail());
+            $this->insert($connected, array('success' => 'suucess', 'error' => 'error'));
 
             $userEntity = $this->getEm()->getRepository(self::ENTITY_UTILISATEUR)->findOneByEmail($email);
             // récupération de token google cloud message du device
