@@ -40,10 +40,10 @@ class GoalApiMatchsLiveScoreCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+            $em = $this->getContainer()->get('doctrine.orm.entity_manager');
             $data = $this->getUrlByChampionat('1');
-            if ($data) {
 
+            if ($data) {
                 $count = 0;
                 foreach ($data['items'] as $vItems) {
                     $count = $count + 1;
@@ -105,13 +105,16 @@ class GoalApiMatchsLiveScoreCommand extends ContainerAwareCommand
 
                         $matchs->setCheminLogoVisiteur($teamsVisiteur->getIdNameClub());
                         $matchs->setCheminLogoDomicile($teamsDomicile->getIdNameClub());
+
                         // score
                         if (array_key_exists('score', $vItems)) {
                             $mScore = $vItems['score'];
                         }
+
                         if (array_key_exists('score', $vItems)) {
                             $resultatDomicile = substr($vItems['score'], 0, 1);
                         }
+
                         if (array_key_exists('score', $vItems)) {
                             $resultatVisiteur = substr($vItems['score'], -1);
                         }
@@ -132,8 +135,9 @@ class GoalApiMatchsLiveScoreCommand extends ContainerAwareCommand
                         }
 
                         $nbLocalME = $em->getRepository(self::ENTITY_MATCH_EVENT)->findByMatchs($matchs);
-                        $nbGoalApiME = $vItems['events'];
 
+                        $nbGoalApiME = $vItems['events'];
+                     //   var_dump(count($nbLocalME)); die;
                         if (count($nbLocalME) < count($nbGoalApiME) && count($nbGoalApiME) > 0) {
 
                             if (count($nbLocalME) == 0) {
@@ -161,13 +165,43 @@ class GoalApiMatchsLiveScoreCommand extends ContainerAwareCommand
                                     }
                                     $this->getEm()->persist($matchsEvent);
                                     $this->getEm()->flush();
+                                    if ($matchs->getScore() != $vEventItems['score']) {
+                                        // Si score différent alors push notification
+                                        $output->writeln("A notification will be sent");
+
+                                        $users = $em->getRepository(self::ENTITY_UTILISATEUR)->findAll();
+                                        $device_token = array();
+                                        foreach ($users as $user) {
+                                            $devices = $user->getDevices();
+                                            foreach ($devices as $device) {
+                                                //$device_token[] = $device->getToken();
+                                                array_push($device_token, $device->getToken());
+                                            }
+                                        }
+                                    }
+
+                                    $messageData = array(
+                                        "message" => $vEventItems['player'] . " a marqué un but à la " . $vEventItems['minute'] . "° minute. Score:" . $vEventItems['score'],
+                                        "type" => "livescore"
+                                    );
+                                    $data = array(
+                                        'registration_ids' => $device_token,
+                                        'data' => $messageData
+                                    );
+                                    $http = $this->getContainer()->get('http');
+                                    //die('okok');
+                                    $res = $http->sendGCMNotification($data);
+
+                                    $output->writeln($res);
                                     $output->writeln("insert event " . $matchsEvent->getId());
+
                                 }
                             } else {
 
                                 $vEventItems = end($vItems['events']);
                                 $output->writeln(count($nbLocalME) . " #" . count($nbGoalApiME));
                                 if (array_key_exists('score', $vEventItems)) {
+
                                     if ($matchs->getScore() != $vEventItems['score']) {
                                         // Si score différent alors push notification
                                         $output->writeln("A notification will be sent");
@@ -195,7 +229,6 @@ class GoalApiMatchsLiveScoreCommand extends ContainerAwareCommand
                                         'data' => $messageData
                                     );
                                     $http = $this->getContainer()->get('http');
-                                    //die('okok');
                                     $res = $http->sendGCMNotification($data);
 
                                     $output->writeln($res);
@@ -218,6 +251,7 @@ class GoalApiMatchsLiveScoreCommand extends ContainerAwareCommand
                                     $matchsEvent->setTeamsScore(substr($vEventItems['score'], -1));
                                 }
                             }
+
                             if ($vEventItems['team'] == 'hosts') {
                                 $matchsEvent->setTeams($matchs->getTeamsDomicile());
                                 if (array_key_exists('score', $vEventItems)) {
@@ -225,9 +259,11 @@ class GoalApiMatchsLiveScoreCommand extends ContainerAwareCommand
                                 }
                             }
                             $matchs->setTimestampDateMatch($vItems['timestamp_starts']);
+
                             $this->getEm()->persist($matchsEvent);
                             $this->getEm()->flush();
                             $output->writeln("insert event " . $matchsEvent->getId());
+
                         }
 
 
@@ -237,23 +273,11 @@ class GoalApiMatchsLiveScoreCommand extends ContainerAwareCommand
                     $output->writeln("Treatements of matchs " . $matchs->getId() . "was successfull");
                     $matchs->setStateGoalApi(true);
                     $em->flush();
-                    $mmatchs = $em->getRepository(self::ENTITY_MATCH)->find($matchs->getId());
-                    /* if(!$mmatchs){
-                        // $this->sendErrorEmail('Error to set flux from goal api with matchs'.$mmatchs->getId());
-                     }
-                     if($mmatchs->getStateGoalApi() == false){
-                       //  $this->sendErrorEmail('Error to set flux from goal api with matchs'.$mmatchs->getId());
-                     }*/
-                  //  $matchs->setScore($mScore);
-                    $em->persist($matchs);
-                    $em->flush();
-
 
                 }
-                // var_dump($vItems['teams']); die;
 
             }
-         //   $output->writeln(" --- End of Championat treatement --- " . $vChampionat->getId());
+        $output->writeln("Command was successfull");
 
     }
 
@@ -272,7 +296,8 @@ class GoalApiMatchsLiveScoreCommand extends ContainerAwareCommand
         // Erreur url  mbol ts ampu date debut todo : test, mettre date debut
       //  $url = "http://api.xmlscores.com/matches/?c[]=" . $data->getNomChampionat() . "&f=json&e=1&l=128&b=today&open=".$apiKey;
         //   var_dump($url); die;
-        $url = $this->getContainer()->get('kernel')->getRootDir().'/../web/json/live/engcslive.json';
+        $url = $this->getContainer()->get('kernel')->getRootDir().'/../web/json/live/engcslive1.json';
+       // var_dump($url); die;
         //var_dump($url); die;
         $content = file_get_contents($url);
         $arrayJson = json_decode($content, true);
