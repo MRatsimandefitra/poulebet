@@ -169,8 +169,11 @@ class GoalApiMatchsLiveScoreCommand extends ContainerAwareCommand
                                         if ($matchs->getScore() != $vEventItems['score']) {
                                             // Si score différent alors push notification
                                             $output->writeln("A notification will be sent");
-
-                                            $users = $em->getRepository(self::ENTITY_UTILISATEUR)->findAll();
+                                            $device_token = array();
+                                            $users = $this->getContainer()->get('security.token_storage')->getToken()->getUser();
+                                            var_dump($users); die;
+                                            $dqlUser = "Select u from ApiDBBundle:Utilisateur u where u.deviceToken  = ";
+                                            /*$users = $em->getRepository(self::ENTITY_UTILISATEUR)->findAll();
                                             $device_token = array();
                                             foreach ($users as $user) {
                                                 $devices = $user->getDevices();
@@ -178,7 +181,7 @@ class GoalApiMatchsLiveScoreCommand extends ContainerAwareCommand
                                                     //$device_token[] = $device->getToken();
                                                     array_push($device_token, $device->getToken());
                                                 }
-                                            }
+                                            }*/
                                         }
 
                                         $messageData = array(

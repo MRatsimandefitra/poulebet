@@ -8,6 +8,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\Validator\Constraints\DateTime;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
@@ -31,6 +33,16 @@ class AuthenticationController extends ApiRestController{
             $email = $request->get('email');
             $password = $request->get('password');
             $user = $this->getEm()->getRepository(self::ENTITY_UTILISATEUR)->findByEmailArray($email);
+            $token = new UsernamePasswordToken($user, $user->getPassword(), "main", $user->getRoles());
+
+            // For older versions of Symfony, use security.context here
+            $this->get("security.token_storage")->setToken($token);
+
+            // Fire the login event
+            // Logging the user in above the way we do it doesn't do this automatically
+            $event = new InteractiveLoginEvent($request, $token);
+            $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
+
             $userEntity = $this->getEm()->getRepository(self::ENTITY_UTILISATEUR)->findOneByEmail($email);
             // récupération de token google cloud message du device
             $gcm_device_token=$request->get("gcm_device_token");
@@ -39,6 +51,7 @@ class AuthenticationController extends ApiRestController{
                 if(!$device){
                     $device = new Device();
                     $device->setToken($gcm_device_token);
+                    $user->setDeviceToken($gcm_device_token);
                     $userEntity = $this->getEm()->getRepository(self::ENTITY_UTILISATEUR)->find($user['id']);
                     $device->setUtilisateur($userEntity);
                     $this->insert($device);

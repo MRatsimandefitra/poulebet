@@ -210,6 +210,13 @@ class Utilisateur
     private $mvtPoints;
     
     private $soldePoint;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="deviceToken", type="string", length=255, nullable=true)
+     */
+    private $deviceToken;
     
     /**
      * Get id
@@ -931,5 +938,29 @@ class Utilisateur
     public function getUserTokenAuth()
     {
         return $this->userTokenAuth;
+    }
+
+    /**
+     * Set deviceToken
+     *
+     * @param string $deviceToken
+     *
+     * @return Utilisateur
+     */
+    public function setDeviceToken($deviceToken)
+    {
+        $this->deviceToken = $deviceToken;
+
+        return $this;
+    }
+
+    /**
+     * Get deviceToken
+     *
+     * @return string
+     */
+    public function getDeviceToken()
+    {
+        return $this->deviceToken;
     }
 }
