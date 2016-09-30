@@ -197,6 +197,9 @@ class GoalApiMatchsLiveScoreCommand extends ContainerAwareCommand
                                         $messageData = array(
                                         /*    "message" => $vEventItems['player'] . " a marqué un but à la " . $vEventItems['minute'] . "° minute. Score:" . $vEventItems['score'],*/
                                             "message" => $this->getMessagePush($vEventItems, $matchs),
+                                            "firstMessage" => $this->firstMessage($matchs),
+                                            "secondMessage" => $this->secondMessage($vEventItems),
+                                            "thirdMessage" => $this->thirdMessage($vEventItems),
                                             "type" => "livescore"
                                         );
                                         $data = array(
@@ -249,6 +252,9 @@ class GoalApiMatchsLiveScoreCommand extends ContainerAwareCommand
                                     $messageData = array(
                                         /*"message" => $vEventItems['player'] . " a marqué un but à la " . $vEventItems['minute'] . "° minute. Score:" . $vEventItems['score'],*/
                                         "message" => $this->getMessagePush($vEventItems, $matchs),
+                                        "firstMessage" => $this->firstMessage($matchs),
+                                        "secondMessage" => $this->secondMessage($vEventItems),
+                                        "thirdMessage" => $this->thirdMessage($vEventItems),
                                         "type" => "livescore"
                                     );
                                     $data = array(
@@ -386,6 +392,23 @@ class GoalApiMatchsLiveScoreCommand extends ContainerAwareCommand
         $msg .= " Score " . $vEventItems['score'];
 
         $msg2 = "But de " .$vEventItems['player']. " à la " . $vEventItems['minute']. " \n - " . $matchs->getEquipeDomicile().' VS '. $matchs->getEquipeVisiteur(). " \n "." Score " . $vEventItems['score'];
+        return $msg;
+    }
+
+    private function firstMessage( $matchs){
+        /*$msg = " <img src='". "http:dplb.arkeup.com/".$matchs->getCheminLogoDomicile() ."'width='15' height='15' /> <b>". $matchs->getEquipeDomicile()->getFullNameClub() ."</b> VS  <img src='".$matchs->getCheminLogoVisiteur()."' width='15' height='15' />  <b> ". $matchs->getEquipeVisiteur()->getFullNameClub() ."</b> <br />";*/
+        $msg = "".$matchs->getEquipeDomicile().' VS '. $matchs->getEquipeVisiteur(). " \n \d ";
+        return $msg;
+    }
+    private function secondMessage($vEventItems){
+        /*$msg = " <img src='". "http:dplb.arkeup.com/".$matchs->getCheminLogoDomicile() ."'width='15' height='15' /> <b>". $matchs->getEquipeDomicile()->getFullNameClub() ."</b> VS  <img src='".$matchs->getCheminLogoVisiteur()."' width='15' height='15' />  <b> ". $matchs->getEquipeVisiteur()->getFullNameClub() ."</b> <br />";*/
+        $msg = " But de ".$vEventItems['player']. " à la " . $vEventItems['minute']. " \n";
+
+        return $msg;
+    }
+    private function thirdMessage($vEventItems){
+        /*$msg = " <img src='". "http:dplb.arkeup.com/".$matchs->getCheminLogoDomicile() ."'width='15' height='15' /> <b>". $matchs->getEquipeDomicile()->getFullNameClub() ."</b> VS  <img src='".$matchs->getCheminLogoVisiteur()."' width='15' height='15' />  <b> ". $matchs->getEquipeVisiteur()->getFullNameClub() ."</b> <br />";*/
+        $msg = " Score " . $vEventItems['score'];
         return $msg;
     }
 }
