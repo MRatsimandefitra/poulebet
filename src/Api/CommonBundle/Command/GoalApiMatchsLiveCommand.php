@@ -204,7 +204,8 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand
                                         }
 
                                         $messageData = array(
-                                            "message" => $vEventItems['player'] . " a marqué un but à la " . $vEventItems['minute'] . "° minute. Score:" . $vEventItems['score'],
+                                            /*"message" => $vEventItems['player'] . " a marqué un but à la " . $vEventItems['minute'] . "° minute. Score:" . $vEventItems['score'],*/
+                                            "message" => $this->getMessagePush($vEventItems, $matchs),
                                             "type" => "livescore"
                                         );
                                         $data = array(
@@ -255,7 +256,7 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand
                                     }
 
                                     $messageData = array(
-                                        "message" => $vEventItems['player'] . " a marqué un but à la " . $vEventItems['minute'] . "° minute. Score:" . $vEventItems['score'],
+                                        "message" => $this->getMessagePush($vEventItems, $matchs),
                                         "type" => "livescore"
                                     );
                                     $data = array(
@@ -391,5 +392,12 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand
             $wm->send();
         }
 
+    }
+    private function getMessagePush($vEventItems, $matchs){
+        /*$msg = " <img src='". "http:dplb.arkeup.com/".$matchs->getCheminLogoDomicile() ."'width='15' height='15' /> <b>". $matchs->getEquipeDomicile()->getFullNameClub() ."</b> VS  <img src='".$matchs->getCheminLogoVisiteur()."' width='15' height='15' />  <b> ". $matchs->getEquipeVisiteur()->getFullNameClub() ."</b> <br />";*/
+        $msg = "".$matchs->getEquipeDomicile()->getFullNameClub().' VS '. $matchs->getEquipeVisiteur()->getFullNameClub(). " ";
+        $msg .= " But de ".$vEventItems['player']. " à la " . $vEventItems['minute'];
+        $msg .= " Score " . $vEventItems['score'];
+        return $msg;
     }
 }
