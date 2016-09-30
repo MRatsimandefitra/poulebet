@@ -52,9 +52,8 @@ class MatchController extends ApiController
 
     public function indexMatchsAction(Request $request)
     {
-
         $session = new Session();
-        
+
         $session->set("current_page","Matchs");
         //var_dump($request->get('dateFinale')); die;
         if ($request->request->get('identifiant')) {
