@@ -395,7 +395,7 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand
     }
     private function getMessagePush($vEventItems, $matchs){
         /*$msg = " <img src='". "http:dplb.arkeup.com/".$matchs->getCheminLogoDomicile() ."'width='15' height='15' /> <b>". $matchs->getEquipeDomicile()->getFullNameClub() ."</b> VS  <img src='".$matchs->getCheminLogoVisiteur()."' width='15' height='15' />  <b> ". $matchs->getEquipeVisiteur()->getFullNameClub() ."</b> <br />";*/
-        $msg = "".$matchs->getEquipeDomicile()->getFullNameClub().' VS '. $matchs->getEquipeVisiteur()->getFullNameClub(). " ";
+        $msg = "".$matchs->getEquipeDomicile().' VS '. $matchs->getEquipeVisiteur(). " ";
         $msg .= " But de ".$vEventItems['player']. " à la " . $vEventItems['minute'];
         $msg .= " Score " . $vEventItems['score'];
         return $msg;
