@@ -178,10 +178,22 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand
                                             // Si score différent alors push notification
                                             $output->writeln("A notification will be sent");
                                             $connected = $em->getRepository('ApiDBBundle:Connected')->findAll();
+
+
                                             $device_token = array();
                                             foreach ($connected as $connectedItems) {
-                                                if(!in_array($connectedItems->getDevice(), $device_token)){
-                                                    $device_token[] = $connectedItems->getDevice();
+                                                $dqlVote = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
+                                                    LEFT JOIN vu.matchs as m
+                                                    LEFT JOIN vu.utilisateur as u
+                                                    WHERE u.email = :email
+                                                    AND vu.vote IS NOT NULL";
+                                                $query = $em->createQuery($dqlVote);
+                                                $query->setParameter('email', $connectedItems->getUsername());
+                                                $result = $query->getResult();
+                                                if($result){
+                                                    if(!in_array($connectedItems->getDevice(), $device_token)){
+                                                        $device_token[] = $connectedItems->getDevice();
+                                                    }
                                                 }
                                                 /*  $devices = $connectedItems->getDevice();
                                                   foreach ($devices as $device) {
@@ -221,8 +233,18 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand
                                         $device_token = array();
                                         foreach ($connected as $connectedItems) {
                                             //array_push($device_token, $connectedItems->getDevice());
-                                            if(!in_array($connectedItems->getDevice(), $device_token)){
-                                                $device_token[] = $connectedItems->getDevice();
+                                            $dqlVote = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
+                                                    LEFT JOIN vu.matchs as m
+                                                    LEFT JOIN vu.utilisateur as u
+                                                    WHERE u.email = :email
+                                                    AND vu.vote IS NOT NULL";
+                                            $query = $em->createQuery($dqlVote);
+                                            $query->setParameter('email', $connectedItems->getUsername());
+                                            $result = $query->getResult();
+                                            if($result){
+                                                if(!in_array($connectedItems->getDevice(), $device_token)){
+                                                    $device_token[] = $connectedItems->getDevice();
+                                                }
                                             }
                                             /*  $devices = $connectedItems->getDevice();
                                               foreach ($devices as $device) {
