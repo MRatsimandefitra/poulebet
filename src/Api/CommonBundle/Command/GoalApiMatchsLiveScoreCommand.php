@@ -384,6 +384,8 @@ class GoalApiMatchsLiveScoreCommand extends ContainerAwareCommand
         $msg = "".$matchs->getEquipeDomicile().' VS '. $matchs->getEquipeVisiteur(). " \n ";
         $msg .= " But de ".$vEventItems['player']. " à la " . $vEventItems['minute']. " \n";
         $msg .= " Score " . $vEventItems['score'];
+
+        $msg2 = "But de " .$vEventItems['player']. " à la " . $vEventItems['minute']. " \n - " . $matchs->getEquipeDomicile().' VS '. $matchs->getEquipeVisiteur(). " \n "." Score " . $vEventItems['score'];
         return $msg;
     }
 }
