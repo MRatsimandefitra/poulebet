@@ -40,6 +40,12 @@ class VoteUtilisateur
      * @ORM\Column(name="vote", type="integer")
      */
     private $vote;
+    /**
+     * @var Boolean
+     *
+     * @ORM\Column(name="isVote", type="boolean", nullable=true)
+     */
+    private $isVote;
 
     /**
      * @var bool
@@ -155,5 +161,29 @@ class VoteUtilisateur
         $this->utilisateur = $utilisateur;
 
         return $this;
+    }
+
+    /**
+     * Set isVote
+     *
+     * @param boolean $isVote
+     *
+     * @return VoteUtilisateur
+     */
+    public function setIsVote($isVote)
+    {
+        $this->isVote = $isVote;
+
+        return $this;
+    }
+
+    /**
+     * Get isVote
+     *
+     * @return boolean
+     */
+    public function getIsVote()
+    {
+        return $this->isVote;
     }
 }

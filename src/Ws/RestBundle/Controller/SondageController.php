@@ -30,12 +30,60 @@ class SondageController extends ApiController
      */
     public function insertVoteUsersAction(Request $request)
     {
-        $token = $request->request->get('token');
-        $vote = $request->request->get('vote');
-        $MatchId = $request->request->get('matchId');
-        $currentUser = $this->getRepo(self::ENTITY_UTILISATEUR)->findOneByUserTokenAuth($token);
+        $tokenWs = $request->request->get('token');
+        $voteWs = (int) $request->request->get('vote');
+        $MatchIdWs = $request->request->get('matchId');
+        $result = array();
+        if($tokenWs){
+            $currentUser = $this->getRepo(self::ENTITY_UTILISATEUR)->findOneByUserTokenAuth($tokenWs);
+            if(!$currentUser){
+                $result['code_error'] = 4;
+                $result['success'] = true;
+                $result['error'] = false;
+                $result['message'] = "Aucun utilisateur trouvé";
+                return new JsonResponse($result);
+            }
+        }else{
+            $result['code_error'] = 2;
+            $result['success'] = false;
+            $result['error'] = true;
+            $result['message'] = "Le token utilisateur doit être précisé";
+            return new JsonResponse($result);
+        }
 
-        $currentMatch = $this->getRepo(self::ENTITY_MATCHS)->find($MatchId);
+        if($MatchIdWs){
+            $currentMatch = $this->getRepo(self::ENTITY_MATCHS)->find($MatchIdWs);
+        }else{
+            $result['code_error'] = 2;
+            $result['success'] = false;
+            $result['error'] = true;
+            $result['message'] = "L' ID du match doit être précisé";
+            return new JsonResponse($result);
+        }
+
+        if($voteWs){
+            if(is_int($voteWs)){
+                if($voteWs != 0 or $voteWs != 1 or $voteWs != 2){
+                    $result['code_error'] = 2;
+                    $result['success'] = false;
+                    $result['error'] = true;
+                    $result['message'] = "Le vote doit être un nombre entre 0 et 2";
+                    return new JsonResponse($result);
+                }
+            }else{
+                $result['code_error'] = 2;
+                $result['success'] = false;
+                $result['error'] = true;
+                $result['message'] = "Le vote doit être un nombre";
+                return new JsonResponse($result);
+            }
+        }else{
+            $result['code_error'] = 2;
+            $result['success'] = false;
+            $result['error'] = true;
+            $result['message'] = "Le vote doit être precisé";
+            return new JsonResponse($result);
+        }
         try {
             $voteUtilisateur = $this->getRepo(self::ENTITY_VOTE)->findOneBy(array('utilisateur' => $currentUser, 'matchs' => $currentMatch));
             $new = false;
@@ -47,7 +95,8 @@ class SondageController extends ApiController
             $voteUtilisateur->setMatchs($currentMatch);
             $voteUtilisateur->setUtilisateur($currentUser);
             $voteUtilisateur->setGagnant(false);
-            $voteUtilisateur->setVote($vote);
+            $voteUtilisateur->setIsVote($voteWs);
+            $voteUtilisateur->setVote($voteWs);
             if ($new) {
                 $this->getEm()->persist($voteUtilisateur);
             }
