@@ -63,7 +63,10 @@ class SondageController extends ApiController
 
         if($voteWs){
             if(is_int($voteWs)){
-                if($voteWs != 0 or $voteWs != 1 or $voteWs != 2){
+                if($voteWs == 0 or $voteWs == 1 or $voteWs == 2) {
+                    $successVote = true;
+                }else{
+
                     $result['code_error'] = 2;
                     $result['success'] = false;
                     $result['error'] = true;
