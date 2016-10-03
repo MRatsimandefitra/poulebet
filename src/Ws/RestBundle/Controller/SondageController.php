@@ -98,7 +98,7 @@ class SondageController extends ApiController
             $voteUtilisateur->setMatchs($currentMatch);
             $voteUtilisateur->setUtilisateur($currentUser);
             $voteUtilisateur->setGagnant(false);
-            $voteUtilisateur->setIsVote($voteWs);
+          //  $voteUtilisateur->setIsVote($voteWs);
             $voteUtilisateur->setVote($voteWs);
             if ($new) {
                 $this->getEm()->persist($voteUtilisateur);
