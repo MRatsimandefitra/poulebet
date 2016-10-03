@@ -56,7 +56,6 @@ class GoalApiMatchsLiveScoreCommand extends ContainerAwareCommand
 
                         $output->writeln("Treatement ->  Matchs With ID :" . $vItems['id']);
                         $matchs = $em->getRepository(self::ENTITY_MATCH)->find($vItems['id']);
-                        var_dump($matchs->getEquipeDomicile());
                         if (!$matchs) {
                             $matchs = new Matchs();
                         }
@@ -166,51 +165,8 @@ class GoalApiMatchsLiveScoreCommand extends ContainerAwareCommand
                                     }
                                     $this->getEm()->persist($matchsEvent);
                                     $this->getEm()->flush();
-                                    if(array_key_exists('score', $vEventItems)){
-                                        if ($matchs->getScore() != $vEventItems['score']) {
-                                            // Si score différent alors push notification
-                                            $output->writeln("A notification will be sent");
-                                            $connected = $em->getRepository('ApiDBBundle:Connected')->findAll();
-                                            $device_token = array();
-                                            foreach ($connected as $connectedItems) {
-                                                $dqlVote = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
-                                                    LEFT JOIN vu.matchs as m
-                                                    LEFT JOIN vu.utilisateur as u
-                                                    WHERE u.email = :email
-                                                    AND vu.vote IS NOT NULL";
-                                                $query = $em->createQuery($dqlVote);
-                                                $query->setParameter('email', $connectedItems->getUsername());
-                                                $result = $query->getResult();
-                                                if($result){
-                                                    if(!in_array($connectedItems->getDevice(), $device_token)){
-                                                        $device_token[] = $connectedItems->getDevice();
-                                                    }
-                                                }
-                                              /*  $devices = $connectedItems->getDevice();
-                                                foreach ($devices as $device) {
-                                                    //$device_token[] = $device->getToken();
-                                                    array_push($device_token, $device->getToken());
-                                                }*/
-                                            }
-                                        }
-
-                                        $messageData = array(
-                                        /*    "message" => $vEventItems['player'] . " a marqué un but à la " . $vEventItems['minute'] . "° minute. Score:" . $vEventItems['score'],*/
-                                            "message" => $this->getMessagePush($vEventItems, $matchs),
-                                            "firstMessage" => $this->firstMessage($matchs),
-                                            "secondMessage" => $this->secondMessage($vEventItems),
-                                            "thirdMessage" => $this->thirdMessage($vEventItems),
-                                            "type" => "livescore"
-                                        );
-                                        $data = array(
-                                            'registration_ids' => $device_token,
-                                            'data' => $messageData
-                                        );
-                                        $http = $this->getContainer()->get('http');
-                                        $res = $http->sendGCMNotification($data);
-
-                                        $output->writeln($res);
-                                    }
+                                    // send notification
+                                    $this->sendNotif($matchs, $vEventItems, $output);
                                     $output->writeln("insert event " . $matchsEvent->getId());
 
                                 }
@@ -218,55 +174,7 @@ class GoalApiMatchsLiveScoreCommand extends ContainerAwareCommand
 
                                 $vEventItems = end($vItems['events']);
                                 $output->writeln(count($nbLocalME) . " #" . count($nbGoalApiME));
-                                if (array_key_exists('score', $vEventItems)) {
-
-                                    if ($matchs->getScore() != $vEventItems['score']) {
-                                        // Si score différent alors push notification
-                                        $output->writeln("A notification will be sent");
-
-                                        $connected = $em->getRepository('ApiDBBundle:Connected')->findAll();
-                                        $device_token = array();
-                                        foreach ($connected as $connectedItems) {
-                                            //array_push($device_token, $connectedItems->getDevice());
-                                            $dqlVote = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
-                                                    LEFT JOIN vu.match as m
-                                                    LEFT JOIN vu.utilisateur as u
-                                                    WHERE u.email = :email
-                                                    AND vu.vote IS NOT NULL";
-                                            $query = $em->createQuery($dqlVote);
-                                            $query->setParameter('email', $connectedItems->getUsername());
-                                            $result = $query->getResult();
-                                            if($result){
-                                                if(!in_array($connectedItems->getDevice(), $device_token)){
-                                                    $device_token[] = $connectedItems->getDevice();
-                                                }
-                                            }
-                                            /*  $devices = $connectedItems->getDevice();
-                                              foreach ($devices as $device) {
-                                                  //$device_token[] = $device->getToken();
-                                                  array_push($device_token, $device->getToken());
-                                              }*/
-                                        }
-                                    }
-
-                                    $messageData = array(
-                                        /*"message" => $vEventItems['player'] . " a marqué un but à la " . $vEventItems['minute'] . "° minute. Score:" . $vEventItems['score'],*/
-                                        "message" => $this->getMessagePush($vEventItems, $matchs),
-                                        "firstMessage" => $this->firstMessage($matchs),
-                                        "secondMessage" => $this->secondMessage($vEventItems),
-                                        "thirdMessage" => $this->thirdMessage($vEventItems),
-                                        "type" => "livescore"
-                                    );
-                                    $data = array(
-                                        'registration_ids' => $device_token,
-                                        'data' => $messageData
-                                    );
-                                    $http = $this->getContainer()->get('http');
-                                    $res = $http->sendGCMNotification($data);
-
-                                    $output->writeln($res);
-
-                                }
+                                $this->sendNotif($matchs, $vEventItems, $output);
                             }
 
                             $matchsEvent = new MatchsEvent();
@@ -410,5 +318,60 @@ class GoalApiMatchsLiveScoreCommand extends ContainerAwareCommand
         /*$msg = " <img src='". "http:dplb.arkeup.com/".$matchs->getCheminLogoDomicile() ."'width='15' height='15' /> <b>". $matchs->getEquipeDomicile()->getFullNameClub() ."</b> VS  <img src='".$matchs->getCheminLogoVisiteur()."' width='15' height='15' />  <b> ". $matchs->getEquipeVisiteur()->getFullNameClub() ."</b> <br />";*/
         $msg = " Score " . $vEventItems['score'];
         return $msg;
+    }
+
+
+    private function sendNotif($matchs, $vEventItems,$output){
+        $em = $this->getEm();
+        if(array_key_exists('score', $vEventItems)){
+            if ($matchs->getScore() != $vEventItems['score']) {
+                // Si score différent alors push notification
+                $output->writeln("A notification will be sent");
+                $connected = $em->getRepository('ApiDBBundle:Connected')->findAll();
+                $device_token = array();
+                foreach ($connected as $connectedItems) {
+                    $dqlVote = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
+                                                    LEFT JOIN vu.matchs as m
+                                                    LEFT JOIN vu.utilisateur as u
+                                                    WHERE u.email = :email
+                                                    AND m.id = :matchId
+                                                    AND vu.vote IS NOT NULL";
+                    $query = $em->createQuery($dqlVote);
+                    /*$query->setParameter('email', $connectedItems->getUsername());*/
+                    $query->setParameters(array(
+                        'email' => $connectedItems->getUsername(),
+                        'matchId' => $matchs->getId()
+                    ));
+                    $result = $query->getResult();
+                    if($result){
+                        if(!in_array($connectedItems->getDevice(), $device_token)){
+                            $device_token[] = $connectedItems->getDevice();
+                        }
+                    }
+                    /*  $devices = $connectedItems->getDevice();
+                      foreach ($devices as $device) {
+                          //$device_token[] = $device->getToken();
+                          array_push($device_token, $device->getToken());
+                      }*/
+                }
+            }
+
+            $messageData = array(
+                /*    "message" => $vEventItems['player'] . " a marqué un but à la " . $vEventItems['minute'] . "° minute. Score:" . $vEventItems['score'],*/
+                "message" => $this->getMessagePush($vEventItems, $matchs),
+                "firstMessage" => $this->firstMessage($matchs),
+                "secondMessage" => $this->secondMessage($vEventItems),
+                "thirdMessage" => $this->thirdMessage($vEventItems),
+                "type" => "livescore"
+            );
+            $data = array(
+                'registration_ids' => $device_token,
+                'data' => $messageData
+            );
+            $http = $this->getContainer()->get('http');
+            $res = $http->sendGCMNotification($data);
+
+            $output->writeln($res);
+        }
     }
 }
