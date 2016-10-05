@@ -12,14 +12,30 @@ use Symfony\Component\HttpFoundation\Request;
 class PariController extends ApiController implements InterfaceDB
 {
     public function postGetAllMathsAction(Request $request){
+
         $date = $request->request->get('date');
         $championat = $request->request->get('championat');
         $token = $request->request->get('token');
+        $result = array();
+        if(!$token){
+            $result['code_error'] = 2;
+            $result['error'] = true;
+            $result['success'] = false;
+            $result['message'] = "Le token utilisateur doit être spécifié";
+            return new JsonResponse($result);
+        }
         $user = $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
+        if(!$user){
+            $result['code_error'] = 0;
+            $result['error'] = false;
+            $result['success'] = true;
+            $result['message'] = "Aucun utilisateur";
+            return new JsonResponse($result);
+        }
         $matchs = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForPari($date, $championat);
         $championat = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForPari($date, $championat, true);
 
-        $result = array();
+
 
         if($championat){
             foreach($championat as $kChampionat => $itemsChampionat){
@@ -30,6 +46,16 @@ class PariController extends ApiController implements InterfaceDB
                     'fullNameChampionat' => $itemsChampionat->getChampionat()->getFullNameChampionat()
                 );
             }
+            $result['code_error'] = 0;
+            $result['error'] = false;
+            $result['success'] = true;
+            $result['message'] = "success";
+        }else{
+            $result['code_error'] = 0;
+            $result['error'] = false;
+            $result['success'] = true;
+            $result['message'] = "Aucun championat";
+            return new JsonResponse($result);
         }
         if($matchs){
             foreach($matchs as $kMatchs => $matchsItems){
@@ -58,9 +84,12 @@ class PariController extends ApiController implements InterfaceDB
                     'idChampionat' => $matchsItems->getChampionat()->getId()
                 );
             }
+        }else{
+            $result['code_error'] = 0;
+            $result['error'] = false;
+            $result['success'] = true;
+            $result['message'] = "Aucun matchs";
         }
-
-
 
         return new JsonResponse($result);
     }
