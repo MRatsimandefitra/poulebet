@@ -156,8 +156,8 @@ class PariController extends ApiController implements InterfaceDB
                         'cotePronostic1' => $matchsItems->getCot1Pronostic(),
                         'cotePronosticN' => $matchsItems->getCoteNPronistic(),
                         'cotePronostic2' => $matchsItems->getCote2Pronostic(),
-                        'gainsPotentiel' => $this->getGainsPotentiel($user->getId(), $matchsItems->getId()),
-                        'miseTotal' => $this->getMiseTotal($user->getId(), $matchsItems->getId()),
+                        'gainsPotentiel' => '', /*$this->getGainsPotentiel($user->getId(), $matchsItems->getId()),*/
+                        'miseTotal' => '', // $this->getMiseTotal($user->getId(), $matchsItems->getId()),
                         'idChampionat' => $matchsItems->getChampionat()->getId()
                     );
                 }
