@@ -261,7 +261,8 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
     }
     function findMatchVote(){
         $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
-                LEFT JOIN vu.matchs m ";
+                LEFT JOIN vu.matchs m
+                LEFT JOIN m.championat ch";
         $query = $this->getEntityManager()->createQuery($dql);
         return $query->getResult();
     }
