@@ -13,18 +13,18 @@ use Doctrine\ORM\Mapping as ORM;
 class MvtCredit
 {
     /**
-     * @ORM\ManyToOne(targetEntity="Utilisateur", cascade={"persist"})
-     * @ORM\JoinColumn(name="utilisateur_id")
+     * @ORM\ManyToOne(targetEntity="Utilisateur", cascade={"persist","remove"})
+     * @ORM\JoinColumn(name="utilisateur_id", nullable=true)
      */
     private $utilisateur;
     /**
-     * @ORM\ManyToOne(targetEntity="VoteUtilisateur", cascade={"persist"})
-     * @ORM\JoinColumn(name="voteutilisateur_id")
+     * @ORM\ManyToOne(targetEntity="VoteUtilisateur", cascade={"persist","remove"})
+     * @ORM\JoinColumn(name="voteutilisateur_id", nullable=true)
      */
     private $voteUtilisateur;
     /**
-     * @ORM\ManyToOne(targetEntity="Credit", cascade={"persist"})
-     * @ORM\JoinColumn(name="credit_id")
+     * @ORM\ManyToOne(targetEntity="Credit", cascade={"persist","remove"})
+     * @ORM\JoinColumn(name="credit_id", nullable=true)
      */
     private $credit;
     /**
@@ -39,28 +39,28 @@ class MvtCredit
     /**
      * @var int
      *
-     * @ORM\Column(name="entreeCredit", type="integer")
+     * @ORM\Column(name="entreeCredit", type="integer", nullable=true)
      */
     private $entreeCredit;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="sortieCredit", type="integer")
+     * @ORM\Column(name="sortieCredit", type="integer", nullable=true)
      */
     private $sortieCredit;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="soldeCredit", type="integer")
+     * @ORM\Column(name="soldeCredit", type="integer", nullable=true)
      */
     private $soldeCredit;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="dateMvt", type="datetime")
+     * @ORM\Column(name="dateMvt", type="datetime", nullable=true)
      */
     private $dateMvt;
 

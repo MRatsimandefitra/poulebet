@@ -5,6 +5,7 @@ namespace Ws\RestBundle\Controller;
 use Api\CommonBundle\Controller\ApiController;
 use Api\CommonBundle\Fixed\InterfaceDB;
 use Api\CommonBundle\Fixed\InterfacePari;
+use Api\DBBundle\Entity\VoteUtilisateur;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -242,6 +243,42 @@ class PariController extends ApiController implements InterfaceDB
             $result['error'] = false;
             $result['message'] = "Success";
             return new JsonResponse($result);
+
+        }
+    }
+
+    public function insertPariAction(Request $request){
+
+        $isCombined = $request->request->get('isCombined');
+        $token  = $request->request->get('token');
+        $user=  $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
+        if($isCombined){
+            $jsonDataCombined =  $request->request->get('jsonDataCombined');
+            $gainsPotentiel = $request->request->get('gainPotentiel');
+            $data = json_decode($jsonDataCombined, true);
+            //var_dump($data['matchs']); die;
+            if(!empty($data['matchs'])){
+                foreach($data['matchs'] as $kMatchs => $itemsMatchs){
+                    $idMatchs = $itemsMatchs['id'];
+                    $voteMatchs = $itemsMatchs['vote'];
+                    $matchs = $this->getObjectRepoFrom(self::ENTITY_MATCHS, array('id' => $idMatchs));
+                    if(!$matchs){
+                        die('pas de matchs');
+                    }
+                    $vu = new VoteUtilisateur();
+                    $vu->setVote($voteMatchs);
+                    $vu->setMatchs($matchs);
+                    $vu->setUtilisateur($user);
+                    $vu->setGainPotentiel($gainsPotentiel);
+
+                    $this->getEm()->persist($vu);
+                    $this->getEm()->flush();
+                }
+            }
+
+        }
+        else
+        {
 
         }
     }

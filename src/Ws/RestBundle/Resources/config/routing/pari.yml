@@ -1,8 +1,13 @@
 ws_rest_pari_list_matchs:
     path:     /get-list-matchs
     defaults: { _controller: WsRestBundle:Pari:postGetAllMaths }
-    methods: POST # string (championat), date, $token, isCombined
+    methods: POST # string (championat), date, $token, isCombined (required)
 ws_rest_pari_get_nb_poulet:
     path:     /get-nb-poulet
     defaults: { _controller: WsRestBundle:Pari:postGetNbPoulet }
     methods: POST # $token
+
+ws_rest_pari_insert_pari:
+    path:     /insert
+    defaults: { _controller: WsRestBundle:Pari:insertPari }
+    methods: POST
