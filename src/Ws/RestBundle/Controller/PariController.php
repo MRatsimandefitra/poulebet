@@ -151,12 +151,12 @@ class PariController extends ApiController implements InterfaceDB
                         'status' => $matchsItems->getStatusMatch(),
                         'tempsEcoules' => $matchsItems->getTempsEcoules(),
                         'live' => ($matchsItems->getStatusMatch() == 'active') ? true : false,
-                        'masterProno1' => $matchsItems->getMasterProno1(),
-                        'masterPronoN' => $matchsItems->getMasterPronoN(),
-                        'masterProno2' => $matchsItems->getMasterProno2(),
-                        'cotePronostic1' => $matchsItems->getCot1Pronostic(),
-                        'cotePronosticN' => $matchsItems->getCoteNPronistic(),
-                        'cotePronostic2' => $matchsItems->getCote2Pronostic(),
+                        'master_prono_1' => $matchsItems->getMasterProno1(),
+                        'master_prono_n' => $matchsItems->getMasterPronoN(),
+                        'master_prono_2' => $matchsItems->getMasterProno2(),
+                        'cote_pronostic_1' => $matchsItems->getCot1Pronostic(),
+                        'cote_pronostic_n' => $matchsItems->getCoteNPronistic(),
+                        'cote_pronostic_2' => $matchsItems->getCote2Pronostic(),
                         'gainsPotentiel' => '', /*$this->getGainsPotentiel($user->getId(), $matchsItems->getId()),*/
                         'miseTotal' => '', // $this->getMiseTotal($user->getId(), $matchsItems->getId()),
                         'idChampionat' => $matchsItems->getChampionat()->getId()
