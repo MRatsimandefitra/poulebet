@@ -63,6 +63,12 @@ class MvtCredit
      * @ORM\Column(name="dateMvt", type="datetime", nullable=true)
      */
     private $dateMvt;
+    /**
+     * @var \String
+     *
+     * @ORM\Column(name="typeCredit", type="string", length=255, nullable=true)
+     */
+    private $typeCredit;
 
 
     /**
@@ -241,5 +247,29 @@ class MvtCredit
     public function getCredit()
     {
         return $this->credit;
+    }
+
+    /**
+     * Set typeCredit
+     *
+     * @param string $typeCredit
+     *
+     * @return MvtCredit
+     */
+    public function setTypeCredit($typeCredit)
+    {
+        $this->typeCredit = $typeCredit;
+
+        return $this;
+    }
+
+    /**
+     * Get typeCredit
+     *
+     * @return string
+     */
+    public function getTypeCredit()
+    {
+        return $this->typeCredit;
     }
 }

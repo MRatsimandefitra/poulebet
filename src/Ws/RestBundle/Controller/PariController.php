@@ -5,6 +5,7 @@ namespace Ws\RestBundle\Controller;
 use Api\CommonBundle\Controller\ApiController;
 use Api\CommonBundle\Fixed\InterfaceDB;
 use Api\CommonBundle\Fixed\InterfacePari;
+use Api\DBBundle\Entity\Matchs;
 use Api\DBBundle\Entity\MvtCredit;
 use Api\DBBundle\Entity\VoteUtilisateur;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -110,6 +111,7 @@ class PariController extends ApiController implements InterfaceDB
                 $this->noUser();
             }
             $matchs = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForPari($date, $championatWs);
+            $matchsVote = $this->getRepo(self::ENTITY_MATCHS)->findMatchVote();
             $championat = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForPari($date, $championatWs, true);
 
 
@@ -252,11 +254,23 @@ class PariController extends ApiController implements InterfaceDB
 
         $isCombined = $request->request->get('isCombined');
         $token  = $request->request->get('token');
-        $user=  $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
+        $gainsPotentiel = $request->request->get('gainPotentiel');
+        $miseTotal = $request->request->get('miseTotal');
+        $voteMatchsSimple = $request->request->get('voteSimple');
+        if(!$token){
+            $this->noToken();
+        }
+        $user =  $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
+        if(!$user){
+            $result['code_error'] = 0;
+            $result['error'] = false;
+            $result['success'] = true;
+            $result['message'] = "Aucun utilisateur";
+            return new JsonResponse($result);
+        }
         if($isCombined){
             $jsonDataCombined =  $request->request->get('jsonDataCombined');
-            $gainsPotentiel = $request->request->get('gainPotentiel');
-            $miseTotal = $request->request->get('miseTotal');
+
             $data = json_decode($jsonDataCombined, true);
             //var_dump($data['matchs']); die;
             if(!empty($data['matchs'])){
@@ -265,7 +279,7 @@ class PariController extends ApiController implements InterfaceDB
                     $voteMatchs = $itemsMatchs['vote'];
                     $matchs = $this->getObjectRepoFrom(self::ENTITY_MATCHS, array('id' => $idMatchs));
                     if(!$matchs){
-                        die('pas de matchs');
+        //                die('pas de matchs');
                     }
                     $vu = new VoteUtilisateur();
                     $vu->setVote($voteMatchs);
@@ -286,12 +300,60 @@ class PariController extends ApiController implements InterfaceDB
                     $this->getEm()->persist($mvtCredit);
                     $this->getEm()->flush();
                 }
+                $result['code_error'] = 0;
+                $result['error'] = false;
+                $result['success'] = true;
+                $result['message'] = "Success";
             }
 
         }
         else
         {
 
+            $matchsId= $request->request->get('matchId');
+            if(!$matchsId){
+
+                $result['code_error'] = 2;
+                $result['error'] = true;
+                $result['success'] = false;
+                $result['message'] = "ID du matchs doit être spécifié";
+                return new JsonResponse($result);
+            }
+
+            $matchs = $this->getObjectRepoFrom(self::ENTITY_MATCHS, array('id' => $matchsId));
+
+            if($matchs){
+                $vu = new VoteUtilisateur();
+                $vu->setUtilisateur($user);
+                $vu->setMisetotale($miseTotal);
+                $vu->setGainPotentiel($gainsPotentiel);
+                $vu->setVote($voteMatchsSimple);
+                $vu->setMatchs($matchs);
+
+                $this->getEm()->persist($vu);
+
+                $this->getEm()->persist($vu);
+                $mvtCredit = new MvtCredit();
+                $mvtCredit->setDateMvt(new \DateTime('now'));
+                $mvtCredit->setUtilisateur($user);
+                $mvtCredit->setVoteUtilisateur($vu->getId());
+                $mvtCredit->setSortieCredit($gainsPotentiel);
+                $mvtCredit->setTypeCredit("JOUER SIMPLE");
+                $this->getEm()->persist($mvtCredit);
+                $this->getEm()->flush();
+
+                //$matchs->set
+                $result['code_error'] = 0;
+                $result['error'] = false;
+                $result['success'] = true;
+                $result['message'] = "Success";
+            }else{
+                $result['code_error'] = 0;
+                $result['error'] = false;
+                $result['success'] = true;
+                $result['message'] = "Aucun matchs trouvé";
+            }
+            return new JsonResponse($result);
         }
     }
 }

@@ -227,7 +227,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
 
         $dql = "Select m from ApiDBBundle:Matchs m
                 LEFT JOIN m.championat ch
-                JOIN m.concours co";
+                JOIN m.concours co ";
 
         $params = array();
         $where = array();
@@ -258,6 +258,12 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         }
         return $query->getResult();
 
+    }
+    function findMatchVote(){
+        $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
+                LEFT JOIN vu.matchs m ";
+        $query = $this->getEntityManager()->createQuery($dql);
+        return $query->getResult();
     }
     public function findGains($idUser, $idMatchs){
 
