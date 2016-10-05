@@ -13,4 +13,5 @@ interface InterfaceDB {
 
     const ENTITY_MATCHS = 'ApiDBBundle:Matchs';
     const ENTITY_UTILISATEUR = 'ApiDBBundle:Utilisateur';
+    const ENTITY_MVT_CREDIT = 'ApiDBBundle:MvtCredit';
 }

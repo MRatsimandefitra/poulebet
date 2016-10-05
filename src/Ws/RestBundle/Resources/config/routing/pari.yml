@@ -1,4 +1,8 @@
 ws_rest_pari_list_matchs:
     path:     /get-list-matchs
     defaults: { _controller: WsRestBundle:Pari:postGetAllMaths }
-    methods: POST # string (championat), date
+    methods: POST # string (championat), date, $token
+ws_rest_pari_get_nb_poulet:
+    path:     /get-nb-poulet
+    defaults: { _controller: WsRestBundle:Pari:postGetNbPoulet }
+    methods: POST # $token

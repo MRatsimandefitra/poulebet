@@ -108,4 +108,45 @@ class PariController extends ApiController implements InterfaceDB
         }
         return $voteUtilisateur->getMiseTotal();
     }
+
+    public function postGetNbPouletAction(Request $request){
+        $token = $request->request->get('token');
+        $result = array();
+        if(!$token){
+            $result['code_error'] = 2;
+            $result['error'] = true;
+            $result['success'] = false;
+            $result['message'] = "Le parametre token doit être specifie";
+            return new JsonResponse($result);
+        }
+        $currentUser= $this->getRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
+        if(!$currentUser){
+            $result['code_error'] = 0;
+            $result['success'] = true;
+            $result['error'] = false;
+            $result['message'] = "Aucun utilisateur en cours";
+            return new JsonResponse($result);
+        }
+        $credit = $this->getRepoFrom(self::ENTITY_MVT_CREDIT, array('utilisateur' => $currentUser));
+        if(!$credit){
+            $result['code_error'] = 0;
+            $result['success'] = true;
+            $result['error'] = false;
+            $result['message'] = "Aucun Credit pour utilisateur";
+            return new JsonResponse($result);
+        }
+        if($credit){
+            foreach($credit as $kCredit => $itemCredit){
+                $result['credit'][] = array(
+                    'soldeCredit' => $itemCredit->getSoldeCredit()
+                );
+            }
+            $result['code_error'] = 0;
+            $result['success'] = true;
+            $result['error'] = false;
+            $result['message'] = "Success";
+            return new JsonResponse($result);
+
+        }
+    }
 }
