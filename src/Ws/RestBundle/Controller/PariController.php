@@ -178,14 +178,14 @@ class PariController extends ApiController implements InterfaceDB
     }
 
     private function getGainsPotentiel($idUser, $idMatchs){
-        $voteUtilisateur = $this->getRepo(self::ENTITY_MATCHS)->findGains($idUser, $idMatchs);
+        $voteUtilisateur = $this->getObjectRepoFrom(self::ENTITY_MATCHS)->findGains($idUser, $idMatchs);
         if(!$voteUtilisateur){
             return null;
         }
         return $voteUtilisateur->getGainPotentiel();
     }
     private function getMiseTotal($idUser, $idMatchs){
-        $voteUtilisateur = $this->getRepo(self::ENTITY_MATCHS)->findGains($idUser, $idMatchs);
+        $voteUtilisateur = $this->getObjectRepoFrom(self::ENTITY_MATCHS)->findGains($idUser, $idMatchs);
         if(!$voteUtilisateur){
             return null;
         }
