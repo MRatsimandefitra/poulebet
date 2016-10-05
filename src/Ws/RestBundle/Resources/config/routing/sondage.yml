@@ -1,7 +1,7 @@
 ws_rest_sondage_insert_vote_utilisateur:
     path:     /insert/vote
     defaults: { _controller: WsRestBundle:Sondage:insertVoteUsers }
-    methods: POST
+    methods: POST # vote (int) 1 ou 2 ou 0 | token: token_user | matchId: id du matchs à voter
 ws_rest_sondage_update_vote_utilisateur:
     path:     /update/vote
     defaults: { _controller: WsRestBundle:Sondage:updateVoteUsers }

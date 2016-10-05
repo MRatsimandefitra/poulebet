@@ -37,7 +37,7 @@ class VoteUtilisateur
     /**
      * @var int
      *
-     * @ORM\Column(name="vote", type="integer")
+     * @ORM\Column(name="vote", type="integer", nullable=true)
      */
     private $vote;
     /**
@@ -46,6 +46,18 @@ class VoteUtilisateur
      * @ORM\Column(name="isVote", type="boolean", nullable=true)
      */
     private $isVote;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="gainPotentiel", type="integer", nullable=true)
+     */
+    private $gainPotentiel;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="misetotale", type="integer", nullable=true)
+     */
+    private $misetotale;
 
     /**
      * @var bool
@@ -185,5 +197,53 @@ class VoteUtilisateur
     public function getIsVote()
     {
         return $this->isVote;
+    }
+
+    /**
+     * Set gainPotentiel
+     *
+     * @param integer $gainPotentiel
+     *
+     * @return VoteUtilisateur
+     */
+    public function setGainPotentiel($gainPotentiel)
+    {
+        $this->gainPotentiel = $gainPotentiel;
+
+        return $this;
+    }
+
+    /**
+     * Get gainPotentiel
+     *
+     * @return integer
+     */
+    public function getGainPotentiel()
+    {
+        return $this->gainPotentiel;
+    }
+
+    /**
+     * Set misetotale
+     *
+     * @param integer $misetotale
+     *
+     * @return VoteUtilisateur
+     */
+    public function setMisetotale($misetotale)
+    {
+        $this->misetotale = $misetotale;
+
+        return $this;
+    }
+
+    /**
+     * Get misetotale
+     *
+     * @return integer
+     */
+    public function getMisetotale()
+    {
+        return $this->misetotale;
     }
 }

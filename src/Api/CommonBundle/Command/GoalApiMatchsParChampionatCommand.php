@@ -154,13 +154,13 @@ class GoalApiMatchsParChampionatCommand extends ContainerAwareCommand {
         }
         $url = "http://api.xmlscores.com/matches/?c[]=" . $data->getNomChampionat() . "&f=json&open=".$apiKey;
        // $url = $this->getContainer()->get('kernel')->getRootDir().'/../web/json/matches1.json';
-
+        var_dump($url); die;
         $content = file_get_contents($url);
 
         $arrayJson = json_decode($content, true);
         return $arrayJson;
     }
-    private function getJson()
+    /*private function getJson()
     {
         $em = $this->getEm();
         $data = $em->getRepository('ApiDBBundle:Championat')->findAll();
@@ -186,7 +186,7 @@ class GoalApiMatchsParChampionatCommand extends ContainerAwareCommand {
         $arrayJson = json_decode($content, true);
         return $arrayJson;
 
-    }
+    }*/
     private function getEm(){
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         return $em;

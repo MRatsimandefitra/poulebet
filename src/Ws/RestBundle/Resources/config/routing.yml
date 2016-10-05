@@ -49,3 +49,6 @@ route_prefix_ws_rest_live_score:
 route_prefix_ws_rest_sondage:
     resource: "@WsRestBundle/Resources/config/routing/sondage.yml"
     prefix:   /sondage
+route_prefix_ws_rest_pari:
+    resource: "@WsRestBundle/Resources/config/routing/pari.yml"
+    prefix:   /pari

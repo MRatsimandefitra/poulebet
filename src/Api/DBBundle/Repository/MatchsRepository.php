@@ -223,4 +223,54 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         return $query->getResult();
     }
 
+    public function findMatchsForPari($date = null, $championat = null, $groupChampionat = null){
+
+        $dql = "Select m from ApiDBBundle:Matchs m
+                LEFT JOIN m.championat ch
+                JOIN m.concours co";
+
+        $params = array();
+        $where = array();
+        if($date){
+            $where[] = " m.dateMatch BETWEEN :date1 AND :date2 ";
+            $params['date1'] = $date. " 00:00:00";
+            $params['date2'] = $date. " 23:59:59";
+        }
+        if($championat){
+            $where[] = " ch.nomChampionat LIKE :championat";
+            $params['championat'] = $championat;
+        }
+
+        if (!empty($where)) {
+            $dql .= ' WHERE ' . implode(' AND ', $where);
+        }
+        if($groupChampionat){
+            $dql .= " GROUP BY ch.nomChampionat";
+        }
+        $dql .= " ORDER BY m.dateMatch ASC, ch.rang ASC";
+
+       // var_dump($dql); die;
+        if(empty($params)){
+            $query = $this->getEntityManager()->createQuery($dql);
+        }else{
+
+            $query = $this->getEntityManager()->createQuery($dql)->setParameters($params);
+        }
+        return $query->getResult();
+
+    }
+    public function findGains($idUser, $idMatchs){
+
+        $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
+                LEFT JOIN vu.matchs m
+                LEFT JOIN vu.utilisateur u
+                WHERE u.id = :idUser AND m.id = :idMatchs ";
+
+        $query = $this->getEntityManager()->createQuery($dql);
+        $query->setParameters(array('idUser' => $idUser, 'idMatchs' => $idMatchs));
+       // var_dump(array('idUser' => $idUser, 'idMatchs' => $idMatchs)); die;
+      //  var_dump($query->getResult()); die;
+     //   $query->setParameters(array('userId' => $idUser, 'idMatch' => $idMatchs));
+        return $query->getResult();
+    }
 }

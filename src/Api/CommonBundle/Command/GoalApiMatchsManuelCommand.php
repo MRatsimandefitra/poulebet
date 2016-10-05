@@ -266,7 +266,6 @@ class GoalApiMatchsManuelCommand extends ContainerAwareCommand
         if(!$dateDebut && !$dateFinale){
             $url = "http://api.xmlscores.com/matches/?c[]=" . $data->getNomChampionat() . "&f=json&e=1&s=0&l=128&open=" . $apiKey;
         }
-      //  var_dump($url); die;
         $content = file_get_contents($url);
 
         $arrayJson = json_decode($content, true);
