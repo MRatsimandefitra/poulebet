@@ -5,6 +5,7 @@ namespace Ws\RestBundle\Controller;
 use Api\CommonBundle\Controller\ApiController;
 use Api\CommonBundle\Fixed\InterfaceDB;
 use Api\CommonBundle\Fixed\InterfacePari;
+use Api\DBBundle\Entity\MvtCredit;
 use Api\DBBundle\Entity\VoteUtilisateur;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -255,6 +256,7 @@ class PariController extends ApiController implements InterfaceDB
         if($isCombined){
             $jsonDataCombined =  $request->request->get('jsonDataCombined');
             $gainsPotentiel = $request->request->get('gainPotentiel');
+            $miseTotal = $request->request->get('miseTotal');
             $data = json_decode($jsonDataCombined, true);
             //var_dump($data['matchs']); die;
             if(!empty($data['matchs'])){
@@ -270,8 +272,18 @@ class PariController extends ApiController implements InterfaceDB
                     $vu->setMatchs($matchs);
                     $vu->setUtilisateur($user);
                     $vu->setGainPotentiel($gainsPotentiel);
-
+                    $vu->setMisetotale($miseTotal);
                     $this->getEm()->persist($vu);
+                    $this->getEm()->flush();
+                    // Todo: a revoir
+
+                    $mvtCredit = new MvtCredit();
+                    $mvtCredit->setUtilisateur($user);
+                    $mvtCredit->setVoteUtilisateur($vu);
+                    $mvtCredit->setSortieCredit($gainsPotentiel);
+                    //$mvtCredit->setSoldeCredit($)
+                    $mvtCredit->setDateMvt(new \DateTime('now'));
+                    $this->getEm()->persist($mvtCredit);
                     $this->getEm()->flush();
                 }
             }
