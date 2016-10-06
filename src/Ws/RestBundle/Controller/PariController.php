@@ -29,13 +29,19 @@ class PariController extends ApiController implements InterfaceDB
         $result = array();
 
         if($isCombined){
+
+
             $user = $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
             if(!$user){
                return $this->noUser();
             }
             $credit = $this->getRepo(self::ENTITY_MVT_CREDIT)->findLastSolde($user->getId());
-            $championatR = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForPari($date, $championatWs, true);
+            $concourEncour = $this->getRepo(self::ENTITY_MATCHS)->findIdConcourByDate();
+            $idConcour = $concourEncour[0]->getId();
+            $championatR = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForPari($date, $championatWs, true, $idConcour);
+
             if($championatR){
+
                 foreach($championatR as $kChampionat => $itemsChampionat){
                     $result['list_championat'][] = array(
                         'idChampionat' => $itemsChampionat->getChampionat()->getId(),
@@ -49,7 +55,6 @@ class PariController extends ApiController implements InterfaceDB
                 $idLast = $credit[0][1];
                 $solde = $this->getRepoFrom(self::ENTITY_MVT_CREDIT, array('id' => $idLast));
                 foreach($solde as $kCredit => $itemsCredit){
-
                     $result['solde'] = $itemsCredit->getSoldeCredit();
                 }
             }else{
@@ -57,7 +62,7 @@ class PariController extends ApiController implements InterfaceDB
             }
 
             // matchs
-            $matchs = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForPari($date, $championatWs);
+            $matchs = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForPari($date, $championatWs, null, $idConcour);
             if($matchs){
                 foreach($matchs as $kMatchs => $matchsItems){
 
@@ -97,7 +102,9 @@ class PariController extends ApiController implements InterfaceDB
             //return new JsonResponse($result);
 
             return new JsonResponse($result);
-        }else{
+        }
+        else
+        {
             if(!$token){
                 return $this->noToken();
             }
@@ -434,6 +441,7 @@ class PariController extends ApiController implements InterfaceDB
                 $result['message'] = "Success";
             }
 
+            return new JsonResponse($result);
         }
         else
         {
