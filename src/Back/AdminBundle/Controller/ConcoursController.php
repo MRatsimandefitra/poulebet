@@ -87,8 +87,9 @@ class ConcoursController extends ApiController {
         $dateFinaleTmp = new \DateTime('now');
         $dateFinaleTmp = $dateFinaleTmp->modify('next monday');
         $dateFinaleTmp->modify('next sunday');
-        $dateFinale = $dateFinaleTmp;
-
+        $dateFinale = $dateFinaleTmp->format('Y-m-d ');
+        $dateFinale = $dateFinale. "23:59:59";
+        $dateFinale = new \DateTime($dateFinale);
         return $this->render('BackAdminBundle:Concours:add_concours.html.twig', array(
                 'form' => $form->createView(),
                 'dateDebut' => $dateDebut->format('Y-m-d'),
