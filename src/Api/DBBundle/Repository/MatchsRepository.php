@@ -231,7 +231,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
 
         $params = array();
         $where = array();
-        $where[] = " m.dateMatch >= co.dateDebut AND m.dateMatch <= co.dateFinale";
+        $where[] = " (m.dateMatch = co.dateDebut OR m.dateMatch = co.dateFinale OR  m.dateMatch BETWEEN co.dateDebut AND co.dateFinale) ";
         $where[] = " co.id = :idConcour";
         $params['idConcour'] = $idConcour;
         if($date){
