@@ -102,8 +102,8 @@ class ConcoursController extends ApiController {
         $form = $this->formPost(self::FORM_CONCOURS, $concours);
         $form->handleRequest($request);
         if($form->isValid()){
-            $concours->setDateDebut(new \DateTime(date('Y-m-d H:i:s', strtotime($form['dateDebut']->getData()->format('Y-m-d H:i:s')))));
-            $concours->setDateFinale(new \DateTime(date('Y-m-d H:i:s', strtotime($form['dateFinale']->getData()->format('Y-m-d H:i:s')))));
+            $concours->setDateDebut(new \DateTime(date('Y-m-d H:i:s', strtotime($form['dateDebut']->getData()->format('Y-m-d 00:00:00')))));
+            $concours->setDateFinale(new \DateTime(date('Y-m-d H:i:s', strtotime($form['dateFinale']->getData()->format('Y-m-d 23:59:59')))));
             $this->insert($concours);
             return $this->redirectToRoute("list_concours");
         }
