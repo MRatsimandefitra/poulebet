@@ -33,7 +33,7 @@ class PariController extends ApiController implements InterfaceDB
             if(!$user){
                return $this->noUser();
             }
-            $credit = $this->getRepoFrom(self::ENTITY_MVT_CREDIT, array('utilisateur' => $user));
+            $credit = $this->getRepo(self::ENTITY_MVT_CREDIT)->findLastSolde($user->getId());
             $championatR = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForPari($date, $championatWs, true);
             if($championatR){
                 foreach($championatR as $kChampionat => $itemsChampionat){
@@ -44,22 +44,18 @@ class PariController extends ApiController implements InterfaceDB
                     );
                 }
             }
-            // credut
+            // credit
             if($credit){
-                foreach($credit as $kCredit => $itemsCredit){
+                $idLast = $credit[0][1];
+                $solde = $this->getRepoFrom(self::ENTITY_MVT_CREDIT, array('id' => $idLast));
+                foreach($solde as $kCredit => $itemsCredit){
 
-                    $result['credit'] = array(
-                        'soldeCredit' => (!$credit) ? $itemsCredit->getSoldeCredit(): 0,
-                        'gainPotentiel' => ''
-                    );
+                    $result['solde'] = $itemsCredit->getSoldeCredit();
                 }
-
             }else{
-                $result['credit'] = array(
-                    'soldeCredit' =>  0,
-                    'gainPotentiel' => 0,
-                );
+                $result['solde'] = 0;
             }
+
             // matchs
             $matchs = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForPari($date, $championatWs);
             if($matchs){
@@ -84,11 +80,8 @@ class PariController extends ApiController implements InterfaceDB
                         'cote_pronostic_1' => $matchsItems->getCot1Pronostic(),
                         'cote_pronostic_n' => $matchsItems->getCoteNPronistic(),
                         'cote_pronostic_2' => $matchsItems->getCote2Pronostic(),
-                        /*'gainsPotentiel' => $this->getGainsPotentiel($user->getId(), $matchsItems->getId()),
-                        'miseTotal' => $this->getMiseTotal($user->getId(), $matchsItems->getId()),*/
                         'idChampionat' => $matchsItems->getChampionat()->getId()
                     );
-
                 }
                 $result['code_error'] = 0;
                 $result['success'] = true;
