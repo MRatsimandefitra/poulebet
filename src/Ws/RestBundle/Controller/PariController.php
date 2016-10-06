@@ -23,12 +23,12 @@ class PariController extends ApiController implements InterfaceDB
          return $this->noToken();
         }
         $isCombined = (bool) $request->request->get('isCombined');
+        if($isCombined === NULL){
+            return $this->noCombined();
+        }
         $result = array();
 
         if($isCombined){
-
-
-
             $user = $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
             if(!$user){
                return $this->noUser();
@@ -105,10 +105,8 @@ class PariController extends ApiController implements InterfaceDB
 
             return new JsonResponse($result);
         }else{
-
-
             if(!$token){
-                $this->noToken();
+                return $this->noToken();
             }
             $user = $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
             if(!$user){
@@ -143,13 +141,14 @@ class PariController extends ApiController implements InterfaceDB
             $arrayMathsVote = array();
             if($matchsVote){
                 foreach($matchsVote as $kMatchsVote => $itemsMatchVote){
-                   // var_dump($itemsMatchVote->getMatchs()->getId()); die;
+                   // var_dump($itemsMatchVote->getVote()); die;
                     $result['list_matchs'][] = array(
                         'idVote' => $itemsMatchVote->getId(),
                         'idMatch' => $itemsMatchVote->getMatchs()->getId(),
                         'dateMatch' => $itemsMatchVote->getMatchs()->getDateMatch(),
                         'equipeDomicile' => $itemsMatchVote->getMatchs()->getEquipeDomicile(),
                         'equipeVisiteur' => $itemsMatchVote->getMatchs()->getEquipeVisiteur(),
+                        'voted_equipe' => $itemsMatchVote->getVote(),
                         'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $itemsMatchVote->getMatchs()->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
                         'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $itemsMatchVote->getMatchs()->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
                         'score' => $itemsMatchVote->getMatchs()->getScore(),
@@ -227,6 +226,7 @@ class PariController extends ApiController implements InterfaceDB
             $lastSolde = $this->getRepo(self::ENTITY_MVT_CREDIT)->findLastSolde($user->getId());
             $idLast = $lastSolde[0][1];
             $mvtCreditLast = $this->getObjectRepoFrom(self::ENTITY_MVT_CREDIT, array('id' => $idLast));
+         //   var_dump($mvtCreditLast); die;
             if($mvtCreditLast){
                 $result['solde'] = $mvtCreditLast->getSoldeCredit();
             }
