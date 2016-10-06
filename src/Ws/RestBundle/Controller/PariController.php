@@ -23,6 +23,7 @@ class PariController extends ApiController implements InterfaceDB
         $result = array();
 
         if($isCombined){
+
             if(!$token){
                 $this->noToken();
             }
@@ -31,7 +32,7 @@ class PariController extends ApiController implements InterfaceDB
             if(!$user){
                $this->noUser();
             }
-            $credit = $this->getObjectRepoFrom(self::ENTITY_MVT_CREDIT, array('utilisateur' => $user));
+            $credit = $this->getRepoFrom(self::ENTITY_MVT_CREDIT, array('utilisateur' => $user));
             $championatR = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForPari($date, $championatWs, true);
             if($championatR){
                 foreach($championatR as $kChampionat => $itemsChampionat){
@@ -45,6 +46,7 @@ class PariController extends ApiController implements InterfaceDB
             // credut
             if($credit){
                 foreach($credit as $kCredit => $itemsCredit){
+
                     $result['credit'] = array(
                         'soldeCredit' => (!$credit) ? $itemsCredit->getSoldeCredit(): 0,
                         'gainPotentiel' => ''
@@ -103,6 +105,7 @@ class PariController extends ApiController implements InterfaceDB
             return new JsonResponse($result);
         }else{
 
+
             if(!$token){
                 $this->noToken();
             }
@@ -111,6 +114,7 @@ class PariController extends ApiController implements InterfaceDB
                 $this->noUser();
             }
             $matchs = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForPari($date, $championatWs);
+           // $matchs = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForPariNoJouer($date, $championatWs, null, $user->getId(), $matchs->getId());
             $matchsVote = $this->getRepo(self::ENTITY_MATCHS)->findMatchVote();
             $championat = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForPari($date, $championatWs, true);
 
@@ -139,8 +143,9 @@ class PariController extends ApiController implements InterfaceDB
             if($matchsVote){
                 foreach($matchsVote as $kMatchsVote => $itemsMatchVote){
                    // var_dump($itemsMatchVote->getMatchs()->getId()); die;
-                    $arrayMathsVote = array(
-                        'id' => $itemsMatchVote->getMatchs()->getId(),
+                    $result['matchs_jouer'][] = array(
+                        'idVote' => $itemsMatchVote->getId(),
+                        'idMatch' => $itemsMatchVote->getMatchs()->getId(),
                         'dateMatch' => $itemsMatchVote->getMatchs()->getDateMatch(),
                         'equipeDomicile' => $itemsMatchVote->getMatchs()->getEquipeDomicile(),
                         'equipeVisiteur' => $itemsMatchVote->getMatchs()->getEquipeVisiteur(),
@@ -158,49 +163,21 @@ class PariController extends ApiController implements InterfaceDB
                         'cote_pronostic_1' => $itemsMatchVote->getMatchs()->getCot1Pronostic(),
                         'cote_pronostic_n' => $itemsMatchVote->getMatchs()->getCoteNPronistic(),
                         'cote_pronostic_2' => $itemsMatchVote->getMatchs()->getCote2Pronostic(),
-                        'gainsPotentiel' => '', /*$this->getGainsPotentiel($user->getId(), $itemsMatchVote->getId()),*/
-                        'miseTotal' => '', // $this->getMiseTotal($user->getId(), $itemsMatchVote->getId()),
-                        'isJouer' => true,
+                        'gainsPotentiel' =>  $this->getGainsPotentiel($user->getId(), $itemsMatchVote->getMatchs()->getId(), $itemsMatchVote->getId()),
+                        'miseTotal' =>  $this->getMiseTotal($user->getId(), $itemsMatchVote->getMatchs()->getId(), $itemsMatchVote->getId()),
+                        'jouer' => true,
                         'idChampionat' => $itemsMatchVote->getMatchs()->getChampionat()->getId()
                     );
 
                 }
             }
 
+
             if($matchs){
                    // foreach($matchsVote as $kMatchsVote => $itemsMatchsVote) {
 
                         foreach ($matchs as $kMatchs => $matchsItems) {
-                            //var_dump($matchsItems->getId()); die;
-                            if(array_key_exists('id', $arrayMathsVote)){
-                                if($arrayMathsVote['id'] != $matchsItems){
-                                    $result['list_matchs'][] = array(
-                                        'id' => $matchsItems->getId(),
-                                        'dateMatch' => $matchsItems->getDateMatch(),
-                                        'equipeDomicile' => $matchsItems->getEquipeDomicile(),
-                                        'equipeVisiteur' => $matchsItems->getEquipeVisiteur(),
-                                        'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $matchsItems->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
-                                        'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $matchsItems->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
-                                        'score' => $matchsItems->getScore(),
-                                        'scoreDomicile' => substr($matchsItems->getScore(), 0, 1),
-                                        'scoreVisiteur' => substr($matchsItems->getScore(), -1, 1),
-                                        'status' => $matchsItems->getStatusMatch(),
-                                        'tempsEcoules' => $matchsItems->getTempsEcoules(),
-                                        'live' => ($matchsItems->getStatusMatch() == 'active') ? true : false,
-                                        'master_prono_1' => $matchsItems->getMasterProno1(),
-                                        'master_prono_n' => $matchsItems->getMasterPronoN(),
-                                        'master_prono_2' => $matchsItems->getMasterProno2(),
-                                        'cote_pronostic_1' => $matchsItems->getCot1Pronostic(),
-                                        'cote_pronostic_n' => $matchsItems->getCoteNPronistic(),
-                                        'cote_pronostic_2' => $matchsItems->getCote2Pronostic(),
-                                        'gainsPotentiel' => '', /*$this->getGainsPotentiel($user->getId(), $matchsItems->getId()),*/
-                                        'miseTotal' => '', // $this->getMiseTotal($user->getId(), $matchsItems->getId()),
-                                        'idChampionat' => $matchsItems->getChampionat()->getId()
-                                    );
-                                }
-                                array_push($arrayMathsVote,$result['list_matchs'][] );
-                            }else{
-
+                            if(!$this->getJouer($matchsItems->getId())){
                                 $result['list_matchs'][] = array(
                                     'id' => $matchsItems->getId(),
                                     'dateMatch' => $matchsItems->getDateMatch(),
@@ -220,11 +197,13 @@ class PariController extends ApiController implements InterfaceDB
                                     'cote_pronostic_1' => $matchsItems->getCot1Pronostic(),
                                     'cote_pronostic_n' => $matchsItems->getCoteNPronistic(),
                                     'cote_pronostic_2' => $matchsItems->getCote2Pronostic(),
-                                    'gainsPotentiel' => '', /*$this->getGainsPotentiel($user->getId(), $matchsItems->getId()),*/
-                                    'miseTotal' => '', // $this->getMiseTotal($user->getId(), $matchsItems->getId()),
+                                    //  'gainsPotentiel' => '', /*$this->getGainsPotentiel($user->getId(), $matchsItems->getId()),*/
+                                    //  'miseTotal' => '', // $this->getMiseTotal($user->getId(), $matchsItems->getId()),
+                                  //  'jouer' => $this->getJouer($matchsItems->getId()),
                                     'idChampionat' => $matchsItems->getChampionat()->getId()
                                 );
                             }
+
 
 
                         }
@@ -245,20 +224,34 @@ class PariController extends ApiController implements InterfaceDB
         }
 
     }
+    private function getJouer($matchsId){
+        $matchsVote = $this->getRepo(self::ENTITY_MATCHS)->findMatchVote();
+        if($matchsVote){
 
-    private function getGainsPotentiel($idUser, $idMatchs){
-        $voteUtilisateur = $this->getObjectRepoFrom(self::ENTITY_MATCHS)->findGains($idUser, $idMatchs);
-        if(!$voteUtilisateur){
-            return null;
+            foreach($matchsVote as $kMatchsVote => $itemsMatchsVote){
+                //var_dump($itemsMatchsVote->getMatchs()->getId()); die;
+                if($itemsMatchsVote->getMatchs()->getId() == $matchsId){
+                    return true;
+                }
+            }
         }
-        return $voteUtilisateur->getGainPotentiel();
+        return false;
     }
-    private function getMiseTotal($idUser, $idMatchs){
-        $voteUtilisateur = $this->getObjectRepoFrom(self::ENTITY_MATCHS)->findGains($idUser, $idMatchs);
+    private function getGainsPotentiel($idUser, $idMatchs, $idVote){
+        $voteUtilisateur = $this->getRepo(self::ENTITY_MATCHS)->findGains($idUser, $idMatchs, $idVote);
         if(!$voteUtilisateur){
             return null;
         }
-        return $voteUtilisateur->getMiseTotal();
+
+        return $voteUtilisateur[0]->getGainPotentiel();
+    }
+    private function getMiseTotal($idUser, $idMatchs, $idVote){
+        $voteUtilisateur = $this->getRepo(self::ENTITY_MATCHS)->findGains($idUser, $idMatchs, $idVote);
+     //   var_dump($voteUtilisateur); die;
+        if(!$voteUtilisateur){
+            return null;
+        }
+        return $voteUtilisateur[0]->getMisetotale();
     }
     private function noUser(){
         $result['code_error'] = 0;
@@ -422,4 +415,6 @@ class PariController extends ApiController implements InterfaceDB
             return new JsonResponse($result);
         }
     }
+
+
 }
