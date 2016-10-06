@@ -318,5 +318,13 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         return $query->getResult();
     }
 
+    public function findDetailsJouer($idMatchs, $userId){
 
+        $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
+                LEFT JOIN vu.matchs m
+                LEFT JOIN vu.utilisateur u WHERE m.id = :idMatch AND u.id = :userId";
+        $query = $this->getEntityManager()->createQuery($dql);
+        $query->setParameters(array('idMatch' => $idMatchs, 'userId' => $userId));
+        return $query->getResult();
+    }
 }

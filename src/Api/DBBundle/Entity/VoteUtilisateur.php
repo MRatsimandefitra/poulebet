@@ -65,7 +65,12 @@ class VoteUtilisateur
      * @ORM\Column(name="gagnant", type="boolean", nullable=true)
      */
     private $gagnant;
-
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateMise", type="datetime", nullable=true)
+     */
+    private $dateMise;
 
     /**
      * Get id
@@ -245,5 +250,29 @@ class VoteUtilisateur
     public function getMisetotale()
     {
         return $this->misetotale;
+    }
+
+    /**
+     * Set dateMise
+     *
+     * @param \DateTime $dateMise
+     *
+     * @return VoteUtilisateur
+     */
+    public function setDateMise($dateMise)
+    {
+        $this->dateMise = $dateMise;
+
+        return $this;
+    }
+
+    /**
+     * Get dateMise
+     *
+     * @return \DateTime
+     */
+    public function getDateMise()
+    {
+        return $this->dateMise;
     }
 }
