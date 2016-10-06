@@ -229,6 +229,11 @@ class PariController extends ApiController implements InterfaceDB
     }
     private function noJsonDataCombined(){
         //$result['code_erro']
+        $result['code_error'] = 2;
+        $result['error'] = true;
+        $result['success'] = false;
+        $result['message'] = "Le json data  doit être spécifié";
+        return new JsonResponse($result);
     }
     private function getJouer($matchsId){
         $matchsVote = $this->getRepo(self::ENTITY_MATCHS)->findMatchVote();
@@ -407,6 +412,7 @@ class PariController extends ApiController implements InterfaceDB
                     $vu->setUtilisateur($user);
                     $vu->setGainPotentiel($gainsPotentiel);
                     $vu->setMisetotale($miseTotal);
+                    $vu->
                     $this->getEm()->persist($vu);
                     $this->getEm()->flush();
                     // Todo: a revoir

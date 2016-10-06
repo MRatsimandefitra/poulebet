@@ -231,6 +231,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
 
         $params = array();
         $where = array();
+        $where[] = " m.dateMatch BETWEEN co.dateDebut AND co.dateFinale";
         if($date){
             $where[] = " m.dateMatch BETWEEN :date1 AND :date2 ";
             $params['date1'] = $date. " 00:00:00";
