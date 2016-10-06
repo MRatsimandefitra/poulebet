@@ -227,6 +227,9 @@ class PariController extends ApiController implements InterfaceDB
         }
 
     }
+    private function noJsonDataCombined(){
+        //$result['code_erro']
+    }
     private function getJouer($matchsId){
         $matchsVote = $this->getRepo(self::ENTITY_MATCHS)->findMatchVote();
         if($matchsVote){
@@ -360,7 +363,7 @@ class PariController extends ApiController implements InterfaceDB
         $gainsPotentiel = $request->request->get('gainPotentiel');
         $miseTotal = $request->request->get('miseTotal');
         $voteMatchsSimple = $request->request->get('voteSimple');
-        $matchId = $request->request->get('matchsId');
+        //$matchId = $request->request->get('matchsId');
 
         if($isCombined === null){
             return $this->noCombined();
@@ -384,9 +387,10 @@ class PariController extends ApiController implements InterfaceDB
             return new JsonResponse($result);
         }
         if($isCombined){
-
             $jsonDataCombined =  $request->request->get('jsonDataCombined');
-
+            if(!$jsonDataCombined){
+                $this->noJsonDataCombined();
+            }
             $data = json_decode($jsonDataCombined, true);
             //var_dump($data['matchs']); die;
             if(!empty($data['matchs'])){
@@ -425,7 +429,7 @@ class PariController extends ApiController implements InterfaceDB
         }
         else
         {
-            if(!$voteMatchsSimple){
+            if($voteMatchsSimple === NULL){
                 return $this->noVoteMatchsSimple();
             }
             $matchsId= $request->request->get('matchId');
