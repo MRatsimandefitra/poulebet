@@ -143,7 +143,7 @@ class PariController extends ApiController implements InterfaceDB
             if($matchsVote){
                 foreach($matchsVote as $kMatchsVote => $itemsMatchVote){
                    // var_dump($itemsMatchVote->getMatchs()->getId()); die;
-                    $result['matchs_jouer'][] = array(
+                    $result['list_matchs'][] = array(
                         'idVote' => $itemsMatchVote->getId(),
                         'idMatch' => $itemsMatchVote->getMatchs()->getId(),
                         'dateMatch' => $itemsMatchVote->getMatchs()->getDateMatch(),
@@ -199,7 +199,7 @@ class PariController extends ApiController implements InterfaceDB
                                     'cote_pronostic_2' => $matchsItems->getCote2Pronostic(),
                                     //  'gainsPotentiel' => '', /*$this->getGainsPotentiel($user->getId(), $matchsItems->getId()),*/
                                     //  'miseTotal' => '', // $this->getMiseTotal($user->getId(), $matchsItems->getId()),
-                                  //  'jouer' => $this->getJouer($matchsItems->getId()),
+                                    'jouer' => false,
                                     'idChampionat' => $matchsItems->getChampionat()->getId()
                                 );
                             }
@@ -220,6 +220,12 @@ class PariController extends ApiController implements InterfaceDB
                 $result['message'] = "Aucun matchs";
             }
 
+            $lastSolde = $this->getRepo(self::ENTITY_MVT_CREDIT)->findLastSolde($user->getId());
+            $idLast = $lastSolde[0][1];
+            $mvtCreditLast = $this->getObjectRepoFrom(self::ENTITY_MVT_CREDIT, array('id' => $idLast));
+            if($mvtCreditLast){
+                $result['solde'] = $mvtCreditLast->getSoldeCredit();
+            }
             return new JsonResponse($result);
         }
 
@@ -260,7 +266,28 @@ class PariController extends ApiController implements InterfaceDB
         $result['message'] = "Aucun utilisateur";
         return new JsonResponse($result);
     }
+    private function noMatchsId(){
+        $result['code_error'] = 2;
+        $result['error'] = true;
+        $result['success'] = false;
+        $result['message'] = "L' ID du matchs  doit être spécifié";
+        return new JsonResponse($result);
+    }
+    private function noVoteMatchsSimple(){
 
+        $result['code_error'] = 2;
+        $result['error'] = true;
+        $result['success'] = false;
+        $result['message'] = "Le vote matchs simple  doit être spécifié";
+        return new JsonResponse($result);
+    }
+    private function noCombined(){
+        $result['code_error'] = 2;
+        $result['error'] = true;
+        $result['success'] = false;
+        $result['message'] = "isCombined doit être spécifié";
+        return new JsonResponse($result);
+    }
     private function noToken(){
         $result['code_error'] = 2;
         $result['error'] = true;
@@ -311,15 +338,28 @@ class PariController extends ApiController implements InterfaceDB
 
     public function insertPariAction(Request $request){
 
-        $isCombined = $request->request->get('isCombined');
+        $isCombined = (bool) $request->request->get('isCombined');
+        //var_dump($isCombined); die;
         $token  = $request->request->get('token');
         $gainsPotentiel = $request->request->get('gainPotentiel');
         $miseTotal = $request->request->get('miseTotal');
         $voteMatchsSimple = $request->request->get('voteSimple');
-        if(!$token){
-            $this->noToken();
+        $matchId = $request->request->get('matchsId');
+
+        if($isCombined === null){
+            return $this->noCombined();
         }
+
+        if(!$token){
+            return $this->noToken();
+        }
+       /* if(!$matchId){
+           return $this->noMatchsId();
+        }*/
+
+
         $user =  $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
+
         if(!$user){
             $result['code_error'] = 0;
             $result['error'] = false;
@@ -328,6 +368,7 @@ class PariController extends ApiController implements InterfaceDB
             return new JsonResponse($result);
         }
         if($isCombined){
+
             $jsonDataCombined =  $request->request->get('jsonDataCombined');
 
             $data = json_decode($jsonDataCombined, true);
@@ -368,19 +409,14 @@ class PariController extends ApiController implements InterfaceDB
         }
         else
         {
-
+            if(!$voteMatchsSimple){
+                return $this->noVoteMatchsSimple();
+            }
             $matchsId= $request->request->get('matchId');
             if(!$matchsId){
-
-                $result['code_error'] = 2;
-                $result['error'] = true;
-                $result['success'] = false;
-                $result['message'] = "ID du matchs doit être spécifié";
-                return new JsonResponse($result);
+                return $this->noMatchsId();
             }
-
             $matchs = $this->getObjectRepoFrom(self::ENTITY_MATCHS, array('id' => $matchsId));
-
             if($matchs){
                 $vu = new VoteUtilisateur();
                 $vu->setUtilisateur($user);
@@ -390,13 +426,21 @@ class PariController extends ApiController implements InterfaceDB
                 $vu->setMatchs($matchs);
 
                 $this->getEm()->persist($vu);
+                $this->getEm()->flush($vu);
 
-                $this->getEm()->persist($vu);
+                $lastSolde = $this->getRepo(self::ENTITY_MVT_CREDIT)->findLastSolde($user->getId());
+                $idLast = $lastSolde[0][1];
+                $mvtCreditLast = $this->getObjectRepoFrom(self::ENTITY_MVT_CREDIT, array('id' => $idLast));
+                if(!$mvtCreditLast){
+                    die('pas de mvt credit last');
+                }
                 $mvtCredit = new MvtCredit();
                 $mvtCredit->setDateMvt(new \DateTime('now'));
                 $mvtCredit->setUtilisateur($user);
-                $mvtCredit->setVoteUtilisateur($vu->getId());
-                $mvtCredit->setSortieCredit($gainsPotentiel);
+                $mvtCredit->setVoteUtilisateur($vu);
+                $mvtCredit->setSortieCredit($miseTotal);
+                //var_dump($mvtCreditLast->getSoldeCredit()); die;
+                $mvtCredit->setSoldeCredit($mvtCreditLast->getSoldeCredit() - $miseTotal);
                 $mvtCredit->setTypeCredit("JOUER SIMPLE");
                 $this->getEm()->persist($mvtCredit);
                 $this->getEm()->flush();

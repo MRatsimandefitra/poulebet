@@ -317,4 +317,6 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         $query->setParameters(array('idUser' => $idUser, 'idMatchs' => $idMatchs,'idVote' => $idVote));
         return $query->getResult();
     }
+
+
 }

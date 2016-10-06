@@ -10,4 +10,4 @@ ws_rest_pari_get_nb_poulet:
 ws_rest_pari_insert_pari:
     path:     /insert
     defaults: { _controller: WsRestBundle:Pari:insertPari }
-    methods: POST
+    methods: POST # string isCombined | $gainPotentiel | $misetTotal | matchsId | token

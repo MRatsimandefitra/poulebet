@@ -10,4 +10,10 @@ namespace Api\DBBundle\Repository;
  */
 class MvtCreditRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findLastSolde($idUser){
+        $dql = "SELECT mc, MAX(mc.id) from ApiDBBundle:MvtCredit mc LEFT JOIN mc.utilisateur u WHERE u.id = :idUser ";
+        $query = $this->getEntityManager()->createQuery($dql);
+        $query->setParameter('idUser', $idUser);
+        return $query->getResult();
+    }
 }
