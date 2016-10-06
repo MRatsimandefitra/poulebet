@@ -223,7 +223,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         return $query->getResult();
     }
 
-    public function findMatchsForPari($date = null, $championat = null, $groupChampionat = null){
+    public function findMatchsForPari($date = null, $championat = null, $groupChampionat = null, $idConcour =null){
 
         $dql = "Select m from ApiDBBundle:Matchs m
                 LEFT JOIN m.championat ch
@@ -232,6 +232,8 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         $params = array();
         $where = array();
         $where[] = " m.dateMatch BETWEEN co.dateDebut AND co.dateFinale";
+        $where[] = " co.id = :idConcour";
+        $params['idConcour'] = $idConcour;
         if($date){
             $where[] = " m.dateMatch BETWEEN :date1 AND :date2 ";
             $params['date1'] = $date. " 00:00:00";
@@ -326,6 +328,12 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
                 LEFT JOIN vu.utilisateur u WHERE m.id = :idMatch AND u.id = :userId";
         $query = $this->getEntityManager()->createQuery($dql);
         $query->setParameters(array('idMatch' => $idMatchs, 'userId' => $userId));
+        return $query->getResult();
+    }
+
+    public function findIdConcourByDate(){
+        $dql = "SELECT co from ApiDBBundle:Concours co where CURRENT_DATE()  BETWEEN co.dateDebut AND co.dateFinale";
+        $query = $this->getEntityManager()->createQuery($dql);
         return $query->getResult();
     }
 }
