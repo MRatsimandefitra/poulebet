@@ -403,11 +403,11 @@ class PariController extends ApiController implements InterfaceDB
         if($isCombined){
             $jsonDataCombined =  $request->request->get('jsonDataCombined');
             if(!$jsonDataCombined){
-                $this->noJsonDataCombined();
+                return  $this->noJsonDataCombined();
             }
             $data = json_decode($jsonDataCombined, true);
-            //var_dump($data['matchs']); die;
             if(!empty($data['matchs'])){
+
                 foreach($data['matchs'] as $kMatchs => $itemsMatchs){
                     $idMatchs = $itemsMatchs['id'];
                     $voteMatchs = $itemsMatchs['vote'];
@@ -421,24 +421,38 @@ class PariController extends ApiController implements InterfaceDB
                     $vu->setUtilisateur($user);
                     $vu->setGainPotentiel($gainsPotentiel);
                     $vu->setMisetotale($miseTotal);
-                    $vu->
+
+                    $vu->setDateMise(new \DateTime('now'));
                     $this->getEm()->persist($vu);
                     $this->getEm()->flush();
                     // Todo: a revoir
 
-                    $mvtCredit = new MvtCredit();
-                    $mvtCredit->setUtilisateur($user);
-                    $mvtCredit->setVoteUtilisateur($vu);
-                    $mvtCredit->setSortieCredit($gainsPotentiel);
-                    //$mvtCredit->setSoldeCredit($)
-                    $mvtCredit->setDateMvt(new \DateTime('now'));
-                    $this->getEm()->persist($mvtCredit);
-                    $this->getEm()->flush();
+
                 }
+
+
+                $lastSolde = $this->getRepo(self::ENTITY_MVT_CREDIT)->findLastSolde($user->getId());
+                $idLast = $lastSolde[0][1];
+                $mvtCreditLast = $this->getObjectRepoFrom(self::ENTITY_MVT_CREDIT, array('id' => $idLast));
+                if(!$mvtCreditLast){
+                    die('pas de mvt credit last');
+                }
+
+                $mvtCredit = new MvtCredit();
+                $mvtCredit->setUtilisateur($user);
+                $mvtCredit->setVoteUtilisateur($vu);
+                $mvtCredit->setSortieCredit($gainsPotentiel);
+                $mvtCredit->setSoldeCredit($mvtCreditLast->getSoldeCredit() - $miseTotal);
+                $mvtCredit->setDateMvt(new \DateTime('now'));
+                $mvtCredit->setTypeCredit('JOUER COMBINE');
+                $this->getEm()->persist($mvtCredit);
+                $this->getEm()->flush();
+
                 $result['code_error'] = 0;
                 $result['error'] = false;
                 $result['success'] = true;
                 $result['message'] = "Success";
+
             }
 
             return new JsonResponse($result);
