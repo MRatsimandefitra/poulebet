@@ -19,18 +19,19 @@ class PariController extends ApiController implements InterfaceDB
         $date = $request->request->get('date');
         $championatWs = $request->request->get('championat');
         $token = $request->request->get('token');
+        if(!$token){
+         return $this->noToken();
+        }
         $isCombined = (bool) $request->request->get('isCombined');
         $result = array();
 
         if($isCombined){
 
-            if(!$token){
-                $this->noToken();
-            }
+
 
             $user = $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
             if(!$user){
-               $this->noUser();
+               return $this->noUser();
             }
             $credit = $this->getRepoFrom(self::ENTITY_MVT_CREDIT, array('utilisateur' => $user));
             $championatR = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForPari($date, $championatWs, true);
@@ -143,7 +144,7 @@ class PariController extends ApiController implements InterfaceDB
             if($matchsVote){
                 foreach($matchsVote as $kMatchsVote => $itemsMatchVote){
                    // var_dump($itemsMatchVote->getMatchs()->getId()); die;
-                    $resultOld['list_matchs'][] = array(
+                    $result['list_matchs'][] = array(
                         'idVote' => $itemsMatchVote->getId(),
                         'idMatch' => $itemsMatchVote->getMatchs()->getId(),
                         'dateMatch' => $itemsMatchVote->getMatchs()->getDateMatch(),
@@ -177,7 +178,7 @@ class PariController extends ApiController implements InterfaceDB
                    // foreach($matchsVote as $kMatchsVote => $itemsMatchsVote) {
 
                         foreach ($matchs as $kMatchs => $matchsItems) {
-                            //if(!$this->getJouer($matchsItems->getId())){
+                            if(!$this->getJouer($matchsItems->getId())){
                                 $result['list_matchs'][] = array(
                                     'id' => $matchsItems->getId(),
                                     'dateMatch' => $matchsItems->getDateMatch(),
@@ -199,13 +200,13 @@ class PariController extends ApiController implements InterfaceDB
                                     'cote_pronostic_2' => $matchsItems->getCote2Pronostic(),
                                     //  'gainsPotentiel' => '', /*$this->getGainsPotentiel($user->getId(), $matchsItems->getId()),*/
                                     //  'miseTotal' => '', // $this->getMiseTotal($user->getId(), $matchsItems->getId()),
-                                    'jouer' => $this->getJouer($matchsItems->getId()),
-                                    'details_jouer' => array(
+                                    'jouer' => false, //$this->getJouer($matchsItems->getId()),
+                           /*         'details_jouer' => array(
                                         $this->getDetailsJouer($matchsItems->getId(), $user->getId())
-                                    ),
+                                    ),*/
                                     'idChampionat' => $matchsItems->getChampionat()->getId()
                                 );
-                            //}
+                            }
 
 
 
