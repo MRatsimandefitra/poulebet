@@ -52,3 +52,6 @@ route_prefix_ws_rest_sondage:
 route_prefix_ws_rest_pari:
     resource: "@WsRestBundle/Resources/config/routing/pari.yml"
     prefix:   /pari
+route_prefix_ws_rest_recapitulation:
+    resource: "@WsRestBundle/Resources/config/routing/recapitulation.yml"
+    prefix:   /recapitulation

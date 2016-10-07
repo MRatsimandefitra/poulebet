@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class RecapitulationController extends ApiController implements InterfaceDB
 {
-    /*public function postGetAllMathsRecapAction(Request $request){
+    public function postGetListRecapAction(Request $request){
 
         $isCombined = (bool) $request->request->get('isCombined');
         if($isCombined === NULL){
@@ -29,6 +29,6 @@ class RecapitulationController extends ApiController implements InterfaceDB
         $result['success'] = true;
         $result['message'] = " IsCombined doit être specifie";
         return new JsonResponse($result);
-    }*/
+    }
 }
 

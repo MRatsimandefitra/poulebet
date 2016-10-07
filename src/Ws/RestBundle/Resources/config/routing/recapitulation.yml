@@ -1,0 +1,4 @@
+ws_rest_pari_list_recapitulation:
+    path:     /get-list-recapitulation
+    defaults: { _controller: WsRestBundle:Recapitulation:postGetListRecap }
+    methods: POST # string (championat), date, $token, isCombined (required)

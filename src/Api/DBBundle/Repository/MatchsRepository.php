@@ -338,12 +338,20 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
     }
 
 
-    public function findMatchsForRecap($idUser){
+    public function findMatchsForRecap($idUser, $idMise ){
         $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu LEFT JOIN vu.matchs m LEFT JOIN vu.utilisateur u
-                u.id = :idUser ";
-        $where = array();
-        $params = array();
+                WHERE u.id = :idUser And vu.isMise = :idMise";
 
+        $query = $this->getEntityManager()->createQuery($dql);
+        $query->setParameters(array('idUser' => $idUser, 'idMise' => $idMise));
+        return $query->getResult();
 
+    }
+    public function findNbMatchsForRecap($idUser){
+        $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu LEFT JOIN vu.matchs m LEFT JOIN vu.utilisateur u
+                u.id = :idUser GROUP BY vu.idMise";
+        $query = $this->getEntityManager()->createQuery($dql);
+        $query->setParameter('idUser' , $idUser);
+        return $query->getResult();
     }
 }

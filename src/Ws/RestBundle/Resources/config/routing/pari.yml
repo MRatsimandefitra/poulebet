@@ -12,3 +12,8 @@ ws_rest_pari_insert_pari:
     path:     /insert
     defaults: { _controller: WsRestBundle:Pari:insertPari }
     methods: POST # string isCombined | $gainPotentiel | $misetTotal | matchsId | token
+
+ws_rest_pari_insert_combined:
+    path:     /insert-combined
+    defaults: { _controller: WsRestBundle:Pari:insertPariCombined }
+    methods: POST # string isCombined | $gainPotentiel | $misetTotal | matchsId | token
