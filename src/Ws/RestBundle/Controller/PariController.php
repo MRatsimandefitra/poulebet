@@ -180,7 +180,7 @@ class PariController extends ApiController implements InterfaceDB
                 foreach ($matchs as $kMatchs => $matchsItems) {
                     if (!$this->getJouer($matchsItems->getId())) {
                         $result['list_matchs'][] = array(
-                            'id' => $matchsItems->getId(),
+                            'idMatch' => $matchsItems->getId(),
                             'dateMatch' => $matchsItems->getDateMatch(),
                             'equipeDomicile' => $matchsItems->getEquipeDomicile(),
                             'equipeVisiteur' => $matchsItems->getEquipeVisiteur(),

@@ -49,53 +49,35 @@ class RecapitulationController extends ApiController implements InterfaceDB
                     $matchs = array();
                     $count = $count + 1;
                     $ss = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForRecapCombined($user->getId(), $itemsNbRecap->getIdMise() );
-                    foreach($ss as $k => $v){
-                        $matchs[] = array(
-                            'idMatchs' => $v->getMatchs()->getId(),
-                            'dateMatch' => $v->getMatchs()->getDateMatch(),
-                            'equipeDomicile' => $v->getMatchs()->getEquipeDomicile(),
-                            'equipeVisiteur' => $v->getMatchs()->getEquipeVisiteur(),
-                            'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $v->getMatchs()->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
-                            'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $v->getMatchs()->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
-                            'score' => $v->getMatchs()->getScore(),
-                            'scoreDomicile' => substr($v->getMatchs()->getScore(), 0, 1),
-                            'scoreVisiteur' => substr($v->getMatchs()->getScore(), -1, 1),
-                            'status' => $v->getMatchs()->getStatusMatch(),
-                            'tempsEcoules' => $v->getMatchs()->getTempsEcoules(),
-                            'live' => ($v->getMatchs()->getStatusMatch() == 'active') ? true : false,
-                            'master_prono_1' => $v->getMatchs()->getMasterProno1(),
-                            'master_prono_n' => $v->getMatchs()->getMasterPronoN(),
-                            'master_prono_2' => $v->getMatchs()->getMasterProno2(),
-                            'cote_pronostic_1' => $v->getMatchs()->getCot1Pronostic(),
-                            'cote_pronostic_n' => $v->getMatchs()->getCoteNPronistic(),
-                            'cote_pronostic_2' => $v->getMatchs()->getCote2Pronostic(),
-                        );
+                    if($ss){
+                        foreach($ss as $k => $v){
+                            $gain = $v->getGainPotentiel();
+                            $miseTotal = $v->getMisetotale();
+                            $matchs[] = array(
+                                'idMatchs' => $v->getMatchs()->getId(),
+                                'dateMatch' => $v->getMatchs()->getDateMatch(),
+                                'equipeDomicile' => $v->getMatchs()->getEquipeDomicile(),
+                                'equipeVisiteur' => $v->getMatchs()->getEquipeVisiteur(),
+                                'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $v->getMatchs()->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
+                                'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $v->getMatchs()->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
+                                'score' => $v->getMatchs()->getScore(),
+                                'scoreDomicile' => substr($v->getMatchs()->getScore(), 0, 1),
+                                'scoreVisiteur' => substr($v->getMatchs()->getScore(), -1, 1),
+                                'status' => $v->getMatchs()->getStatusMatch(),
+                                'tempsEcoules' => $v->getMatchs()->getTempsEcoules(),
+                                'live' => ($v->getMatchs()->getStatusMatch() == 'active') ? true : false,
+                                'master_prono_1' => $v->getMatchs()->getMasterProno1(),
+                                'master_prono_n' => $v->getMatchs()->getMasterPronoN(),
+                                'master_prono_2' => $v->getMatchs()->getMasterProno2(),
+                                'cote_pronostic_1' => $v->getMatchs()->getCot1Pronostic(),
+                                'cote_pronostic_n' => $v->getMatchs()->getCoteNPronistic(),
+                                'cote_pronostic_2' => $v->getMatchs()->getCote2Pronostic(),
+                            );
+                        }
                     }
-                    $resultMatchs[$itemsIdMise] = $matchs;
-                  //  $resultMatchs[] = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForRecapCombined($user->getId(), $itemsNbRecap->getIdMise() );
-                   /* foreach($resultMatchs as $itemsResultMatch){
-                        $sousResultMatchs[] = array(
-                            'idMatchs' => $itemsResultMatch->getMatchs()->getId(),
-                            'dateMatch' => $itemsResultMatch->getMatchs()->getDateMatch(),
-                            'equipeDomicile' => $itemsResultMatch->getMatchs()->getEquipeDomicile(),
-                            'equipeVisiteur' => $itemsResultMatch->getMatchs()->getEquipeVisiteur(),
-                            'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $itemsResultMatch->getMatchs()->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
-                            'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $itemsResultMatch->getMatchs()->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
-                            'score' => $itemsResultMatch->getMatchs()->getScore(),
-                            'scoreDomicile' => substr($itemsResultMatch->getMatchs()->getScore(), 0, 1),
-                            'scoreVisiteur' => substr($itemsResultMatch->getMatchs()->getScore(), -1, 1),
-                            'status' => $itemsResultMatch->getMatchs()->getStatusMatch(),
-                            'tempsEcoules' => $itemsResultMatch->getMatchs()->getTempsEcoules(),
-                            'live' => ($itemsResultMatch->getMatchs()->getStatusMatch() == 'active') ? true : false,
-                            'master_prono_1' => $itemsResultMatch->getMatchs()->getMasterProno1(),
-                            'master_prono_n' => $itemsResultMatch->getMatchs()->getMasterPronoN(),
-                            'master_prono_2' => $itemsResultMatch->getMatchs()->getMasterProno2(),
-                            'cote_pronostic_1' => $itemsResultMatch->getMatchs()->getCot1Pronostic(),
-                            'cote_pronostic_n' => $itemsResultMatch->getMatchs()->getCoteNPronistic(),
-                            'cote_pronostic_2' => $itemsResultMatch->getMatchs()->getCote2Pronostic(),
-                        );
-                    }*/
-
+                    $resultMatchs[$itemsIdMise]['gain'] = $gain;
+                    $resultMatchs[$itemsIdMise]['miseTotal'] = $miseTotal;
+                    $resultMatchs[$itemsIdMise]['matchs'] = $matchs;
                 }
                 $result['vote'] = $resultMatchs;
                /* if(!empty($resultMatchs)){
