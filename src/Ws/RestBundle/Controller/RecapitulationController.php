@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 class RecapitulationController extends ApiController implements InterfaceDB
 {
     public function postGetListRecapAction(Request $request){
-
         $isCombined = (bool) $request->request->get('isCombined');
         if($isCombined === NULL){
             return $this->noCombined();
@@ -164,8 +163,19 @@ class RecapitulationController extends ApiController implements InterfaceDB
                         'idChampionat' => $vItems->getMatchs()->getChampionat()->getId()
                     );
                 }
+                $result['code_error'] = 0;
+                $result['error'] = false;
+                $result['success'] = true;
+                $result['message'] = "Success";
+                return new JsonResponse($result);
+            }else{
+                $result['code_error'] = 0;
+                $result['error'] = false;
+                $result['success'] = true;
+                $result['message'] = "Aucun donne disponible";
+                return new JsonResponse($result);
             }
-            return new JsonResponse($result);
+
 
         }
 
