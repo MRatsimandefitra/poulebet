@@ -377,4 +377,12 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         $query->setParameter('idUser' , $userId);
         return $query->getResult();
     }
+
+    public function findMatchsForRecap(){
+        $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
+                LEFT JOIN vu.matchs m
+                LEFT JOIN vu.utilisateur u";
+        $query = $this->getEntityManager()->createQuery($dql);
+        return $query->getResult();
+    }
 }
