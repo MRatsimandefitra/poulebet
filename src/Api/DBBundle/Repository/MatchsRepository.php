@@ -336,4 +336,14 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         $query = $this->getEntityManager()->createQuery($dql);
         return $query->getResult();
     }
+
+
+    public function findMatchsForRecap($idUser){
+        $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu LEFT JOIN vu.matchs m LEFT JOIN vu.utilisateur u
+                u.id = :idUser ";
+        $where = array();
+        $params = array();
+
+
+    }
 }

@@ -407,7 +407,7 @@ class PariController extends ApiController implements InterfaceDB
             }
             $data = json_decode($jsonDataCombined, true);
             if(!empty($data['matchs'])){
-
+                $idMise = uniqid(sha1("mise double"));
                 foreach($data['matchs'] as $kMatchs => $itemsMatchs){
                     $idMatchs = $itemsMatchs['id'];
                     $voteMatchs = $itemsMatchs['vote'];
@@ -421,6 +421,8 @@ class PariController extends ApiController implements InterfaceDB
                     $vu->setUtilisateur($user);
                     $vu->setGainPotentiel($gainsPotentiel);
                     $vu->setMisetotale($miseTotal);
+                    $vu->setIsCombined(true);
+                    $vu->setIdMise($idMise);
 
                     $vu->setDateMise(new \DateTime('now'));
                     $this->getEm()->persist($vu);
@@ -473,6 +475,8 @@ class PariController extends ApiController implements InterfaceDB
                 $vu->setMisetotale($miseTotal);
                 $vu->setGainPotentiel($gainsPotentiel);
                 $vu->setVote($voteMatchsSimple);
+                $vu->setIsCombined(false);
+                $vu->setIdMise(uniqid(sha1("Mise simple")));
                 $vu->setDateMise(new \DateTime('now'));
                 $vu->setMatchs($matchs);
 

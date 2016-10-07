@@ -43,9 +43,9 @@ class VoteUtilisateur
     /**
      * @var Boolean
      *
-     * @ORM\Column(name="isVote", type="boolean", nullable=true)
+     * @ORM\Column(name="isCombined", type="boolean", nullable=true)
      */
-    private $isVote;
+    private $isCombined;
     /**
      * @var int
      *
@@ -71,6 +71,13 @@ class VoteUtilisateur
      * @ORM\Column(name="dateMise", type="datetime", nullable=true)
      */
     private $dateMise;
+
+    /**
+     * @var \String
+     *
+     * @ORM\Column(name="idMise", type="string", length=255, nullable=true)
+     */
+    private $idMise;
 
     /**
      * Get id
@@ -181,30 +188,6 @@ class VoteUtilisateur
     }
 
     /**
-     * Set isVote
-     *
-     * @param boolean $isVote
-     *
-     * @return VoteUtilisateur
-     */
-    public function setIsVote($isVote)
-    {
-        $this->isVote = $isVote;
-
-        return $this;
-    }
-
-    /**
-     * Get isVote
-     *
-     * @return boolean
-     */
-    public function getIsVote()
-    {
-        return $this->isVote;
-    }
-
-    /**
      * Set gainPotentiel
      *
      * @param integer $gainPotentiel
@@ -274,5 +257,53 @@ class VoteUtilisateur
     public function getDateMise()
     {
         return $this->dateMise;
+    }
+
+    /**
+     * Set isCombined
+     *
+     * @param boolean $isCombined
+     *
+     * @return VoteUtilisateur
+     */
+    public function setIsCombined($isCombined)
+    {
+        $this->isCombined = $isCombined;
+
+        return $this;
+    }
+
+    /**
+     * Get isCombined
+     *
+     * @return boolean
+     */
+    public function getIsCombined()
+    {
+        return $this->isCombined;
+    }
+
+    /**
+     * Set idMise
+     *
+     * @param string $idMise
+     *
+     * @return VoteUtilisateur
+     */
+    public function setIdMise($idMise)
+    {
+        $this->idMise = $idMise;
+
+        return $this;
+    }
+
+    /**
+     * Get idMise
+     *
+     * @return string
+     */
+    public function getIdMise()
+    {
+        return $this->idMise;
     }
 }
