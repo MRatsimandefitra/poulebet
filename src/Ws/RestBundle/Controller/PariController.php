@@ -68,7 +68,7 @@ class PariController extends ApiController implements InterfaceDB
                 foreach ($matchs as $kMatchs => $matchsItems) {
 
                     $result['list_matchs'][] = array(
-                        'id' => $matchsItems->getId(),
+                        'idMatch' => $matchsItems->getId(),
                         'dateMatch' => $matchsItems->getDateMatch(),
                         'equipeDomicile' => $matchsItems->getEquipeDomicile(),
                         'equipeVisiteur' => $matchsItems->getEquipeVisiteur(),
@@ -336,7 +336,21 @@ class PariController extends ApiController implements InterfaceDB
         $result['message'] = "isCombined doit être spécifié";
         return new JsonResponse($result);
     }
-
+    private function noMatchs(){
+        $result = $this->no();
+        $result['message'] = "Les Matchs  doivent être sppécifiés";
+        return new JsonResponse($result);
+    }
+    private function noMiseTotal(){
+        $result = $this->no();
+        $result['message'] = "La mise total doit être sppécifié";
+        return new JsonResponse($result);
+    }
+    private function noGain(){
+        $result = $this->no();
+        $result['message'] = "Le gain doit être sppécifié";
+        return new JsonResponse($result);
+    }
     private function noToken()
     {
         $result['code_error'] = 2;
@@ -391,8 +405,7 @@ class PariController extends ApiController implements InterfaceDB
     public function insertPariAction(Request $request)
     {
 
-       // $isCombined = (bool)$request->request->get('isCombined');
-        //var_dump($isCombined); die;
+
         $token = $request->request->get('token');
         $gainsPotentiel = $request->request->get('gainPotentiel');
         $miseTotal = $request->request->get('miseTotal');
@@ -475,19 +488,33 @@ class PariController extends ApiController implements InterfaceDB
     public function insertPariCombinedAction(Request $request)
     {
 
-        $jsonDataCombined = $request->request->get('jsonDataCombined');
-       // var_dump($request->getContent()); die;
-      /*  if (!$jsonDataCombined) {
+        $jsonDataCombined = $request->getContent();
+        if (!$jsonDataCombined) {
             return $this->noJsonDataCombined();
-        }*/
-       // return new JsonResponse($jsonDataCombined);
+        }
 
-        $data = json_decode($request->getContent(), true);
-        //var_dump($data['token']); die;
-        $token = $data['token'];
-        $gainsPotentiel = $data['gainPotentiel'];
-        $miseTotal = $data['miseTotal'];
-        $matchs = $data['matchs'];
+        $data = json_decode($jsonDataCombined, true);
+        if(array_key_exists('token', $data)){
+            $token = $data['token'];
+        }else{
+            return $this->noToken();
+        }
+        if(array_key_exists('gainPotentiel', $data)){
+            $gainsPotentiel = $data['gainPotentiel'];
+        }else{
+            return $this->noGain();
+        }
+        if(array_key_exists('miseTotal', $data)){
+            $miseTotal = $data['miseTotal'];
+        }else{
+            return $this->noMiseTotal();
+        }
+        if(array_key_exists('matchs', $data)){
+            $matchs = $data['matchs'];
+        }else{
+            return $this->noMatchs();
+        }
+
         $user = $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
         if (!empty($matchs)) {
             $idMise = uniqid(sha1("mise double"));

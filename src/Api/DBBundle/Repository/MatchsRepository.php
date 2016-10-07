@@ -338,18 +338,25 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
     }
 
 
-    public function findMatchsForRecap($idUser, $idMise ){
-        $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu LEFT JOIN vu.matchs m LEFT JOIN vu.utilisateur u
-                WHERE u.id = :idUser And vu.isMise = :idMise";
-
+    public function findMatchsForRecapCombined($idUser, $idMise){
+        $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu LEFT JOIN vu.matchs m LEFT JOIN vu.utilisateur u LEFT JOIN m.championat ch
+                WHERE u.id = :idUser And vu.idMise = :idMise ";
         $query = $this->getEntityManager()->createQuery($dql);
         $query->setParameters(array('idUser' => $idUser, 'idMise' => $idMise));
         return $query->getResult();
-
     }
-    public function findNbMatchsForRecap($idUser){
+    public function findChampionatForRecapCombined($idUser){
+        $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu LEFT JOIN vu.matchs m LEFT JOIN vu.utilisateur u LEFT JOIN m.championat ch
+                WHERE u.id = :idUser AND vu.isCombined = true GROUP BY ch.nomChampionat ";
+
+        $query = $this->getEntityManager()->createQuery($dql);
+        $query->setParameters(array('idUser' => $idUser));
+        return $query->getResult();
+    }
+
+    public function findNbMatchsForRecapCombined($idUser){
         $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu LEFT JOIN vu.matchs m LEFT JOIN vu.utilisateur u
-                u.id = :idUser GROUP BY vu.idMise";
+                WHERE u.id = :idUser AND vu.isCombined = true GROUP BY vu.idMise ";
         $query = $this->getEntityManager()->createQuery($dql);
         $query->setParameter('idUser' , $idUser);
         return $query->getResult();
