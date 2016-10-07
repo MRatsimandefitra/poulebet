@@ -111,15 +111,61 @@ class RecapitulationController extends ApiController implements InterfaceDB
                     }
                     $result['vote_matchs'][] = $iResultMatchs;
                 }*/
+                $result['code_error'] = 0;
+                $result['error'] = false;
+                $result['success'] = true;
+                $result['message'] = "success";
                 return new JsonResponse($result);
             }else{
-
+                $result['code_error'] = 0;
+                $result['error'] = false;
+                $result['success'] = true;
+                $result['message'] = "Aucun resultat trouve";
+                return new JsonResponse($result);
             }
-            //$matchs = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForRecap($user);
-
-            return new JsonResponse($result);
         }else{
 
+            // championat
+            $championat = $this->getRepo(self::ENTITY_MATCHS)->findChampionatVoteSimple($user->getId());
+            if($championat){
+                foreach($championat as $kChampionat => $itemsChampionat){
+                    $result['list_championat'][] = array(
+                        'idChampionat' => $itemsChampionat->getMatchs()->getChampionat()->getId(),
+                        'nomChampionat' =>$itemsChampionat->getMatchs()->getChampionat()->getNomChampionat(),
+                        'fullNameChampionat' =>$itemsChampionat->getMatchs()->getChampionat()->getNomChampionat(),
+                    );
+                }
+            }
+            // matchs
+            $nbRecap = $this->getRepo(self::ENTITY_MATCHS)->findNbMatchsVoteSimple($user->getId());
+            if(!empty($nbRecap)){
+                foreach($nbRecap as $k => $vItems){
+                    $result['list_match'][] = array(
+                        'idMatchs' => $vItems->getMatchs()->getId(),
+                        'dateMatch' => $vItems->getMatchs()->getDateMatch(),
+                        'equipeDomicile' => $vItems->getMatchs()->getEquipeDomicile(),
+                        'equipeVisiteur' => $vItems->getMatchs()->getEquipeVisiteur(),
+                        'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $vItems->getMatchs()->getCheminLogoDomicile() . '.png',// $vItemsData->getTeamsDomicile()->getLogo(),
+                        'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $vItems->getMatchs()->getCheminLogoVisiteur() . '.png',// $vItemsData->getTeamsVisiteur()->getLogo(),
+                        'score' => $vItems->getMatchs()->getScore(),
+                        'scoreDomicile' => substr($vItems->getMatchs()->getScore(), 0, 1),
+                        'scoreVisiteur' => substr($vItems->getMatchs()->getScore(), -1, 1),
+                        'status' => $vItems->getMatchs()->getStatusMatch(),
+                        'tempsEcoules' => $vItems->getMatchs()->getTempsEcoules(),
+                        'live' => ($vItems->getMatchs()->getStatusMatch() == 'active') ? true : false,
+                        'master_prono_1' => $vItems->getMatchs()->getMasterProno1(),
+                        'master_prono_n' => $vItems->getMatchs()->getMasterPronoN(),
+                        'master_prono_2' => $vItems->getMatchs()->getMasterProno2(),
+                        'cote_pronostic_1' => $vItems->getMatchs()->getCot1Pronostic(),
+                        'cote_pronostic_n' => $vItems->getMatchs()->getCoteNPronistic(),
+                        'cote_pronostic_2' => $vItems->getMatchs()->getCote2Pronostic(),
+                        'gain' => $vItems->getGainPotentiel(),
+                        'miseTotale' => $vItems->getMisetotale(),
+                        'idChampionat' => $vItems->getMatchs()->getChampionat()->getId()
+                    );
+                }
+            }
+            return new JsonResponse($result);
 
         }
 

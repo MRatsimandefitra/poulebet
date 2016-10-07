@@ -361,4 +361,20 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         $query->setParameter('idUser' , $idUser);
         return $query->getResult();
     }
+
+    public function findNbMatchsVoteSimple($userId){
+        $dql ="SELECT vu from ApiDBBundle:VoteUtilisateur vu LEFT JOIN vu.matchs m LEFT JOIN vu.utilisateur u
+               WHERE u.id = :idUser AND vu.isCombined = false GROUP BY vu.idMise";
+        $query = $this->getEntityManager()->createQuery($dql);
+        $query->setParameter('idUser' , $userId);
+        return $query->getResult();
+    }
+
+    public function findChampionatVoteSimple($userId){
+        $dql ="SELECT vu from ApiDBBundle:VoteUtilisateur vu LEFT JOIN vu.matchs m LEFT JOIN vu.utilisateur u LEFT JOIN m.championat ch
+               WHERE u.id = :idUser AND vu.isCombined = false GROUP BY ch.nomChampionat";
+        $query = $this->getEntityManager()->createQuery($dql);
+        $query->setParameter('idUser' , $userId);
+        return $query->getResult();
+    }
 }
