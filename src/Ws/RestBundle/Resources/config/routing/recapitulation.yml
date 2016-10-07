@@ -1,4 +1,0 @@
-ws_rest_pari_list_matchs:
-    path:     /get-list-matchs
-    defaults: { _controller: WsRestBundle:Recapitulation:postGetAllMaths }
-    methods: POST # string (championat), date, $token, isCombined (required)
