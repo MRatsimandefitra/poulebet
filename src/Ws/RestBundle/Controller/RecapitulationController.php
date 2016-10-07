@@ -17,18 +17,36 @@ class RecapitulationController extends ApiController implements InterfaceDB
         if($isCombined === NULL){
             return $this->noCombined();
         }
+        $token = $request->request->get('token');
+        if($isCombined === NULL){
+            return $this->noToken();
+        }
+        $user  = $this->getRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
+
+
+        die('okok');
         $result = array();
-        $matchs = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForRecap();
+        $nbRecap = $this->getRepo(self::ENTITY_MATCHS)->findNbMatchsForRecap($user->getId());
+        //$matchs = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForRecap($user);
 
         return new JsonResponse($result);
     }
 
-    public function noCombined(){
+    private function noToken(){
+        $result = $this->no();
+        $result['message'] = " Token doit être specifie";
+        return new JsonResponse($result);
+    }
+    private function noCombined(){
+        $result = $this->no();
+        $result['message'] = " IsCombined doit être specifie";
+        return new JsonResponse($result);
+    }
+    private function no(){
         $result['code_error'] = 2;
         $result['error'] = true;
         $result['success'] = true;
-        $result['message'] = " IsCombined doit être specifie";
-        return new JsonResponse($result);
+        return $result;
     }
 }
 

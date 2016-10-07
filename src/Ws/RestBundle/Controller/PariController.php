@@ -476,12 +476,14 @@ class PariController extends ApiController implements InterfaceDB
     {
 
         $jsonDataCombined = $request->request->get('jsonDataCombined');
-        if (!$jsonDataCombined) {
+       // var_dump($request->getContent()); die;
+      /*  if (!$jsonDataCombined) {
             return $this->noJsonDataCombined();
-        }
+        }*/
        // return new JsonResponse($jsonDataCombined);
 
-        $data = json_decode($jsonDataCombined, true);
+        $data = json_decode($request->getContent(), true);
+        //var_dump($data['token']); die;
         $token = $data['token'];
         $gainsPotentiel = $data['gainPotentiel'];
         $miseTotal = $data['miseTotal'];
@@ -490,6 +492,7 @@ class PariController extends ApiController implements InterfaceDB
         if (!empty($matchs)) {
             $idMise = uniqid(sha1("mise double"));
             foreach ($matchs as $kMatchs => $itemsMatchs) {
+
                 $idMatchs = $itemsMatchs['id'];
                 $voteMatchs = $itemsMatchs['vote'];
                 $matchs = $this->getObjectRepoFrom(self::ENTITY_MATCHS, array('id' => $idMatchs));
