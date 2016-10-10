@@ -31,14 +31,31 @@ class GoalApiCheckNotificationForRecapCommand extends ContainerAwareCommand impl
     {
         $container = $this->getContainer();
         $em = $container->get('doctrine.orm.entity_manager');
-
+        $device_token = array();
         $notifRecap = $em->getRepository(self::ENTITY_NOTIF_RECAP)->findNoSended();
-        if(!$notifRecap){
+        if (!$notifRecap) {
             $output->writeln("No notification");
         }
-        foreach($notifRecap as $kNotifRecap => $itemsNotifRecap){
-            var_dump($itemsNotifRecap); die;
+        foreach ($notifRecap as $kNotifRecap => $itemsNotifRecap) {
+                if(!in_array($itemsNotifRecap->getTokenDevice(), $device_token)){
+                    $device_token[] = $itemsNotifRecap->getTokenDevice();
+                }
         }
+        $output->writeln("A notification will be sent");
+
+        $messageData = array(
+            "message" => "Une recapitulation ",
+            "type" => "livescore"
+        );
+        $data = array(
+            'registration_ids' => $device_token,
+            'data' => $messageData
+        );
+        $http = $this->getContainer()->get('http');
+        $res = $http->sendGCMNotification($data);
+
+        $output->writeln($res);
+
         $output->writeln("Command was successfull");
     }
 
