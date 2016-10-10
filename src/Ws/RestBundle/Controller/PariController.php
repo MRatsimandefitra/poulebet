@@ -7,6 +7,7 @@ use Api\CommonBundle\Fixed\InterfaceDB;
 use Api\CommonBundle\Fixed\InterfacePari;
 use Api\DBBundle\Entity\Matchs;
 use Api\DBBundle\Entity\MvtCredit;
+use Api\DBBundle\Entity\NotificationRecapitulation;
 use Api\DBBundle\Entity\VoteUtilisateur;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -112,6 +113,9 @@ class PariController extends ApiController implements InterfaceDB
                 return $this->noUser();
             }
             $concourEncour = $this->getRepo(self::ENTITY_MATCHS)->findIdConcourByDate();
+            if(!$concourEncour){
+                die('no Conour');
+            }
             $idConcour = $concourEncour[0]->getId();
             $matchs = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForPari($date, $championatWs, null, $idConcour);
             // $matchs = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForPariNoJouer($date, $championatWs, null, $user->getId(), $matchs->getId());
@@ -336,6 +340,11 @@ class PariController extends ApiController implements InterfaceDB
         $result['message'] = "isCombined doit être spécifié";
         return new JsonResponse($result);
     }
+    private function noDeviceToken(){
+        $result = $this->no();
+        $result['message'] = "Le token device  doit être sppécifiés";
+        return new JsonResponse($result);
+    }
     private function noMatchs(){
         $result = $this->no();
         $result['message'] = "Les Matchs  doivent être sppécifiés";
@@ -422,7 +431,7 @@ class PariController extends ApiController implements InterfaceDB
 
 
         $user = $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
-
+        $deviceToken = $this->getObjectRepoFrom(self::ENTITY_CONNECTED, array('username' => $user->getEMail()));
         if (!$user) {
             $result['code_error'] = 0;
             $result['error'] = false;
@@ -438,7 +447,8 @@ class PariController extends ApiController implements InterfaceDB
         if (!$matchsId) {
             return $this->noMatchsId();
         }
-        $matchs = $this->getObjectRepoFrom(self::ENTITY_MATCHS, array('id' => $matchsId));
+        $matchs = $this->getObjectRepoFrom(self::ENTITY_MATCHS, array('id' => $matchsId))->getDevice();
+
         if ($matchs) {
             $vu = new VoteUtilisateur();
             $vu->setUtilisateur($user);
@@ -468,6 +478,17 @@ class PariController extends ApiController implements InterfaceDB
             $mvtCredit->setSoldeCredit($mvtCreditLast->getSoldeCredit() - $miseTotal);
             $mvtCredit->setTypeCredit("JOUER SIMPLE");
             $this->getEm()->persist($mvtCredit);
+            $this->getEm()->flush();
+
+            $notifRecap = new NotificationRecapitulation();
+            $notifRecap->setUtilisateur($user);
+            $notifRecap->setIsNotificationSended(false);
+            $notifRecap->setTokenDevice($deviceToken);
+            $notifRecap->setUpdatedAt(new \DateTime('now'));
+            $notifRecap->setIsCombined(false);
+            $notifRecap->setNbMatchs(1);
+            $notifRecap->setMatchs($matchs);
+            $this->getEm()->persist($notifRecap);
             $this->getEm()->flush();
 
             //$matchs->set
@@ -514,12 +535,19 @@ class PariController extends ApiController implements InterfaceDB
         }else{
             return $this->noMatchs();
         }
-
+        /*if(array_key_exists('deviseToken', $data)){
+            $deviceToken = $data['deviceToken'];
+        }else{
+            return $this->noDeviceToken();
+        }*/
+        $deviceToken = null;
         $user = $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
+        $deviceToken = $this->getObjectRepoFrom(self::ENTITY_CONNECTED, array('username' => $user->getEMail()))->getDevice();
         if (!empty($matchs)) {
             $idMise = uniqid(sha1("mise double"));
+            $count = 0;
             foreach ($matchs as $kMatchs => $itemsMatchs) {
-
+                $count = $count + 1;
                 $idMatchs = $itemsMatchs['id'];
                 $voteMatchs = $itemsMatchs['vote'];
                 $matchs = $this->getObjectRepoFrom(self::ENTITY_MATCHS, array('id' => $idMatchs));
@@ -557,6 +585,22 @@ class PariController extends ApiController implements InterfaceDB
             $mvtCredit->setDateMvt(new \DateTime('now'));
             $mvtCredit->setTypeCredit('JOUER COMBINE');
             $this->getEm()->persist($mvtCredit);
+            $this->getEm()->flush();
+
+
+            if(!$deviceToken){
+
+            }
+            $notifRecap = new NotificationRecapitulation();
+            $notifRecap->setUtilisateur($user);
+            $notifRecap->setIsNotificationSended(false);
+            $notifRecap->setTokenDevice($deviceToken);
+            $notifRecap->setUpdatedAt(new \DateTime('now'));
+            $notifRecap->setIsCombined(true);
+            $notifRecap->setMatchs($matchs);
+            $notifRecap->setNbMatchs($count);
+            $notifRecap->setTokenDevice($deviceToken);
+            $this->getEm()->persist($notifRecap);
             $this->getEm()->flush();
 
             $result['code_error'] = 0;

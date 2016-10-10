@@ -35,10 +35,47 @@ class GoalApiChackMatchsGagnerForRecapCommand extends ContainerAwareCommand impl
         $container = $this->getContainer();
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         $matchsVoter = $em->getRepository(self::ENTITY_MATCHS)->findMatchsForRecap();
-        var_dump($matchsVoter); die;
+        //var_dump($matchsVoter); die;
+       // var_dump($matchsVoter); die;
         if($matchsVoter){
             foreach($matchsVoter as $k => $itemsMatchsVoter){
-                var_dump($itemsMatchsVoter); die;
+                $matchs = $em->getRepository(self::ENTITY_MATCHS)->find($itemsMatchsVoter->getMatchs()->getId());
+                if(!$matchs){
+                    $output->writeln("Aucun matchs");
+                }
+                $gagnant = null;
+                if($matchs->getStatusMatch() == 'finished'){
+                    $score = $matchs->getScore();
+                    $scoreDomicile =substr($score, 0, 1);
+                    $scoreVisiteur =substr($score, -1, 1);
+                    if($scoreDomicile > $scoreVisiteur){
+                        $gagnant = 1;
+                    }
+                    if($scoreVisiteur > $scoreDomicile){
+                        $gagnant = 2;
+                    }
+                    if($scoreVisiteur === $scoreDomicile){
+                        $gagnant = 0;
+                    }
+                }
+
+                $voteMatch = $em->getRepository(self::ENTITY_MATCHS)->findMatchsExisitInVote($itemsMatchsVoter->getMatchs()->getId());
+
+                if(!$voteMatch){
+                    $output->writeln("Aucun vote");
+                }
+                foreach($voteMatch as $kVoteMatchs => $itemsVoteMatchs){
+                    $vote = $itemsVoteMatchs->getVote();
+                    if($vote === $gagnant){
+                        $itemsVoteMatchs->setGagnant(true);
+                    }else{
+                        $itemsVoteMatchs->setGagnant(false);
+                    }
+                    $em->persist($itemsVoteMatchs);
+                    $em->flush();
+                }
+
+                $output->writeln("Mise à jour");
             }
         }
     }
