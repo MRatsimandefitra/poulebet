@@ -4,4 +4,3 @@ fos_user:
 api_db_homepage:
     path:     /
     defaults: { _controller: ApiDBBundle:Default:index }
-

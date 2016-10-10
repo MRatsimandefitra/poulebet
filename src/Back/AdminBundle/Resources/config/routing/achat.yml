@@ -1,0 +1,15 @@
+index_achat:
+    path:     /
+    defaults: { _controller: BackAdminBundle:Achat:indexAchat }
+
+add_achat:
+    path:     /add-achat
+    defaults: { _controller: BackAdminBundle:Achat:addAchat }
+
+edit_achat:
+    path:     /edit-achat/{id}
+    defaults: { _controller: BackAdminBundle:Achat:editAchat }
+
+delete_achat:
+    path:     /delete-achat/{id}
+    defaults: { _controller: BackAdminBundle:Achat:deleteAchat }

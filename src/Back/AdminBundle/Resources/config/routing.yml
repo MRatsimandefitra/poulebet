@@ -36,3 +36,7 @@ route_prefix_admin_championat:
 route_prefix_admin_lots:
     resource: "@BackAdminBundle/Resources/config/routing/lots.yml"
     prefix:   /lots
+route_prefix_admin_achats:
+    resource: "@BackAdminBundle/Resources/config/routing/achat.yml"
+    prefix:   /achats
+

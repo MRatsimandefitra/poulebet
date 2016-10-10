@@ -1,0 +1,6 @@
+ws_rest_list_classement:
+    path:     /get-list-classement
+    defaults: { _controller: WsRestBundle:Classement:postGetListClassement }
+    methods: POST # time = now, last, global
+
+

@@ -1,0 +1,65 @@
+{% extends 'BackAdminBundle::layout_match.html.twig' %}
+{% block title %} {{ parent() }} {% endblock %}
+{% block ariane %} {{ parent() }} {% endblock %}
+
+{% block page %}
+    <div class="col-lg-12">
+
+        <div class="col-lg-12">
+            <div class="link">
+                <a href="{{ path('add_achat') }}">
+                    {{ 'Ajouter un achat' }}
+                </a>
+            </div>
+            <table class="table-list">
+                <tr>
+                    <thead>
+                    <th>{{ 'ID' }}</th>
+                    <th>{{ 'Image' }}</th>
+                    <th>{{ 'Montant en €' }}</th>
+                    <th>{{ 'Montant en oeufs' }}</th>
+                    <th>{{ 'Modifié le ' }}</th>
+                    <th>{{ 'Actions' }}</th>
+                    </thead>
+                </tr>
+                {% if achat is defined and achat %}
+                    {% for row in achat %}
+                        <tr>
+                            <td>
+                                {{ row.id }}
+                            </td>
+                            <td>
+                                <img src="{{ asset('images/achats/'~ row.imageOeuf ) }}" alt="" width="100"
+                                     height="100"/>
+                            </td>
+                            <td>
+                                {{ row.tarifEuro }}
+                            </td>
+                            <td>
+                                {{ row.tarifOeufs }}
+                            </td>
+                            <td>
+                                {{ row.updatedAt|date('d/m/Y H:i:s') }}
+                            </td>
+                            <td>
+                                <div class="action">
+                                    <a href="{{ path('edit_achat', {'id': row.id} ) }}">{{ 'Modifier' }}</a> | &nbsp;
+                                    <a href="{{ path('delete_achat', {'id': row.id } ) }}">{{ 'Supprimer' }}</a> | &nbsp;
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="6">
+                            {{ 'Aucun Donné ' }}
+                        </td>
+                    </tr>
+
+                {% endif %}
+
+            </table>
+
+        </div>
+    </div>
+{% endblock %}

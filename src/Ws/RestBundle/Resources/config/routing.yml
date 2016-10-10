@@ -55,3 +55,9 @@ route_prefix_ws_rest_pari:
 route_prefix_ws_rest_recapitulation:
     resource: "@WsRestBundle/Resources/config/routing/recapitulation.yml"
     prefix:   /recapitulation
+route_prefix_ws_rest_classement:
+    resource: "@WsRestBundle/Resources/config/routing/classement.yml"
+    prefix:   /classements
+route_prefix_ws_rest_achats:
+    resource: "@WsRestBundle/Resources/config/routing/achats.yml"
+    prefix:   /achats

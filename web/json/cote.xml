@@ -1,0 +1,240 @@
+<SportList>
+    <Sport id="13" name="Football">
+        <RegionList>
+            <Region id="43" name="Angleterre">
+                <CompetitionList>
+                    <Competition id="94" name="Premier League">
+                        <MatchList>
+                            <Match id="1507017" date="2016-10-15 16:00:00">
+                                <OfferList>
+                                    <Offer type_id="476356970" type_name="1-N-2">
+                                        <Outcome name="Bournemouth" odds="1.75"/>
+                                        <Outcome name="Nul" odds="3.50"/>
+                                        <Outcome name="Hull City" odds="4.50"/>
+                                    </Offer>
+                                </OfferList>
+                                <Team post="home" name="Bournemouth"/>
+                                <Team post="away" name="Hull City"/>
+                            </Match>
+                            <Match id="1507017" date="2016-10-15 16:00:00">
+                                <OfferList>
+                                    <Offer type_id="476357109" type_name="Over Under" number="1.5">
+                                        <Outcome name="Plus" odds="1.25"/>
+                                        <Outcome name="Moins" odds="2.92"/>
+                                    </Offer>
+                                    <Offer type_id="476357103" type_name="Over Under" number="2.5">
+                                        <Outcome name="Plus" odds="1.92"/>
+                                        <Outcome name="Moins" odds="1.58"/>
+                                    </Offer>
+                                    <Offer type_id="476357106" type_name="Over Under" number="5.5">
+                                        <Outcome name="Plus" odds="12.50"/>
+                                        <Outcome name="Moins" odds="1.00"/>
+                                    </Offer>
+                                    <Offer type_id="476357102" type_name="Over Under" number="0.5">
+                                        <Outcome name="Plus" odds="1.00"/>
+                                        <Outcome name="Moins" odds="8.00"/>
+                                    </Offer>
+                                    <Offer type_id="476357120" type_name="Over Under" number="4.5">
+                                        <Outcome name="Plus" odds="6.75"/>
+                                        <Outcome name="Moins" odds="1.00"/>
+                                    </Offer>
+                                    <Offer type_id="476357105" type_name="Over Under" number="3.5">
+                                        <Outcome name="Plus" odds="3.45"/>
+                                        <Outcome name="Moins" odds="1.17"/>
+                                    </Offer>
+                                    <Offer type_id="476357327" type_name="Double chance">
+                                        <Outcome name="1N" odds="1.08"/>
+                                        <Outcome name="12" odds="1.16"/>
+                                        <Outcome name="N2" odds="1.75"/>
+                                    </Offer>
+                                    <Offer type_id="476357291" type_name="1ère équipe à marquer">
+                                        <Outcome name="Aucun" odds="9.25"/>
+                                        <Outcome name="Bournemouth" odds="1.45"/>
+                                        <Outcome name="Hull City" odds="2.57"/>
+                                    </Offer>
+                                    <Offer type_id="476357255" type_name="1ère équipe à marquer">
+                                        <Outcome name="Aucun" odds="2.50"/>
+                                        <Outcome name="Bournemouth" odds="2.02"/>
+                                        <Outcome name="Hull City" odds="3.60"/>
+                                    </Offer>
+                                    <Offer type_id="476357176" type_name="1ère équipe à marquer">
+                                        <Outcome name="Aucun" odds="3.45"/>
+                                        <Outcome name="Bournemouth" odds="1.77"/>
+                                        <Outcome name="Hull City" odds="3.10"/>
+                                    </Offer>
+                                    <Offer type_id="476357357" type_name="Oui-Non">
+                                        <Outcome name="Oui" odds="13.50"/>
+                                        <Outcome name="Non" odds="1.00"/>
+                                    </Offer>
+                                    <Offer type_id="476357045" type_name="Oui-Non">
+                                        <Outcome name="Oui" odds="2.45"/>
+                                        <Outcome name="Non" odds="1.31"/>
+                                    </Offer>
+                                    <Offer type_id="476356940" type_name="Oui-Non">
+                                        <Outcome name="Oui" odds="1.32"/>
+                                        <Outcome name="Non" odds="2.37"/>
+                                    </Offer>
+                                    <Offer type_id="476357440" type_name="Oui-Non">
+                                        <Outcome name="Oui" odds="2.02"/>
+                                        <Outcome name="Non" odds="1.47"/>
+                                    </Offer>
+                                    <Offer type_id="476357308" type_name="Oui-Non">
+                                        <Outcome name="Oui" odds="4.70"/>
+                                        <Outcome name="Non" odds="1.05"/>
+                                    </Offer>
+                                    <Offer type_id="475750199" type_name="Oui-Non">
+                                        <Outcome name="Oui" odds="6.00"/>
+                                        <Outcome name="Non" odds="1.00"/>
+                                    </Offer>
+                                    <Offer type_id="476357161" type_name="Mi-temps avec le +">
+                                        <Outcome name="1er" odds="3.95"/>
+                                        <Outcome name="2ème" odds="2.90"/>
+                                        <Outcome name="Egal" odds="1.73"/>
+                                    </Offer>
+                                    <Offer type_id="476357442" type_name="Mi-temps avec le +">
+                                        <Outcome name="1er" odds="3.15"/>
+                                        <Outcome name="2ème" odds="2.25"/>
+                                        <Outcome name="Egal" odds="2.42"/>
+                                    </Offer>
+                                    <Offer type_id="476357466" type_name="Mi-temps avec le +">
+                                        <Outcome name="1er" odds="2.85"/>
+                                        <Outcome name="2ème" odds="1.88"/>
+                                        <Outcome name="Egal" odds="3.00"/>
+                                    </Offer>
+                                    <Offer type_id="476357033" type_name="1-N-2 Mi-temps">
+                                        <Outcome name="Bournemouth" odds="1.98"/>
+                                        <Outcome name="Nul" odds="2.30"/>
+                                        <Outcome name="Hull City" odds="4.30"/>
+                                    </Offer>
+                                    <Offer type_id="476357075" type_name="1-N-2 Mi-temps">
+                                        <Outcome name="Bournemouth" odds="2.22"/>
+                                        <Outcome name="Nul" odds="1.93"/>
+                                        <Outcome name="Hull City" odds="4.70"/>
+                                    </Offer>
+                                </OfferList>
+                            </Match>
+                        </MatchList>
+                        <MatchList/>
+                    </Competition>
+                </CompetitionList>
+            </Region>
+        </RegionList>
+    </Sport>
+    <Sport id="13" name="Football">
+        <RegionList>
+            <Region id="39" name="Allemagne">
+                <CompetitionList>
+                    <Competition id="268" name="Bundesliga">
+                        <MatchList>
+                            <Match id="1518764" date="2016-10-22 15:30:00">
+                                <OfferList>
+                                    <Offer type_id="477143612" type_name="1-N-2">
+                                        <Outcome name="Bayer Leverkusen" odds="1.48"/>
+                                        <Outcome name="Nul" odds="4.50"/>
+                                        <Outcome name="Hoffenheim" odds="5.70"/>
+                                    </Offer>
+                                </OfferList>
+                                <Team post="home" name="Bayer Leverkusen"/>
+                                <Team post="away" name="Hoffenheim"/>
+                            </Match>
+                            <Match id="1518764" date="2016-10-22 15:30:00">
+                                <OfferList>
+                                    <Offer type_id="477143653" type_name="Over Under" number="0.5">
+                                        <Outcome name="Plus" odds="1.01"/>
+                                        <Outcome name="Moins" odds="13.00"/>
+                                    </Offer>
+                                    <Offer type_id="477143658" type_name="Over Under" number="4.5">
+                                        <Outcome name="Plus" odds="3.40"/>
+                                        <Outcome name="Moins" odds="1.18"/>
+                                    </Offer>
+                                    <Offer type_id="477143655" type_name="Over Under" number="2.5">
+                                        <Outcome name="Plus" odds="1.35"/>
+                                        <Outcome name="Moins" odds="2.45"/>
+                                    </Offer>
+                                    <Offer type_id="477143657" type_name="Over Under" number="1.5">
+                                        <Outcome name="Plus" odds="1.05"/>
+                                        <Outcome name="Moins" odds="5.25"/>
+                                    </Offer>
+                                    <Offer type_id="477143654" type_name="Over Under" number="3.5">
+                                        <Outcome name="Plus" odds="2.00"/>
+                                        <Outcome name="Moins" odds="1.55"/>
+                                    </Offer>
+                                    <Offer type_id="477143656" type_name="Over Under" number="5.5">
+                                        <Outcome name="Plus" odds="6.00"/>
+                                        <Outcome name="Moins" odds="1.02"/>
+                                    </Offer>
+                                    <Offer type_id="477143613" type_name="Double chance">
+                                        <Outcome name="1N" odds="1.03"/>
+                                        <Outcome name="12" odds="1.08"/>
+                                        <Outcome name="N2" odds="2.20"/>
+                                    </Offer>
+                                    <Offer type_id="477143632" type_name="1ère équipe à marquer">
+                                        <Outcome name="Aucun" odds="22.00"/>
+                                        <Outcome name="Bayer Leverkusen" odds="1.30"/>
+                                        <Outcome name="Hoffenheim" odds="2.70"/>
+                                    </Offer>
+                                    <Offer type_id="477143623" type_name="1ère équipe à marquer">
+                                        <Outcome name="Aucun" odds="3.70"/>
+                                        <Outcome name="Bayer Leverkusen" odds="1.63"/>
+                                        <Outcome name="Hoffenheim" odds="3.50"/>
+                                    </Offer>
+                                    <Offer type_id="477143618" type_name="1ère équipe à marquer">
+                                        <Outcome name="Aucun" odds="5.50"/>
+                                        <Outcome name="Bayer Leverkusen" odds="1.50"/>
+                                        <Outcome name="Hoffenheim" odds="3.10"/>
+                                    </Offer>
+                                    <Offer type_id="477143676" type_name="Oui-Non">
+                                        <Outcome name="Oui" odds="3.30"/>
+                                        <Outcome name="Non" odds="1.15"/>
+                                    </Offer>
+                                    <Offer type_id="477143615" type_name="Oui-Non">
+                                        <Outcome name="Oui" odds="1.15"/>
+                                        <Outcome name="Non" odds="3.30"/>
+                                    </Offer>
+                                    <Offer type_id="477143630" type_name="Oui-Non">
+                                        <Outcome name="Oui" odds="3.25"/>
+                                        <Outcome name="Non" odds="1.15"/>
+                                    </Offer>
+                                    <Offer type_id="477143660" type_name="Oui-Non">
+                                        <Outcome name="Oui" odds="3.15"/>
+                                        <Outcome name="Non" odds="1.16"/>
+                                    </Offer>
+                                    <Offer type_id="477143621" type_name="Oui-Non">
+                                        <Outcome name="Oui" odds="2.65"/>
+                                        <Outcome name="Non" odds="1.27"/>
+                                    </Offer>
+                                    <Offer type_id="477143629" type_name="Mi-temps avec le +">
+                                        <Outcome name="1er" odds="2.85"/>
+                                        <Outcome name="2ème" odds="2.05"/>
+                                        <Outcome name="Egal" odds="3.00"/>
+                                    </Offer>
+                                    <Offer type_id="477143682" type_name="Mi-temps avec le +">
+                                        <Outcome name="1er" odds="2.70"/>
+                                        <Outcome name="2ème" odds="1.78"/>
+                                        <Outcome name="Egal" odds="3.60"/>
+                                    </Offer>
+                                    <Offer type_id="477143663" type_name="Mi-temps avec le +">
+                                        <Outcome name="1er" odds="3.60"/>
+                                        <Outcome name="2ème" odds="2.70"/>
+                                        <Outcome name="Egal" odds="1.92"/>
+                                    </Offer>
+                                    <Offer type_id="477143619" type_name="1-N-2 Mi-temps">
+                                        <Outcome name="Bayer Leverkusen" odds="1.63"/>
+                                        <Outcome name="Nul" odds="2.85"/>
+                                        <Outcome name="Hoffenheim" odds="4.75"/>
+                                    </Offer>
+                                    <Offer type_id="477143681" type_name="1-N-2 Mi-temps">
+                                        <Outcome name="Bayer Leverkusen" odds="1.77"/>
+                                        <Outcome name="Nul" odds="2.45"/>
+                                        <Outcome name="Hoffenheim" odds="5.00"/>
+                                    </Offer>
+                                </OfferList>
+                            </Match>
+                        </MatchList>
+                        <MatchList/>
+                    </Competition>
+                </CompetitionList>
+            </Region>
+        </RegionList>
+    </Sport>
+</SportList>

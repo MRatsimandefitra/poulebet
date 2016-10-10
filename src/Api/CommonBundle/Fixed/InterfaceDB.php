@@ -17,6 +17,7 @@ interface InterfaceDB {
     const ENTITY_VOTE_UTILISATEUR = 'ApiDBBundle:VoteUtilisateur';
     const ENTITY_NOTIF_RECAP = 'ApiDBBundle:NotificationRecapitulation';
     const ENTITY_CONNECTED = 'ApiDBBundle:Connected';
-
+    const ENTITY_ACHAT = 'ApiDBBundle:Oeufs';
+    const FORM_ACHAT  = 'Api\DBBundle\Form\OeufsType';
 
 }
