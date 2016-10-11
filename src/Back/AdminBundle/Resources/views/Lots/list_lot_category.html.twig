@@ -1,0 +1,39 @@
+{% extends 'BackAdminBundle::layout.html.twig' %}
+{% block title %} {{ parent() }} {% endblock %}
+{% block ariane %} {{ parent() }} {% endblock %}
+
+{% block page %}
+
+    {#<div class="box-header-response">
+        {{ 'Liste des lots'|trans }}
+    </div>#}
+    <div class="col-lg-12">
+        <div class="col-lg-12">
+            <div class="link">
+                <a href="{{ path('add_lots_category') }}">{{ 'Ajouter category' }}</a>
+            </div>
+            <table class="table-list">
+                <tr>
+                    <thead>
+                    <th>{{ 'ID' }}</th>
+                    <th>{{ 'Categorie' }}</th>
+                    <th>{{ 'Actions' }}</th>
+                    </thead>
+
+                </tr>
+                {% for row in entities %}
+                <tr>
+                    <td>{{ row.id }}</td>
+                    <td>{{ row.category }}</td>
+                    <td>
+                        <div class="action">
+                            <a href="{{ path('edit_lots_category', {'id': row.id }) }}">{{ 'Modifier' }}</a> &nbsp;&nbsp; |
+                            <a href="{{ path('remove_lots_category', {'id': row.id }) }}">{{ 'Supprimer' }}</a> &nbsp;&nbsp;
+                        </div>
+                    </td>
+                </tr>
+                    {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}

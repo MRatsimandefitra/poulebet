@@ -13,7 +13,10 @@
         <span class="glyphicon glyphicon-plus green" aria-hidden="true"></span>
         {% endif %}
         {% if droitAdmin.ajout is defined and droitAdmin.ajout %}
-            <a href="{{ path('add_lots') }}">{{ 'Ajout lots'|trans }}</a>&nbsp;  &nbsp;
+            <div class="link">
+            <a href="{{ path('add_lots') }}">{{ 'Ajout lots'|trans }}</a>&nbsp;  &nbsp; |
+                <a href="{{ path('index_lots_category') }}">{{ 'Category Lots' }}</a> &nbsp;  &nbsp;
+            </div>
         {% endif %}
         <div class="list">
             <table>
@@ -22,6 +25,7 @@
                     <td style="min-width: 200px">{{ 'Nom du lot'|trans }}</td>
                     <td style="max-width: 500px">{{ 'Description'|trans }}</td>
                     <td>{{ 'Nb point nécessaire'|trans }}</td>
+                    <td>{{ 'Categorie' }}</td>
                     <td style="min-height: 150px;">{{ 'Date de création'|trans }}</td>
                     <td>{{ 'Actions'|trans }}</td>
                 </tr>
@@ -37,6 +41,12 @@
                             {{ row.description }}
                         </td>
                         <td>{{ row.nbPointNecessaire }}</td>
+                        <td>
+                            {% if row.lotCategory.category is defined %}
+                            {#{{ dump(row.lotCategory) }}#}
+                            {{ row.lotCategory.category }}
+                                {% endif %}
+                        </td>
                         <td>
                             {{ row.createdAt|date('d-m-Y') }}
                         </td>

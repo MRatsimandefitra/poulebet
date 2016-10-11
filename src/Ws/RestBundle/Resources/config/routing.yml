@@ -61,3 +61,6 @@ route_prefix_ws_rest_classement:
 route_prefix_ws_rest_achats:
     resource: "@WsRestBundle/Resources/config/routing/achats.yml"
     prefix:   /achats
+route_prefix_ws_rest_achats_lots:
+    resource: "@WsRestBundle/Resources/config/routing/achat_lot.yml"
+    prefix:   /achats-lots

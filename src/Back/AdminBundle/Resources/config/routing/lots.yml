@@ -10,3 +10,15 @@ add_lots:
 remove_lots:
     path:     /remove/{id}
     defaults: { _controller: BackAdminBundle:Lots:removeLots }
+index_lots_category:
+    path:     /category
+    defaults: { _controller: BackAdminBundle:Lots:listLotCategory }
+add_lots_category:
+    path:     /category/add
+    defaults: { _controller: BackAdminBundle:Lots:addLotsCategory }
+edit_lots_category:
+    path:     /category/edit/{id}
+    defaults: { _controller: BackAdminBundle:Lots:editLotCategory }
+remove_lots_category:
+    path:     /category/remove/{id}
+    defaults: { _controller: BackAdminBundle:Lots:removeLotCategory }

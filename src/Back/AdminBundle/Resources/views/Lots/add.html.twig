@@ -15,7 +15,8 @@
                 <div>{{form_label(form.description)}}</div> 
                 <div>{{form_widget(form.description ,{'attr': {'class': 'form-control'  }})}}</div>
                 <div>{{form_label(form.nbPointNecessaire)}}</div> 
-                <div>{{form_widget(form.nbPointNecessaire ,{'attr': {'class': 'form-control'  }})}}</div> 
+                <div>{{form_widget(form.nbPointNecessaire ,{'attr': {'class': 'form-control'  }})}}</div>
+                <div>{{form_widget(form.lotCategory ,{'attr': {'class': 'form-control'  }})}}</div>
                 <div><label>{{'Image'|trans}}</label></div>
                 <div>{{form_widget(form.cheminImage ,{'required': false})}}</div>
                 <div><input type="submit" value="Enregistrer" class="btn btn-primary"></div> 

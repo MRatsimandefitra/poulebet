@@ -19,5 +19,13 @@ interface InterfaceDB {
     const ENTITY_CONNECTED = 'ApiDBBundle:Connected';
     const ENTITY_ACHAT = 'ApiDBBundle:Oeufs';
     const FORM_ACHAT  = 'Api\DBBundle\Form\OeufsType';
+    const ENTITY_LOTS = 'ApiDBBundle:Lot';
+    const ENTITY_DROIT = 'ApiDBBundle:Droit';
+    const ENTITY_DROIT_ADMIN = 'ApiDBBundle:DroitAdmin';
+    const FORM_LOT = 'Api\DBBundle\Form\LotType';
+    const FORM_ADMIN_DROIT = 'Api\DBBundle\Form\DroitAdminType';
+    const FORM_ADMIN_DROIT_ADD_ROLES = 'Api\DBBundle\Form\DroitAdminRoleType';
+    const ENTITY_LOT_CATEGORY = 'ApiDBBundle:LotCategory';
+    const FORM_LOT_CATEGORY = 'Api\DBBundle\Form\LotCategoryType';
 
 }

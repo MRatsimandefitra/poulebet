@@ -15,22 +15,19 @@ namespace Back\AdminBundle\Controller;
  * @author miora.manitra
  */
 use Api\CommonBundle\Controller\ApiController;
+use Api\CommonBundle\Fixed\InterfaceDB;
 use Api\DBBundle\Entity\Lot;
 use Api\DBBundle\Entity\DroitAdmin;
+use Api\DBBundle\Entity\LotCategory;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 
-class LotsController extends ApiController
+class LotsController extends ApiController implements InterfaceDB
 {
-    const ENTITY_LOTS = 'ApiDBBundle:Lot';
-    const ENTITY_DROIT = 'ApiDBBundle:Droit';
-    const ENTITY_DROIT_ADMIN = 'ApiDBBundle:DroitAdmin';
-    const FORM_LOT = 'Api\DBBundle\Form\LotType';
-    const FORM_ADMIN_DROIT = 'Api\DBBundle\Form\DroitAdminType';
-    const FORM_ADMIN_DROIT_ADD_ROLES = 'Api\DBBundle\Form\DroitAdminRoleType';
+
 
 
     public function indexAction(Request $request)
@@ -99,5 +96,49 @@ class LotsController extends ApiController
     {
 
         return $this->get('roles.manager')->getDroitAdmin($droit);
+    }
+
+    public function addLotsCategoryAction(Request $request){
+
+        $categoryLots = new LotCategory();
+        $form= $this->formPost(self::FORM_LOT_CATEGORY, $categoryLots);
+        $form->handleRequest($request);
+        if($form->isValid()){
+            $this->insert($categoryLots);
+            return $this->redirectToRoute("index_lots_category");
+        }
+        $currentDroitAdmin = $this->getDroitAdmin('Lots concours');
+        return $this->render('BackAdminBundle:Lots:add_lot_category.html.twig', array(
+            'form' => $form->createView(),
+            'droitAdmin' => $currentDroitAdmin[0]
+        ));
+    }
+    public function listLotCategoryAction(){
+        $lotCategory = $this->getAllEntity(self::ENTITY_LOT_CATEGORY);
+        $currentDroitAdmin = $this->getDroitAdmin('Lots concours');
+        return $this->render('BackAdminBundle:Lots:list_lot_category.html.twig', array(
+            'entities' => $lotCategory,
+            'droitAdmin' => $currentDroitAdmin[0]
+        ));
+    }
+    public function editLotCategoryAction(Request $request, $id){
+        $categoryLots = $this->getRepoFormId(self::ENTITY_LOT_CATEGORY, $id);
+        $form= $this->formPost(self::FORM_LOT_CATEGORY, $categoryLots);
+        $form->handleRequest($request);
+        if($form->isValid()){
+            $this->insert($categoryLots);
+            return $this->redirectToRoute("index_lots_category");
+        }
+        $currentDroitAdmin = $this->getDroitAdmin('Lots concours');
+        return $this->render('BackAdminBundle:Lots:edit_lot_category.html.twig', array(
+            'droitAdmin' => $currentDroitAdmin[0],
+            'form' => $form->createView()
+        ));
+    }
+
+    public function removeLotCategoryAction($id){
+        $categoryLots = $this->getRepoFormId(self::ENTITY_LOT_CATEGORY, $id);
+        $this->remove($categoryLots);
+        return $this->redirectToRoute('index_lots_category');
     }
 }

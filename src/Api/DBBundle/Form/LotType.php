@@ -2,6 +2,7 @@
 
 namespace Api\DBBundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -21,7 +22,12 @@ class LotType extends AbstractType
             ->add('description')
             ->add('cheminImage', FileType::class, array(
                 'data_class' => null
-            ))    
+            ))
+            ->add('lotCategory', EntityType::class, array(
+                'class' => 'ApiDBBundle:LotCategory',
+                'choice_label' => 'category',
+                'empty_data' => ''
+            ))
             
         ;
     }

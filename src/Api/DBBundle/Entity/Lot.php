@@ -13,6 +13,12 @@ use Doctrine\ORM\Mapping as ORM;
 class Lot
 {
     /**
+     * @ORM\ManyToOne(targetEntity="LotCategory", cascade={"persist","remove"})
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $lotCategory;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Concours", cascade={"persist"})
      * @ORM\JoinColumn(name="concours_id")
      */
@@ -214,5 +220,29 @@ class Lot
     public function getCreatedAt()
     {
         return $this->createdAt;
+    }
+
+    /**
+     * Set lotCategory
+     *
+     * @param \Api\DBBundle\Entity\LotCategory $lotCategory
+     *
+     * @return Lot
+     */
+    public function setLotCategory(\Api\DBBundle\Entity\LotCategory $lotCategory = null)
+    {
+        $this->lotCategory = $lotCategory;
+
+        return $this;
+    }
+
+    /**
+     * Get lotCategory
+     *
+     * @return \Api\DBBundle\Entity\LotCategory
+     */
+    public function getLotCategory()
+    {
+        return $this->lotCategory;
     }
 }
