@@ -428,8 +428,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
     public function findMatchsForCote($dateMatchs, $equipeDomicile, $equipeVisiteur){
         $dql = "SELECT m from ApiDBBundle:Matchs m
                 WHERE m.dateMatch = :dateMatchs
-                AND m.equipeDomicile LIKE :equipeDomicile
-                OR m.equipeVisiteur LIKE :equipeVisiteur";
+                AND (m.equipeDomicile LIKE :equipeDomicile OR m.equipeVisiteur LIKE :equipeVisiteur)";
         $query = $this->getEntityManager()->createQuery($dql);
         $query->setParameter('dateMatchs', $dateMatchs);
         $query->setParameter('equipeDomicile', '%'.$equipeDomicile.'%');

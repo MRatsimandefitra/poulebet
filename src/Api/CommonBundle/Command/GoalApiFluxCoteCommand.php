@@ -59,7 +59,9 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
                 if(array_key_exists('MatchList', $competition)){
                     $matchsList = $competition['MatchList'];
                     if(count($matchsList) > 1 ){
+                        $count = 0;
                         foreach($matchsList as $kMatchList => $itemsMatchsList){
+                            $count = $count + 1;
                             if(array_key_exists('Match', $itemsMatchsList)){
                                 $matchs = $itemsMatchsList['Match'];
 
@@ -68,7 +70,6 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
                                     //  var_dump($itemsMatch['Team']); die;
                                     $dateMatchs = "";
                                     if(array_key_exists('@attributes',$itemsMatch)){
-
                                         $dateMatchs = $itemsMatch['@attributes']['date'];
                                     }
                                     if(array_key_exists('OfferList',$itemsMatch)){
@@ -103,7 +104,10 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
                                                 }
 
                                                 if($dateMatchs && $equipeVisiteur && $equipeDomicile){
-                                                   // var_dump($equipeVisiteur); die;
+                                                    if($count == 7){
+                                                        var_dump($equipeVisiteur); die;
+                                                    }
+                                                    //var_dump($equipeVisiteur); die;
                                                     $matchs = $em->getRepository(self::ENTITY_MATCHS)->findMatchsForCote($dateMatchs, $equipeDomicile, $equipeVisiteur);
                                                     if($matchs){
                                                         // $matchs = new Matchs();
@@ -135,9 +139,9 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
                                                             $matchs[0]->setMasterProno1(false);
                                                         }
                                                         $em->flush();
-                                                        $output->writeln("Insert".$matchs[0]->getId());
+                                                        $output->writeln("Insert".$matchs[0]->getId() . " ---  Numero : ".$count);
                                                     }else{
-                                                        $output->writeln("Aucun matchs trouvé");
+                                                        $output->writeln("Aucun matchs trouvé - ID : ". $count);
 
                                                     }
                                                 }else{
