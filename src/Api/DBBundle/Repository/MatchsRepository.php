@@ -429,7 +429,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         $dql = "SELECT m from ApiDBBundle:Matchs m
                 WHERE m.dateMatch = :dateMatchs
                 AND m.equipeDomicile LIKE :equipeDomicile
-                AND m.equipeVisiteur LIKE :equipeVisiteur";
+                OR m.equipeVisiteur LIKE :equipeVisiteur";
         $query = $this->getEntityManager()->createQuery($dql);
         $query->setParameter('dateMatchs', $dateMatchs);
         $query->setParameter('equipeDomicile', '%'.$equipeDomicile.'%');
