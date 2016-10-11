@@ -30,9 +30,9 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
     {
         $container = $this->getContainer();
         $em = $container->get('doctrine.orm.entity_manager');
-        $data =  file_get_contents($this->getContainer()->get('kernel')->getRootDir().'/../web/json/cote.xml');
+        /*$data =  file_get_contents($this->getContainer()->get('kernel')->getRootDir().'/../web/json/cote.xml');*/
        // var_dump($data); die;
-        #$data =  file_get_contents("http://partner.netbetsport.fr/xmlreports/fluxcotes.xml");
+        $data =  file_get_contents("http://partner.netbetsport.fr/xmlreports/fluxcotes.xml");
         $equipeDomicile = "";
         $equipeVisiteur = "";
 
