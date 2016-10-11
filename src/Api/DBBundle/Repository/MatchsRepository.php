@@ -235,6 +235,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         $where[] = " co.id = :idConcour";
         $params['idConcour'] = $idConcour;
         if($date){
+
             $where[] = " m.dateMatch BETWEEN :date1 AND :date2 ";
             $params['date1'] = $date. " 00:00:00";
             $params['date2'] = $date. " 23:59:59";
@@ -302,11 +303,25 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         return $query->getResult();
 
     }
-    function findMatchVote(){
+    function findMatchVote($date = null){
         $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
                 LEFT JOIN vu.matchs m
                 LEFT JOIN m.championat ch";
-        $query = $this->getEntityManager()->createQuery($dql);
+        $where[] = array();
+        $params[] = array();
+        if($date){
+
+
+            $date1 = $date. ' 00:00:00';
+            $date2 = $date. ' 23:59:59';
+            $dql .= " WHERE m.dateMatch BETWEEN '".$date1."' AND  '" .$date2. "' ";
+
+        }
+
+        //var_dump($params['date1']); die;
+            $query = $this->getEntityManager()->createQuery($dql);
+
+
         return $query->getResult();
     }
     public function findGains($idUser, $idMatchs, $idVote){
@@ -398,5 +413,17 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
     public function findRecapForNotification(){
         $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu LEFT JOIN vu.matchs m";
 
+    }
+
+    public function findMatchsForCote($dateMatchs, $equipeDomicile, $equipeVisiteur){
+        $dql = "SELECT m from ApiDBBundle:Matchs m
+                WHERE m.dateMatch = :dateMatchs
+                AND m.equipeDomicile LIKE :equipeDomicile
+                AND m.equipeVisiteur LIKE :equipeVisiteur";
+        $query = $this->getEntityManager()->createQuery($dql);
+        $query->setParameter('dateMatchs', $dateMatchs);
+        $query->setParameter('equipeDomicile', '%'.$equipeDomicile.'%');
+        $query->setParameter('equipeVisiteur', '%'.$equipeVisiteur.'%');
+        return $query->getResult();
     }
 }
