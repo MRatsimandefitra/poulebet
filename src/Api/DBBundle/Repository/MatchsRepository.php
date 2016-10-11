@@ -303,24 +303,34 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         return $query->getResult();
 
     }
-    function findMatchVote($date = null){
+    function findMatchVote($date = null, $championat = null){
         $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
                 LEFT JOIN vu.matchs m
                 LEFT JOIN m.championat ch";
-        $where[] = array();
-        $params[] = array();
+        $where = array();
+        $params = array();
         if($date){
-
+            $where[] = " m.dateMatch BETWEEN :dateDebut AND :dateFinale ";
 
             $date1 = $date. ' 00:00:00';
             $date2 = $date. ' 23:59:59';
-            $dql .= " WHERE m.dateMatch BETWEEN '".$date1."' AND  '" .$date2. "' ";
+            $params['dateDebut'] = $date1;
+            $params['dateFinale'] = $date2;
+            /*$dql .= " WHERE m.dateMatch BETWEEN '".$date1."' AND  '" .$date2. "' ";*/
 
         }
-
-        //var_dump($params['date1']); die;
+        if($championat){
+            $where[] = " ch.nomChampionat LIKE :championat ";
+            $params['championat'] = $championat;
+        }
+        if(!empty($where)){
+            $dql .= ' WHERE ' . implode(' AND ', $where);
+        }
+        if(empty($params)){
             $query = $this->getEntityManager()->createQuery($dql);
-
+        }else{
+            $query = $this->getEntityManager()->createQuery($dql)->setParameters($params);
+        }
 
         return $query->getResult();
     }
