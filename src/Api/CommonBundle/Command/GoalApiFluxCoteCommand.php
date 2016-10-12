@@ -104,12 +104,21 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
                                                 }
 
                                                 if ($dateMatchs && $equipeVisiteur && $equipeDomicile) {
-                                                    if ($count == 7) {
-                                                        var_dump($equipeVisiteur);
-                                                        die;
+
+                                                    // correspondance
+
+                                                    $matchsCorresDomicile = $em->getRepository(self::ENTITY_MATCHS_CORRESPONDANT)->findCorrespondanceEquipeDomicile($equipeDomicile);
+                                                    if(!empty($matchsCorresDomicile)){
+                                                        $equipeDomicile = $matchsCorresDomicile[0]->getEquipeGoalApi();
                                                     }
-                                                    //var_dump($equipeVisiteur); die;
+
+                                                    $matchsCorresVisiteur = $em->getRepository(self::ENTITY_MATCHS_CORRESPONDANT)->findCorrespondanceEquipeVisiteur($equipeVisiteur);
+                                                    if(!empty($matchsCorresVisiteur)){
+                                                        $equipeVisiteur = $matchsCorresVisiteur[0]->getEquipeGoalApi();
+                                                    }
+
                                                     $matchs = $em->getRepository(self::ENTITY_MATCHS)->findMatchsForCote($dateMatchs, $equipeDomicile, $equipeVisiteur);
+
                                                     if ($matchs) {
                                                         // $matchs = new Matchs();
                                                         if (array_key_exists($equipeDomicile, $resultOdds)) {

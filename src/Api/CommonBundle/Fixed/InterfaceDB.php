@@ -27,5 +27,6 @@ interface InterfaceDB {
     const FORM_ADMIN_DROIT_ADD_ROLES = 'Api\DBBundle\Form\DroitAdminRoleType';
     const ENTITY_LOT_CATEGORY = 'ApiDBBundle:LotCategory';
     const FORM_LOT_CATEGORY = 'Api\DBBundle\Form\LotCategoryType';
+    const ENTITY_MATCHS_CORRESPONDANT = 'ApiDBBundle:MatchsCorrespondance';
 
 }
