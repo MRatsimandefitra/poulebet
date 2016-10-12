@@ -31,6 +31,7 @@ class AchatController extends ApiController implements InterfaceDB
 
             $result['achats'][] = array(
                 'image' => "dplb.arkeup.com/images/achats/".$itemsOeufs->getImageOeuf(),
+                'productSKU' => $itemsOeufs->getProductSKU(),
                 'tarifOeuf' => $itemsOeufs->getTarifOeufs(),
                 'tarifEuro' => $itemsOeufs->getTarifEuro()
             );
@@ -63,6 +64,10 @@ class AchatController extends ApiController implements InterfaceDB
         $user = $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
         if(!$user){
                 return $this->noUser();
+        }
+        $productSKU = $request->request->get('productSKU');
+        if(!$productSKU){
+            return $this->noProductSKU();
         }
         $lastSolde = $this->getRepo(self::ENTITY_MVT_CREDIT)->findLastSolde($user->getId());
         $idLast = $lastSolde[0][1];
@@ -102,6 +107,13 @@ class AchatController extends ApiController implements InterfaceDB
         return new JsonResponse($result);
     }
 
+    private function noProductSKU(){
+        $result['code_error'] = 2;
+        $result['error'] = true;
+        $result['success'] = false;
+        $result['message'] = "Le product SKU devrait être précisé";
+        return new JsonResponse($result);
+    }
     private function noUser(){
         $result['code_error'] = 0;
         $result['error'] = false;

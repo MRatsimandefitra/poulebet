@@ -5,4 +5,4 @@ ws_rest_pari_list_achats:
 ws_rest_pari_insert_achats:
     path:     /
     defaults: { _controller: WsRestBundle:Achat:postGetInsertAchats }
-    methods: POST # token, oeufs
+    methods: POST # token, oeufs, productSKU
