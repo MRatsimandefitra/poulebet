@@ -12,9 +12,22 @@ use Api\DBBundle\Entity\VoteUtilisateur;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+
 
 class PariController extends ApiController implements InterfaceDB
 {
+    /**
+     * Ws, récupérer la les matchs pour les paris
+     * @ApiDoc(
+     *  description="Ws, récupérer la liste les matchs pour les paris",
+     *   parameters = {
+     *          {"name" = "date", "dataType"="date" ,"required"=false, "description"= "date of matchs lets mec ...."},
+     *          {"name" = "championat", "dataType"="string" ,"required"=false, "description"= "Identifiant championat ex: eng_pl"},
+     *          {"name" = "isCombined", "dataType"="bool" ,"required"=false, "description"= "Combiné ou non"}
+     *      }
+     * )
+     */
     public function postGetAllMathsAction(Request $request)
     {
 
@@ -114,7 +127,7 @@ class PariController extends ApiController implements InterfaceDB
             }
             $concourEncour = $this->getRepo(self::ENTITY_MATCHS)->findIdConcourByDate();
             if(!$concourEncour){
-                die('no Conour');
+                //die('no Conour');
             }
             $idConcour = $concourEncour[0]->getId();
             $matchs = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForPari($date, $championatWs, null, $idConcour);
@@ -144,10 +157,8 @@ class PariController extends ApiController implements InterfaceDB
                 return new JsonResponse($result);
             }
 
-            $arrayMathsVote = array();
             if ($matchsVote) {
                 foreach ($matchsVote as $kMatchsVote => $itemsMatchVote) {
-                    // var_dump($itemsMatchVote->getVote()); die;
                     $result['list_matchs'][] = array(
                         'idVote' => $itemsMatchVote->getId(),
                         'idMatch' => $itemsMatchVote->getMatchs()->getId(),
@@ -180,7 +191,6 @@ class PariController extends ApiController implements InterfaceDB
 
 
             if ($matchs) {
-                // foreach($matchsVote as $kMatchsVote => $itemsMatchsVote) {
 
                 foreach ($matchs as $kMatchs => $matchsItems) {
                     if (!$this->getJouer($matchsItems->getId())) {
@@ -203,19 +213,13 @@ class PariController extends ApiController implements InterfaceDB
                             'cote_pronostic_1' => $matchsItems->getCot1Pronostic(),
                             'cote_pronostic_n' => $matchsItems->getCoteNPronistic(),
                             'cote_pronostic_2' => $matchsItems->getCote2Pronostic(),
-                            //  'gainsPotentiel' => '', /*$this->getGainsPotentiel($user->getId(), $matchsItems->getId()),*/
-                            //  'miseTotal' => '', // $this->getMiseTotal($user->getId(), $matchsItems->getId()),
-                            'jouer' => false, //$this->getJouer($matchsItems->getId()),
-                            /*         'details_jouer' => array(
-                                         $this->getDetailsJouer($matchsItems->getId(), $user->getId())
-                                     ),*/
+                            'jouer' => false,
                             'idChampionat' => $matchsItems->getChampionat()->getId()
                         );
                     }
 
 
                 }
-                // array_push($arrayMathsVote, $result['list_matchs'][]);
 
                 $result['code_error'] = 0;
                 $result['error'] = false;
@@ -231,7 +235,6 @@ class PariController extends ApiController implements InterfaceDB
             $lastSolde = $this->getRepo(self::ENTITY_MVT_CREDIT)->findLastSolde($user->getId());
             $idLast = $lastSolde[0][1];
             $mvtCreditLast = $this->getObjectRepoFrom(self::ENTITY_MVT_CREDIT, array('id' => $idLast));
-            //   var_dump($mvtCreditLast); die;
             if ($mvtCreditLast) {
                 $result['solde'] = $mvtCreditLast->getSoldeCredit();
             }
@@ -370,6 +373,16 @@ class PariController extends ApiController implements InterfaceDB
         return new JsonResponse($result);
     }
 
+
+    /**
+     * Ws, get nombre de poulet en stock
+     * @ApiDoc(
+     *  description="Ws, récupérer le nombre de poulet en stock",
+     *   parameters = {
+     *          {"name" = "token", "dataType"="string" ,"required"=false, "description"= " Token de l'utilisateur "},
+     *      }
+     * )
+     */
     public function postGetNbPouletAction(Request $request)
     {
         $token = $request->request->get('token');
@@ -410,8 +423,21 @@ class PariController extends ApiController implements InterfaceDB
             return new JsonResponse($result);
 
         }
+
     }
 
+    /**
+     * Ws, Insertion  pari simple
+     * @ApiDoc(
+     *  description="Ws, Insertion  pari simple",
+     *   parameters = {
+     *          {"name" = "token", "dataType"="string" ,"required"=false, "description"= "Token de l'utilisateur "},
+     *          {"name" = "gainPotentiel", "dataType"="string" ,"required"=false, "description"= "Gain potentiel "},
+     *          {"name" = "miseTotal", "dataType"="string" ,"required"=false, "description"= "Mise total"},
+     *          {"name" = "voteSimple", "dataType"="string" ,"required"=false, "description"= "voteSimple"}
+     *      }
+     * )
+     */
     public function insertPariAction(Request $request)
     {
 
@@ -420,7 +446,7 @@ class PariController extends ApiController implements InterfaceDB
         $gainsPotentiel = $request->request->get('gainPotentiel');
         $miseTotal = $request->request->get('miseTotal');
         $voteMatchsSimple = $request->request->get('voteSimple');
-        $matchId = $request->request->get('matchsId');
+        //$matchId = $request->request->get('matchsId');
 
 
         if (!$token) {
@@ -506,7 +532,15 @@ class PariController extends ApiController implements InterfaceDB
         return new JsonResponse($result);
     }
 
-
+    /**
+     * Ws, Insertion  combiné
+     * @ApiDoc(
+     *  description="Ws, Insertion  pari combiné",
+     *   parameters = {
+     *          {"name" = "jsonDataCombined", "dataType"="string" ,"required"=false, "description"= " Json data pour pari combine"},
+     *      }
+     * )
+     */
     public function insertPariCombinedAction(Request $request)
     {
 
@@ -610,8 +644,5 @@ class PariController extends ApiController implements InterfaceDB
             $result['message'] = "Success";
             return new JsonResponse($result);
         }
-
-
-
     }
 }

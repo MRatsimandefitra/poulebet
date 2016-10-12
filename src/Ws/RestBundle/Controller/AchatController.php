@@ -9,9 +9,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class AchatController extends ApiController implements InterfaceDB
 {
+    /**
+     * Ws, Get list oeufs
+     * @ApiDoc(
+     *  description="Ws, Get liste oeufs à acheter ",
+     *   parameters = {
+     *          {"name" = "token", "dataType"="string" ,"required"=false, "description"= "Token de l'utilisateur "}
+     *      }
+     * )
+     */
     public function postGetListOeufsAction(Request $request){
         $token  = $request->request->get('token');
         if(!$token){
@@ -23,7 +33,6 @@ class AchatController extends ApiController implements InterfaceDB
             $result['error'] = false;
             $result['success'] = true;
             $result['message'] = "success";
-
         }
 
         $result = array();
@@ -55,6 +64,16 @@ class AchatController extends ApiController implements InterfaceDB
         return new JsonResponse($result);
     }
 
+    /**
+     * Ws, Insert achat orufs
+     * @ApiDoc(
+     *  description="Ws, Insertion achat oeufs",
+     *   parameters = {
+     *          {"name" = "token", "dataType"="string" ,"required"=false, "description"= "Token de l'utilisateur "},
+     *          {"name" = "oeufs", "dataType"="string" ,"required"=false, "description"= "Token de l'utilisateur "}
+     *      }
+     * )
+     */
     public function postGetInsertAchatsAction(Request $request){
         $token = $request->request->get('token');
         $oeufs = (int) $request->request->get('oeufs');

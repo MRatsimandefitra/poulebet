@@ -9,9 +9,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class AchatLotController extends ApiController implements InterfaceDB
 {
+    /**
+     * Ws, Get list des lots
+     * @ApiDoc(
+     *   description="Ws, Get list des lots ",
+     *   parameters = {
+     *          {"name" = "token", "dataType"="string" ,"required"=false, "description"= "Token de l'utilisateur "}
+     *      }
+     * )
+     */
     public function postGetListLotAction(Request $request){
         $token = $request->request->get('token');
         if(!$token){
@@ -63,6 +73,22 @@ class AchatLotController extends ApiController implements InterfaceDB
         return new JsonResponse($result);
     }
 
+    /**
+     * Ws, Insert addresse de livraison
+     * @ApiDoc(
+     *   description="Ws, Insert addresse de livraison ",
+     *   parameters = {
+     *          {"name" = "token", "dataType"="string" ,"required"=false, "description"= "Token de l'utilisateur "},
+     *          {"name" = "ville", "dataType"="string" ,"required"=false, "description"= "Ville de livraison "},
+     *          {"name" = "pays", "dataType"="string" ,"required"=false, "description"= "Pays de livraison "},
+     *          {"name" = "voie", "dataType"="string" ,"required"=false, "description"= "voie de livraison "},
+     *          {"name" = "region", "dataType"="string" ,"required"=false, "description"= "region de livraison "},
+     *          {"name" = "codePostal", "dataType"="string" ,"required"=false, "description"= "codePostal de livraison "},
+     *          {"name" = "nomComplet", "dataType"="string" ,"required"=false, "description"= "Nom complet "},
+     *          {"name" = "numero", "dataType"="string" ,"required"=false, "description"= "Numero de livraison "}
+     *      }
+     * )
+     */
     public function postInsertAddressLivraisonAction(Request $request){
         $ville = $request->request->get('ville');
         if(!$ville){
