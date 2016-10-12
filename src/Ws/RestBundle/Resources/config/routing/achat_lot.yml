@@ -3,6 +3,6 @@ list_des_lots:
     defaults: { _controller: WsRestBundle:AchatLot:postGetListLot }
     methods: POST # token, prix
 insert_address_livraison:
-    path:     /get-list-lots
+    path:     /insert-addresse-livraison
     defaults: { _controller: WsRestBundle:AchatLot:postInsertAddressLivraison }
     methods: POST # nomcomplet, numero, pays, region, codepostal, ville, voie
