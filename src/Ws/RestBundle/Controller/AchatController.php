@@ -76,6 +76,7 @@ class AchatController extends ApiController implements InterfaceDB
      * )
      */
     public function postGetInsertAchatsAction(Request $request){
+
         $token = $request->request->get('token');
         $oeufs = (int) $request->request->get('oeufs');
         if(!$token){
@@ -98,6 +99,7 @@ class AchatController extends ApiController implements InterfaceDB
             $newMvtCredit->setEntreeCredit($oeufs);
             $newMvtCredit->setSoldeCredit($lastCredit + $oeufs);
             $newMvtCredit->setUtilisateur($user);
+            $newMvtCredit->setTypeCredit("ACHAT OEUFS");
             $newMvtCredit->getDateMvt(new \DateTime('now'));
             $this->insert($newMvtCredit, array('success' => 'success', 'error' => 'error') );
 

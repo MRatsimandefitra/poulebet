@@ -76,7 +76,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
                             );
                         }
                     }
-                    $result['list-mise'][] = array(
+                    $result['list_mise'][] = array(
                         'miseId' =>$itemsIdMise,
                         'gain' => $gain,
                         'miseTotal' => $miseTotal,
