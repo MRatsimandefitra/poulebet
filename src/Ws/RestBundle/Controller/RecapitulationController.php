@@ -76,12 +76,17 @@ class RecapitulationController extends ApiController implements InterfaceDB
                             );
                         }
                     }
+                    $result['list-mise'][] = array(
+                        'miseId' =>$itemsIdMise,
+                        'maths' => $matchs
+                    );
                     $resultMatchs[$itemsIdMise]['gain'] = $gain;
                     $resultMatchs[$itemsIdMise]['miseTotal'] = $miseTotal;
-                    $resultMatchs[$itemsIdMise]['matchs'] = $matchs;
+                   // $resultMatchs[$itemsIdMise]['matchs'] = $matchs;
                     $resultMatchs[$itemsIdMise]['gagnant'] = "";
                 }
-                $result['vote'] = $resultMatchs;
+
+                $result['details'] = $resultMatchs;
                /* if(!empty($resultMatchs)){
                     foreach($resultMatchs as $itemsResultMatchs){
 
