@@ -109,10 +109,10 @@ class PariController extends ApiController implements InterfaceDB
                 $result['message'] = "Success";
 
             } else {
-                /*$result['code_error'] = 0;
+                $result['code_error'] = 4;
                 $result['success'] = true;
                 $result['error'] = false;
-                $result['message'] = "Success";*/
+                $result['message'] = "Aucun resultat";
             }
             //return new JsonResponse($result);
 
