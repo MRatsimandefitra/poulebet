@@ -128,6 +128,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
 
             // championat
             $championat = $this->getRepo(self::ENTITY_MATCHS)->findChampionatVoteSimple($user->getId());
+           // var_dump($championat); die;
             if($championat){
                 foreach($championat as $kChampionat => $itemsChampionat){
                     $result['list_championat'][] = array(
@@ -139,6 +140,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
             }
             // matchs
             $nbRecap = $this->getRepo(self::ENTITY_MATCHS)->findNbMatchsVoteSimple($user->getId());
+
             if(!empty($nbRecap)){
                 foreach($nbRecap as $k => $vItems){
                     $result['list_match'][] = array(

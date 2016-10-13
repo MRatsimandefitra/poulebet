@@ -36,11 +36,13 @@ class GoalApiChackMatchsGagnerForRecapCommand extends ContainerAwareCommand impl
         $container = $this->getContainer();
         $em = $container->get('doctrine.orm.entity_manager');
         $matchsVoter = $em->getRepository(self::ENTITY_MATCHS)->findMatchsForRecap();
+
         $arrayGagner = array();
         if($matchsVoter){
             $count = 0;
             foreach($matchsVoter as $k => $itemsMatchsVoter){
                 $matchs = $em->getRepository(self::ENTITY_MATCHS)->find($itemsMatchsVoter->getMatchs()->getId());
+
                 if(!$matchs){
                     $output->writeln("Aucun matchs");
                 }
@@ -60,27 +62,31 @@ class GoalApiChackMatchsGagnerForRecapCommand extends ContainerAwareCommand impl
                     }
                 }
 
-//                $voteMatch = $em->getRepository(self::ENTITY_MATCHS)->findMatchsExisitInVote($itemsMatchsVoter->getMatchs()->getId());*
+                $voteMatch = $em->getRepository(self::ENTITY_MATCHS)->findMatchsExisitInVote($itemsMatchsVoter->getMatchs()->getId());
 
-                $voteMatch = $em->getRepository(self::ENTITY_MATCHS)->findMatchsExisitInVote('2a4436e6b50383d2f3a205f11f9c829a');
-                var_dump(count($voteMatch)); die;
+//                $voteMatch = $em->getRepository(self::ENTITY_MATCHS)->findMatchsExisitInVote('2a4436e6b50383d2f3a205f11f9c829a');
+                //var_dump(count($voteMatch)); die;
                 if(!$voteMatch){
                     $output->writeln("Aucun vote");
                 }
 
                 foreach($voteMatch as $kVoteMatchs => $itemsVoteMatchs){
+
                     $gainPotentiel  = $itemsVoteMatchs->getGainPotentiel();
                     $vote = $itemsVoteMatchs->getVote();
+                    $isCombined  = $itemsVoteMatchs->getIsCombined();
 
                     if($vote === $gagnant){
+                        var_dump("Gagnant = ".$gagnant . " Vote = ".$vote . ' Combine = '.$isCombined);
                         $count = $count + 1;
                         $itemsVoteMatchs->setGagnant(true);
                         $arrayGagner[] =array(
                             'IdVote' => $itemsVoteMatchs->getId(),
                             'utilisateurId' => $itemsVoteMatchs->getUtilisateur()->getId(),
                             'vote' => $vote,
-                            'matchsId' => $itemsVoteMatchs->getMatchs()->getId()
+                            'matchsId' => $itemsVoteMatchs->getMatchs()->getId(),
                         );
+                        $output->writeln("gagnant okok");
                         //$mvtCredit->setSoldeCredit($)
                     }else{
                         $itemsVoteMatchs->setGagnant(false);
@@ -95,7 +101,7 @@ class GoalApiChackMatchsGagnerForRecapCommand extends ContainerAwareCommand impl
 
                 $output->writeln("Mise à jour");
             }
-
+            die('okok');
             var_dump($arrayGagner); die;
 
             foreach($arrayGagner as $kArrayGagner => $itemsArrayGagner){
