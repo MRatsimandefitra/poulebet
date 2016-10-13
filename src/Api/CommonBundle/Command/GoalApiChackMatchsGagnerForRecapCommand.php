@@ -75,17 +75,20 @@ class GoalApiChackMatchsGagnerForRecapCommand extends ContainerAwareCommand impl
                     $gainPotentiel  = $itemsVoteMatchs->getGainPotentiel();
                     $vote = $itemsVoteMatchs->getVote();
                     $isCombined  = $itemsVoteMatchs->getIsCombined();
-
+                    $tmpArrayGagner = array();
                     if($vote === $gagnant){
-                        var_dump("Gagnant = ".$gagnant . " Vote = ".$vote . ' Combine = '.$isCombined);
+
                         $count = $count + 1;
                         $itemsVoteMatchs->setGagnant(true);
-                        $arrayGagner[] =array(
-                            'IdVote' => $itemsVoteMatchs->getId(),
-                            'utilisateurId' => $itemsVoteMatchs->getUtilisateur()->getId(),
-                            'vote' => $vote,
-                            'matchsId' => $itemsVoteMatchs->getMatchs()->getId(),
-                        );
+                        if(!in_array('IdVote',$arrayGagner, $itemsVoteMatchs->getId() )){
+                            $tmpArrayGagner[] =array(
+                                'IdVote' => $itemsVoteMatchs->getId(),
+                                'utilisateurId' => $itemsVoteMatchs->getUtilisateur()->getId(),
+                                'vote' => $vote,
+                                'matchsId' => $itemsVoteMatchs->getMatchs()->getId(),
+                            );
+                        }
+
                         $output->writeln("gagnant okok");
                         //$mvtCredit->setSoldeCredit($)
                     }else{
@@ -101,8 +104,9 @@ class GoalApiChackMatchsGagnerForRecapCommand extends ContainerAwareCommand impl
 
                 $output->writeln("Mise à jour");
             }
+            var_dump(count($arrayGagner)); die;
             die('okok');
-            var_dump($arrayGagner); die;
+
 
             foreach($arrayGagner as $kArrayGagner => $itemsArrayGagner){
                 // var_dump($itemsArrayGagner); die;
