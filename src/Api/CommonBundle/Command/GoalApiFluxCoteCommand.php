@@ -10,6 +10,8 @@ namespace Api\CommonBundle\Command;
 use Api\CommonBundle\Fixed\InterfaceDB;
 use Api\DBBundle\Entity\Championat;
 use Api\DBBundle\Entity\Matchs;
+use Api\DBBundle\Entity\MatchsFluxCote;
+use Api\DBBundle\Entity\TeamsCoresspondance;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -30,9 +32,9 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
     {
         $container = $this->getContainer();
         $em = $container->get('doctrine.orm.entity_manager');
-        /*$data =  file_get_contents($this->getContainer()->get('kernel')->getRootDir().'/../web/json/cote.xml');*/
+        $data =  file_get_contents($this->getContainer()->get('kernel')->getRootDir().'/../web/json/cote.xml');
         // var_dump($data); die;
-        $data = file_get_contents("http://partner.netbetsport.fr/xmlreports/fluxcotes.xml");
+        #$data = file_get_contents("http://partner.netbetsport.fr/xmlreports/fluxcotes.xml");
         $equipeDomicile = "";
         $equipeVisiteur = "";
 
@@ -53,11 +55,14 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
             if ($itemsSport['@attributes']['name'] === 'Football') {
                 $regionList = $itemsSport['RegionList'];
                 $region = $regionList['Region'];
-
+                $regionName = $region['@attributes']['name'];
                 $competitionList = $region['CompetitionList'];
                 $competition = $competitionList['Competition'];
+                $championat = $competition['@attributes']['name'];
+             //   var_dump($competition['@attributes']['name']); die;
                 if (array_key_exists('MatchList', $competition)) {
                     $matchsList = $competition['MatchList'];
+
                     if (count($matchsList) > 1) {
                         $count = 0;
                         foreach ($matchsList as $kMatchList => $itemsMatchsList) {
@@ -81,6 +86,34 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
                                             $outcome = $offre['Outcome'];
                                             if (array_key_exists('Team', $itemsMatch)) {
                                                 $teams = $itemsMatch['Team'];
+
+                                                foreach($teams as $kTeams => $itemsTeams){
+                                                   // var_dump($itemsTeams); die;
+                                                    $teamsCorres = $em->getRepository(self::ENTITY_TEAMS_CORRES)->findOneBy(array('teams' => $itemsTeams['@attributes']['name']));
+                                                    $newTeamsCorres = false;
+                                                    if(!$teamsCorres){
+                                                        $teamsCorres = new TeamsCoresspondance();
+                                                        $newTeamsCorres = true;
+                                                    }
+                                                    $teamsCorres->setRegion($regionName);
+                                                    $teamsCorres->setTeams($itemsTeams['@attributes']['name']);
+                                                    $temasGoalApi = $em->getRepository(self::ENTITY_TEAMS)->findTeamsByFluxCote($itemsTeams['@attributes']['name']);
+                                                    if(!empty($temasGoalApi)){
+                                                        $isExist = true;
+                                                        $teamsCorres->setTeamsNameInGoalApi($temasGoalApi[0]->getNomClub());
+                                                        $teamsCorres->setTeamsFullNameInGoalApi($temasGoalApi[0]->getFullNameClub());
+                                                    }else{
+                                                        $isExist = false;
+                                                    }
+                                                    $teamsCorres->setIsExistInGoalApi($isExist);
+                                                    if($newTeamsCorres){
+                                                        $em->persist($teamsCorres);
+                                                    }
+
+                                                    $em->flush();
+
+                                                }
+
                                                 ///var_dump($outcome[0]); die;
                                                 $resultOdds = array();
                                                 foreach ($outcome as $kOutcome => $itemsOutcome) {
@@ -99,8 +132,6 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
                                                             $equipeVisiteur = $itemsTeams['@attributes']['name'];
                                                         }
                                                     }
-
-
                                                 }
 
                                                 if ($dateMatchs && $equipeVisiteur && $equipeDomicile) {
@@ -114,6 +145,7 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
 
                                                     $matchsCorresVisiteur = $em->getRepository(self::ENTITY_MATCHS_CORRESPONDANT)->findCorrespondanceEquipeVisiteur($equipeVisiteur);
                                                     if(!empty($matchsCorresVisiteur)){
+
                                                         $equipeVisiteur = $matchsCorresVisiteur[0]->getEquipeGoalApi();
                                                     }
 
@@ -151,11 +183,50 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
                                                         $em->flush();
                                                         $output->writeln("Insert" . $matchs[0]->getId() . " ---  Numero : " . $count);
                                                     } else {
+
                                                         $output->writeln("Aucun matchs trouvé - ID : " . $count);
+                                                    //    var_dump($da)
+                                                        if (array_key_exists($equipeDomicile, $resultOdds)) {
+                                                            $cote1 = $resultOdds[$equipeDomicile];
+                                                        }
+                                                        if (array_key_exists('Nul', $resultOdds)) {
+                                                            $coteN = $resultOdds['Nul'];
+                                                        }
+                                                        if (array_key_exists($equipeVisiteur, $resultOdds)) {
+                                                            $cote2 = $resultOdds[$equipeVisiteur];
+                                                        }
+                                                        $dateMatch = new \DateTime($dateMatchs);
+                                                        $matchsFluxCote = $em->getRepository(self::ENTITY_MATCHS_FLUX_COTE)->findOneBy(array('dateMatch' =>$dateMatch, 'equipeDomicile' => $equipeDomicile, 'equipeVisiteur' => $equipeVisiteur ));
+                                                        $newMatchsFluxCote = false;
+                                                        if(!$matchsFluxCote){
+                                                            $matchsFluxCote  = new MatchsFluxCote();
+                                                            $newMatchsFluxCote = true;
+                                                        }
+
+                                                        $matchsFluxCote->setChampionat($championat);
+
+
+                                                        $matchsFluxCote->setDateMatch($dateMatch);
+                                                        $matchsFluxCote->setEquipeDomicile($equipeDomicile);
+                                                        $matchsFluxCote->setEquipeVisiteur($equipeVisiteur);
+                                                        $matchsFluxCote->setRegion($regionName);
+                                                        $matchsFluxCote->setCote1($cote1);
+                                                        $matchsFluxCote->setCote2($cote2);
+                                                        $matchsFluxCote->setCoteN($coteN);
+                                                        if($newMatchsFluxCote){
+                                                            $em->persist($matchsFluxCote);
+                                                        }
+
+                                                        $em->flush();
+                                                        $output->writeln("insert matchs inxistant sur goalapi");
+
+
 
                                                     }
                                                 } else {
                                                     $output->writeln("Les arguments datematch equipevisiteur, equipedomicile ne sont pas complet");
+
+
                                                 }
                                             }
 

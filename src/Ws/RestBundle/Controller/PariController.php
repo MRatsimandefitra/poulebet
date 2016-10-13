@@ -42,7 +42,7 @@ class PariController extends ApiController implements InterfaceDB
             return $this->noCombined();
         }
         $result = array();
-
+        die('okok');
         if ($isCombined) {
 
 
@@ -459,6 +459,7 @@ class PariController extends ApiController implements InterfaceDB
 
         $user = $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
         $deviceToken = $this->getObjectRepoFrom(self::ENTITY_CONNECTED, array('username' => $user->getEMail()));
+
         if (!$user) {
             $result['code_error'] = 0;
             $result['error'] = false;
@@ -474,9 +475,11 @@ class PariController extends ApiController implements InterfaceDB
         if (!$matchsId) {
             return $this->noMatchsId();
         }
-        $matchs = $this->getObjectRepoFrom(self::ENTITY_MATCHS, array('id' => $matchsId))->getDevice();
+
+        $matchs = $this->getObjectRepoFrom(self::ENTITY_MATCHS, array('id' => $matchsId));
 
         if ($matchs) {
+
             $vu = new VoteUtilisateur();
             $vu->setUtilisateur($user);
             $vu->setMisetotale($miseTotal);
@@ -485,6 +488,11 @@ class PariController extends ApiController implements InterfaceDB
             $vu->setIsCombined(false);
             $vu->setIdMise(uniqid(sha1("Mise simple")));
             $vu->setDateMise(new \DateTime('now'));
+            $vu->setClassement($gainsPotentiel + $miseTotal / 2);
+          //  var_dump($matchs->getCot1Pronostic()); die;
+            $vu->setCote1($matchs->getCot1Pronostic());
+            $vu->setCoteN($matchs->getCoteNPronistic());
+            $vu->setCote2($matchs->getCote2Pronostic());
             $vu->setMatchs($matchs);
 
             $this->getEm()->persist($vu);
@@ -493,6 +501,7 @@ class PariController extends ApiController implements InterfaceDB
             $lastSolde = $this->getRepo(self::ENTITY_MVT_CREDIT)->findLastSolde($user->getId());
             $idLast = $lastSolde[0][1];
             $mvtCreditLast = $this->getObjectRepoFrom(self::ENTITY_MVT_CREDIT, array('id' => $idLast));
+
             if (!$mvtCreditLast) {
                 die('pas de mvt credit last');
             }
@@ -510,14 +519,13 @@ class PariController extends ApiController implements InterfaceDB
             $notifRecap = new NotificationRecapitulation();
             $notifRecap->setUtilisateur($user);
             $notifRecap->setIsNotificationSended(false);
-            $notifRecap->setTokenDevice($deviceToken);
+            $notifRecap->setTokenDevice($deviceToken->getTokenSession());
             $notifRecap->setUpdatedAt(new \DateTime('now'));
             $notifRecap->setIsCombined(false);
             $notifRecap->setNbMatchs(1);
             $notifRecap->setMatchs($matchs);
             $this->getEm()->persist($notifRecap);
             $this->getEm()->flush();
-
             //$matchs->set
             $result['code_error'] = 0;
             $result['error'] = false;
@@ -578,6 +586,7 @@ class PariController extends ApiController implements InterfaceDB
         $deviceToken = null;
         $user = $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
         $deviceToken = $this->getObjectRepoFrom(self::ENTITY_CONNECTED, array('username' => $user->getEMail()))->getDevice();
+
         if (!empty($matchs)) {
             $idMise = uniqid(sha1("mise double"));
             $count = 0;
@@ -589,6 +598,7 @@ class PariController extends ApiController implements InterfaceDB
                 if (!$matchs) {
                     //                die('pas de matchs');
                 }
+
                 $vu = new VoteUtilisateur();
                 $vu->setVote($voteMatchs);
                 $vu->setMatchs($matchs);
@@ -597,6 +607,10 @@ class PariController extends ApiController implements InterfaceDB
                 $vu->setMisetotale($miseTotal);
                 $vu->setIsCombined(true);
                 $vu->setIdMise($idMise);
+                $vu->setClassement($gainsPotentiel + $miseTotal / 2);
+                $vu->setCote1($matchs->getCot1Pronostic());
+                $vu->setCoteN($matchs->getCoteNPronistic());
+                $vu->setCote2($matchs->getCote2Pronostic());
 
                 $vu->setDateMise(new \DateTime('now'));
                 $this->getEm()->persist($vu);
@@ -634,7 +648,7 @@ class PariController extends ApiController implements InterfaceDB
             $notifRecap->setIsCombined(true);
             $notifRecap->setMatchs($matchs);
             $notifRecap->setNbMatchs($count);
-            $notifRecap->setTokenDevice($deviceToken);
+            $notifRecap->setTokenDevice($deviceToken->getTokenSession());
             $this->getEm()->persist($notifRecap);
             $this->getEm()->flush();
 

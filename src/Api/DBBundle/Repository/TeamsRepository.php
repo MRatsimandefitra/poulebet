@@ -10,4 +10,10 @@ namespace Api\DBBundle\Repository;
  */
 class TeamsRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findTeamsByFluxCote($name){
+        $dql = "SELECT t from ApiDBBundle:Teams t WHERE t.nomClub LIKE :nameteams or t.fullNameClub LIKE :nameteams";
+        $query = $this->getEntityManager()->createQuery($dql);
+        $query->setParameter('nameteams', '%'.$name.'%');
+        return $query->getResult();
+    }
 }

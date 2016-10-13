@@ -58,6 +58,30 @@ class VoteUtilisateur
      * @ORM\Column(name="misetotale", type="integer", nullable=true)
      */
     private $misetotale;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="classement", type="integer", nullable=true)
+     */
+    private $classement;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="cote1", type="integer", nullable=true)
+     */
+    private $cote1;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="coteN", type="integer", nullable=true)
+     */
+    private $coteN;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="cote2", type="integer", nullable=true)
+     */
+    private $cote2;
 
     /**
      * @var bool
@@ -305,5 +329,101 @@ class VoteUtilisateur
     public function getIdMise()
     {
         return $this->idMise;
+    }
+
+    /**
+     * Set classement
+     *
+     * @param integer $classement
+     *
+     * @return VoteUtilisateur
+     */
+    public function setClassement($classement)
+    {
+        $this->classement = $classement;
+
+        return $this;
+    }
+
+    /**
+     * Get classement
+     *
+     * @return integer
+     */
+    public function getClassement()
+    {
+        return $this->classement;
+    }
+
+    /**
+     * Set cote1
+     *
+     * @param integer $cote1
+     *
+     * @return VoteUtilisateur
+     */
+    public function setCote1($cote1)
+    {
+        $this->cote1 = $cote1;
+
+        return $this;
+    }
+
+    /**
+     * Get cote1
+     *
+     * @return integer
+     */
+    public function getCote1()
+    {
+        return $this->cote1;
+    }
+
+    /**
+     * Set coteN
+     *
+     * @param integer $coteN
+     *
+     * @return VoteUtilisateur
+     */
+    public function setCoteN($coteN)
+    {
+        $this->coteN = $coteN;
+
+        return $this;
+    }
+
+    /**
+     * Get coteN
+     *
+     * @return integer
+     */
+    public function getCoteN()
+    {
+        return $this->coteN;
+    }
+
+    /**
+     * Set cote2
+     *
+     * @param integer $cote2
+     *
+     * @return VoteUtilisateur
+     */
+    public function setCote2($cote2)
+    {
+        $this->cote2 = $cote2;
+
+        return $this;
+    }
+
+    /**
+     * Get cote2
+     *
+     * @return integer
+     */
+    public function getCote2()
+    {
+        return $this->cote2;
     }
 }

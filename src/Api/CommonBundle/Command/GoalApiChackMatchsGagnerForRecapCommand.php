@@ -12,6 +12,7 @@ namespace Api\CommonBundle\Command;
 use Api\CommonBundle\Fixed\InterfaceDB;
 use Api\DBBundle\Entity\Matchs;
 use Api\DBBundle\Entity\MatchsEvent;
+use Api\DBBundle\Entity\MvtCredit;
 use Api\DBBundle\Entity\Teams;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Config\Definition\Exception\Exception;
@@ -35,9 +36,9 @@ class GoalApiChackMatchsGagnerForRecapCommand extends ContainerAwareCommand impl
         $container = $this->getContainer();
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         $matchsVoter = $em->getRepository(self::ENTITY_MATCHS)->findMatchsForRecap();
-        //var_dump($matchsVoter); die;
-       // var_dump($matchsVoter); die;
+        $arrayGagner = array();
         if($matchsVoter){
+            $count = 0;
             foreach($matchsVoter as $k => $itemsMatchsVoter){
                 $matchs = $em->getRepository(self::ENTITY_MATCHS)->find($itemsMatchsVoter->getMatchs()->getId());
                 if(!$matchs){
@@ -64,18 +65,53 @@ class GoalApiChackMatchsGagnerForRecapCommand extends ContainerAwareCommand impl
                 if(!$voteMatch){
                     $output->writeln("Aucun vote");
                 }
+
                 foreach($voteMatch as $kVoteMatchs => $itemsVoteMatchs){
+                    $gainPotentiel  = $itemsVoteMatchs->getGainPotentiel();
                     $vote = $itemsVoteMatchs->getVote();
+
                     if($vote === $gagnant){
+                        $count = $count + 1;
                         $itemsVoteMatchs->setGagnant(true);
+                        $arrayGagner[] =array(
+                            'IdVote' => $itemsVoteMatchs->getId(),
+                            'utilisateurId' => $itemsVoteMatchs->getUtilisateur()->getId(),
+                            'vote' => $vote,
+                            'matchsId' => $itemsVoteMatchs->getMatchs()->getId()
+                        );
+                        //$mvtCredit->setSoldeCredit($)
                     }else{
                         $itemsVoteMatchs->setGagnant(false);
                     }
+
+
                     $em->persist($itemsVoteMatchs);
                     $em->flush();
+                    $output->writeln("Mise a Gagnant ");
                 }
 
+
                 $output->writeln("Mise à jour");
+            }
+            foreach($arrayGagner as $kArrayGagner => $itemsArrayGagner){
+                // var_dump($itemsArrayGagner); die;
+                $mvtCredit = new MvtCredit();
+                $lastSolde = $em->getRepository(self::ENTITY_MVT_CREDIT)->findLastSolde($itemsArrayGagner['utilisateurId']);
+                $idLast = $lastSolde[0][1];
+
+                $mvtCreditLast = $em->getRepository(self::ENTITY_MVT_CREDIT)->findOneBy(array('id' => $idLast));
+                if(!$mvtCreditLast){
+                    $solde = 0 + $gainPotentiel;
+                }else{
+                    $solde  = $mvtCreditLast->getSoldeCredit() + $gainPotentiel;
+                }
+                $mvtCredit->setEntreeCredit($gainPotentiel);
+                $mvtCredit->setSoldeCredit($solde);
+                $mvtCredit->setUtilisateur($em->getRepository(self::ENTITY_UTILISATEUR)->findOneBy(array('id' => $itemsArrayGagner['utilisateurId'])));
+                $em->persist($mvtCredit);
+                $em->flush();
+                $output->writeln("Mise a jour Mouvement credit ");
+
             }
         }
     }

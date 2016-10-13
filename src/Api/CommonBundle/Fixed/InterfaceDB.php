@@ -28,5 +28,8 @@ interface InterfaceDB {
     const ENTITY_LOT_CATEGORY = 'ApiDBBundle:LotCategory';
     const FORM_LOT_CATEGORY = 'Api\DBBundle\Form\LotCategoryType';
     const ENTITY_MATCHS_CORRESPONDANT = 'ApiDBBundle:MatchsCorrespondance';
+    const ENTITY_TEAMS = 'ApiDBBundle:Teams';
+    const  ENTITY_TEAMS_CORRES = 'ApiDBBundle:TeamsCoresspondance';
+    const ENTITY_MATCHS_FLUX_COTE = 'ApiDBBundle:MatchsFluxCote';
 
 }

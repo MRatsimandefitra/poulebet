@@ -414,7 +414,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
     public function findMatchsExisitInVote($idMatchs){
 
         $dql ="SELECT vu from ApiDBBundle:VoteUtilisateur vu
-               LEFT JOIN vu.matchs m WHERE m.id = :idMatchs ";
+               LEFT JOIN vu.matchs m WHERE m.id = :idMatchs AND vu.gagnant <> true";
         $query = $this->getEntityManager()->createQuery($dql);
         $query->setParameter('idMatchs', $idMatchs);
         return $query->getResult();
@@ -427,8 +427,14 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
 
     public function findMatchsForCote($dateMatchs, $equipeDomicile, $equipeVisiteur){
         $dql = "SELECT m from ApiDBBundle:Matchs m
+                LEFT JOIN m.teamsDomicile td
+                LEFT JOIN m.teamsVisiteur tv
                 WHERE m.dateMatch = :dateMatchs
-                AND (m.equipeDomicile LIKE :equipeDomicile OR m.equipeVisiteur LIKE :equipeVisiteur)";
+                AND (
+                (td.nomClub LIKE :equipeDomicile OR td.fullNameClub LIKE :equipeDomicile)
+                    OR
+                (tv.nomClub LIKE :equipeVisiteur OR td.fullNameClub LIKE :equipeVisiteur)
+                )";
         $query = $this->getEntityManager()->createQuery($dql);
         $query->setParameter('dateMatchs', $dateMatchs);
         $query->setParameter('equipeDomicile', '%'.$equipeDomicile.'%');
