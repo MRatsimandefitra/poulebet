@@ -79,6 +79,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
                     $resultMatchs[$itemsIdMise]['gain'] = $gain;
                     $resultMatchs[$itemsIdMise]['miseTotal'] = $miseTotal;
                     $resultMatchs[$itemsIdMise]['matchs'] = $matchs;
+                    $resultMatchs[$itemsIdMise]['gagnant'] = "";
                 }
                 $result['vote'] = $resultMatchs;
                /* if(!empty($resultMatchs)){
@@ -164,6 +165,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
                         'cote_pronostic_2' => $vItems->getMatchs()->getCote2Pronostic(),
                         'gain' => $vItems->getGainPotentiel(),
                         'miseTotale' => $vItems->getMisetotale(),
+                        'gagnant' => '',
                         'idChampionat' => $vItems->getMatchs()->getChampionat()->getId()
                     );
                 }
