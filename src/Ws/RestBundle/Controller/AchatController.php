@@ -57,9 +57,9 @@ class AchatController extends ApiController implements InterfaceDB
             $result['solde'] = $mvtCreditLast->getSoldeCredit();
         }else{
             $result['solde'] = 0;
-            $result['code_error'] = 0;
+          /*  $result['code_error'] = 0;
             $result['error'] = false;
-            $result['success'] = true;
+            $result['success'] = true;*/
             $result['message'] = "Aucun credit";
         }
         return new JsonResponse($result);
