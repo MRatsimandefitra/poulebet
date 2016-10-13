@@ -42,7 +42,6 @@ class PariController extends ApiController implements InterfaceDB
             return $this->noCombined();
         }
         $result = array();
-        die('okok');
         if ($isCombined) {
 
 
