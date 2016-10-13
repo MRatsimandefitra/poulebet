@@ -21,7 +21,9 @@ class RecapitulationController extends ApiController implements InterfaceDB
             return $this->noToken();
         }
         $user  = $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
-
+        if(!$user){
+            return $this->noUser();
+        }
         $result = array();
         if($isCombined){
             $nbRecap = $this->getRepo(self::ENTITY_MATCHS)->findNbMatchsForRecapCombined($user->getId());
@@ -195,8 +197,15 @@ class RecapitulationController extends ApiController implements InterfaceDB
     private function no(){
         $result['code_error'] = 2;
         $result['error'] = true;
-        $result['success'] = true;
+        $result['success'] = false;
         return $result;
+    }
+    private function noUser(){
+        $result['code_error'] = 0;
+        $result['error'] = false;
+        $result['success'] = true;
+        $result['message'] = "Aucun utilisateur compatible avec le token";
+        return new JsonResponse($result);
     }
 }
 

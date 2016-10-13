@@ -34,7 +34,7 @@ class GoalApiChackMatchsGagnerForRecapCommand extends ContainerAwareCommand impl
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $container = $this->getContainer();
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        $em = $container->get('doctrine.orm.entity_manager');
         $matchsVoter = $em->getRepository(self::ENTITY_MATCHS)->findMatchsForRecap();
         $arrayGagner = array();
         if($matchsVoter){
@@ -85,14 +85,17 @@ class GoalApiChackMatchsGagnerForRecapCommand extends ContainerAwareCommand impl
                     }
 
 
-                    $em->persist($itemsVoteMatchs);
-                    $em->flush();
+                  /*  $em->persist($itemsVoteMatchs);
+                    $em->flush();*/
                     $output->writeln("Mise a Gagnant ");
                 }
 
 
                 $output->writeln("Mise à jour");
             }
+
+            var_dump($arrayGagner); die;
+
             foreach($arrayGagner as $kArrayGagner => $itemsArrayGagner){
                 // var_dump($itemsArrayGagner); die;
                 $mvtCredit = new MvtCredit();
@@ -107,9 +110,10 @@ class GoalApiChackMatchsGagnerForRecapCommand extends ContainerAwareCommand impl
                 }
                 $mvtCredit->setEntreeCredit($gainPotentiel);
                 $mvtCredit->setSoldeCredit($solde);
+                $mvtCredit->setTypeCredit("PAYEMENT ");
                 $mvtCredit->setUtilisateur($em->getRepository(self::ENTITY_UTILISATEUR)->findOneBy(array('id' => $itemsArrayGagner['utilisateurId'])));
-                $em->persist($mvtCredit);
-                $em->flush();
+                /*$em->persist($mvtCredit);
+                $em->flush();*/
                 $output->writeln("Mise a jour Mouvement credit ");
 
             }

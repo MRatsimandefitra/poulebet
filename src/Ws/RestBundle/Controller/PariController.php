@@ -648,7 +648,7 @@ class PariController extends ApiController implements InterfaceDB
             $notifRecap->setIsCombined(true);
             $notifRecap->setMatchs($matchs);
             $notifRecap->setNbMatchs($count);
-            $notifRecap->setTokenDevice($deviceToken->getTokenSession());
+            $notifRecap->setTokenDevice($deviceToken);
             $this->getEm()->persist($notifRecap);
             $this->getEm()->flush();
 

@@ -414,7 +414,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
     public function findMatchsExisitInVote($idMatchs){
 
         $dql ="SELECT vu from ApiDBBundle:VoteUtilisateur vu
-               LEFT JOIN vu.matchs m WHERE m.id = :idMatchs AND vu.gagnant <> true";
+               LEFT JOIN vu.matchs m WHERE m.id = :idMatchs AND vu.gagnant IS NULL";
         $query = $this->getEntityManager()->createQuery($dql);
         $query->setParameter('idMatchs', $idMatchs);
         return $query->getResult();
