@@ -56,6 +56,7 @@ class AchatController extends ApiController implements InterfaceDB
         if($mvtCreditLast){
             $result['solde'] = $mvtCreditLast->getSoldeCredit();
         }else{
+            $result['solde'] = 0;
             $result['code_error'] = 0;
             $result['error'] = false;
             $result['success'] = true;

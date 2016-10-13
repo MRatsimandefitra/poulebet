@@ -61,6 +61,7 @@ class GoalApiChackMatchsGagnerForRecapCommand extends ContainerAwareCommand impl
                 }
 
 //                $voteMatch = $em->getRepository(self::ENTITY_MATCHS)->findMatchsExisitInVote($itemsMatchsVoter->getMatchs()->getId());*
+
                 $voteMatch = $em->getRepository(self::ENTITY_MATCHS)->findMatchsExisitInVote('2a4436e6b50383d2f3a205f11f9c829a');
                 var_dump(count($voteMatch)); die;
                 if(!$voteMatch){
