@@ -55,7 +55,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
                             $gain = $v->getGainPotentiel();
                             $miseTotal = $v->getMisetotale();
                             $matchs[] = array(
-                                'idMatchs' => $v->getMatchs()->getId(),
+                                'idMatch' => $v->getMatchs()->getId(),
                                 'dateMatch' => $v->getMatchs()->getDateMatch(),
                                 'equipeDomicile' => $v->getMatchs()->getEquipeDomicile(),
                                 'equipeVisiteur' => $v->getMatchs()->getEquipeVisiteur(),
@@ -80,7 +80,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
                         'miseId' =>$itemsIdMise,
                         'gain' => $gain,
                         'miseTotal' => $miseTotal,
-                        'maths' => $matchs
+                        'matchs' => $matchs
                     );
                    /* $resultMatchs[$itemsIdMise]['gain'] = $gain;
                     $resultMatchs[$itemsIdMise]['miseTotal'] = $miseTotal;*/
@@ -152,7 +152,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
             if(!empty($nbRecap)){
                 foreach($nbRecap as $k => $vItems){
                     $result['list_match'][] = array(
-                        'idMatchs' => $vItems->getMatchs()->getId(),
+                        'idMatch' => $vItems->getMatchs()->getId(),
                         'dateMatch' => $vItems->getMatchs()->getDateMatch(),
                         'equipeDomicile' => $vItems->getMatchs()->getEquipeDomicile(),
                         'equipeVisiteur' => $vItems->getMatchs()->getEquipeVisiteur(),
