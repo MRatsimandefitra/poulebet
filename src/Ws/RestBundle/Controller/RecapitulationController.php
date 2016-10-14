@@ -73,12 +73,13 @@ class RecapitulationController extends ApiController implements InterfaceDB
                                 'cote_pronostic_1' => $v->getMatchs()->getCot1Pronostic(),
                                 'cote_pronostic_n' => $v->getMatchs()->getCoteNPronistic(),
                                 'cote_pronostic_2' => $v->getMatchs()->getCote2Pronostic(),
+                                'voted_equipe' => $v->getVote()
                             );
                         }
                     }
                     $result['list_mise'][] = array(
                         'miseId' =>$itemsIdMise,
-                        'gain' => $gain,
+                        'gainsPotentiel' => $gain,
                         'miseTotal' => $miseTotal,
                         'matchs' => $matchs
                     );
@@ -133,7 +134,6 @@ class RecapitulationController extends ApiController implements InterfaceDB
                 return new JsonResponse($result);
             }
         }else{
-
             // championat
             $championat = $this->getRepo(self::ENTITY_MATCHS)->findChampionatVoteSimple($user->getId());
            // var_dump($championat); die;
@@ -170,10 +170,11 @@ class RecapitulationController extends ApiController implements InterfaceDB
                         'cote_pronostic_1' => $vItems->getMatchs()->getCot1Pronostic(),
                         'cote_pronostic_n' => $vItems->getMatchs()->getCoteNPronistic(),
                         'cote_pronostic_2' => $vItems->getMatchs()->getCote2Pronostic(),
-                        'gain' => $vItems->getGainPotentiel(),
-                        'miseTotale' => $vItems->getMisetotale(),
+                        'gainsPotentiel' => $vItems->getGainPotentiel(),
+                        'miseTotal' => $vItems->getMisetotale(),
                         'state' => '',
-                        'idChampionat' => $vItems->getMatchs()->getChampionat()->getId()
+                        'idChampionat' => $vItems->getMatchs()->getChampionat()->getId(),
+                        'voted_equipe' => $vItems->getVote()
                     );
                 }
                 $result['code_error'] = 0;
