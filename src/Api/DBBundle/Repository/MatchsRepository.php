@@ -426,19 +426,27 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
     }
 
     public function findMatchsForCote($dateMatchs, $equipeDomicile, $equipeVisiteur){
+        $date = date('Y-m-d', strtotime($dateMatchs));
+        $date1 = $date.' 00:00:00';
+        $date2 = $date. ' 23:59:59';
+
         $dql = "SELECT m from ApiDBBundle:Matchs m
                 LEFT JOIN m.teamsDomicile td
                 LEFT JOIN m.teamsVisiteur tv
-                WHERE m.dateMatch = :dateMatchs
+                WHERE m.dateMatch BETWEEN :date1 AND :date2
                 AND (
                 (td.nomClub LIKE :equipeDomicile OR td.fullNameClub LIKE :equipeDomicile)
                     OR
                 (tv.nomClub LIKE :equipeVisiteur OR td.fullNameClub LIKE :equipeVisiteur)
                 )";
+
         $query = $this->getEntityManager()->createQuery($dql);
-        $query->setParameter('dateMatchs', $dateMatchs);
+       // $query->setParameter('dateMatchs', $dateMatchs);
+        $query->setParameter('date1', $date1);
+        $query->setParameter('date2', $date2);
         $query->setParameter('equipeDomicile', '%'.$equipeDomicile.'%');
         $query->setParameter('equipeVisiteur', '%'.$equipeVisiteur.'%');
+        //$query->setParameter()
         return $query->getResult();
     }
 

@@ -32,9 +32,9 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
     {
         $container = $this->getContainer();
         $em = $container->get('doctrine.orm.entity_manager');
-        #$data =  file_get_contents($this->getContainer()->get('kernel')->getRootDir().'/../web/json/cote.xml');
+        $data =  file_get_contents($this->getContainer()->get('kernel')->getRootDir().'/../web/json/cote.xml');
         // var_dump($data); die;
-        $data = file_get_contents("http://partner.netbetsport.fr/xmlreports/fluxcotes.xml");
+        #$data = file_get_contents("http://partner.netbetsport.fr/xmlreports/fluxcotes.xml");
         $equipeDomicile = "";
         $equipeVisiteur = "";
 
@@ -76,6 +76,7 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
                                     $dateMatchs = "";
                                     if (array_key_exists('@attributes', $itemsMatch)) {
                                         $dateMatchs = $itemsMatch['@attributes']['date'];
+
                                     }
                                     if (array_key_exists('OfferList', $itemsMatch)) {
 
@@ -138,7 +139,7 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
 
                                                     // correspondance
 
-                                                    /*$matchsCorresDomicile = $em->getRepository(self::ENTITY_MATCHS_CORRESPONDANT)->findCorrespondanceEquipeDomicile($equipeDomicile);
+                                                    $matchsCorresDomicile = $em->getRepository(self::ENTITY_MATCHS_CORRESPONDANT)->findCorrespondanceEquipeDomicile($equipeDomicile);
                                                     if(!empty($matchsCorresDomicile)){
                                                         $equipeDomicile = $matchsCorresDomicile[0]->getEquipeGoalApi();
                                                     }
@@ -147,7 +148,7 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
                                                     if(!empty($matchsCorresVisiteur)){
 
                                                         $equipeVisiteur = $matchsCorresVisiteur[0]->getEquipeGoalApi();
-                                                    }*/
+                                                    }
 
                                                     $matchs = $em->getRepository(self::ENTITY_MATCHS)->findMatchsForCote($dateMatchs, $equipeDomicile, $equipeVisiteur);
 
@@ -219,14 +220,9 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
 
                                                         $em->flush();
                                                         $output->writeln("insert matchs inxistant sur goalapi");
-
-
-
                                                     }
                                                 } else {
                                                     $output->writeln("Les arguments datematch equipevisiteur, equipedomicile ne sont pas complet");
-
-
                                                 }
                                             }
 
