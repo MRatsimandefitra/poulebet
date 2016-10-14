@@ -80,14 +80,19 @@ class GoalApiChackMatchsGagnerForRecapCommand extends ContainerAwareCommand impl
 
                         $count = $count + 1;
                         $itemsVoteMatchs->setGagnant(true);
-                        if(!in_array('IdVote',$arrayGagner, $itemsVoteMatchs->getId() )){
+
                             $tmpArrayGagner[] =array(
                                 'IdVote' => $itemsVoteMatchs->getId(),
                                 'utilisateurId' => $itemsVoteMatchs->getUtilisateur()->getId(),
                                 'vote' => $vote,
                                 'matchsId' => $itemsVoteMatchs->getMatchs()->getId(),
                             );
-                        }
+                       // var_dump($tmpArrayGagner); die;
+                            // if(!in_array($itemsVoteMatchs->getId(),$arrayGagner[$kVoteMatchs]['IdVote'] )){
+
+                                 $arrayGagner = $tmpArrayGagner;
+                             //}
+
 
                         $output->writeln("gagnant okok");
                         //$mvtCredit->setSoldeCredit($)
@@ -104,7 +109,22 @@ class GoalApiChackMatchsGagnerForRecapCommand extends ContainerAwareCommand impl
 
                 $output->writeln("Mise à jour");
             }
-            var_dump(count($arrayGagner)); die;
+            //var_dump($arrayGagner); die;/$resultMatchs = array();
+            $tmpResultMatchs = array();
+            $resultMatchs = array();
+            var_dump($arrayGagner); die;
+            foreach($arrayGagner as $kAg => $itemsKg){
+              //  var_dump($itemsKg['IdVote']); die;
+
+                    $tmpResultMatchs[]= array(
+                        'IdVote' => $itemsKg['IdVote'],
+                        'utilisateurId' => $itemsKg['utilisateurId'],
+                        'vote' => $itemsKg['vote'],
+                        'matchsId' => $itemsKg['matchsId'],
+                    );
+                   // $resultMatchs = $tmpResultMatchs;
+            }
+            var_dump($tmpResultMatchs); die;
             die('okok');
 
 

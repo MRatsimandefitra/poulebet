@@ -441,4 +441,13 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         $query->setParameter('equipeVisiteur', '%'.$equipeVisiteur.'%');
         return $query->getResult();
     }
+
+    public function findMatchVoteGagnant(){
+        $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
+                LEFT JOIN vu.matchs m
+                LEFT JOIN vu.utilisateur u
+                WHERE vu.gagnant is null";
+        $query = $this->getEntityManager()->createQuery($dql);
+        return $query->getResult();
+    }
 }
