@@ -458,4 +458,14 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         $query = $this->getEntityManager()->createQuery($dql);
         return $query->getResult();
     }
+
+    public  function findStateForCombined($utilisateurId){
+        $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
+                LEFT JOIN vu.matchs m
+                LEFT JOIN vu.utilisateur u
+                WHERE u.id = :utilisateurId AND vu.isCombined = 1 group by vu.dateMise";
+        $query = $this->getEntityManager()->createQuery($dql);
+        $query->setParameter('utilisateurId', $utilisateurId);
+        return $query->getResult();
+    }
 }

@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 class RecapitulationController extends ApiController implements InterfaceDB
 {
     public function postGetListRecapAction(Request $request){
+
         $isCombined = (bool) $request->request->get('isCombined');
         if($isCombined === NULL){
             return $this->noCombined();
@@ -24,6 +25,8 @@ class RecapitulationController extends ApiController implements InterfaceDB
         if(!$user){
             return $this->noUser();
         }
+        $this->getStateCombined($user->getId());
+        die('okok');
         $result = array();
         if($isCombined){
             $nbRecap = $this->getRepo(self::ENTITY_MATCHS)->findNbMatchsForRecapCombined($user->getId());
@@ -81,7 +84,8 @@ class RecapitulationController extends ApiController implements InterfaceDB
                         'miseId' =>$itemsIdMise,
                         'gainsPotentiel' => $gain,
                         'miseTotal' => $miseTotal,
-                        'matchs' => $matchs
+                        'matchs' => $matchs,
+                        'state' => $this->getStateCombined()
                     );
                    /* $resultMatchs[$itemsIdMise]['gain'] = $gain;
                     $resultMatchs[$itemsIdMise]['miseTotal'] = $miseTotal;*/
@@ -172,7 +176,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
                         'cote_pronostic_2' => $vItems->getMatchs()->getCote2Pronostic(),
                         'gainsPotentiel' => $vItems->getGainPotentiel(),
                         'miseTotal' => $vItems->getMisetotale(),
-                        'state' => '',
+                        'state' => $this->getMatchsState($vItems->getId()),
                         'idChampionat' => $vItems->getMatchs()->getChampionat()->getId(),
                         'voted_equipe' => $vItems->getVote()
                     );
@@ -218,6 +222,27 @@ class RecapitulationController extends ApiController implements InterfaceDB
         $result['success'] = true;
         $result['message'] = "Aucun utilisateur compatible avec le token";
         return new JsonResponse($result);
+    }
+    private function getMatchsState($idMatch){
+        $matchs = $this->getObjectRepoFrom(self::ENTITY_MATCHS, array('id' => $idMatch));
+        if($matchs){
+            $state = $matchs->getStatusMatchs();
+            return $state;
+        }
+        return null;
+    }
+    private function getStateCombined($utilisateur){
+        $matchsVote = $this->getRepo(self::ENTITY_MATCHS)->findStateForCombined($utilisateur);
+
+        if($matchsVote){
+            foreach($matchsVote as $kMatchsVote => $itemsMatchsVote){
+                //var_dump($itemsMatchsVote->getMatchs()->getId()); die;
+                $matchs = $this->getRepoFrom(self::ENTITY_MATCHS, array('id' => $itemsMatchsVote->getMatchs()->getId() ));
+                if(!empty($matchs)){
+                    //foreach($matchs as $kmatchs)
+                }
+            }
+        }
     }
 }
 

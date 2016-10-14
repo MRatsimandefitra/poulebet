@@ -52,6 +52,7 @@ class PariController extends ApiController implements InterfaceDB
             $credit = $this->getRepo(self::ENTITY_MVT_CREDIT)->findLastSolde($user->getId());
             $concourEncour = $this->getRepo(self::ENTITY_MATCHS)->findIdConcourByDate();
             $idConcour = $concourEncour[0]->getId();
+            var_dump($idConcour); die;
             $championatR = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForPari($date, $championatWs, true, $idConcour);
 
             if ($championatR) {

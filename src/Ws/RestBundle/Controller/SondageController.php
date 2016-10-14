@@ -162,17 +162,31 @@ class SondageController extends ApiController
     {
         $token = $request->request->get('token');
         $matchId = $request->request->get('matchId');
+        $dqlConcour = "SELECT co from ApiDBBundle:Concours co where CURRENT_DATE() BETWEEN co.dateDebut and co.dateFinale";
+        $queryConcours = $this->get('doctrine.orm.entity_manager')->createQuery($dqlConcour);
+        $dataConcour = $queryConcours->getResult();
 
+        if(!$dataConcour){
+
+        }
         // modification (probale waiaka)
-        $dqlMatch = "SELECT m from ApiDBBundle:Matchs m "
+        /*$dqlMatch = "SELECT m from ApiDBBundle:Matchs m "
                 . "JOIN m.concours co "
-                . "JOIN m.championat ch "
-                . "WHERE co.dateDebut <= CURRENT_DATE() "
-                . "AND co.dateFinale >= CURRENT_DATE() "
-                . " ORDER BY m.dateMatch, m.id ";
-        $queryMatch = $this->get('doctrine.orm.entity_manager')->createQuery($dqlMatch);
-        $data = $queryMatch->getResult();
+                . "LEFT JOIN m.championat ch "
+                . " WHERE co.id = :idConcours "
+                . " ORDER BY m.dateMatch, m.id ";*/
 
+        $dqlMatch= "SELECT m, co, ch from ApiDBBundle:Matchs m
+                     LEFT JOIN m.championat ch
+                     JOIN m.concours co
+                     WHERE co.id = :idConcours And m.dateMatch BETWEEN co.dateDebut and co.dateFinale";
+        $queryMatch = $this->get('doctrine.orm.entity_manager')->createQuery($dqlMatch);
+        $queryMatch->setParameter('idConcours', $dataConcour[0]->getId());
+
+        /*$queryMatch->setParameter('date1', $dataConcour[0]->getDateDebut());
+        $queryMatch->setParameter('date2', $dataConcour[0]->getDateFinale());*/
+        $data = $queryMatch->getResult();
+      //  var_dump(count($data)); die;
         // vote total
         $dqlVote = "SELECT co from ApiDBBundle:Concours co  LEFT JOIN co.matchs m";
         $queryVote = $this->get('doctrine.orm.entity_manager')->createQuery($dqlVote);
