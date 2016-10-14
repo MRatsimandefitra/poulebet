@@ -177,16 +177,17 @@ class SondageController extends ApiController
                 . " ORDER BY m.dateMatch, m.id ";*/
 
         $dqlMatch= "SELECT m, co, ch from ApiDBBundle:Matchs m
-                     LEFT JOIN m.championat ch
                      JOIN m.concours co
-                     WHERE co.id = :idConcours And m.dateMatch BETWEEN co.dateDebut and co.dateFinale ORDER BY m.dateMatch, ch.rang, m.id  ";
+                     LEFT JOIN m.championat ch
+                     WHERE co.id = :idConcours And m.dateMatch BETWEEN co.dateDebut and co.dateFinale ORDER BY m.dateMatch, ch.rang, m.id
+                     ";
         $queryMatch = $this->get('doctrine.orm.entity_manager')->createQuery($dqlMatch);
         $queryMatch->setParameter('idConcours', $dataConcour[0]->getId());
 
         /*$queryMatch->setParameter('date1', $dataConcour[0]->getDateDebut());
         $queryMatch->setParameter('date2', $dataConcour[0]->getDateFinale());*/
         $data = $queryMatch->getResult();
-      //  var_dump(count($data)); die;
+       // var_dump(count($data)); die;
         // vote total
         $dqlVote = "SELECT co from ApiDBBundle:Concours co  LEFT JOIN co.matchs m";
         $queryVote = $this->get('doctrine.orm.entity_manager')->createQuery($dqlVote);
@@ -305,7 +306,7 @@ class SondageController extends ApiController
             $result['code_error'] = 0;
             $result['success'] = true;
             $result['error'] = true;
-            $result['message'] = "Sucess";
+            $result['message'] = "Success";
         } else {
             $result['code_error'] = 2;
             $result['success'] = true;
