@@ -82,7 +82,7 @@ class PronosticController extends ApiController
         ));
     }
 
-    public function removePronosticAction($id){
+    public function removePronosticAction($id, Request $request){
         $entity = $this->getRepoFormId(self::ENTITY_MATCH, $id);
         try{
 
@@ -94,8 +94,10 @@ class PronosticController extends ApiController
             $entity->setCoteNPronistic(null);
             $entity->setCote2Pronostic(null);
             $this->get('doctrine.orm.entity_manager')->flush();
+            $referer = $request->headers->get('referer');
 
-            return $this->redirectToRoute('index_admin_pronostic');
+            return $this->redirect($referer);
+          //  return $this->redirectToRoute('index_admin_pronostic');
 
         }catch(Exception $e){
             return false;
