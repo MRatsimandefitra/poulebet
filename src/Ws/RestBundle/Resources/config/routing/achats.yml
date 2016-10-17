@@ -1,4 +1,4 @@
-ws_rest_pari_list_achats:
+ws_rest_pari_list_achats_oeuf:
     path:     /get-list-oeuf
     defaults: { _controller: WsRestBundle:Achat:postGetListOeufs }
     methods: POST # token,

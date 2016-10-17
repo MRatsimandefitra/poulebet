@@ -1,8 +1,8 @@
-ws_rest_pari_list_achats:
+ws_rest_achat_prono_get_status:
     path:     /get-status
     defaults: { _controller: WsRestBundle:AchatProno:postGetStatus }
     methods: POST # token,
-ws_rest_pari_insert_achat_prono:
+ws_rest_achat_prono_insert:
     path:     /insert
     defaults: { _controller: WsRestBundle:AchatProno:insertStatusAchatProno }
     methods: POST # token,
