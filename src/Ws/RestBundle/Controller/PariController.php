@@ -42,18 +42,18 @@ class PariController extends ApiController implements InterfaceDB
             return $this->noCombined();
         }
         $result = array();
-        if ($isCombined) {
 
+        if ($isCombined) {
 
             $user = $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
             if (!$user) {
                 return $this->noUser();
             }
             $credit = $this->getRepo(self::ENTITY_MVT_CREDIT)->findLastSolde($user->getId());
+
             $concourEncour = $this->getRepo(self::ENTITY_MATCHS)->findIdConcourByDate();
             $idConcour = $concourEncour[0]->getId();
             $championatR = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForPari($date, $championatWs, true, $idConcour);
-
             if ($championatR) {
 
                 foreach ($championatR as $kChampionat => $itemsChampionat) {
@@ -63,7 +63,7 @@ class PariController extends ApiController implements InterfaceDB
                         'fullNameChampionat' => $itemsChampionat->getChampionat()->getFullNameChampionat()
                     );
                 }
-                if ($credit) {
+                if (empty($credit)) {
                     $idLast = $credit[0][1];
                     $solde = $this->getRepoFrom(self::ENTITY_MVT_CREDIT, array('id' => $idLast));
                     foreach ($solde as $kCredit => $itemsCredit) {
