@@ -64,3 +64,6 @@ route_prefix_ws_rest_achats:
 route_prefix_ws_rest_achats_lots:
     resource: "@WsRestBundle/Resources/config/routing/achat_lot.yml"
     prefix:   /achats-lots
+route_prefix_ws_rest_achats_prono:
+    resource: "@WsRestBundle/Resources/config/routing/achat_prono.yml"
+    prefix:   /achats-prono
