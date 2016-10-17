@@ -122,7 +122,7 @@ class LiveScoreController extends ApiController
         $dqlChampionat = "SELECT m from ApiDBBundle:Matchs m
                 LEFT JOIN m.championat ch
                 where m.dateMatch BETWEEN CURRENT_DATE() AND DATE_ADD(CURRENT_DATE(), 7, 'day' )
-                AND m.statusMatch LIKE 'active' GROUP BY ch.fullNameChampionat ";
+                AND m.statusMatch LIKE 'active' GROUP BY ch.fullNameChampionat ORDER BY ch.rang ASC, m.dateMatch ASC";
         $queryChampionat = $this->get('doctrine.orm.entity_manager')->createQuery($dqlChampionat);
         $matchLiveChampionat = $queryChampionat->getResult();
         foreach($matchLiveChampionat as $kLiveChampionat => $vLiveChampionatItems){
@@ -136,7 +136,7 @@ class LiveScoreController extends ApiController
         $dqlMatchs = "SELECT m from ApiDBBundle:Matchs m
                 LEFT JOIN m.championat ch
                 where m.dateMatch BETWEEN CURRENT_DATE() AND DATE_ADD(CURRENT_DATE(), 7, 'day' )
-                AND m.statusMatch LIKE 'active'";
+                AND m.statusMatch LIKE 'active' ORDER BY ch.rang ASC, m.dateMatch ASC";
         $queryMatchs = $this->get('doctrine.orm.entity_manager')->createQuery($dqlMatchs);
         $matchLive = $queryMatchs->getResult();
 
