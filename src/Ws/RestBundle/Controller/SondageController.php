@@ -61,7 +61,7 @@ class SondageController extends ApiController
             return new JsonResponse($result);
         }
 
-        if($voteWs){
+        if($voteWs == 0 or $voteWs == 1 or $voteWs == 2){
             if(is_int($voteWs)){
                 if($voteWs == 0 or $voteWs == 1 or $voteWs == 2) {
                     $successVote = true;
