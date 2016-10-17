@@ -206,7 +206,7 @@ class SondageController extends ApiController
                     . "JOIN m.championat ch "
                     . "WHERE co.dateDebut <= CURRENT_DATE() "
                     . "AND co.dateFinale >= CURRENT_DATE() "
-                    . "GROUP BY ch.nomChampionat ORDER BY m.dateMatch ASC";
+                    . "GROUP BY ch.nomChampionat ORDER BY ch.rang asc, m.dateMatch ASC";
             $queryChampionat = $this->get('doctrine.orm.entity_manager')->createQuery($dqlChampionat);
             $dataChampionat = $queryChampionat->getResult();
             if ($dataChampionat) {

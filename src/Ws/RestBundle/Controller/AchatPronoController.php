@@ -82,7 +82,7 @@ class AchatPronoController extends ApiController implements InterfaceDB
         }
         $montant = (int) $request->request->get('montant');
 
-        if(is_null($montant) or $montant == 0){
+        if(is_null($montant) or $montant == 0 or $montant < 0){
             return $this->noMontant();
         }
 
@@ -115,8 +115,11 @@ class AchatPronoController extends ApiController implements InterfaceDB
             } else {
                 $dernierSolde = 0;
             }
-
-            $mvtCredit->setSoldeCredit($dernierSolde - $montant);
+            $soldeCredit = $dernierSolde - $montant;
+            if($soldeCredit <= 0){
+                $soldeCredit = 0;
+            }
+            $mvtCredit->setSoldeCredit($soldeCredit);
             $this->getEm()->persist($mvtCredit);
             $this->getEm()->flush();
 
