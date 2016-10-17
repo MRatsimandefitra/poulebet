@@ -396,7 +396,7 @@ class PariController extends ApiController implements InterfaceDB
             $result['message'] = "Le parametre token doit être specifie";
             return new JsonResponse($result);
         }
-        $currentUser = $this->getRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
+        $currentUser = $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
         if (!$currentUser) {
             $result['code_error'] = 0;
             $result['success'] = true;
@@ -412,19 +412,16 @@ class PariController extends ApiController implements InterfaceDB
             $result['message'] = "Aucun Credit pour utilisateur";
             return new JsonResponse($result);
         }
-        if ($credit) {
-            foreach ($credit as $kCredit => $itemCredit) {
-                $result['credit'][] = array(
-                    'soldeCredit' => $itemCredit->getSoldeCredit()
-                );
+        if (empty($credit)) {
+            $idLast = $credit[0][1];
+            $solde = $this->getRepoFrom(self::ENTITY_MVT_CREDIT, array('id' => $idLast));
+            foreach ($solde as $kCredit => $itemsCredit) {
+                $result['solde'] = $itemsCredit->getSoldeCredit();
             }
-            $result['code_error'] = 0;
-            $result['success'] = true;
-            $result['error'] = false;
-            $result['message'] = "Success";
-            return new JsonResponse($result);
-
+        } else {
+            $result['solde'] = 0;
         }
+        return new JsonResponse($result);
 
     }
 

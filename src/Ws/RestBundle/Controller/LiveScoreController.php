@@ -117,6 +117,13 @@ class LiveScoreController extends ApiController
     }
 
 
+    /**
+     * @ApiDoc(
+     *      description = "Recuperer les match en live "
+     * )
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function getMatchLiveScoreAction(Request $request){
 
         $dqlChampionat = "SELECT m from ApiDBBundle:Matchs m
