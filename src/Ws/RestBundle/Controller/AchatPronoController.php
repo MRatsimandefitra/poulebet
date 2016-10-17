@@ -4,6 +4,7 @@ namespace Ws\RestBundle\Controller;
 
 use Api\CommonBundle\Controller\ApiController;
 use Api\CommonBundle\Fixed\InterfaceDB;
+use Api\DBBundle\Entity\MvtCredit;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,6 +29,7 @@ class AchatPronoController extends ApiController implements InterfaceDB
         if(!$token){
             return $this->noToken();
         }
+
         $userCurrent = $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
         if(!$userCurrent){
             return $this->noUser();
@@ -58,9 +60,11 @@ class AchatPronoController extends ApiController implements InterfaceDB
 
     /**
      * @ApiDoc(
-     *      description = "Achat prono > Récuperer status si achat prono effectué ",
+     *      description = "Achat prono > Inerrer un  achat prono ",
      *      parameters = {
-     *          {"name" = "token", "dataType"="string" ,"required"=false, "description"= "Token pour utilisateur connecte"},
+     *          {"name" = "token", "dataType"="string" ,"required"=true, "description"= "Token pour utilisateur connecte"},
+     *          {"name" = "montant", "dataType"="integer" ,"required"=true, "description"= "Montant à inserer"},
+     *
      *      }
      * )
      * @param Request $request
@@ -68,6 +72,7 @@ class AchatPronoController extends ApiController implements InterfaceDB
      */
     public function insertStatusAchatPronoAction(Request $request){
         $token = $request->request->get('token');
+        $result = array();
         if(!$token){
             return $this->noToken();
         }
@@ -75,7 +80,62 @@ class AchatPronoController extends ApiController implements InterfaceDB
         if(!$userCurrent){
             return $this->noUser();
         }
+        $montant = (int) $request->request->get('montant');
+
+        if(is_null($montant) or $montant == 0){
+            return $this->noMontant();
+        }
+
+        if($userCurrent->setAchatProno(true)){
+            $this->getEm()->flush();
+            $mvtCredit = new MvtCredit();
+            $mvtCredit->setTypeCredit("PAYEMENT PRONOSTIC");
+            $mvtCredit->setUtilisateur($userCurrent);
+            $mvtCredit->setSortieCredit($montant);
+
+            // last Solde
+            $credit = $this->getRepoFrom(self::ENTITY_MVT_CREDIT, array('utilisateur' => $userCurrent));
+
+            if (!empty($credit)) {
+               // var_dump($credit[0]); die;
+                if(is_object($credit[0])){
+                    $idLast = $credit[0]->getId();
+                }else{
+                    $idLast = $credit[0][1];
+                }
+
+
+                $solde = $this->getRepoFrom(self::ENTITY_MVT_CREDIT, array('id' => $idLast));
+
+                foreach ($solde as $kCredit => $itemsCredit) {
+
+                    $dernierSolde = $itemsCredit->getSoldeCredit();
+                }
+
+            } else {
+                $dernierSolde = 0;
+            }
+
+            $mvtCredit->setSoldeCredit($dernierSolde - $montant);
+            $this->getEm()->persist($mvtCredit);
+            $this->getEm()->flush();
+
+            $result['code_error'] = 0;
+            $result['success'] = true;
+            $result['error'] = false;
+            $result['message'] = "Success";
+            return new JsonResponse($result);
+        }else{
+            $result['code_error'] = 2;
+            $result['success'] = false;
+            $result['error'] = true;
+            $result['message'] = "Error insertion achat prono";
+            return new JsonResponse($result);
+        }
+
+
     }
+
     private function noUser(){
         $result['success'] = true;
         $result['error'] = false;
@@ -93,4 +153,11 @@ class AchatPronoController extends ApiController implements InterfaceDB
         return new JsonResponse($result);
     }
 
+    private function noMontant(){
+        $result['success'] = false;
+        $result['error'] = true;
+        $result['code_error'] = 2;
+        $result['message'] = "Le montant doit être specifie";
+        return new JsonResponse($result);
+    }
 }

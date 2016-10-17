@@ -2,3 +2,7 @@ ws_rest_pari_list_achats:
     path:     /get-status
     defaults: { _controller: WsRestBundle:AchatProno:postGetStatus }
     methods: POST # token,
+ws_rest_pari_insert_achat_prono:
+    path:     /insert
+    defaults: { _controller: WsRestBundle:AchatProno:insertStatusAchatProno }
+    methods: POST # token,

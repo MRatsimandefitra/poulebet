@@ -63,7 +63,7 @@ class PariController extends ApiController implements InterfaceDB
                         'fullNameChampionat' => $itemsChampionat->getChampionat()->getFullNameChampionat()
                     );
                 }
-                if (empty($credit)) {
+                if (!empty($credit)) {
                     $idLast = $credit[0][1];
                     $solde = $this->getRepoFrom(self::ENTITY_MVT_CREDIT, array('id' => $idLast));
                     foreach ($solde as $kCredit => $itemsCredit) {
