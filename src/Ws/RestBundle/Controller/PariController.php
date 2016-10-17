@@ -54,7 +54,7 @@ class PariController extends ApiController implements InterfaceDB
             $concourEncour = $this->getRepo(self::ENTITY_MATCHS)->findIdConcourByDate();
             $idConcour = $concourEncour[0]->getId();
             $championatR = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForPari($date, $championatWs, true, $idConcour);
-            if ($championatR) {
+            if (!empty($championatR)) {
 
                 foreach ($championatR as $kChampionat => $itemsChampionat) {
                     $result['list_championat'][] = array(
@@ -237,6 +237,8 @@ class PariController extends ApiController implements InterfaceDB
             $mvtCreditLast = $this->getObjectRepoFrom(self::ENTITY_MVT_CREDIT, array('id' => $idLast));
             if ($mvtCreditLast) {
                 $result['solde'] = $mvtCreditLast->getSoldeCredit();
+            }else{
+                $result['solde'] = 0;
             }
             return new JsonResponse($result);
         }
