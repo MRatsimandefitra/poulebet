@@ -412,6 +412,10 @@ class PariController extends ApiController implements InterfaceDB
             foreach ($solde as $kCredit => $itemsCredit) {
                 $result['solde'] = $itemsCredit->getSoldeCredit();
             }
+            $result['code_error'] = 0;
+            $result['success'] = true;
+            $result['error'] = false;
+            $result['message'] = "Success";
         } else {
             $result['solde'] = 0;
             $result['code_error'] = 0;
