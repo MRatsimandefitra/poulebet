@@ -26,7 +26,6 @@ class RecapitulationController extends ApiController implements InterfaceDB
             return $this->noUser();
         }
         $this->getStateCombined($user->getId());
-        die('okok');
         $result = array();
         if($isCombined){
             $nbRecap = $this->getRepo(self::ENTITY_MATCHS)->findNbMatchsForRecapCombined($user->getId());
@@ -85,7 +84,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
                         'gainsPotentiel' => $gain,
                         'miseTotal' => $miseTotal,
                         'matchs' => $matchs,
-                        'state' => $this->getStateCombined()
+                       // 'state' => $this->getStateCombined()
                     );
                    /* $resultMatchs[$itemsIdMise]['gain'] = $gain;
                     $resultMatchs[$itemsIdMise]['miseTotal'] = $miseTotal;*/
