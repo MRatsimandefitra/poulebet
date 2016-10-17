@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -24,6 +25,7 @@ class OeufsType extends AbstractType
             ))
             ->add('tarifOeufs', NumberType::class, array())
             ->add('imageOeuf', FileType::class, array())
+            ->add('productSKU', TextType::class, array())
             //->add('updatedAt', Datet)
         ;
     }
