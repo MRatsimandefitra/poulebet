@@ -253,13 +253,12 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         }
         $dql .= " ORDER BY m.dateMatch ASC, ch.rang ASC";
 
-       // var_dump($dql); die;
         if(empty($params)){
             $query = $this->getEntityManager()->createQuery($dql);
         }else{
-
             $query = $this->getEntityManager()->createQuery($dql)->setParameters($params);
         }
+
         return $query->getResult();
 
     }
@@ -326,6 +325,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         if(!empty($where)){
             $dql .= ' WHERE ' . implode(' AND ', $where);
         }
+        $dql .=" ORDER BY m.dateMatch ASC, ch.rang ASC ";
         if(empty($params)){
             $query = $this->getEntityManager()->createQuery($dql);
         }else{
