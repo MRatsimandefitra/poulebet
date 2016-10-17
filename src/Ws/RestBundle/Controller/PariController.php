@@ -405,14 +405,8 @@ class PariController extends ApiController implements InterfaceDB
             return new JsonResponse($result);
         }
         $credit = $this->getRepoFrom(self::ENTITY_MVT_CREDIT, array('utilisateur' => $currentUser));
-        if (!$credit) {
-            $result['code_error'] = 0;
-            $result['success'] = true;
-            $result['error'] = false;
-            $result['message'] = "Aucun Credit pour utilisateur";
-            return new JsonResponse($result);
-        }
-        if (empty($credit)) {
+
+        if (!empty($credit)) {
             $idLast = $credit[0][1];
             $solde = $this->getRepoFrom(self::ENTITY_MVT_CREDIT, array('id' => $idLast));
             foreach ($solde as $kCredit => $itemsCredit) {
@@ -420,6 +414,11 @@ class PariController extends ApiController implements InterfaceDB
             }
         } else {
             $result['solde'] = 0;
+            $result['code_error'] = 0;
+            $result['success'] = true;
+            $result['error'] = false;
+            $result['message'] = "Aucun Credit pour utilisateur";
+            return new JsonResponse($result);
         }
         return new JsonResponse($result);
 
