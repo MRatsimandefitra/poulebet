@@ -24,7 +24,9 @@ class OeufsType extends AbstractType
                 'required' => false
             ))
             ->add('tarifOeufs', NumberType::class, array())
-            ->add('imageOeuf', FileType::class, array())
+            ->add('imageOeuf', FileType::class, array(
+                'data_class' => null
+            ))
             ->add('productSKU', TextType::class, array())
             //->add('updatedAt', Datet)
         ;
