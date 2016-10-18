@@ -221,7 +221,7 @@ class PariController extends ApiController implements InterfaceDB
                         );
                     }
                 }
-
+                return new JsonResponse($resultTmp);
                 foreach($resultTmp['list_matchs'] as $itemsListMatch){
                     $dateMatch[] = $itemsListMatch['dateMatch'];
                 }
