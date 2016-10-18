@@ -137,6 +137,7 @@ class PariController extends ApiController implements InterfaceDB
             $matchsVote = $this->getRepo(self::ENTITY_MATCHS)->findMatchVote($date, $championatWs);
             $championat = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForPari($date, $championatWs, true, $idConcour);
             $resultTmp = array();
+            //championat
             if ($championat) {
                 foreach ($championat as $kChampionat => $itemsChampionat) {
 
@@ -158,6 +159,7 @@ class PariController extends ApiController implements InterfaceDB
                 return new JsonResponse($result);
             }
 
+            //
             if ($matchsVote) {
                 foreach ($matchsVote as $kMatchsVote => $itemsMatchVote) {
                     $resultTmp['list_matchs'][] = array(
@@ -221,16 +223,37 @@ class PariController extends ApiController implements InterfaceDB
 
                 }
 
-                /*foreach($resultTmp['list_matchs'] as $itemsListMatch){
+                foreach($resultTmp['list_matchs'] as $itemsListMatch){
                     $dateMatch[] = $itemsListMatch['dateMatch'];
                 }
-                ksort($dateMatch);
-                        foreach($dateMatch as $kDateMatc => $itemsDateMatch){
-                            if($itemsDateMatch == $resultTmp['list_matchs'][]){
-                                $result['list_matchs_tri'][] = $itemsResultMatch;
-                            }
-
-                    }*/
+                krsort($dateMatch);
+                foreach($dateMatch as $kDateMatch => $itemsDateMatch){
+                    $matchsQuery = $this->getObjectRepoFrom(self::ENTITY_MATCHS, array(
+                        'dateMatch' => $itemsDateMatch
+                    ));
+                    $result["list_matchs"][] = array(
+                        'idMatch' => $matchsQuery->getId(),
+                        'dateMatch' => $matchsQuery->getDateMatch(),
+                        'equipeDomicile' => $matchsQuery->getEquipeDomicile(),
+                        'equipeVisiteur' => $matchsQuery->getEquipeVisiteur(),
+                        'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $matchsQuery->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
+                        'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $matchsQuery->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
+                        'score' => $matchsQuery->getScore(),
+                        'scoreDomicile' => substr($matchsQuery->getScore(), 0, 1),
+                        'scoreVisiteur' => substr($matchsQuery->getScore(), -1, 1),
+                        'status' => $matchsQuery->getStatusMatch(),
+                        'tempsEcoules' => $matchsQuery->getTempsEcoules(),
+                        'live' => ($matchsQuery->getStatusMatch() == 'active') ? true : false,
+                        'master_prono_1' => $matchsQuery->getMasterProno1(),
+                        'master_prono_n' => $matchsQuery->getMasterPronoN(),
+                        'master_prono_2' => $matchsQuery->getMasterProno2(),
+                        'cote_pronostic_1' => $matchsQuery->getCot1Pronostic(),
+                        'cote_pronostic_n' => $matchsQuery->getCoteNPronistic(),
+                        'cote_pronostic_2' => $matchsQuery->getCote2Pronostic(),
+                        'jouer' => false,
+                        'idChampionat' => $matchsQuery->getChampionat()->getId()
+                    );
+                }
                 $result['code_error'] = 0;
                 $result['error'] = false;
                 $result['success'] = true;
