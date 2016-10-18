@@ -7,9 +7,19 @@ use Api\CommonBundle\Fixed\InterfaceDB;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class CreditController extends ApiController implements InterfaceDB
 {
+    /**
+     * Ws, récupérer la les matchs pour les paris
+     * @ApiDoc(
+     *  description="Get solde credit ",
+     *   parameters = {
+     *          {"name" = "token", "dataType"="string" ,"required"=true, "description"= "Token utlisateur"},
+     *      }
+     * )
+     */
     public function postGetSoldeCreditAction(Request $request){
         $token = $request->request->get('token');
         if(!$token){
