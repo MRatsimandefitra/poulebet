@@ -51,7 +51,18 @@ class AchatController extends ApiController implements InterfaceDB
         $form= $this->formPost(self::FORM_ACHAT, $achat);
         $form->handleRequest($request);
         if($form->isValid()){
+            $file = $achat->getImageOeuf();
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
 
+            // Move the file to the directory where brochures are stored
+            $file->move(
+                $this->get('kernel')->getRootDir().'/../web/images/achats/',
+                $fileName
+            );
+
+            // Update the 'brochure' property to store the PDF file name
+            // instead of its contents
+            $achat->setImageOeuf($fileName);
             $this->insert($achat, array('success' => 'success', 'error' => 'error'));
             return $this->redirectToRoute('index_achat');
         }
