@@ -31,15 +31,13 @@ class CreditController extends ApiController implements InterfaceDB
         }
 
         $lastSolde = $this->getRepo(self::ENTITY_MVT_CREDIT)->findLastSolde($user->getId());
-
+        var_dump($lastSolde); die;
         if(is_object($lastSolde[0])){
             $idLast =  $lastSolde[0];
         }else{
             $idLast = $lastSolde[0][1];
         }
-        var_dump($idLast);
         $mvtCreditLast = $this->getObjectRepoFrom(self::ENTITY_MVT_CREDIT, array('id' => $idLast));
-        var_dump($mvtCreditLast); die;
         $result['solde'] = $mvtCreditLast->getSoldeCredit();
         $result['code_error'] = 0;
         $result['success'] = true;
