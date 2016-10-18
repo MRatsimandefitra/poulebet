@@ -222,7 +222,7 @@ class PariController extends ApiController implements InterfaceDB
                 }
 
                 foreach($resultTmp['list_matchs'] as $itemsListMatch){
-                    $dateMatch[] = $itemsListMatch['dateMatch'];
+                    $dateMatch[] = $itemsListMatch['dateMatch']->format('Y-m-d H:i:s');
                 }
                 ksort($dateMatch);
                 var_dump($dateMatch); die;
