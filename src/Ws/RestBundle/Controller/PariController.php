@@ -219,14 +219,13 @@ class PariController extends ApiController implements InterfaceDB
                             'idChampionat' => $matchsItems->getChampionat()->getId()
                         );
                     }
-
-
                 }
 
                 foreach($resultTmp['list_matchs'] as $itemsListMatch){
                     $dateMatch[] = $itemsListMatch['dateMatch'];
                 }
                 ksort($dateMatch);
+                var_dump($dateMatch); die;
                 foreach($dateMatch as $kDateMatch => $itemsDateMatch){
                     $matchsQuery = $this->getObjectRepoFrom(self::ENTITY_MATCHS, array(
                         'dateMatch' => $itemsDateMatch
