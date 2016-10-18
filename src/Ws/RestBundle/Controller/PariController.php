@@ -222,7 +222,7 @@ class PariController extends ApiController implements InterfaceDB
                 }
 
                 foreach($resultTmp['list_matchs'] as $itemsListMatch){
-                    $dateMatch[] = $itemsListMatch['dateMatch']->format('Y-m-d H:i:s');
+                    $dateMatch[] = $itemsListMatch['dateMatch'];
                 }
                 asort($dateMatch);
                 foreach($dateMatch as $kDateMatch => $itemsDateMatch){
@@ -289,7 +289,7 @@ class PariController extends ApiController implements InterfaceDB
     private function getJouer($matchsId)
     {
         $matchsVote = $this->getRepo(self::ENTITY_MATCHS)->findMatchVote();
-        if ($matchsVote) {
+        if (!empty($matchsVote)) {
 
             foreach ($matchsVote as $kMatchsVote => $itemsMatchsVote) {
                 //var_dump($itemsMatchsVote->getMatchs()->getId()); die;
