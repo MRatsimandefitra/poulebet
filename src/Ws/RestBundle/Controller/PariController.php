@@ -136,7 +136,7 @@ class PariController extends ApiController implements InterfaceDB
 
             $matchsVote = $this->getRepo(self::ENTITY_MATCHS)->findMatchVote($date, $championatWs);
             $championat = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForPari($date, $championatWs, true, $idConcour);
-
+            $resultTmp = array();
             if ($championat) {
                 foreach ($championat as $kChampionat => $itemsChampionat) {
 
@@ -160,7 +160,7 @@ class PariController extends ApiController implements InterfaceDB
 
             if ($matchsVote) {
                 foreach ($matchsVote as $kMatchsVote => $itemsMatchVote) {
-                    $result['list_matchs'][] = array(
+                    $resultTmp['list_matchs'][] = array(
                         'idVote' => $itemsMatchVote->getId(),
                         'idMatch' => $itemsMatchVote->getMatchs()->getId(),
                         'dateMatch' => $itemsMatchVote->getMatchs()->getDateMatch(),
@@ -194,7 +194,7 @@ class PariController extends ApiController implements InterfaceDB
 
                 foreach ($matchs as $kMatchs => $matchsItems) {
                     if (!$this->getJouer($matchsItems->getId())) {
-                        $result['list_matchs'][] = array(
+                        $resultTmp['list_matchs'][] = array(
                             'idMatch' => $matchsItems->getId(),
                             'dateMatch' => $matchsItems->getDateMatch(),
                             'equipeDomicile' => $matchsItems->getEquipeDomicile(),
@@ -221,6 +221,16 @@ class PariController extends ApiController implements InterfaceDB
 
                 }
 
+                /*foreach($resultTmp['list_matchs'] as $itemsListMatch){
+                    $dateMatch[] = $itemsListMatch['dateMatch'];
+                }
+                ksort($dateMatch);
+                        foreach($dateMatch as $kDateMatc => $itemsDateMatch){
+                            if($itemsDateMatch == $resultTmp['list_matchs'][]){
+                                $result['list_matchs_tri'][] = $itemsResultMatch;
+                            }
+
+                    }*/
                 $result['code_error'] = 0;
                 $result['error'] = false;
                 $result['success'] = true;

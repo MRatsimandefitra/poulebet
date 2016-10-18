@@ -27,7 +27,7 @@ class AchatController extends ApiController implements InterfaceDB
         if(!$token){
             return $this->noToken();
         }
-        $oeufs = $this->getAllEntity(self::ENTITY_ACHAT);
+        $oeufs = $this->getRepo(self::ENTITY_ACHAT)->findOeufs();
         if(!$oeufs){
             $result['code_error'] = 0;
             $result['error'] = false;

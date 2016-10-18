@@ -10,4 +10,9 @@ namespace Api\DBBundle\Repository;
  */
 class OeufsRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findOeufs(){
+        $dql = "SELECT o from ApiDBBundle:Oeufs o order by o.tarifOeufs";
+        $query = $this->getEntityManager()->createQuery($dql);
+        return $query->getResult();
+    }
 }
