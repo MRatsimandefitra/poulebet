@@ -221,11 +221,11 @@ class PariController extends ApiController implements InterfaceDB
                         );
                     }
                 }
-                return new JsonResponse($resultTmp);
+                //return new JsonResponse($resultTmp);
                 foreach($resultTmp['list_matchs'] as $itemsListMatch){
                     $dateMatch[] = $itemsListMatch['dateMatch'];
                 }
-                var_dump($dateMatch); die;
+                //var_dump($dateMatch); die;
                 asort($dateMatch);
                 foreach($dateMatch as $kDateMatch => $itemsDateMatch){
                     $matchsQuery = $this->getObjectRepoFrom(self::ENTITY_MATCHS, array(
