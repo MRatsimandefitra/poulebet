@@ -225,7 +225,6 @@ class PariController extends ApiController implements InterfaceDB
                     $dateMatch[] = $itemsListMatch['dateMatch']->format('Y-m-d H:i:s');
                 }
                 asort($dateMatch);
-                var_dump($dateMatch); die;
                 foreach($dateMatch as $kDateMatch => $itemsDateMatch){
                     $matchsQuery = $this->getObjectRepoFrom(self::ENTITY_MATCHS, array(
                         'dateMatch' => $itemsDateMatch
@@ -249,7 +248,7 @@ class PariController extends ApiController implements InterfaceDB
                         'cote_pronostic_1' => $matchsQuery->getCot1Pronostic(),
                         'cote_pronostic_n' => $matchsQuery->getCoteNPronistic(),
                         'cote_pronostic_2' => $matchsQuery->getCote2Pronostic(),
-                        'jouer' => false,
+                        'jouer' => $this->getJouer($matchsQuery->getId()),
                         'idChampionat' => $matchsQuery->getChampionat()->getId()
                     );
                 }
