@@ -1,0 +1,4 @@
+ws_rest_get_solde_credit:
+    path:     /get-solde
+    defaults: { _controller: WsRestBundle:Credit:postGetSoldeCredit }
+    methods: POST # token, oeufs, productSKU
