@@ -78,6 +78,7 @@ class PariController extends ApiController implements InterfaceDB
 
             // matchs
             $matchs = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForPari($date, $championatWs, null, $idConcour);
+
             if ($matchs) {
                 foreach ($matchs as $kMatchs => $matchsItems) {
 
@@ -128,6 +129,7 @@ class PariController extends ApiController implements InterfaceDB
             $concourEncour = $this->getRepo(self::ENTITY_MATCHS)->findIdConcourByDate();
             if(!$concourEncour){
                 //die('no Conour');
+                die('pas de concour');
             }
             $idConcour = $concourEncour[0]->getId();
             $matchs = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForPari($date, $championatWs, null, $idConcour);
@@ -191,7 +193,6 @@ class PariController extends ApiController implements InterfaceDB
 
                 }
             }
-
             if ($matchs) {
 
                 foreach ($matchs as $kMatchs => $matchsItems) {
@@ -224,6 +225,7 @@ class PariController extends ApiController implements InterfaceDB
                 foreach($resultTmp['list_matchs'] as $itemsListMatch){
                     $dateMatch[] = $itemsListMatch['dateMatch'];
                 }
+                var_dump($dateMatch); die;
                 asort($dateMatch);
                 foreach($dateMatch as $kDateMatch => $itemsDateMatch){
                     $matchsQuery = $this->getObjectRepoFrom(self::ENTITY_MATCHS, array(
