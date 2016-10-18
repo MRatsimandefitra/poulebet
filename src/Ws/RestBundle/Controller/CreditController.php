@@ -37,8 +37,9 @@ class CreditController extends ApiController implements InterfaceDB
         }else{
             $idLast = $lastSolde[0][1];
         }
-
+        var_dump($idLast);
         $mvtCreditLast = $this->getObjectRepoFrom(self::ENTITY_MVT_CREDIT, array('id' => $idLast));
+        var_dump($mvtCreditLast); die;
         $result['solde'] = $mvtCreditLast->getSoldeCredit();
         $result['code_error'] = 0;
         $result['success'] = true;
