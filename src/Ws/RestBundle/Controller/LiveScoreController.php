@@ -132,6 +132,7 @@ class LiveScoreController extends ApiController
                 AND m.statusMatch LIKE 'active' GROUP BY ch.fullNameChampionat ORDER BY ch.rang ASC, m.dateMatch ASC";
         $queryChampionat = $this->get('doctrine.orm.entity_manager')->createQuery($dqlChampionat);
         $matchLiveChampionat = $queryChampionat->getResult();
+        $championat = array();
         foreach($matchLiveChampionat as $kLiveChampionat => $vLiveChampionatItems){
 
             $championat[] = array(

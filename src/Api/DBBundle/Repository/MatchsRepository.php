@@ -231,6 +231,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
 
         $params = array();
         $where = array();
+
         $where[] = " m.dateMatch BETWEEN co.dateDebut AND co.dateFinale";
         $where[] = " co.id = :idConcour";
         $params['idConcour'] = $idConcour;
@@ -302,12 +303,18 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         return $query->getResult();
 
     }
-    function findMatchVote($date = null, $championat = null){
+    function findMatchVote($date = null, $championat = null, $userId = null){
         $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
                 LEFT JOIN vu.matchs m
-                LEFT JOIN m.championat ch";
+                LEFT JOIN m.championat ch
+                LEFT JOIN vu.utilisateur u ";
         $where = array();
         $params = array();
+        if($userId){
+            $where[] = " u.id = :idUser ";
+            $params['idUser'] = $userId;
+        }
+
         if($date){
             $where[] = " m.dateMatch BETWEEN :dateDebut AND :dateFinale ";
 
