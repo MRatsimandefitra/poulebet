@@ -137,11 +137,14 @@ class ApiController extends Controller
     /**
      * @param $entity
      * @param array $params
+     * @param array|null $orderBy
+     * @param int|null   $limit
+     * @param int|null   $offset
      * @return mixed
      */
-    public function getRepoFrom($entity, $params = array())
+    public function getRepoFrom($entity, $params = array(), array $orderBy = null, $limit = null, $offset = null)
     {
-        return $this->getRepo($entity)->findBy($params);
+        return $this->getRepo($entity)->findBy($params, $orderBy, $limit, $offset);
     }
 
     /**
