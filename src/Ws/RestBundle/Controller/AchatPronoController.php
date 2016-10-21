@@ -94,7 +94,7 @@ class AchatPronoController extends ApiController implements InterfaceDB
             $mvtCredit->setSortieCredit($montant);
 
             // last Solde
-            $credit = $this->getRepoFrom(self::ENTITY_MVT_CREDIT, array('utilisateur' => $userCurrent));
+            $credit = $this->getRepoFrom(self::ENTITY_MVT_CREDIT, array('utilisateur' => $userCurrent),array('id' => 'DESC'));
 
             if (!empty($credit)) {
                // var_dump($credit[0]); die;
