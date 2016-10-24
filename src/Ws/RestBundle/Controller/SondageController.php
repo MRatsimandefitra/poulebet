@@ -161,20 +161,14 @@ class SondageController extends ApiController
     public function postToGetAllMatchsSondageAction(Request $request)
     {
         $token = $request->request->get('token');
-        $matchId = $request->request->get('matchId');
+        //$matchId = $request->request->get('matchId');
         $dqlConcour = "SELECT co from ApiDBBundle:Concours co where CURRENT_DATE() BETWEEN co.dateDebut and co.dateFinale";
         $queryConcours = $this->get('doctrine.orm.entity_manager')->createQuery($dqlConcour);
         $dataConcour = $queryConcours->getResult();
 
-        if(!$dataConcour){
-
+        if(empty($dataConcour)){
+            return $this->noDataConcour();
         }
-        // modification (probale waiaka)
-        /*$dqlMatch = "SELECT m from ApiDBBundle:Matchs m "
-                . "JOIN m.concours co "
-                . "LEFT JOIN m.championat ch "
-                . " WHERE co.id = :idConcours "
-                . " ORDER BY m.dateMatch, m.id ";*/
 
         $dqlMatch= "SELECT m, co, ch from ApiDBBundle:Matchs m
                      JOIN m.concours co
@@ -189,7 +183,8 @@ class SondageController extends ApiController
         $data = $queryMatch->getResult();
        // var_dump(count($data)); die;
         // vote total
-        $dqlVote = "SELECT co from ApiDBBundle:Concours co  LEFT JOIN co.matchs m";
+        //$dqlVote = "SELECT co from ApiDBBundle:Concours co   JOIN co.matchs m";
+        $dqlVote = "SELECT m from ApiDBBundle:Matchs m LEFT JOIN m.concours co";
         $queryVote = $this->get('doctrine.orm.entity_manager')->createQuery($dqlVote);
         $dataVote = $queryVote->getResult();
         $nbTotalVote = count($dataVote) + 1;
@@ -384,5 +379,13 @@ class SondageController extends ApiController
     }
     private function getTokenValid($token){
         $dql = "SELECT co from ApiDBBundle:Concours co left Join co.";
+    }
+
+    private function noDataConcour(){
+        $result['code_error'] = 0;
+        $result['success'] = true;
+        $result['error'] = false;
+        $result['message'] = "Aucun concour en vue";
+        return new JsonResponse($result);
     }
 }
