@@ -315,7 +315,6 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
             $where[] = " u.id = :idUser ";
             $params['idUser'] = $userId;
         }
-
         if($date){
             $where[] = " m.dateMatch BETWEEN :dateDebut AND :dateFinale ";
 
