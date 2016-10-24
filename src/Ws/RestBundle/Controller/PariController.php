@@ -170,7 +170,7 @@ class PariController extends ApiController implements InterfaceDB
             //
             if ($matchsVote) {
                 foreach ($matchsVote as $kMatchsVote => $itemsMatchVote) {
-                    $resultTmp['list_matchs'][] = array(
+                    $result['list_matchs'][] = array(
                         'idVote' => $itemsMatchVote->getId(),
                         'idMatch' => $itemsMatchVote->getMatchs()->getId(),
                         'dateMatch' => $itemsMatchVote->getMatchs()->getDateMatch(),
@@ -202,8 +202,9 @@ class PariController extends ApiController implements InterfaceDB
             if ($matchs) {
 
                 foreach ($matchs as $kMatchs => $matchsItems) {
+                   // var_dump(); die;
                     if (!$this->getJouer($matchsItems->getId(), $user->getId())) {
-                        $resultTmp['list_matchs'][] = array(
+                        $result['list_matchs'][] = array(
                             'idMatch' => $matchsItems->getId(),
                             'dateMatch' => $matchsItems->getDateMatch(),
                             'equipeDomicile' => $matchsItems->getEquipeDomicile(),
@@ -223,12 +224,14 @@ class PariController extends ApiController implements InterfaceDB
                             'cote_pronostic_n' => $matchsItems->getCoteNPronistic(),
                             'cote_pronostic_2' => $matchsItems->getCote2Pronostic(),
                             'jouer' => false,
-                            'idChampionat' => $matchsItems->getChampionat()->getId()
+                            'idChampionat' => $matchsItems->getChampionat()->getId(),
+                            //'concours' => $matchsItems->getConcours()[$k]->getId(),
                         );
                     }
                 }
+
                 //return new JsonResponse($resultTmp);
-                if(array_key_exists('list_matchs', $resultTmp)){
+               /* if(array_key_exists('list_matchs', $resultTmp)){
                     foreach($resultTmp['list_matchs'] as $itemsListMatch){
                         $dateMatch[] = $itemsListMatch['dateMatch'];
                     }
@@ -268,7 +271,7 @@ class PariController extends ApiController implements InterfaceDB
                         'jouer' => $this->getJouer($matchsQuery->getId(), $user->getId(), null, null ),
                         'idChampionat' => $matchsQuery->getChampionat()->getId()
                     );
-                }
+                }*/
                 $result['code_error'] = 0;
                 $result['error'] = false;
                 $result['success'] = true;
@@ -551,9 +554,12 @@ class PariController extends ApiController implements InterfaceDB
             $lastSolde = $this->getRepo(self::ENTITY_MVT_CREDIT)->findLastSolde($user->getId());
             $idLast = $lastSolde[0][1];
             $mvtCreditLast = $this->getObjectRepoFrom(self::ENTITY_MVT_CREDIT, array('id' => $idLast));
-
             if (!$mvtCreditLast) {
-                die('pas de mvt credit last');
+                $result['code_error'] = 0;
+                $result['success'] = 'Success';
+                $result['error'] = 'Error';
+                $result['message'] = "Aucun credit";
+                return new JsonResponse($result);
             }
             $mvtCredit = new MvtCredit();
             $mvtCredit->setDateMvt(new \DateTime('now'));
