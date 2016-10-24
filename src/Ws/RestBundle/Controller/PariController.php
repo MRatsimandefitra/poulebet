@@ -127,6 +127,7 @@ class PariController extends ApiController implements InterfaceDB
                 return $this->noUser();
             }
             $concourEncour = $this->getRepo(self::ENTITY_MATCHS)->findIdConcourByDate();
+
             if(!$concourEncour){
                 //die('no Conour');
                 die('pas de concour');
@@ -135,7 +136,8 @@ class PariController extends ApiController implements InterfaceDB
             $matchs = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForPari($date, $championatWs, null, $idConcour);
 
             // $matchs = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForPariNoJouer($date, $championatWs, null, $user->getId(), $matchs->getId());
-            $userId = $user->getId();
+                $userId = $user->getId();
+
             $matchsVote = $this->getRepo(self::ENTITY_MATCHS)->findMatchVote($date, $championatWs,$userId);
             $championat = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForPari($date, $championatWs, true, $idConcour);
             $resultTmp = array();
@@ -222,9 +224,18 @@ class PariController extends ApiController implements InterfaceDB
                     }
                 }
                 //return new JsonResponse($resultTmp);
-                foreach($resultTmp['list_matchs'] as $itemsListMatch){
-                    $dateMatch[] = $itemsListMatch['dateMatch'];
+                if(array_key_exists('list_matchs', $resultTmp)){
+                    foreach($resultTmp['list_matchs'] as $itemsListMatch){
+                        $dateMatch[] = $itemsListMatch['dateMatch'];
+                    }
+                }else{
+                    $result['success'] = true;
+                    $result['error'] = false;
+                    $result['code_error'] = 4;
+                    $result['message'] = "Aucun match trouve";
+                    return new JsonResponse($result);
                 }
+
                 //var_dump($dateMatch); die;
                 asort($dateMatch);
                 foreach($dateMatch as $kDateMatch => $itemsDateMatch){

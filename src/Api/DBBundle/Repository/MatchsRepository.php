@@ -303,6 +303,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         return $query->getResult();
 
     }
+
     function findMatchVote($date = null, $championat = null, $userId = null){
         $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
                 LEFT JOIN vu.matchs m
