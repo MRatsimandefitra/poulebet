@@ -134,8 +134,11 @@ class PariController extends ApiController implements InterfaceDB
                 die('pas de concour');
             }
             $idConcour = $concourEncour[0]->getId();
-            $matchs = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForPari($date, $championatWs, null, $idConcour);
-
+            //var_dump($idConcour); die;
+            //$matchs = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForPari($date, $championatWs, null, $idConcour);
+            //var_dump($date); die;
+          //  $matchs = $this->getRepo(self::ENTITY_MATCHS)->findBy(array('dateMatch'=> $date, 'championat' => $championatWs , 'concours' => $concourEncour[0]->getId()));
+            $matchs = $this->getRepo(self::ENTITY_MATCHS)->findMatchsPariSimple($idConcour, $date, $championatWs);
             // $matchs = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForPariNoJouer($date, $championatWs, null, $user->getId(), $matchs->getId());
                 $userId = $user->getId();
 

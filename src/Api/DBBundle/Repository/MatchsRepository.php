@@ -229,6 +229,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
                 LEFT JOIN m.championat ch
                 JOIN m.concours co ";
 
+
         $params = array();
         $where = array();
 
@@ -253,7 +254,6 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
             $dql .= " GROUP BY ch.nomChampionat";
         }
         $dql .= " ORDER BY m.dateMatch ASC, ch.rang ASC";
-        var_dump($dql); die;
         if(empty($params)){
             $query = $this->getEntityManager()->createQuery($dql);
         }else{
@@ -474,6 +474,13 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
                 WHERE u.id = :utilisateurId AND vu.isCombined = 1 group by vu.dateMise";
         $query = $this->getEntityManager()->createQuery($dql);
         $query->setParameter('utilisateurId', $utilisateurId);
+        return $query->getResult();
+    }
+
+    public function findMatchsPariSimple($idConcour , $date = null, $championat = null){
+        $dql = "SELECT m from ApiDBBundle:Matchs m JOIN m.concours co where co.id = :idConcour";
+        $query = $this->getEntityManager()->createQuery($dql);
+        $query->setParameter('idConcour' , $idConcour);
         return $query->getResult();
     }
 }

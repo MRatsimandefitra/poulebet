@@ -634,7 +634,7 @@ class Matchs
         return $this->championat;
     }
 
-    
+
     /**
      * Set statusMatch
      *
