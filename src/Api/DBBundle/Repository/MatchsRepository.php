@@ -253,7 +253,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
             $dql .= " GROUP BY ch.nomChampionat";
         }
         $dql .= " ORDER BY m.dateMatch ASC, ch.rang ASC";
-
+        var_dump($dql); die;
         if(empty($params)){
             $query = $this->getEntityManager()->createQuery($dql);
         }else{

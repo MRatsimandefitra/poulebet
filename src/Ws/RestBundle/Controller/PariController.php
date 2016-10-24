@@ -126,8 +126,9 @@ class PariController extends ApiController implements InterfaceDB
             if (!$user) {
                 return $this->noUser();
             }
-            $concourEncour = $this->getRepo(self::ENTITY_MATCHS)->findIdConcourByDate();
 
+            $concourEncour = $this->getRepo(self::ENTITY_MATCHS)->findIdConcourByDate();
+           // var_dump($concourEncour[0]->getId()); die;
             if(!$concourEncour){
                 //die('no Conour');
                 die('pas de concour');
