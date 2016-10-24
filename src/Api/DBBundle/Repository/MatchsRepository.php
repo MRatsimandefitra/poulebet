@@ -315,6 +315,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
             $where[] = " u.id = :idUser ";
             $params['idUser'] = $userId;
         }
+        $where[] = " vu.isCombined = FALSE ";
         if($date){
             $where[] = " m.dateMatch BETWEEN :dateDebut AND :dateFinale ";
 

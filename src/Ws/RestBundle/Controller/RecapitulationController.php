@@ -76,7 +76,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
                                 'cote_pronostic_n' => $v->getMatchs()->getCoteNPronistic(),
                                 'cote_pronostic_2' => $v->getMatchs()->getCote2Pronostic(),
                                 'voted_equipe' => $v->getVote(),
-                                'isgagne' => ''
+                                'isGagne' => ''
                             );
                         }
                     }
