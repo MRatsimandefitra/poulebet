@@ -198,7 +198,7 @@ class PariController extends ApiController implements InterfaceDB
             if ($matchs) {
 
                 foreach ($matchs as $kMatchs => $matchsItems) {
-                    if (!$this->getJouer($matchsItems->getId())) {
+                    if (!$this->getJouer($matchsItems->getId(), $user->getId())) {
                         $resultTmp['list_matchs'][] = array(
                             'idMatch' => $matchsItems->getId(),
                             'dateMatch' => $matchsItems->getDateMatch(),
@@ -261,7 +261,7 @@ class PariController extends ApiController implements InterfaceDB
                         'cote_pronostic_1' => $matchsQuery->getCot1Pronostic(),
                         'cote_pronostic_n' => $matchsQuery->getCoteNPronistic(),
                         'cote_pronostic_2' => $matchsQuery->getCote2Pronostic(),
-                        'jouer' => $this->getJouer($matchsQuery->getId()),
+                        'jouer' => $this->getJouer($matchsQuery->getId(), $user->getId(), null, null ),
                         'idChampionat' => $matchsQuery->getChampionat()->getId()
                     );
                 }
@@ -299,9 +299,9 @@ class PariController extends ApiController implements InterfaceDB
         return new JsonResponse($result);
     }
 
-    private function getJouer($matchsId)
+    private function getJouer($matchsId, $userId, $date = null, $championnat = null)
     {
-        $matchsVote = $this->getRepo(self::ENTITY_MATCHS)->findMatchVote();
+        $matchsVote = $this->getRepo(self::ENTITY_MATCHS)->findMatchVote($userId);
         if (!empty($matchsVote)) {
 
             foreach ($matchsVote as $kMatchsVote => $itemsMatchsVote) {
