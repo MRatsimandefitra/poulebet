@@ -18,7 +18,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
             return $this->noCombined();
         }
         $token = $request->request->get('token');
-        if($isCombined === NULL){
+        if($token === NULL){
             return $this->noToken();
         }
         $user  = $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
@@ -76,7 +76,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
                                 'cote_pronostic_n' => $v->getMatchs()->getCoteNPronistic(),
                                 'cote_pronostic_2' => $v->getMatchs()->getCote2Pronostic(),
                                 'voted_equipe' => $v->getVote(),
-                                'isGagne' => ''
+                                'isGagne' => $this->getStatusRecap($v->getId())
                             );
                         }
                     }
@@ -223,6 +223,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
         $result['message'] = "Aucun utilisateur compatible avec le token";
         return new JsonResponse($result);
     }
+
     private function getMatchsState($idMatch){
         $matchs = $this->getObjectRepoFrom(self::ENTITY_MATCHS, array('id' => $idMatch));
         if($matchs){
@@ -231,6 +232,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
         }
         return null;
     }
+
     private function getStateCombined($utilisateur){
         $matchsVote = $this->getRepo(self::ENTITY_MATCHS)->findStateForCombined($utilisateur);
 
@@ -240,6 +242,21 @@ class RecapitulationController extends ApiController implements InterfaceDB
                 $matchs = $this->getRepoFrom(self::ENTITY_MATCHS, array('id' => $itemsMatchsVote->getMatchs()->getId() ));
                 if(!empty($matchs)){
                     //foreach($matchs as $kmatchs)
+                }
+            }
+        }
+    }
+
+    private function getStatusRecap($idVoteUtilisateur){
+        $data = $this->getRepo(self::ENTITY_MATCHS)->findStatusRecap($idVoteUtilisateur);
+        if(is_array($data) && count($data)> 0){
+            foreach($data as $kData => $itemsData){
+                $gagnant = $itemsData->getGagnant();
+                $vote = $itemsData->getVote();
+                if($gagnant == $vote){
+                    return true;
+                }else{
+                    return false;
                 }
             }
         }

@@ -483,4 +483,11 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         $query->setParameter('idConcour' , $idConcour);
         return $query->getResult();
     }
+
+    public function findStatusRecap($idVoteUtilisateur){
+        $dql ="SELECT vu from ApiDBBundle:VoteUtilisateur vu WHERE vu.id = :idVoteUtilisateur group by vu.idMise ";
+        $query = $this->getEm()->createQuery($dql);
+        $query->setParameter('idVoteUtilisateur', $idVoteUtilisateur);
+        return $query->getResult();
+    }
 }
