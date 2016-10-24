@@ -225,53 +225,11 @@ class PariController extends ApiController implements InterfaceDB
                             'cote_pronostic_2' => $matchsItems->getCote2Pronostic(),
                             'jouer' => false,
                             'idChampionat' => $matchsItems->getChampionat()->getId(),
-                            //'concours' => $matchsItems->getConcours()[$k]->getId(),
                         );
                     }
                 }
 
-                //return new JsonResponse($resultTmp);
-               /* if(array_key_exists('list_matchs', $resultTmp)){
-                    foreach($resultTmp['list_matchs'] as $itemsListMatch){
-                        $dateMatch[] = $itemsListMatch['dateMatch'];
-                    }
-                }else{
-                    $result['success'] = true;
-                    $result['error'] = false;
-                    $result['code_error'] = 4;
-                    $result['message'] = "Aucun match trouve";
-                    return new JsonResponse($result);
-                }
 
-                //var_dump($dateMatch); die;
-                asort($dateMatch);
-                foreach($dateMatch as $kDateMatch => $itemsDateMatch){
-                    $matchsQuery = $this->getObjectRepoFrom(self::ENTITY_MATCHS, array(
-                        'dateMatch' => $itemsDateMatch
-                    ));
-                    $result["list_matchs"][] = array(
-                        'idMatch' => $matchsQuery->getId(),
-                        'dateMatch' => $matchsQuery->getDateMatch(),
-                        'equipeDomicile' => $matchsQuery->getEquipeDomicile(),
-                        'equipeVisiteur' => $matchsQuery->getEquipeVisiteur(),
-                        'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $matchsQuery->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
-                        'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $matchsQuery->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
-                        'score' => $matchsQuery->getScore(),
-                        'scoreDomicile' => substr($matchsQuery->getScore(), 0, 1),
-                        'scoreVisiteur' => substr($matchsQuery->getScore(), -1, 1),
-                        'status' => $matchsQuery->getStatusMatch(),
-                        'tempsEcoules' => $matchsQuery->getTempsEcoules(),
-                        'live' => ($matchsQuery->getStatusMatch() == 'active') ? true : false,
-                        'master_prono_1' => $matchsQuery->getMasterProno1(),
-                        'master_prono_n' => $matchsQuery->getMasterPronoN(),
-                        'master_prono_2' => $matchsQuery->getMasterProno2(),
-                        'cote_pronostic_1' => $matchsQuery->getCot1Pronostic(),
-                        'cote_pronostic_n' => $matchsQuery->getCoteNPronistic(),
-                        'cote_pronostic_2' => $matchsQuery->getCote2Pronostic(),
-                        'jouer' => $this->getJouer($matchsQuery->getId(), $user->getId(), null, null ),
-                        'idChampionat' => $matchsQuery->getChampionat()->getId()
-                    );
-                }*/
                 $result['code_error'] = 0;
                 $result['error'] = false;
                 $result['success'] = true;

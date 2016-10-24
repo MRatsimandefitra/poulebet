@@ -66,10 +66,10 @@ class GoalapiLiveScoreTodayCommand extends ContainerAwareCommand
         //$url = $this->getContainer()->get('kernel')->getRootDir().'/../web/json/live/engcslive1.json';
         // var_dump($url); die;
         //var_dump($url); die;
-        $content = file_get_contents($url);
+      /*  $content = file_get_contents($url);
         $arrayJson = json_decode($content, true);
 
-        return $arrayJson;
+        return $arrayJson;*/
     }
 
 
