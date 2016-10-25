@@ -103,7 +103,20 @@ class PariController extends ApiController implements InterfaceDB
                         'cote_pronostic_2' => $matchsItems->getCote2Pronostic(),
                         'idChampionat' => $matchsItems->getChampionat()->getId()
                     );
+                    $resultCote[] = $matchsItems->getCot1Pronostic();
+                    $resultCote[]= $matchsItems->getCoteNPronistic();
+                    $resultCote[]= $matchsItems->getCote2Pronostic();
                 }
+                arsort($resultCote);
+                $countCote = 0;
+                $value = 1;
+                foreach($resultCote as $kResultCote => $itemsResultCode){
+                    $countCote = $countCote +  1;
+                    if($countCote <= 8){
+                        $value = $value * $itemsResultCode;
+                    }
+                }
+                $result['gain_potentiel_max'] = $value;
                 $result['code_error'] = 0;
                 $result['success'] = true;
                 $result['error'] = false;
