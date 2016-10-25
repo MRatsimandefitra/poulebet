@@ -24,6 +24,9 @@ class LotType extends AbstractType
             'mapped'   => false,
             'required' => true
         );
+        $imageOptions = array(
+            'data_class' => null
+        );
         //edit view
         if($lot->getId()){
             $quantityOptions['required'] = false;
@@ -36,15 +39,14 @@ class LotType extends AbstractType
             ));
         } else {
             $quantityOptions['constraints'] = new NotBlank();
+            $imageOptions['constraints'] = new NotBlank();
         }
         $builder
             ->add('nomLot')
             ->add('nbPointNecessaire')
             ->add('description')
             ->add('quantity',TextType::class,$quantityOptions)
-            ->add('cheminImage', FileType::class, array(
-                'data_class' => null
-            ))
+            ->add('cheminImage', FileType::class, $imageOptions)
             ->add('lotCategory', EntityType::class, array(
                 'class' => 'ApiDBBundle:LotCategory',
                 'choice_label' => 'category',
