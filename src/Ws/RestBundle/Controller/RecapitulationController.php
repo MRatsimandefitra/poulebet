@@ -89,7 +89,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
                         'gainsPotentiel' => $gain,
                         'miseTotal' => $miseTotal,
                         'matchs' => $matchs,
-                        'isGagnat' => $dataIsGagne
+                        'gagnantCombine' => $dataIsGagne
                        // 'state' => $this->getStateCombined()
                     );
                    /* $resultMatchs[$itemsIdMise]['gain'] = $gain;
