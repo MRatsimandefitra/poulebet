@@ -115,6 +115,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
                     $result['pagination']['total'] = $totalPage;
                     $result['pagination']['perPage'] = $perPage;
                     $result['pagination']['pageNow'] = $pageNow;
+                    $result['pagination']['nbPage'] = $nbPage;
                    /* $resultMatchs[$itemsIdMise]['gain'] = $gain;
                     $resultMatchs[$itemsIdMise]['miseTotal'] = $miseTotal;*/
                    // $resultMatchs[$itemsIdMise]['matchs'] = $matchs;
@@ -236,7 +237,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
                 $result['pagination']['total'] = $totalPage;
                 $result['pagination']['perPage'] = $perPage;
                 $result['pagination']['pageNow'] = $pageNow;
-
+                $result['pagination']['nbPage'] = $nbPage;
                 return new JsonResponse($result);
 
             }else{
