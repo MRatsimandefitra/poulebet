@@ -30,6 +30,15 @@
                 <div>{{form_widget(form.lotCategory ,{'attr': {'class': 'form-control'  }})}}</div>
                 <div><label>{{'Image'|trans}}</label></div>
                 <div>{{form_widget(form.cheminImage ,{'required': false})}}</div>
+                {% if form.cheminImage.vars.errors|length > 0 %}
+                <div>
+                    <ul class="help-block list-unstyled">
+                        {% for error in form.cheminImage.vars.errors %}
+                            <li><span class="glyphicon glyphicon-exclamation-sign"></span> {{ error.message }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
                 <div><input type="submit" value="Enregistrer" class="btn btn-primary"></div> 
             {{form_end(form)}}
         </div>
