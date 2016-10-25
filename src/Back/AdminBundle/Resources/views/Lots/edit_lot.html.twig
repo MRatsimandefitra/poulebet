@@ -14,6 +14,9 @@
             <div>{{form_widget(form.nomLot ,{'attr': {'class': 'form-control'  }})}}</div>
             <div>{{form_label(form.description)}}</div>
             <div>{{form_widget(form.description ,{'attr': {'class': 'form-control'  }})}}</div>
+            <div>{{form_label(form.quantity)}} <a href="#" id="addNewQuantity"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a></div>
+            <div>{{form_widget(form.quantity ,{'attr': {'class': 'form-control'  }})}}</div>
+            <div id="fieldNewQuantity" style="display:none;">{{form_widget(form.newQuantity ,{'attr': {'class': 'form-control'  }})}}</div>
             <div>{{form_label(form.nbPointNecessaire)}}</div>
             <div>{{form_widget(form.nbPointNecessaire ,{'attr': {'class': 'form-control'  }})}}</div>
             <div>{{form_widget(form.lotCategory ,{'attr': {'class': 'form-control'  }})}}</div>
@@ -29,4 +32,15 @@
 
 
     </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function(){
+            $('#addNewQuantity').click(function(e){
+                e.preventDefault();
+                $('#fieldNewQuantity').show();
+            });
+        });
+    </script>
 {% endblock %}

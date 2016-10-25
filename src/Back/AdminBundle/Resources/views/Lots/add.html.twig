@@ -14,6 +14,17 @@
                 <div>{{form_widget(form.nomLot ,{'attr': {'class': 'form-control'  }})}}</div>
                 <div>{{form_label(form.description)}}</div> 
                 <div>{{form_widget(form.description ,{'attr': {'class': 'form-control'  }})}}</div>
+                <div>{{form_label(form.quantity)}}</div>
+                <div>{{form_widget(form.quantity ,{'attr': {'class': 'form-control'  }})}}</div>
+                {% if form.quantity.vars.errors|length > 0 %}
+                <div>
+                    <ul class="help-block list-unstyled">
+                        {% for error in form.quantity.vars.errors %}
+                            <li><span class="glyphicon glyphicon-exclamation-sign"></span> {{ error.message }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
                 <div>{{form_label(form.nbPointNecessaire)}}</div> 
                 <div>{{form_widget(form.nbPointNecessaire ,{'attr': {'class': 'form-control'  }})}}</div>
                 <div>{{form_widget(form.lotCategory ,{'attr': {'class': 'form-control'  }})}}</div>

@@ -31,3 +31,4 @@ var/cache/
 /src/Api/DBBundle/Entity/*.php~
 *.php~
 *.php~
+/nbproject/*
