@@ -28,6 +28,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
         $this->getStateCombined($user->getId());
         $result = array();
         if($isCombined){
+
             $nbRecap = $this->getRepo(self::ENTITY_MATCHS)->findNbMatchsForRecapCombined($user->getId());
             if(!empty($nbRecap)){
                 $count = 0;
@@ -47,11 +48,13 @@ class RecapitulationController extends ApiController implements InterfaceDB
                     $count = $count + 1;
                     $idMise[] = $itemsNbRecap->getIdMise();
                 }
+
                 $count = 0;
                 foreach($idMise as $k => $itemsIdMise){
                     $matchs = array();
                     $count = $count + 1;
                     $ss = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForRecapCombined($user->getId(), $itemsNbRecap->getIdMise() );
+
                     if($ss){
                         $dataIsGagne = true;
                         foreach($ss as $k => $v){
@@ -77,7 +80,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
                                 'cote_pronostic_n' => $v->getMatchs()->getCoteNPronistic(),
                                 'cote_pronostic_2' => $v->getMatchs()->getCote2Pronostic(),
                                 'voted_equipe' => $v->getVote(),
-                                'isGagne' => $this->getStatusRecap($v->getId(), $v->getIdMise(), $v->getDateMise())
+                                'isGagne' => $this->getStatusRecap($v->getId())
                             );
                             if($this->getStatusRecap($v->getId(), $v->getIdMise(), $v->getDateMise()) === false){
                                 $dataIsGagne = false;
@@ -97,6 +100,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
                    // $resultMatchs[$itemsIdMise]['matchs'] = $matchs;
                     $resultMatchs[$itemsIdMise]['gagnant'] = "";
                 }
+
 
               //  $result['details'] = $resultMatchs;
                /* if(!empty($resultMatchs)){
