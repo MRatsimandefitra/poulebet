@@ -53,6 +53,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
                     $count = $count + 1;
                     $ss = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForRecapCombined($user->getId(), $itemsNbRecap->getIdMise() );
                     if($ss){
+                        $dataIsGagne = true;
                         foreach($ss as $k => $v){
                             $gain = $v->getGainPotentiel();
                             $miseTotal = $v->getMisetotale();
@@ -76,8 +77,11 @@ class RecapitulationController extends ApiController implements InterfaceDB
                                 'cote_pronostic_n' => $v->getMatchs()->getCoteNPronistic(),
                                 'cote_pronostic_2' => $v->getMatchs()->getCote2Pronostic(),
                                 'voted_equipe' => $v->getVote(),
-                                'isGagne' => $this->getStatusRecap($v->getId())
+                                'isGagne' => $this->getStatusRecap($v->getId(), $v->getIdMise(), $v->getDateMise())
                             );
+                            if($this->getStatusRecap($v->getId(), $v->getIdMise(), $v->getDateMise()) === false){
+                                $dataIsGagne = false;
+                            }
                         }
                     }
                     $result['list_mise'][] = array(
@@ -85,6 +89,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
                         'gainsPotentiel' => $gain,
                         'miseTotal' => $miseTotal,
                         'matchs' => $matchs,
+                        'isGagnat' => $dataIsGagne
                        // 'state' => $this->getStateCombined()
                     );
                    /* $resultMatchs[$itemsIdMise]['gain'] = $gain;
@@ -138,9 +143,9 @@ class RecapitulationController extends ApiController implements InterfaceDB
                 return new JsonResponse($result);
             }
         }else{
+
             // championat
             $championat = $this->getRepo(self::ENTITY_MATCHS)->findChampionatVoteSimple($user->getId());
-           // var_dump($championat); die;
             if($championat){
                 foreach($championat as $kChampionat => $itemsChampionat){
                     $result['list_championat'][] = array(
@@ -178,7 +183,8 @@ class RecapitulationController extends ApiController implements InterfaceDB
                         'miseTotal' => $vItems->getMisetotale(),
                         'state' => $this->getMatchsState($vItems->getId()),
                         'idChampionat' => $vItems->getMatchs()->getChampionat()->getId(),
-                        'voted_equipe' => $vItems->getVote()
+                        'voted_equipe' => $vItems->getVote(),
+                        'isGagne' => $this->getIsGagne($vItems->getId(), $vItems->getIdMise(), $vItems->getDateMise())
                     );
                 }
                 $result['code_error'] = 0;
@@ -259,6 +265,27 @@ class RecapitulationController extends ApiController implements InterfaceDB
                     return false;
                 }
             }
+        }
+    }
+
+    private function getIsGagne($idVote, $idMise, $date){
+        $matchs =  $this->getRepo(self::ENTITY_MATCHS)->findRecapMatchGagnant($idVote,$idMise, $date);
+        if(is_array($matchs) && count($matchs) > 0 ){
+            foreach($matchs as $kMatchs => $itemsMatchs){
+                $statusMatchs = $itemsMatchs->getMatchs()->getStatusMatchs();
+                if($statusMatchs ==='finished'){
+                    $gagnant = $itemsMatchs->getGagnat();
+                    if($gagnant === 1){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                }else{
+                    return false;
+                }
+            }
+        }else{
+            return false;
         }
     }
 }
