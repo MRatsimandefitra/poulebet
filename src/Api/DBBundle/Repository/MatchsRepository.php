@@ -410,6 +410,13 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         $query->setParameter('idUser' , $userId);
         return $query->getResult();
     }
+    public function findChampionatVoteSimpleDQL($userId){
+        $dql ="SELECT vu from ApiDBBundle:VoteUtilisateur vu LEFT JOIN vu.matchs m LEFT JOIN vu.utilisateur u LEFT JOIN m.championat ch
+               WHERE u.id = :idUser AND vu.isCombined = false GROUP BY ch.nomChampionat";
+        $query = $this->getEntityManager()->createQuery($dql);
+        $query->setParameter('idUser' , $userId);
+        return $query;
+    }
 
     public function findMatchsForRecap(){
         $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
