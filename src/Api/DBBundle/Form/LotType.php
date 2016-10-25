@@ -20,7 +20,7 @@ class LotType extends AbstractType
     {
         $lot = $builder->getData();
         $quantityOptions = array(
-            'label'    => 'Quantité disponible',
+            'label'    => 'Qté dispo',
             'mapped'   => false,
             'required' => true
         );
