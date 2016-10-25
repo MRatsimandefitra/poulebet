@@ -14,9 +14,9 @@ class UtilisateurRepository extends \Doctrine\ORM\EntityRepository
     {
 
         $dql = "SELECT u FROM ApiDBBundle:Utilisateur u
-                WHERE u.username = :username or u.email =:email";
+                WHERE u.username = :username or u.email LIKE :email";
         $query = $this->getEntityManager()->createQuery($dql);
-        $query->setParameters(array('username' => $username, 'email' => $email));
+        $query->setParameters(array('username' => $username, 'email' => '%'.$email.'%'));
         if ($query->getResult()) {
             return true;
         }
