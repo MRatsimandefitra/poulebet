@@ -69,22 +69,22 @@ class RecapitulationController extends ApiController implements InterfaceDB
                 $count = 0;
 
                 foreach ($idMise as $k => $itemsIdMise) {
+
                     $countRow = $countRow + 1;
 
                     if ($countRow <= $countTotalRow) {
                         $matchs = array();
                         $count = $count + 1;
-                        $ss = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForRecapCombined($user->getId(), $itemsNbRecap->getIdMise());
-
+                        $ss = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForRecapCombined($user->getId(), $itemsIdMise);
                         if ($ss) {
                             $dataIsGagne = true;
                             $dataStatus = null;
                             foreach ($ss as $k => $v) {
+
                                 $gain = $v->getGainPotentiel();
                                 $miseTotal = $v->getMisetotale();
                                 $matchs[] = array(
                                     'idMatch' => $v->getMatchs()->getId(),
-                                    'idMise' => $v->getIdMise(),
                                     'dateMatch' => $v->getMatchs()->getDateMatch(),
                                     'equipeDomicile' => $v->getMatchs()->getEquipeDomicile(),
                                     'equipeVisiteur' => $v->getMatchs()->getEquipeVisiteur(),
