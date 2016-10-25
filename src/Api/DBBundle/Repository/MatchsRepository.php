@@ -410,6 +410,13 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         $query->setParameter('idUser' , $userId);
         return $query->getResult();
     }
+    public function findChampionatVoteSimpleDQL($userId){
+        $dql ="SELECT vu from ApiDBBundle:VoteUtilisateur vu LEFT JOIN vu.matchs m LEFT JOIN vu.utilisateur u LEFT JOIN m.championat ch
+               WHERE u.id = :idUser AND vu.isCombined = false GROUP BY ch.nomChampionat";
+        $query = $this->getEntityManager()->createQuery($dql);
+        $query->setParameter('idUser' , $userId);
+        return $query;
+    }
 
     public function findMatchsForRecap(){
         $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
@@ -486,8 +493,54 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
 
     public function findStatusRecap($idVoteUtilisateur){
         $dql ="SELECT vu from ApiDBBundle:VoteUtilisateur vu WHERE vu.id = :idVoteUtilisateur group by vu.idMise ";
-        $query = $this->getEm()->createQuery($dql);
+        $query = $this->getEntityManager()->createQuery($dql);
         $query->setParameter('idVoteUtilisateur', $idVoteUtilisateur);
+        return $query->getResult();
+    }
+
+    public function findMatchsToday(){
+        $now = new \DateTime('now');
+        $tmpNow =  $now->format('Y-m-d');
+        $dateDebut = $tmpNow. ' 00:00:00';
+        $dateFinale = $tmpNow. ' 23:59:59';
+
+        $dql = "SELECT m from ApiDBBundle:Matchs m
+                LEFT JOIN m.championat ch
+                where m.dateMatch BETWEEN :dateDebut and :dateFinale";
+
+        $query = $this->getEntityManager()->createQuery($dql);
+        $query->setParameters(array('dateDebut'=> $dateDebut, 'dateFinale' => $dateFinale));
+        return $query->getResult();
+    }
+
+    public function findChampionatToday(){
+        $now = new \DateTime('now');
+        $tmpNow =  $now->format('Y-m-d');
+        $dateDebut = $tmpNow. ' 00:00:00';
+        $dateFinale = $tmpNow. ' 23:59:59';
+
+        $dql = "SELECT m from ApiDBBundle:Matchs m
+                LEFT JOIN m.championat ch
+                where m.dateMatch BETWEEN :dateDebut and :dateFinale GROUP by ch.nomChampionat ";
+
+        $query = $this->getEntityManager()->createQuery($dql);
+        $query->setParameters(array('dateDebut'=> $dateDebut, 'dateFinale' => $dateFinale));
+        return $query->getResult();
+    }
+
+    public function findMatchsFinished(){
+        $dql = "SELECT m from ApiDBBundle:Matchs m where m.statusMatchs";
+        $query = $this->getEntityManager()->createQuery($dql);
+        return $query->getResult();
+    }
+
+    public function findRecapMatchGagnant($idMatchs, $idMise, $dateMise){
+        $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
+                LEFT JOIN vu.matchs m
+                LEFT JOIN m.championat ch
+                WHERE m.id = :idMatchs and vu.idMise = :idMise and vu.dateMise = :dateMise";
+        $query = $this->getEntityManager()->createQuery($dql);
+        $query->setParameters(array('idMatchs' => $idMatchs, 'idMise' => $idMise, 'dateMise' => $dateMise));
         return $query->getResult();
     }
 }

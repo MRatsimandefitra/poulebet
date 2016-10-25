@@ -140,6 +140,7 @@ class Matchs
      * @ORM\Column(name="masterProno", type="boolean", nullable=true, nullable=true)
      */
     private $masterProno;
+
     /**
      * @var bool
      *
@@ -219,11 +220,18 @@ class Matchs
      * @ORM\Column(name="stateGoalApi", type="boolean", nullable=true)
      */
     private $stateGoalApi;
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="isGagne", type="boolean", nullable=true, nullable=true)
+     */
+    private $isGagne;
 
     /**
     * @ORM\OneToMany(targetEntity="Api\DBBundle\Entity\MatchsEvent", mappedBy="matchs")
     */
     private $matchsEvents;
+
 
 
     /**
@@ -1070,5 +1078,29 @@ class Matchs
     public function getLotoFoot()
     {
         return $this->lotoFoot;
+    }
+
+    /**
+     * Set isGagne
+     *
+     * @param boolean $isGagne
+     *
+     * @return Matchs
+     */
+    public function setIsGagne($isGagne)
+    {
+        $this->isGagne = $isGagne;
+
+        return $this;
+    }
+
+    /**
+     * Get isGagne
+     *
+     * @return boolean
+     */
+    public function getIsGagne()
+    {
+        return $this->isGagne;
     }
 }

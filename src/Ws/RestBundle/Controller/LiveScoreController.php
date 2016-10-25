@@ -182,4 +182,72 @@ class LiveScoreController extends ApiController
 
 
     }
+
+
+    /**
+     * @ApiDoc(
+     *      description = "Récuperer matchs de la jpourné "
+     * )
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getMatchLiveScoreTodayAction(Request $request){
+
+        $matchsToday = $this->getRepo(self::ENTITY_MATCHS)->findMatchsToday();
+        $championatToday = $this->getRepo(self::ENTITY_MATCHS)->findChampionatToday();
+        $result = array();
+        if(is_array($championatToday) && count($championatToday) > 0 ){
+            $result['list_championat'][] = array(
+                'idChampionat' =>$championatToday->getChampionat()->getId(),
+                'nomChampionat' => $championatToday->getChampionat()->getNomChampionat(),
+                'fullNameChampionat' => $championatToday->getChampionat()->getFullNameChampionat()
+            );
+        }else{
+            return $this->noChampionat();
+        }
+
+        if(is_array($matchsToday) && count($matchsToday) > 0 ){
+
+            foreach($matchsToday as $kMatchsToday => $itemsMatchsToday){
+                $result['list_matchs'][] = array(
+                    'teamsDomicile' => $itemsMatchsToday->getTeamsDomicile()->getFullNameClub(),
+                    'teamsVisiteur' => $itemsMatchsToday->getTeamsVisiteur()->getFullNameClub(),
+                    'score' => $itemsMatchsToday->getScore(),
+                    'scoreDomicile' => substr($itemsMatchsToday->getScore(), 0, 1),
+                    'scoreVisiteur' => substr($itemsMatchsToday->getScore(), -1, 1),
+                    'live' => ($itemsMatchsToday->getStatusMatch() == 'active') ? true : false,
+                    'current-state' => array(
+                        'period' => $itemsMatchsToday->getPeriod(),
+                        'minute' => $itemsMatchsToday->getMinute()
+                    ),
+                    'championat' => $itemsMatchsToday->getChampionat()->getId(),
+                    'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $itemsMatchsToday->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
+                    'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $itemsMatchsToday->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
+                );
+            }
+        }else{
+            return $this->noMatchs();
+        }
+
+        $result['code_error'] = 0;
+        $result['success']= true;
+        $result['error'] = false;
+        $result['message'] = "Success";
+        return new JsonResponse($result);
+    }
+
+    private function noChampionat(){
+        $result['code_error'] = 4;
+        $result['success'] = true;
+        $result['error'] = false;
+        $result['message'] = "Aucun championat en cours";
+        return new JsonResponse($result);
+    }
+    private function noMatchs(){
+        $result['code_error'] = 4;
+        $result['success'] = true;
+        $result['error'] = false;
+        $result['message'] = "Aucun matchs en cours";
+        return new JsonResponse($result);
+    }
 }
