@@ -37,7 +37,7 @@ class AchatLotController extends ApiController implements InterfaceDB
         if($category){
             foreach($category as $kCategory => $itemsCategory){
                 $result['category_lot'][] = array(
-                    'category' => $itemsCategory->getCategory()
+                    'category' => $itemsCategory->getLotCategory()->getCategory()
                 );
             }
         }else{
@@ -46,14 +46,19 @@ class AchatLotController extends ApiController implements InterfaceDB
         if($lots){
 
             foreach($lots as $kLots => $itemsLots){
-                $result['list_lot'][] = array(
-                    'idLot' => $itemsLots->getId(),
-                    'nomLot' => $itemsLots->getNomLot(),
-                    'nbPointNecessaire' => $itemsLots->getId(),
-                    'description' => $itemsLots->getDescription(),
-                    'image' => 'dplb.arkeup.com/images/upload/'.$itemsLots->getCheminImage(),
-                    'idLotCategory' => $itemsLots->getLotCategory()->getId(),
-                );
+                $lotCategory = $itemsLots->getLotCategory();
+                $quantity = $itemsLots->getQuantity();
+                if($quantity > 0){
+                    $result['list_lot'][] = array(
+                        'idLot' => $itemsLots->getId(),
+                        'nomLot' => $itemsLots->getNomLot(),
+                        'nbPointNecessaire' => $itemsLots->getId(),
+                        'description' => $itemsLots->getDescription(),
+                        'image' => $request->getHttpHost().'/upload/lots/'.$itemsLots->getCheminImage(),
+                        'idLotCategory' => $lotCategory->getId(),
+                        'qteDisponible' => $quantity
+                    );                    
+                }
             }
             $result['code_error'] = 0;
             $result['success'] = true;

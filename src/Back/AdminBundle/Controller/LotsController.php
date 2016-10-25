@@ -58,7 +58,7 @@ class LotsController extends ApiController implements InterfaceDB
             }
             $image = $lot->getCheminImage();
             if($image && is_object($image)){
-                $dir = $this->get('kernel')->getRootDir() . '/../web/upload/';
+                $dir = $this->get('kernel')->getRootDir() . '/../web/upload/lots/';
                 $filename = time() . "." . $image->guessExtension();
                 $image->move($dir, $filename);
                 $lot->setCheminImage($filename);                
@@ -86,7 +86,7 @@ class LotsController extends ApiController implements InterfaceDB
             }
             $image = $lots->getCheminImage();
             if($image && is_object($image)){
-                $dir = $this->get('kernel')->getRootDir() . '/../web/upload/';
+                $dir = $this->get('kernel')->getRootDir() . '/../web/upload/lots/';
                 $filename = time() . "." . $image->guessExtension();
                 $image->move($dir, $filename);
                 $lots->setCheminImage($filename);                
