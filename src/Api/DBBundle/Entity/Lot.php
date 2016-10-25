@@ -3,6 +3,7 @@
 namespace Api\DBBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Lot
@@ -24,6 +25,11 @@ class Lot
      */
     private $concours;
 
+    /**
+     * @ORM\OneToMany(targetEntity="MvtLot", mappedBy="lot")
+     */
+    private $mvtLots;
+    
     /**
      * @var int
      *
@@ -135,7 +141,9 @@ class Lot
      */
     public function setCheminImage($cheminImage)
     {
-        $this->cheminImage = $cheminImage;
+        if(!empty($cheminImage)){
+            $this->cheminImage = $cheminImage;  
+        }
 
         return $this;
     }
@@ -244,5 +252,61 @@ class Lot
     public function getLotCategory()
     {
         return $this->lotCategory;
+    }
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->mvtLots = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add mvtLot
+     *
+     * @param \Api\DBBundle\Entity\MvtLot $mvtLot
+     *
+     * @return Lot
+     */
+    public function addMvtLot(\Api\DBBundle\Entity\MvtLot $mvtLot)
+    {
+        $this->mvtLots[] = $mvtLot;
+
+        return $this;
+    }
+
+    /**
+     * Remove mvtLot
+     *
+     * @param \Api\DBBundle\Entity\MvtLot $mvtLot
+     */
+    public function removeMvtLot(\Api\DBBundle\Entity\MvtLot $mvtLot)
+    {
+        $this->mvtLots->removeElement($mvtLot);
+    }
+
+    /**
+     * Get mvtLots
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMvtLots()
+    {
+        return $this->mvtLots;
+    }
+    
+    /**
+     * Get last quantity
+     * 
+     * @return int
+     */
+    public function getQuantity(){
+        $mvtLots = array();
+        foreach($this->getMvtLots() as $mvt){
+            $mvtLots[$mvt->getId()] = $mvt->getSoldeLot();
+        }
+        reset($mvtLots);
+        return end($mvtLots);
     }
 }
