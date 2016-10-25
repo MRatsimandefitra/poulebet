@@ -71,7 +71,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
                         $countRow = $countRow + 1;
                         if($countRow < $countTotalRow){
                             $dataIsGagne = true;
-
+                            $dataStatus = null;
                             foreach($ss as $k => $v){
                                 $gain = $v->getGainPotentiel();
                                 $miseTotal = $v->getMisetotale();
@@ -100,6 +100,13 @@ class RecapitulationController extends ApiController implements InterfaceDB
                                 if($this->getStatusRecap($v->getId(), $v->getIdMise(), $v->getDateMise()) === false){
                                     $dataIsGagne = false;
                                 }
+                                if($v->getMatchs()->getStatusMatch() != 'finished'){
+                                    $dataStatus = 'En cours';
+                                }elseif($dataIsGagne === true) {
+                                    $dataStatus = "Gagné";
+                                }else{
+                                        $dataStatus = "Terminé";
+                                }
                             }
                         }
 
@@ -109,52 +116,16 @@ class RecapitulationController extends ApiController implements InterfaceDB
                         'gainsPotentiel' => $gain,
                         'miseTotal' => $miseTotal,
                         'matchs' => $matchs,
-                        'gagnantCombine' => $dataIsGagne
-                       // 'state' => $this->getStateCombined()
+                        'gagnantCombine' => $dataIsGagne,
+                        'statusCombine' => $dataStatus
                     );
                     $result['pagination']['total'] = $totalPage;
                     $result['pagination']['perPage'] = $perPage;
                     $result['pagination']['pageNow'] = $pageNow;
                     $result['pagination']['nbPage'] = $nbPage;
-                   /* $resultMatchs[$itemsIdMise]['gain'] = $gain;
-                    $resultMatchs[$itemsIdMise]['miseTotal'] = $miseTotal;*/
-                   // $resultMatchs[$itemsIdMise]['matchs'] = $matchs;
                     $resultMatchs[$itemsIdMise]['gagnant'] = "";
                 }
 
-
-              //  $result['details'] = $resultMatchs;
-               /* if(!empty($resultMatchs)){
-                    foreach($resultMatchs as $itemsResultMatchs){
-
-                        $iResultMatchs[] = array(
-                            'idMatchs' => $itemsResultMatchs->getMatchs()->getId(),
-                            'dateMatch' => $itemsResultMatchs->getMatchs()->getDateMatch(),
-                            'equipeDomicile' => $itemsResultMatchs->getMatchs()->getEquipeDomicile(),
-                            'equipeVisiteur' => $itemsResultMatchs->getMatchs()->getEquipeVisiteur(),
-                            'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $itemsResultMatchs->getMatchs()->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
-                            'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $itemsResultMatchs->getMatchs()->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
-                            'score' => $itemsResultMatchs->getMatchs()->getScore(),
-                            'scoreDomicile' => substr($itemsResultMatchs->getMatchs()->getScore(), 0, 1),
-                            'scoreVisiteur' => substr($itemsResultMatchs->getMatchs()->getScore(), -1, 1),
-                            'status' => $itemsResultMatchs->getMatchs()->getStatusMatch(),
-                            'tempsEcoules' => $itemsResultMatchs->getMatchs()->getTempsEcoules(),
-                            'live' => ($itemsResultMatchs->getMatchs()->getStatusMatch() == 'active') ? true : false,
-                            'master_prono_1' => $itemsResultMatchs->getMatchs()->getMasterProno1(),
-                            'master_prono_n' => $itemsResultMatchs->getMatchs()->getMasterPronoN(),
-                            'master_prono_2' => $itemsResultMatchs->getMatchs()->getMasterProno2(),
-                            'cote_pronostic_1' => $itemsResultMatchs->getMatchs()->getCot1Pronostic(),
-                            'cote_pronostic_n' => $itemsResultMatchs->getMatchs()->getCoteNPronistic(),
-                            'cote_pronostic_2' => $itemsResultMatchs->getMatchs()->getCote2Pronostic(),
-                            'idMise' => $itemsResultMatchs->getIdMise(),
-                            'voted_equipe' => $itemsResultMatchs->getVote(),
-                            'gainPotentiel' => $itemsResultMatchs->getGainPotentiel(),
-                            'miseTotal' => $itemsResultMatchs->getMisetotale(),
-                            'idChampionat' => $itemsResultMatchs->getMatchs()->getChampionat()->getId(),
-                        );
-                    }
-                    $result['vote_matchs'][] = $iResultMatchs;
-                }*/
                 $result['code_error'] = 0;
                 $result['error'] = false;
                 $result['success'] = true;
