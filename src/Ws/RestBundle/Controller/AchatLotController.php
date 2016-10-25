@@ -37,7 +37,8 @@ class AchatLotController extends ApiController implements InterfaceDB
         if($category){
             foreach($category as $kCategory => $itemsCategory){
                 $result['category_lot'][] = array(
-                    'category' => $itemsCategory->getLotCategory()->getCategory()
+                    'category' => $itemsCategory->getLotCategory()->getCategory(),
+                    'id' => $itemsCategory->getLotCategory()->getId()
                 );
             }
         }else{
