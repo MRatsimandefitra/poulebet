@@ -51,8 +51,8 @@ class Concours
      * @ORM\ManyToMany(targetEntity="Matchs" , cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      **/
-    private $matchs;
-    
+    /*private $matchs;*/
+
     /**
      * Get id
      *
@@ -119,39 +119,6 @@ class Concours
         $this->matchs = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
-    /**
-     * Add match
-     *
-     * @param \Api\DBBundle\Entity\Matchs $match
-     *
-     * @return Concours
-     */
-    public function addMatch(\Api\DBBundle\Entity\Matchs $match)
-    {
-        $this->matchs[] = $match;
-
-        return $this;
-    }
-
-    /**
-     * Remove match
-     *
-     * @param \Api\DBBundle\Entity\Matchs $match
-     */
-    public function removeMatch(\Api\DBBundle\Entity\Matchs $match)
-    {
-        $this->matchs->removeElement($match);
-    }
-
-    /**
-     * Get matchs
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getMatchs()
-    {
-        return $this->matchs;
-    }
 
     /**
      * Set dateDebut

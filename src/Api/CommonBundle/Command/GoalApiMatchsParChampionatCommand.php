@@ -154,7 +154,7 @@ class GoalApiMatchsParChampionatCommand extends ContainerAwareCommand {
         }
         $url = "http://api.xmlscores.com/matches/?c[]=" . $data->getNomChampionat() . "&f=json&open=".$apiKey;
        // $url = $this->getContainer()->get('kernel')->getRootDir().'/../web/json/matches1.json';
-        var_dump($url); die;
+      //  var_dump($url); die;
         $content = file_get_contents($url);
 
         $arrayJson = json_decode($content, true);

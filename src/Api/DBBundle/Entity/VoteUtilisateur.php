@@ -65,21 +65,21 @@ class VoteUtilisateur
      */
     private $classement;
     /**
-     * @var int
+     * @var float
      *
-     * @ORM\Column(name="cote1", type="integer", nullable=true)
+     * @ORM\Column(name="cote1", type="float", nullable=true)
      */
     private $cote1;
     /**
-     * @var int
+     * @var float
      *
-     * @ORM\Column(name="coteN", type="integer", nullable=true)
+     * @ORM\Column(name="coteN", type="float", nullable=true)
      */
     private $coteN;
     /**
-     * @var int
+     * @var float
      *
-     * @ORM\Column(name="cote2", type="integer", nullable=true)
+     * @ORM\Column(name="cote2", type="float", nullable=true)
      */
     private $cote2;
 
@@ -103,10 +103,11 @@ class VoteUtilisateur
      */
     private $idMise;
 
+
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -130,7 +131,7 @@ class VoteUtilisateur
     /**
      * Get vote
      *
-     * @return int
+     * @return integer
      */
     public function getVote()
     {
@@ -138,77 +139,27 @@ class VoteUtilisateur
     }
 
     /**
-     * Set gagnant
+     * Set isCombined
      *
-     * @param boolean $gagnant
+     * @param boolean $isCombined
      *
      * @return VoteUtilisateur
      */
-    public function setGagnant($gagnant)
+    public function setIsCombined($isCombined)
     {
-        $this->gagnant = $gagnant;
+        $this->isCombined = $isCombined;
 
         return $this;
     }
 
     /**
-     * Get gagnant
+     * Get isCombined
      *
-     * @return bool
+     * @return boolean
      */
-    public function getGagnant()
+    public function getIsCombined()
     {
-        return $this->gagnant;
-    }
-
-
-
-    /**
-     * Get utilisateur
-     *
-     * @return \Api\DBBundle\Entity\Utilisateur
-     */
-    public function getUtilisateur()
-    {
-        return $this->utilisateur;
-    }
-
-    /**
-     * Set matchs
-     *
-     * @param \Api\DBBundle\Entity\Matchs $matchs
-     *
-     * @return VoteUtilisateur
-     */
-    public function setMatchs(\Api\DBBundle\Entity\Matchs $matchs = null)
-    {
-        $this->matchs = $matchs;
-
-        return $this;
-    }
-
-    /**
-     * Get matchs
-     *
-     * @return \Api\DBBundle\Entity\Matchs
-     */
-    public function getMatchs()
-    {
-        return $this->matchs;
-    }
-
-    /**
-     * Set utilisateur
-     *
-     * @param \Api\DBBundle\Entity\Utilisateur $utilisateur
-     *
-     * @return VoteUtilisateur
-     */
-    public function setUtilisateur(\Api\DBBundle\Entity\Utilisateur $utilisateur = null)
-    {
-        $this->utilisateur = $utilisateur;
-
-        return $this;
+        return $this->isCombined;
     }
 
     /**
@@ -260,6 +211,126 @@ class VoteUtilisateur
     }
 
     /**
+     * Set classement
+     *
+     * @param integer $classement
+     *
+     * @return VoteUtilisateur
+     */
+    public function setClassement($classement)
+    {
+        $this->classement = $classement;
+
+        return $this;
+    }
+
+    /**
+     * Get classement
+     *
+     * @return integer
+     */
+    public function getClassement()
+    {
+        return $this->classement;
+    }
+
+    /**
+     * Set cote1
+     *
+     * @param float $cote1
+     *
+     * @return VoteUtilisateur
+     */
+    public function setCote1($cote1)
+    {
+        $this->cote1 = $cote1;
+
+        return $this;
+    }
+
+    /**
+     * Get cote1
+     *
+     * @return float
+     */
+    public function getCote1()
+    {
+        return $this->cote1;
+    }
+
+    /**
+     * Set coteN
+     *
+     * @param float $coteN
+     *
+     * @return VoteUtilisateur
+     */
+    public function setCoteN($coteN)
+    {
+        $this->coteN = $coteN;
+
+        return $this;
+    }
+
+    /**
+     * Get coteN
+     *
+     * @return float
+     */
+    public function getCoteN()
+    {
+        return $this->coteN;
+    }
+
+    /**
+     * Set cote2
+     *
+     * @param float $cote2
+     *
+     * @return VoteUtilisateur
+     */
+    public function setCote2($cote2)
+    {
+        $this->cote2 = $cote2;
+
+        return $this;
+    }
+
+    /**
+     * Get cote2
+     *
+     * @return float
+     */
+    public function getCote2()
+    {
+        return $this->cote2;
+    }
+
+    /**
+     * Set gagnant
+     *
+     * @param boolean $gagnant
+     *
+     * @return VoteUtilisateur
+     */
+    public function setGagnant($gagnant)
+    {
+        $this->gagnant = $gagnant;
+
+        return $this;
+    }
+
+    /**
+     * Get gagnant
+     *
+     * @return boolean
+     */
+    public function getGagnant()
+    {
+        return $this->gagnant;
+    }
+
+    /**
      * Set dateMise
      *
      * @param \DateTime $dateMise
@@ -281,30 +352,6 @@ class VoteUtilisateur
     public function getDateMise()
     {
         return $this->dateMise;
-    }
-
-    /**
-     * Set isCombined
-     *
-     * @param boolean $isCombined
-     *
-     * @return VoteUtilisateur
-     */
-    public function setIsCombined($isCombined)
-    {
-        $this->isCombined = $isCombined;
-
-        return $this;
-    }
-
-    /**
-     * Get isCombined
-     *
-     * @return boolean
-     */
-    public function getIsCombined()
-    {
-        return $this->isCombined;
     }
 
     /**
@@ -332,98 +379,50 @@ class VoteUtilisateur
     }
 
     /**
-     * Set classement
+     * Set matchs
      *
-     * @param integer $classement
+     * @param \Api\DBBundle\Entity\Matchs $matchs
      *
      * @return VoteUtilisateur
      */
-    public function setClassement($classement)
+    public function setMatchs(\Api\DBBundle\Entity\Matchs $matchs = null)
     {
-        $this->classement = $classement;
+        $this->matchs = $matchs;
 
         return $this;
     }
 
     /**
-     * Get classement
+     * Get matchs
      *
-     * @return integer
+     * @return \Api\DBBundle\Entity\Matchs
      */
-    public function getClassement()
+    public function getMatchs()
     {
-        return $this->classement;
+        return $this->matchs;
     }
 
     /**
-     * Set cote1
+     * Set utilisateur
      *
-     * @param integer $cote1
+     * @param \Api\DBBundle\Entity\Utilisateur $utilisateur
      *
      * @return VoteUtilisateur
      */
-    public function setCote1($cote1)
+    public function setUtilisateur(\Api\DBBundle\Entity\Utilisateur $utilisateur = null)
     {
-        $this->cote1 = $cote1;
+        $this->utilisateur = $utilisateur;
 
         return $this;
     }
 
     /**
-     * Get cote1
+     * Get utilisateur
      *
-     * @return integer
+     * @return \Api\DBBundle\Entity\Utilisateur
      */
-    public function getCote1()
+    public function getUtilisateur()
     {
-        return $this->cote1;
-    }
-
-    /**
-     * Set coteN
-     *
-     * @param integer $coteN
-     *
-     * @return VoteUtilisateur
-     */
-    public function setCoteN($coteN)
-    {
-        $this->coteN = $coteN;
-
-        return $this;
-    }
-
-    /**
-     * Get coteN
-     *
-     * @return integer
-     */
-    public function getCoteN()
-    {
-        return $this->coteN;
-    }
-
-    /**
-     * Set cote2
-     *
-     * @param integer $cote2
-     *
-     * @return VoteUtilisateur
-     */
-    public function setCote2($cote2)
-    {
-        $this->cote2 = $cote2;
-
-        return $this;
-    }
-
-    /**
-     * Get cote2
-     *
-     * @return integer
-     */
-    public function getCote2()
-    {
-        return $this->cote2;
+        return $this->utilisateur;
     }
 }

@@ -162,6 +162,7 @@ class ConcoursController extends ApiController {
             $this->get('doctrine.orm.entity_manager')->flush();
         }
         $concours = $this->getRepoFormId(self::ENTITY_CONCOURS, $id);
+       // var_dump($concours); die;
         $championat = $this->getAllEntity(self::ENTITY_CHAMPIONAT);
         $sm = $this->getServiceMatch();
         $pays = $sm->getCountry();
@@ -171,9 +172,11 @@ class ConcoursController extends ApiController {
               LEFT JOIN m.championat c
               "
               ;
+       /* $dql ="SELECT m from ApiDBBundle:Matchs m
+               JOIN m.concours co
+            LEFT JOIN m.championat c ";*/
         $query = $this->get('doctrine.orm.entity_manager')->createQuery($dql);
         $result = $query->getResult();
-
         $where = array();
         $where[] = " c.isEnable = true";
         $params = array();
@@ -234,31 +237,7 @@ class ConcoursController extends ApiController {
         }
 
 
-        /*if($request->get('date_match_debut') && !$request->get('date_match_finale')){
-            $dateMatch = $request->get('date_match_debut');
-            $where[] = "m.dateMatch BETWEEN :dateStart AND :dateEnd";
-            $dateStart = $dateMatch.' 00:00:00';
 
-            $dateEnd = new \DateTime($dateStart);
-            $dateEnd->modify('next sunday');
-            $dateEnd = $dateEnd->format('Y-m-d');
-            $dateEnd = $dateEnd. ' 23:59:59';
-
-            $params["dateStart"] = $dateStart;
-            $params["dateEnd"] = $dateEnd;
-            $searchValue['date_match_debut'] = $dateMatch;
-        }
-        if($request->get('date_match_finale') ){
-            $dateMatch = $request->get('date_match_finale');
-            $where[] = "m.dateMatch BETWEEN :dateStart AND :dateEnd";
-            $dateStart = $dateMatch.' 00:00:00';
-            $dateEnd = $dateMatch. ' 23:59:59';
-
-            $params["dateStart"] = $dateStart;
-            $params["dateEnd"] = $dateEnd;
-            $searchValue['date_match_debut'] = $dateMatch;
-        }
-        */
         # champinat seul
         if($request->get('championat_match')){
 
@@ -286,6 +265,8 @@ class ConcoursController extends ApiController {
            $withSelection = true;
             //$dql .= " LEFT JOIN c";
         }
+
+
         if (!empty($where)) {
             $dql .= ' WHERE ' . implode(' AND ', $where);
         }
@@ -323,12 +304,14 @@ class ConcoursController extends ApiController {
         foreach($idarray as $vId){
             $matchsEntity = $this->getRepoFormId(self::ENTITY_MATCH, $vId);
             $matchsEntity->addConcour($concours);
-            $concours->addMatch($matchsEntity);
+            //$concours->addMatch($matchsEntity);
+            //die('okok');
             $this->get('doctrine.orm.entity_manager')->persist($matchsEntity);
             $this->get('doctrine.orm.entity_manager')->flush();
         }
-        $this->get('doctrine.orm.entity_manager')->persist($concours);
-        $this->get('doctrine.orm.entity_manager')->flush();
+
+       /* $this->get('doctrine.orm.entity_manager')->persist($concours);
+        $this->get('doctrine.orm.entity_manager')->flush();*/
 
         $droitAdmin = $this->get('roles.manager')->getDroitAdmin('Lots concours');
         return $this->render('BackAdminBundle:Concours:add_match_concours.html.twig', array(

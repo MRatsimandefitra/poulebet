@@ -19,6 +19,7 @@ use Api\CommonBundle\Fixed\InterfaceDB;
 use Api\DBBundle\Entity\Lot;
 use Api\DBBundle\Entity\DroitAdmin;
 use Api\DBBundle\Entity\LotCategory;
+use Api\DBBundle\Entity\MvtLot;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -49,11 +50,19 @@ class LotsController extends ApiController implements InterfaceDB
         $form = $this->formPost(self::FORM_LOT, $lot);
         $form->handleRequest($request);
         if ($form->isValid()) {
+            $newQuantity = $form->get('quantity')->getData();
+            if(!empty($newQuantity) && (intval($newQuantity) > 0)){
+                $newQuantity = intval($newQuantity);
+                $token = $request->request->get('token');
+                $this->addMvtLot($token, $lot, $newQuantity, 0);
+            }
             $image = $lot->getCheminImage();
-            $dir = $this->get('kernel')->getRootDir() . '/../web/upload/';
-            $filename = time() . "." . $image->guessExtension();
-            $image->move($dir, $filename);
-            $lot->setCheminImage($filename);
+            if($image && is_object($image)){
+                $dir = $this->get('kernel')->getRootDir() . '/../web/upload/lots/';
+                $filename = time() . "." . $image->guessExtension();
+                $image->move($dir, $filename);
+                $lot->setCheminImage($filename);                
+            }
             $lot->setCreatedAt(new \DateTime("now"));
             $this->insert($lot);
             return $this->redirectToRoute("index_lots");
@@ -69,11 +78,19 @@ class LotsController extends ApiController implements InterfaceDB
         $form = $this->formPost(self::FORM_LOT, $lots);
         $form->handleRequest($request);
         if ($form->isValid()) {
+            $newQuantity = $form->get('newQuantity')->getData();
+            if(!empty($newQuantity) && (intval($newQuantity) > 0)){
+                $newQuantity = intval($newQuantity);
+                $token = $request->request->get('token');
+                $this->addMvtLot($token, $lots, $newQuantity, 0);
+            }
             $image = $lots->getCheminImage();
-            $dir = $this->get('kernel')->getRootDir() . '/../web/upload/';
-            $filename = time() . "." . $image->guessExtension();
-            $image->move($dir, $filename);
-            $lots->setCheminImage($filename);
+            if($image && is_object($image)){
+                $dir = $this->get('kernel')->getRootDir() . '/../web/upload/lots/';
+                $filename = time() . "." . $image->guessExtension();
+                $image->move($dir, $filename);
+                $lots->setCheminImage($filename);                
+            }
             $this->insert($lots, array('success' => 'success', 'error' => 'error'));
             return $this->redirectToRoute('index_lots');
         }
@@ -140,5 +157,25 @@ class LotsController extends ApiController implements InterfaceDB
         $categoryLots = $this->getRepoFormId(self::ENTITY_LOT_CATEGORY, $id);
         $this->remove($categoryLots);
         return $this->redirectToRoute('index_lots_category');
+    }
+    
+    /**
+     * Add MvtLot for Lot entity
+     * 
+     * @param string $token
+     * @param Lot $lot
+     * @param int $newQuantity
+     * @param int $out output
+     */
+    protected function addMvtLot($token,$lot,$newQuantity,$out){
+        $userCurrent = $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
+        $mvtLot = new MvtLot();
+        $mvtLot->setLot($lot);
+        $mvtLot->setUtilisateur($userCurrent);
+        $mvtLot->setSortieLot($out);
+        $solde = (int) $lot->getQuantity() + $newQuantity;
+        $mvtLot->setSoldeLot($solde);
+        $mvtLot->setEntreeLot($newQuantity);
+        $this->getEm()->persist($mvtLot);
     }
 }

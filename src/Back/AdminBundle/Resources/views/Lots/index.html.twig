@@ -26,13 +26,14 @@
                     <td style="max-width: 500px">{{ 'Description'|trans }}</td>
                     <td>{{ 'Nb point nécessaire'|trans }}</td>
                     <td>{{ 'Categorie' }}</td>
+                    <td>{{ 'Qté dispo'|trans }}</td>
                     <td style="min-height: 150px;">{{ 'Date de création'|trans }}</td>
                     <td>{{ 'Actions'|trans }}</td>
                 </tr>
                 {% for row in entities %}
                     <tr>
                         <td>
-                            <img class ="lots" src="{{asset('upload/'~row.cheminImage)}}">
+                            <img class ="lots" src="{{asset('upload/lots/'~row.cheminImage)}}">
                         </td>
                         <td>
                             {{ row.nomLot }}
@@ -46,6 +47,9 @@
                             {#{{ dump(row.lotCategory) }}#}
                             {{ row.lotCategory.category }}
                                 {% endif %}
+                        </td>
+                        <td>
+                            {{ row.getQuantity }}
                         </td>
                         <td>
                             {{ row.createdAt|date('d-m-Y') }}

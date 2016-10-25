@@ -30,7 +30,7 @@ class Device
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="Utilisateur", cascade={"remove"})
+     * @ORM\ManyToOne(targetEntity="Utilisateur", cascade={"remove"}, inversedBy="devices")
      * @ORM\JoinColumn(name="utilisateur_id", onDelete="CASCADE")
      */
     private $utilisateur;

@@ -2,3 +2,7 @@ ws_rest_matchs_live_score:
     path:     /matchs
     defaults: { _controller: WsRestBundle:LiveScore:getMatchLiveScore }
     methods: GET
+ws_rest_matchs_live_today:
+    path:     /matchs-today
+    defaults: { _controller: WsRestBundle:LiveScore:getMatchLiveScoreToday }
+    methods: GET
