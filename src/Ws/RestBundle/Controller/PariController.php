@@ -121,7 +121,7 @@ class PariController extends ApiController implements InterfaceDB
                         $value = $value * $itemsResultCode;
                     }
                 }
-                $result['gain_potentiel_max'] = $value;
+                $result['gain_potentiel_max'] = round($value);
                 $result['code_error'] = 0;
                 $result['success'] = true;
                 $result['error'] = false;
