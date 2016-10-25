@@ -12,7 +12,7 @@
 /var/sessions/*
 !var/sessions/.gitkeep
 !var/SymfonyRequirements.php
-.idea/*
+!.idea/*
 .svn/
 /vendor/
 .idea/
@@ -22,12 +22,3 @@
 composer.lock
 var/cache/
 /.svn
-/web/app_dev.php
-/web/config.php
-/web/.htaccess
-
-/app/bootstrap.php.cache
-/src/Api/DBBundle/Entity/*.php~
-/src/Api/DBBundle/Entity/*.php~
-*.php~
-*.php~
