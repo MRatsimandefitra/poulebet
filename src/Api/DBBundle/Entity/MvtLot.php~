@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="mvt_lot")
  * @ORM\Entity(repositoryClass="Api\DBBundle\Repository\MvtLotRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class MvtLot
 {
@@ -18,8 +19,8 @@ class MvtLot
      */
     private $utilisateur;
     /**
-     * @ORM\ManyToOne(targetEntity="Lot", cascade={"persist"})
-     * @ORM\JoinColumn(name="lot_id")
+     * @ORM\ManyToOne(targetEntity="Lot", cascade={"persist"}, inversedBy="mvtLots")
+     * @ORM\JoinColumn(name="lot_id", onDelete="CASCADE")
      */
     private $lot;
     /**
@@ -212,5 +213,14 @@ class MvtLot
     public function getLot()
     {
         return $this->lot;
+    }
+    
+    /**
+     * @ORM\PrePersist
+     * 
+     */
+    public function setCreated()
+    {
+        $this->dateMvtLot = new \DateTime();
     }
 }

@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class MvtPoint
 {
     /**
-     * @ORM\ManyToOne(targetEntity="Utilisateur", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Utilisateur", cascade={"persist"}, inversedBy="mvtPoints")
      * @ORM\JoinColumn(name="utilisateur_id")
      */
     private $utilisateur;

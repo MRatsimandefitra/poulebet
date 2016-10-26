@@ -22,3 +22,5 @@
 composer.lock
 var/cache/
 /.svn
+/src/Api/DBBundle/Entity/*.php~
+*.php~
