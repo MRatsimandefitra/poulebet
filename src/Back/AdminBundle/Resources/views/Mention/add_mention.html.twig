@@ -8,6 +8,14 @@
     <div class="col-lg-12">
         <div class="col-lg-12">
             {{ 'Listes des droits'|trans }}
+            <div class="link">
+                <a href="{{ path('edit_publicite', {'isPopup': 1 } ) }}">
+                    {{ 'Popup' }}
+                </a> &nbsp;&nbsp; | &nbsp;&nbsp;
+                <a href="{{ path('edit_publicite', {'isPopup': 0 } ) }}">
+                    {{ 'Bannière ' }}
+                </a>
+            </div>
            {# {% include 'BackAdminBundle:Mention:sous_menu.html.twig' %}#}
         </div>
 

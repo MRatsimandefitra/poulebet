@@ -31,5 +31,7 @@ interface InterfaceDB {
     const ENTITY_TEAMS = 'ApiDBBundle:Teams';
     const  ENTITY_TEAMS_CORRES = 'ApiDBBundle:TeamsCoresspondance';
     const ENTITY_MATCHS_FLUX_COTE = 'ApiDBBundle:MatchsFluxCote';
+    const ENTITY_PUB  = 'ApiDBBundle:Publicite';
+    const FORM_PUB ='Api\DBBundle\Form\PubliciteType';
 
 }

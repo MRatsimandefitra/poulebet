@@ -1,0 +1,43 @@
+{% extends 'BackAdminBundle::layout_match.html.twig' %}
+
+{% block title %}{{ parent() }}{% endblock %}
+{% block ariane %}{{ parent() }}{% endblock %}
+
+{% block page %}
+    <div class="col-lg-12">
+        <div class="col-lg-6">
+            <div class="form-pub">
+                {{ form_start(form) }}
+
+                <div class="input">
+                    {{ 'Publicite'|trans }}
+                    {{ form_widget(form.cheminPub) }}
+                    {{ form_errors(form.cheminPub) }}
+                </div>
+              {#  <div class="input">
+                    {{ 'Type'|trans }}
+                    {{ form_widget(form.type) }}
+                    {{ form_errors(form.type) }}
+                </div>
+                <div class="input">
+                    {{ 'Publié'|trans }}
+                    {{ form_widget(form.isPublish) }}
+                    {{ form_errors(form.isPublish) }}
+                </div>#}
+                <div class="input">
+                    <input type="submit" class="btn-primary" value="{{ 'btn.add'|trans }}"/>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+        <div class="col-lg-6">
+            {% if publicite is defined and publicite %}
+            <div class="list">
+                <div class="img">
+                    <img src="{{ asset('upload/admin/publicite/' ~ publicite.cheminLogo) }}" alt=""/>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
