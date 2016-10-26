@@ -475,7 +475,7 @@ class PariController extends ApiController implements InterfaceDB
         $gainsPotentiel = $request->request->get('gainPotentiel');
         $miseTotal = $request->request->get('miseTotal');
         $voteMatchsSimple = $request->request->get('voteSimple');
-        //$matchId = $request->request->get('matchsId');
+        $matchId = $request->request->get('matchsId');
 
 
         if (!$token) {

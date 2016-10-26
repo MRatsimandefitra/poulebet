@@ -178,6 +178,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
                 $pageNow = $totalPage;
             }
             $countBoucle = $pageNow * 10;
+
             if (!empty($nbRecap)) {
                 $count = 0;
                 foreach ($nbRecap as $k => $vItems) {
@@ -200,7 +201,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
                             'master_prono_n' => $vItems->getMatchs()->getMasterPronoN(),
                             'master_prono_2' => $vItems->getMatchs()->getMasterProno2(),
                             'cote_pronostic_1' => $vItems->getCote1(),
-                            'cote_pronostic_n' => $vItems->getCodeN(),
+                            'cote_pronostic_n' => $vItems->getCoteN(),
                             'cote_pronostic_2' => $vItems->getCote2(),
                             'gainsPotentiel' => $vItems->getGainPotentiel(),
                             'miseTotal' => $vItems->getMisetotale(),
@@ -211,6 +212,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
                         );
                     }
                 }
+                $result['nb'] = count($nbRecap);
                 $result['code_error'] = 0;
                 $result['error'] = false;
                 $result['success'] = true;
