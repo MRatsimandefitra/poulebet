@@ -212,7 +212,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
                         );
                     }
                 }
-                $result['nb'] = count($nbRecap);
+              //  $result['nb'] = count($nbRecap);
                 $result['code_error'] = 0;
                 $result['error'] = false;
                 $result['success'] = true;
