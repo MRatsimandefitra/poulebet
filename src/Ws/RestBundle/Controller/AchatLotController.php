@@ -14,6 +14,105 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 class AchatLotController extends ApiController implements InterfaceDB
 {
     /**
+     * Ws, Get list des lots par categorie
+     * @ApiDoc(
+     *   description="Ws, Get list des lots par categorie",
+     *   parameters = {
+     *          {"name" = "category_id", "dataType"="int" ,"required"=true, "description"= "ID de la catégorie"}
+     *      }
+     * )
+     */
+    public function getListLotCategoryAction(Request $request){
+        $categoryId = $request->request->get('category_id');
+        if(!$categoryId){
+            return $this->noCategory();
+        }
+        $lots = $this->getRepo(self::ENTITY_LOTS)->getLotsByCategory($categoryId);
+        $output = array();
+        if(count($lots) > 0){
+            foreach($lots as $lot){
+                $output['list_lot'][] = array(
+                    'idLot' => $lot->getId(),
+                    'nomLong' => $lot->getNomLong(),
+                    'nbPointNecessaire' => $lot->getId(),
+                    'cheminImage' => $request->getHttpHost().'/upload/lots/'.$lot->getCheminImage(),
+                    'description' => $lot->getDescription()
+                ); 
+            }
+            $output['code_error'] = 0;
+            $output['success'] = true;
+            $output['error'] = false;
+            $output['message'] = "Success";
+        } else {
+            $output['code_error'] = 0;
+            $output['success'] = true;
+            $output['error'] = false;
+            $output['message'] = "Aucun lots disponible";
+        }
+        return new JsonResponse($output);
+    }
+    
+    /**
+     * Ws, check if user can buy
+     * @ApiDoc(
+     *   description="Ws, verifier si l'utilisateur peut acheter le lot",
+     *   parameters = {
+     *          {"name" = "lot_id", "dataType"="int" ,"required"=true, "description"= "ID du lot"},
+     *          {"name" = "token", "dataType"="string" ,"required"=true, "description"= "Token de l'utilisateur "}
+     *      }
+     * )
+     */
+    public function checkBuyLotAction(Request $request){
+        $lotId = $request->request->get('lot_id');
+        $token = $request->request->get('token');
+        if(!$lotId){
+            return $this->noLot();
+        }
+        if(!$token){
+            return $this->noToken();
+        }
+        $user = $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
+        if(!$user){
+            return $this->noUser();
+        }
+        $lot = $this->getRepo(self::ENTITY_LOTS)->findOneById($lotId);
+        $output = array();
+        if($lot){
+            // last Solde
+            $credit = $this->getRepoFrom(self::ENTITY_MVT_CREDIT, array('utilisateur' => $user),array('id' => 'DESC'));
+            if (!empty($credit)) {
+                if(is_object($credit[0])){
+                    $idLast = $credit[0]->getId();
+                }else{
+                    $idLast = $credit[0][1];
+                }
+                $soldes = $this->getRepoFrom(self::ENTITY_MVT_CREDIT, array('id' => $idLast));
+
+                foreach ($soldes as $solde) {
+                    $dernierSolde = $solde->getSoldeCredit();
+                }
+            } else {
+                $dernierSolde = 0;
+            }
+            $output['response'] = false;
+            if($dernierSolde >= $lot->getNbPointNecessaire()){
+                $output['response'] = true;
+            }
+            $output['code_error'] = 0;
+            $output['success'] = true;
+            $output['error'] = false;
+            $output['message'] = "Success";
+        } else {
+            $output['response'] = false;
+            $output['code_error'] = 0;
+            $output['success'] = true;
+            $output['error'] = false;
+            $output['message'] = "Aucun lot disponible";
+        }
+        return new JsonResponse($output);
+    }
+    
+    /**
      * Ws, Get list des lots
      * @ApiDoc(
      *   description="Ws, Get list des lots ",
@@ -218,6 +317,22 @@ class AchatLotController extends ApiController implements InterfaceDB
         $result['error'] = false;
         $result['success'] = true;
         $result['message'] = "Aucun utilisateur";
+        return new JsonResponse($result);
+    }
+    
+    private function noCategory(){
+        $result['code_error'] = 2;
+        $result['error'] = true;
+        $result['success'] = false;
+        $result['message'] = "L'ID de la categorie doit etre précisé";
+        return new JsonResponse($result);
+    }
+    
+    private function noLot(){
+        $result['code_error'] = 2;
+        $result['error'] = true;
+        $result['success'] = false;
+        $result['message'] = "L'ID du lot doit etre précisé";
         return new JsonResponse($result);
     }
 }

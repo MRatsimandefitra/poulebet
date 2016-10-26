@@ -6,3 +6,11 @@ insert_address_livraison:
     path:     /insert-addresse-livraison
     defaults: { _controller: WsRestBundle:AchatLot:postInsertAddressLivraison }
     methods: POST # nomcomplet, numero, pays, region, codepostal, ville, voie
+list_des_lots_category:
+    path:     /get-list-lots-category
+    defaults: { _controller: WsRestBundle:AchatLot:getListLotCategory }
+    methods: POST #category_id
+check_buy_lot:
+    path:     /check-lot
+    defaults: { _controller: WsRestBundle:AchatLot:checkBuyLot }
+    methods: POST #lot_id,token
