@@ -41,6 +41,7 @@ class PariController extends ApiController implements InterfaceDB
         if ($isCombined === NULL) {
             return $this->noCombined();
         }
+
         $result = array();
 
         if ($isCombined) {
@@ -75,7 +76,7 @@ class PariController extends ApiController implements InterfaceDB
             }
             // credit
 
-
+            $nbRecapTotal = $this->getRepo(self::ENTITY_MATCHS)->findNbRecapMatchsSimpleAndCombined($user->getId());
             // matchs
             $matchs = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForPari($date, $championatWs, null, $idConcour);
 
@@ -122,6 +123,7 @@ class PariController extends ApiController implements InterfaceDB
                     }
                 }
                 $result['gain_potentiel_max'] = round($value);
+                $result['itemTotal'] = $nbRecapTotal;
                 $result['code_error'] = 0;
                 $result['success'] = true;
                 $result['error'] = false;
@@ -141,6 +143,7 @@ class PariController extends ApiController implements InterfaceDB
                 return $this->noToken();
             }
             $user = $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
+            $nbRecapTotal = $this->getRepo(self::ENTITY_MATCHS)->findNbRecapMatchsSimpleAndCombined($user->getId());
             if (!$user) {
                 return $this->noUser();
             }
@@ -247,7 +250,7 @@ class PariController extends ApiController implements InterfaceDB
                     }
                 }
 
-
+                $result['itemTotal'] = $nbRecapTotal;
                 $result['code_error'] = 0;
                 $result['error'] = false;
                 $result['success'] = true;

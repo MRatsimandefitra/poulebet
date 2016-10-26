@@ -39,4 +39,8 @@ route_prefix_admin_lots:
 route_prefix_admin_achats:
     resource: "@BackAdminBundle/Resources/config/routing/achat.yml"
     prefix:   /achats
+route_prefix_admin_publicite:
+    resource: "@BackAdminBundle/Resources/config/routing/publicite.yml"
+    prefix:   /publicites
+
 

@@ -1,0 +1,15 @@
+index_publicite:
+    path:     /
+    defaults: { _controller: BackAdminBundle:Publicite:indexPublicite }
+
+add_publicite:
+    path:     /add-pub
+    defaults: { _controller: BackAdminBundle:Publicite:addPublicite }
+
+edit_publicite:
+    path:     /edit-pub/{isPopup}
+    defaults: { _controller: BackAdminBundle:Publicite:editPublicite }
+
+remove_publicite:
+    path:     /remove-pub/{id}
+    defaults: { _controller: BackAdminBundle:Publicite:removePublicite }
