@@ -31,9 +31,9 @@ class PariController extends ApiController implements InterfaceDB
     public function postGetAllMathsAction(Request $request)
     {
 
-        $date = $request->request->get('date');
-        $championatWs = $request->request->get('championat');
-        $token = $request->request->get('token');
+        $date = $request->get('date');
+        $championatWs = $request->get('championat');
+        $token = $request->get('token');
         if (!$token) {
             return $this->noToken();
         }
