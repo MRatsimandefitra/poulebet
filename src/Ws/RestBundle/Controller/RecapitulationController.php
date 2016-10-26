@@ -32,6 +32,8 @@ class RecapitulationController extends ApiController implements InterfaceDB
         }
         // var_dump($page); die;
         $this->getStateCombined($user->getId());
+        $nbRecapTotal = $this->getRepo(self::ENTITY_MATCHS)->findNbRecapMatchsSimpleAndCombined($user->getId());
+        $result = array();
         $result = array();
         if ($isCombined) {
 
@@ -133,6 +135,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
                         $result['pagination']['perPage'] = $perPage;
                         $result['pagination']['pageNow'] = $pageNow;
                         $result['pagination']['nbPage'] = $nbPage;
+                        $result['itemTotal'] = $nbRecapTotal;
                         $resultMatchs[$itemsIdMise]['gagnant'] = "";
                     }
                 }
@@ -222,6 +225,9 @@ class RecapitulationController extends ApiController implements InterfaceDB
                 $result['pagination']['perPage'] = $perPage;
                 $result['pagination']['pageNow'] = $pageNow;
                 $result['pagination']['nbPage'] = $nbPage;
+
+                $result['itemTotal'] = $nbRecapTotal;
+
                 return new JsonResponse($result);
 
             } else {

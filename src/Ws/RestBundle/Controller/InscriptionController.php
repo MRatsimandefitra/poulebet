@@ -40,6 +40,7 @@ class InscriptionController extends ApiRestController
      */
      public function postUserFromAndroidAction(Request $request)
      {
+
          $username = $request->get('username');
          $prenom = $request->get('prenom');
          $email = $request->get('email');
