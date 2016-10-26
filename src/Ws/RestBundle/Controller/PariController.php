@@ -708,6 +708,23 @@ class PariController extends ApiController implements InterfaceDB
             $result['error'] = false;
             $result['success'] = true;
             $result['message'] = "Success";
+            //user
+            $device_token = array();
+            $messageData = array("message"=> "1","type"=>"concours","categorie"=> "recap");
+            $users = $this->getRepo(self::ENTITY_UTILISATEUR)->findAll();
+            foreach($users as $user){
+                $devices = $user->getDevices();
+                foreach ($devices as $device){
+                    //$device_token[] = $device->getToken();
+                    array_push($device_token, $device->getToken());
+                }
+            }
+            $data = array(
+                'registration_ids' => $device_token,
+                'data' => $messageData
+            );
+            $this->sendGCMNotification($data);
+
             return new JsonResponse($result);
         }
     }
