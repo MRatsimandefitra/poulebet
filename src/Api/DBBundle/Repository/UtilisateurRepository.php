@@ -12,12 +12,14 @@ class UtilisateurRepository extends \Doctrine\ORM\EntityRepository
 {
     public function testIfUserExist($username, $emailPost)
     {
-
+        $mailTri  = strchr($emailPost, '@', true);
+        $mailTri = $mailTri .'@';
         $dql = "SELECT u FROM ApiDBBundle:Utilisateur u
-                WHERE u.username = :username or u.email LIKE :email";
+                WHERE   u.email LIKE :email";
         $query = $this->getEntityManager()->createQuery($dql);
-        $query->setParameters(array('username' => $username, 'email' => '%'.$emailPost.'%'));
-        if ($query->getResult()) {
+        $query->setParameters(array( 'email' => '%'.$mailTri.'%'));
+
+        if (count($query->getResult()) > 0) {
             foreach($query->getResult() as $kResult => $itemsResult){
                 $email = $itemsResult->getEmail();
                 $emailValide =  strchr($email, '@', true);
