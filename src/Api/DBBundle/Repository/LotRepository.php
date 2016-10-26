@@ -16,4 +16,22 @@ class LotRepository extends \Doctrine\ORM\EntityRepository
         $query = $this->getEntityManager()->createQuery($dql);
         return $query->getResult();
     }
+    
+    /**
+     * get Lots by Category
+     *
+     * @return mixed
+     */
+    public function getLotsByCategory($categoryId)
+    {
+        $query = $this->createQueryBuilder('lot')
+            ->select('lot')
+            ->join('lot.lotCategory', 'lotCategory')
+            ->andWhere('lotCategory.id = :categoryId')
+            ->setParameter('categoryId', $categoryId)
+            ->orderBy('lot.id', 'asc')
+            ->getQuery();
+
+        return $results = $query->getResult();
+    }
 }
