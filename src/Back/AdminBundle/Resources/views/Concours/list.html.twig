@@ -83,7 +83,14 @@
                     <td>{{ 'Actions'|trans }}</td>
                 </tr>
                 {% for row in concours %}
-                    <tr>
+                    {# TEST COLORIER EN COURS #}
+
+                    {% if "now"|date('Ymd') > row.dateDebut|date('Ymd') and "now"|date('Ymd') < row.dateFinale|date('Ymd') %}
+                        <tr class="selected">
+
+                    {% else %}
+                        <tr>
+                        {% endif %}
                         <td>
                             {{ row.numero }}
                         </td>

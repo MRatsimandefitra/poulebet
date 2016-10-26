@@ -51,7 +51,7 @@ class ChampionnatController extends ApiController
         $championat = $this->getRepoFormId(self::ENTITY_CHAMPIONAT, $id);
 
         $nbChampionat = count($this->getAllEntity(self::ENTITY_CHAMPIONAT)) + 1;
-        $form = $this->formPost(self::FORM_CHAMPIONAT, $championat, array('nbChampionat' => $nbChampionat));
+        $form = $this->formPost(self::FORM_CHAMPIONAT, $championat, array('nbChampionat' => $nbChampionat, 'edit' => true));
         $form->handleRequest($request);
         /*$countries = $request->get("pays");
         $championat->setPays($countries);*/
@@ -71,7 +71,7 @@ class ChampionnatController extends ApiController
 
         $championat = new Championat();
         $nbChampionat = count($this->getAllEntity(self::ENTITY_CHAMPIONAT)) + 1;
-        $form = $this->formPost(self::FORM_CHAMPIONAT, $championat, array('nbChampionat' => $nbChampionat));
+        $form = $this->formPost(self::FORM_CHAMPIONAT, $championat, array('nbChampionat' => $nbChampionat, 'rdit' => false));
         $form->handleRequest($request);
 
         if($form->isValid()){

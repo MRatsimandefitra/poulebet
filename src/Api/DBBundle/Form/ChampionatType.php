@@ -36,36 +36,8 @@ class ChampionatType extends AbstractType
             ))
             ->add('nomChampionat', TextType::class)
             ->add('fullNameChampionat', TextType::class)
-          /*  ->add('typeChampionat', ChoiceType::class, array(
-                'choices' => array(
-                    'International' => 'International',
-                    'National' => 'National',
-                    'Regional' => 'Regional'
-                ),
-                'placeholder' => 'Choisir le type championat',
-                'empty_data'  => null
-
-            ))*/
-           /* ->add('dateDebutChampionat', DateType::class, array(
-                    'data' => new \DateTime('2016-01-01'),
-                    'html5' => false,
-                    'widget' => 'single_text',
-                    'attr' => ['class' => 'datepic', 'style' => "width:200px"]
-                'format' => 'yyyy-MM-dd'
-            ))*/
-           /* ->add('dateFinaleChampionat', DateType::class, array(
-                    'data' => new \DateTime('2016-12-31'),
-                    'html5' => false,
-                    'attr' => ['class' => 'datepic', 'style' => "width:200px"],
-                    'widget' => 'single_text',
-
-            ))*/
-           /* ->add('teamsPays', EntityType::class, array(
-                'class' => 'ApiDBBundle:TeamsPays',
-                'choice_label' => 'fullName',
-                'multiple' => true
-            ))*/
             ->add('pays', TextType::class, array('required' => false))
+
             ->add('rang', ChoiceType::class, array(
                 'choices' => $this->dataNb,
                 'data' => max($this->dataNb)
@@ -73,6 +45,21 @@ class ChampionatType extends AbstractType
             //->add('season', TextType::class, array())
 
         ;
+        if($options['edit'] = true){
+            $builder
+                ->add('isEnable', CheckboxType::class, array(
+                    'required' => false,
+                    'data' => true
+                ))
+                ->add('nomChampionat', TextType::class)
+                ->add('fullNameChampionat', TextType::class)
+                ->add('pays', TextType::class, array('required' => false))
+                ->add('rang', ChoiceType::class, array(
+                    'choices' => $this->dataNb,
+                ))
+
+            ;
+        }
     }
     
     /**
@@ -82,7 +69,8 @@ class ChampionatType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'Api\DBBundle\Entity\Championat',
-            'nbChampionat' => null
+            'nbChampionat' => null,
+            'edit' => null
         ));
     }
 
@@ -91,11 +79,11 @@ class ChampionatType extends AbstractType
      */
     public function getDataNb($nbChampionat)
     {
-        $this->nb = $nbChampionat;
-        for($i = 1; $i <= $this->nb; $i++){
-            $result[$i] = $i;
-        }
-        return $this->dataNb = $result;
+            $this->nb = $nbChampionat;
+            for($i = 1; $i <= $this->nb; $i++){
+                $result[$i] = $i;
+            }
+            return $this->dataNb = $result;
     }
 
     /**
