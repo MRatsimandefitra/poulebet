@@ -58,6 +58,7 @@ class ConcoursController extends ApiController {
         if ($droitAdmin){
             $drt = $droitAdmin[0];
         }
+
         return $this->render('BackAdminBundle:Concours:list.html.twig', array(
                 'concours' => $concours,
                 'droitAdmin' => $drt
@@ -332,7 +333,7 @@ class ConcoursController extends ApiController {
     public function removeMatchInConcoursAction(Request $request, $idConcours, $id){
         $match = $this->getRepoFormId(self::ENTITY_MATCH, $id);
         $concours = $this->getRepoFormId(self::ENTITY_CONCOURS, $idConcours);
-        $concours->removeMatch($match);
+        //$concours->removeMatch($match);
         $match->removeConcour($concours);
         $this->getEm()->persist($match);
         $this->getEm()->persist($concours);

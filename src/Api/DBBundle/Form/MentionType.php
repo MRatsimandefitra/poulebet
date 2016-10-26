@@ -26,9 +26,9 @@ class MentionType extends AbstractType
             ->add('api_key_apione', TextType::class, array())
             ->add('api_key_goalapi', TextType::class, array())
             ->add('appyone_url_liste_application', TextType::class, array())
-            ->add('mentionLegale', TextareaType::class, array('attr' => array(
+           /* ->add('mentionLegale', TextareaType::class, array('attr' => array(
                 'class' => 'tinyMCE'
-            )))
+            )))*/
             ->add('cgv', TextareaType::class, array('attr' => array(
                 'class' => 'tinyMCE'
             )))
