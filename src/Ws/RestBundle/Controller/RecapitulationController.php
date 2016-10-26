@@ -118,10 +118,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
                                     $dataStatus = "Terminé";
                                 }
                             }
-
-
                         }
-
 
                         $result['list_mise'][] = array(
                             'miseId' => $itemsIdMise,
