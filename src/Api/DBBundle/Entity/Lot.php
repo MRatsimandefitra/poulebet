@@ -75,6 +75,13 @@ class Lot
     private $createdAt;
     
     /**
+     * @var string
+     *
+     * @ORM\Column(name="nomLong", type="string", length=100)
+     */
+    private $nomLong;
+    
+    /**
      * Get id
      *
      * @return int
@@ -308,5 +315,29 @@ class Lot
         }
         reset($mvtLots);
         return end($mvtLots);
+    }
+
+    /**
+     * Set nomLong
+     *
+     * @param string $nomLong
+     *
+     * @return Lot
+     */
+    public function setNomLong($nomLong)
+    {
+        $this->nomLong = $nomLong;
+
+        return $this;
+    }
+
+    /**
+     * Get nomLong
+     *
+     * @return string
+     */
+    public function getNomLong()
+    {
+        return $this->nomLong;
     }
 }

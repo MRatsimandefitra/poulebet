@@ -46,6 +46,10 @@ class LotType extends AbstractType
             ->add('nbPointNecessaire')
             ->add('description')
             ->add('quantity',TextType::class,$quantityOptions)
+            ->add('nomLong',null,array(
+                'required'    => true,
+                'constraints' => new NotBlank()
+            ))
             ->add('cheminImage', FileType::class, $imageOptions)
             ->add('lotCategory', EntityType::class, array(
                 'class' => 'ApiDBBundle:LotCategory',

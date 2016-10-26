@@ -17,6 +17,17 @@
             <div>{{form_label(form.quantity)}} <a href="#" id="addNewQuantity"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a></div>
             <div>{{form_widget(form.quantity ,{'attr': {'class': 'form-control'  }})}}</div>
             <div id="fieldNewQuantity" style="display:none;">{{form_widget(form.newQuantity ,{'attr': {'class': 'form-control'  }})}}</div>
+            <div>{{form_label(form.nomLong)}}</div> 
+            <div>{{form_widget(form.nomLong ,{'attr': {'class': 'form-control'  }})}}</div>
+            {% if form.nomLong.vars.errors|length > 0 %}
+            <div>
+                <ul class="help-block list-unstyled">
+                    {% for error in form.nomLong.vars.errors %}
+                        <li class="text-danger"><span class="glyphicon glyphicon-exclamation-sign"></span> {{ error.message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
             <div>{{form_label(form.nbPointNecessaire)}}</div>
             <div>{{form_widget(form.nbPointNecessaire ,{'attr': {'class': 'form-control'  }})}}</div>
             <div>{{form_widget(form.lotCategory ,{'attr': {'class': 'form-control'  }})}}</div>
