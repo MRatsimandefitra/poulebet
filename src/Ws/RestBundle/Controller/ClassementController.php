@@ -7,9 +7,19 @@ use Api\CommonBundle\Fixed\InterfaceDB;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class ClassementController extends ApiController implements InterfaceDB
 {
+    /**
+     * Ws, récupérer la liste des classement
+     * @ApiDoc(
+     *  description="Ws, la liste des classement",
+     *  parameters = {
+     *          {"name" = "time", "dataType"="string" ,"required"=true, "description"= "time choix entre now, last, global"}
+     *      }
+     * )
+     */
     public function postGetListClassementAction(Request $request)
     {
         $time = $request->get('time');
