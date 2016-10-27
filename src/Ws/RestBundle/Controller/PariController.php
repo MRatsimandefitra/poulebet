@@ -102,7 +102,8 @@ class PariController extends ApiController implements InterfaceDB
                         'cote_pronostic_1' => $matchsItems->getCot1Pronostic(),
                         'cote_pronostic_n' => $matchsItems->getCoteNPronistic(),
                         'cote_pronostic_2' => $matchsItems->getCote2Pronostic(),
-                        'idChampionat' => $matchsItems->getChampionat()->getId()
+                        'idChampionat' => $matchsItems->getChampionat()->getId(),
+                        'noPari'=> $this->getPariFroSimple($matchsItems->getId())
                     );
                     $cote1 = $matchsItems->getCot1Pronostic();
                     $coteN = $matchsItems->getCoteNPronistic();
@@ -122,6 +123,8 @@ class PariController extends ApiController implements InterfaceDB
                         $value = $value * $itemsResultCode;
                     }
                 }
+                $pub = $this->getObjectRepoFrom(self::ENTITY_PUB, array('isPopup' => false));
+                $result['banniere'] = 'dplb.arkeup.com/upload/admin/publicite/'.$pub->getCheminPub();
                 $result['gain_potentiel_max'] = round($value);
                 $result['itemTotal'] = $nbRecapTotal;
                 $result['code_error'] = 0;
@@ -216,6 +219,7 @@ class PariController extends ApiController implements InterfaceDB
                         'gainsPotentiel' => $this->getGainsPotentiel($user->getId(), $itemsMatchVote->getMatchs()->getId(), $itemsMatchVote->getId()),
                         'miseTotal' => $this->getMiseTotal($user->getId(), $itemsMatchVote->getMatchs()->getId(), $itemsMatchVote->getId()),
                         'jouer' => true,
+                        'noPari' => $this->getPariFroSimple($itemsMatchVote->getMatchs()->getId()),
                         'idChampionat' => $itemsMatchVote->getMatchs()->getChampionat()->getId(),
 
                     );
@@ -253,6 +257,8 @@ class PariController extends ApiController implements InterfaceDB
                     }
                 }
 
+                $pub = $this->getObjectRepoFrom(self::ENTITY_PUB, array('isPopup' => false));
+                $result['banniere'] = 'dplb.arkeup.com/upload/admin/publicite/'.$pub->getCheminPub();
                 $result['itemTotal'] = $nbRecapTotal;
                 $result['code_error'] = 0;
                 $result['error'] = false;
