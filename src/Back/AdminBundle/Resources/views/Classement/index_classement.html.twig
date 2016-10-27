@@ -7,14 +7,61 @@
         <div class="col-lg-2">
             <div class="classement">
                 <div class="form-search-classement">
-                    dgzezefgzegze
-                    <div class="space"></div>
+                   {# <table class="form">
+                        <tr>
+                            <td>
+                                {{ 'Date début' }}
+                                <input type="text" class="datepic" value=""/>
+                            </td>
+                            <td>
+                                {{ 'Date Fin' }}
+                                <input type="text" class="datepic" value=""/>
+                            </td>
+                            <td>
+                                <input type="submit" class="btn" value=""/>
+                            </td>
+                        </tr>
+                    </table>#}
+
                 </div>
+                <div class="space"></div>
 
                 <table class="table-list">
                     <tr>
-                        <td></td>
+                        <td>
+                            {{ 'Profil' }}
+                        </td>
+                        <td>
+                            {{ 'Nom' }}
+                        </td>
+                        <td>
+                            {{ 'Prenom' }}
+                        </td>
+
+                        <td>
+                            {{ 'Point' }}
+                        </td>
+
                     </tr>
+                    {% if result is defined and result %}
+                            <tr>
+                                <td>
+                                    <img src="{#{{ asset('upload/profil/' ~ row.utilisateur.cheminPhoto) }#}" alt="" width="50" height="50"/>
+                                </td>
+                                <td>
+                                   {{ result['nom'] }}
+                                </td>
+                                <td>
+                                    {{ result['prenom'] }}
+                                </td>
+                                <td>
+                                    {{ result['classement'] }}
+                                </td>
+
+                            </tr>
+                    {% else %}
+
+                    {% endif %}
                 </table>
             </div>
         </div>

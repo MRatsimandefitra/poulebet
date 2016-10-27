@@ -137,7 +137,7 @@ div.header-table {
 }
 
 div.table-list {
-
+    width: 100%;
 }
 
 div.table-list tr {
@@ -359,6 +359,12 @@ div.classement div.form-search-classement{
     margin-top: 10px;
     margin-bottom: 10px;
     background-color: #a3a4ae;
-    width: 100%;
+    width: 100px;
     height: 30px;
+}
+table.form{
+    border: none;
+}
+table.form tr, table.form tr td{
+    border: none;
 }

@@ -5,15 +5,27 @@ namespace Back\AdminBundle\Controller;
 use Api\CommonBundle\Controller\ApiController;
 use Api\CommonBundle\Fixed\InterfaceDB;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 class ClassementController extends ApiController implements InterfaceDB
 {
-    public function indexClassementAction()
+    public function indexClassementAction(Request $request)
     {
-        $classement = $this->getRepo(self::ENTITY_MATCHS)->findClassement();
 
+        $classement = $this->getRepo(self::ENTITY_MATCHS)->findClassement();
+        $total = 0;
+        foreach($classement as $itemsClassement){
+            $total = $total + $itemsClassement->getClassement();
+            $result = array(
+                'nom' =>   $itemsClassement->getUtilisateur()->getNom(),
+                'prenom' =>   $itemsClassement->getUtilisateur()->getPrenom(),
+                'photo' => $itemsClassement->getUtilisateur()->getCheminPhoto(),
+                'classement' => $total
+            );
+        }
         return $this->render('BackAdminBundle:Classement:index_classement.html.twig', array(
-            'classement' => $classement
+            'classement' => $classement,
+            'result' => $result
         ));
     }
 
