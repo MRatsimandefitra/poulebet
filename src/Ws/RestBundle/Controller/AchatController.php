@@ -155,17 +155,25 @@ class AchatController extends ApiController implements InterfaceDB
         $lots = $this->getRepo(self::ENTITY_LOTS)->findCategoryLot();
 
         if(is_array($lots) && !empty($lots)){
+            $pricesLot = array();
             foreach($lots as $kLots => $itemsLots){
+                $quantity = $itemsLots->getQuantity();
+                if($quantity > 0) {
+                    $pricesLot[$itemsLots->getNbPointNecessaire()] = $itemsLots->getNbPointNecessaire();
+                    $result['list_lot'][] = array(
+                        'nom' => $itemsLots->getNomLot(),
+                        'nbPointNecessaire' => $itemsLots->getNbPointNecessaire(),
+                        'cheminImage' => 'dplb.arkeup.com/upload/lots/' . $itemsLots->getCheminImage(),
+                        'decription' => $itemsLots->getDescription(),
+                        'nomLong' => $itemsLots->getNomLong(),
+                        'idLotCategory' => $itemsLots->getLotCategory()->getId(),
+                        'qteDisponible' => $quantity
+                    );
+                }
 
-                $result['list_lot'][] = array(
-                    'nom' => $itemsLots->getNomLot(),
-                    'nbPointNecessaire' => $itemsLots->getNbPointNecessaire(),
-                    'cheminImage' => 'dplb.arkeup.com/upload/lots/'.$itemsLots->getCheminImage(),
-                    'decription' => $itemsLots->getDescription(),
-                    'categoryId' => $itemsLots->getLotCategory()->getId()
-
-                );
-
+            }
+            foreach($pricesLot as $price){
+                $result['prix_lot'][] = $price;
             }
             $result['code_error'] = 0;
             $result['error'] = false;
