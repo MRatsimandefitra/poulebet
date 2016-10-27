@@ -102,8 +102,7 @@ class PariController extends ApiController implements InterfaceDB
                         'cote_pronostic_1' => $matchsItems->getCot1Pronostic(),
                         'cote_pronostic_n' => $matchsItems->getCoteNPronistic(),
                         'cote_pronostic_2' => $matchsItems->getCote2Pronostic(),
-                        'idChampionat' => $matchsItems->getChampionat()->getId(),
-                        'noPari'=> $this->getPariFroSimple($matchsItems->getId())
+                        'idChampionat' => $matchsItems->getChampionat()->getId()
                     );
                     $cote1 = $matchsItems->getCot1Pronostic();
                     $coteN = $matchsItems->getCoteNPronistic();
@@ -123,8 +122,6 @@ class PariController extends ApiController implements InterfaceDB
                         $value = $value * $itemsResultCode;
                     }
                 }
-                $pub = $this->getObjectRepoFrom(self::ENTITY_PUB, array('isPopup' => false));
-                $result['banniere'] = 'dplb.arkeup.com/upload/admin/publicite/'.$pub->getCheminPub();
                 $result['gain_potentiel_max'] = round($value);
                 $result['itemTotal'] = $nbRecapTotal;
                 $result['code_error'] = 0;
@@ -153,7 +150,7 @@ class PariController extends ApiController implements InterfaceDB
             }
 
             $concourEncour = $this->getRepo(self::ENTITY_MATCHS)->findIdConcourByDate();
-           // var_dump($concourEncour[0]->getId()); die;
+            // var_dump($concourEncour[0]->getId()); die;
             if(!$concourEncour){
                 //die('no Conour');
                 die('pas de concour');
@@ -162,10 +159,10 @@ class PariController extends ApiController implements InterfaceDB
             //var_dump($idConcour); die;
             $matchs = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForPari($date, $championatWs, null, $idConcour);
             //var_dump($date); die;
-          //  $matchs = $this->getRepo(self::ENTITY_MATCHS)->findBy(array('dateMatch'=> $date, 'championat' => $championatWs , 'concours' => $concourEncour[0]->getId()));
-          //  $matchs = $this->getRepo(self::ENTITY_MATCHS)->findMatchsPariSimple($idConcour, $date, $championatWs);
+            //  $matchs = $this->getRepo(self::ENTITY_MATCHS)->findBy(array('dateMatch'=> $date, 'championat' => $championatWs , 'concours' => $concourEncour[0]->getId()));
+            //  $matchs = $this->getRepo(self::ENTITY_MATCHS)->findMatchsPariSimple($idConcour, $date, $championatWs);
             // $matchs = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForPariNoJouer($date, $championatWs, null, $user->getId(), $matchs->getId());
-                $userId = $user->getId();
+            $userId = $user->getId();
             $matchsVote = $this->getRepo(self::ENTITY_MATCHS)->findMatchVote($userId, $date, $championatWs);
 
             $championat = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForPari($date, $championatWs, true, $idConcour);
@@ -219,7 +216,6 @@ class PariController extends ApiController implements InterfaceDB
                         'gainsPotentiel' => $this->getGainsPotentiel($user->getId(), $itemsMatchVote->getMatchs()->getId(), $itemsMatchVote->getId()),
                         'miseTotal' => $this->getMiseTotal($user->getId(), $itemsMatchVote->getMatchs()->getId(), $itemsMatchVote->getId()),
                         'jouer' => true,
-                        'noPari' => $this->getPariFroSimple($itemsMatchVote->getMatchs()->getId()),
                         'idChampionat' => $itemsMatchVote->getMatchs()->getChampionat()->getId(),
 
                     );
@@ -229,7 +225,7 @@ class PariController extends ApiController implements InterfaceDB
             if ($matchs) {
 
                 foreach ($matchs as $kMatchs => $matchsItems) {
-                   // var_dump(); die;
+                    // var_dump(); die;
                     if (!$this->getJouer($matchsItems->getId(), $user->getId())) {
                         $result['list_matchs'][] = array(
                             'idMatch' => $matchsItems->getId(),
@@ -257,8 +253,6 @@ class PariController extends ApiController implements InterfaceDB
                     }
                 }
 
-                $pub = $this->getObjectRepoFrom(self::ENTITY_PUB, array('isPopup' => false));
-                $result['banniere'] = 'dplb.arkeup.com/upload/admin/publicite/'.$pub->getCheminPub();
                 $result['itemTotal'] = $nbRecapTotal;
                 $result['code_error'] = 0;
                 $result['error'] = false;
@@ -530,7 +524,7 @@ class PariController extends ApiController implements InterfaceDB
             $vu->setIdMise(uniqid(sha1("Mise simple")));
             $vu->setDateMise(new \DateTime('now'));
             $vu->setClassement($gainsPotentiel + $miseTotal / 2);
-          //  var_dump($matchs->getCot1Pronostic()); die;
+            //  var_dump($matchs->getCot1Pronostic()); die;
             $vu->setCote1($matchs->getCot1Pronostic());
             $vu->setCoteN($matchs->getCoteNPronistic());
             $vu->setCote2($matchs->getCote2Pronostic());
