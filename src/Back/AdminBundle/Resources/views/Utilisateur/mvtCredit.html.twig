@@ -32,7 +32,7 @@
                         <td>{{row.entreeCredit}}</td>
                         <td>{{row.sortieCredit}}</td>
                         <td>{{row.soldeCredit}}</td>
-                        <td>{% if row.credit.typeCredit == 0 %} 
+                        <td>{#{% if row.credit.typeCredit == 0 %}
                                 {{" 3 credits gratuits à jouer  chaque jour  "|trans}}
                             {% elseif row.credit.typeCredit == 1 %}
                                 {{" pack 1 credit  "|trans}}
@@ -46,7 +46,9 @@
                                 {{"pack 20 credits"|trans}}
                             {% elseif row.credit.typeCredit == 21 %}
                                  {{"credit 1 partage de l'app sur facebook"|trans}}
-                            {% endif %}</td>
+                            {% endif %}#}
+                            {{ row.typeCredit }}
+                        </td>
                             <td>
                                 {% if currentAdmin.modification == true %}
                                 <a href="{{path('update_mvtCredit_utilisateur',{'id_mvtCredit':row.id})}}">{{"Modifier" |trans }}</a>|
