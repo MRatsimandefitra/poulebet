@@ -354,3 +354,10 @@ form#search select{
     height: 20px;
     width: 150px;
 }
+div.classement div.form-search{
+    padding: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: #a3a4ae;
+    width: 100%;
+}

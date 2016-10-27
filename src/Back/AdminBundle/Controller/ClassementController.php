@@ -1,0 +1,41 @@
+<?php
+
+namespace Back\AdminBundle\Controller;
+
+use Api\CommonBundle\Controller\ApiController;
+use Api\CommonBundle\Fixed\InterfaceDB;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
+class ClassementController extends ApiController implements InterfaceDB
+{
+    public function indexClassementAction()
+    {
+        $classement = $this->getRepo(self::ENTITY_MATCHS)->findClassement();
+
+        return $this->render('BackAdminBundle:Classement:index_classement.html.twig', array(
+            'classement' => $classement
+        ));
+    }
+
+    public function addClassementAction()
+    {
+        return $this->render('BackAdminBundle:Classement:add_classement.html.twig', array(
+            // ...
+        ));
+    }
+
+    public function editClassementAction($id)
+    {
+        return $this->render('BackAdminBundle:Classement:edit_classement.html.twig', array(
+            // ...
+        ));
+    }
+
+    public function removeClassementAction($id)
+    {
+        return $this->render('BackAdminBundle:Classement:remove_classement.html.twig', array(
+            // ...
+        ));
+    }
+
+}

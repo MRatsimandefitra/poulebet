@@ -1,0 +1,15 @@
+index_classement:
+    path:     /
+    defaults: { _controller: BackAdminBundle:Classement:indexClassement }
+
+add_classement:
+    path:     /add-classement
+    defaults: { _controller: BackAdminBundle:Classement:addClassement }
+
+edit_classement:
+    path:     /edit-classement/{id}
+    defaults: { _controller: BackAdminBundle:Classement:editClassement }
+
+remove_classement:
+    path:     /remove-classement/{id}
+    defaults: { _controller: BackAdminBundle:Classement:removeClassement }

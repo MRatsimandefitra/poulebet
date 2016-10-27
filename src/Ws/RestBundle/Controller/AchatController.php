@@ -125,7 +125,72 @@ class AchatController extends ApiController implements InterfaceDB
 
 
     }
+    /**
+     * Ws, Listes des lots
+     * @ApiDoc(
+     *  description="Ws, Listes des lots"
+     * )
+     */
+    public function getListLotAction(){
+        $result = array();
 
+        $category = $this->getRepo(self::ENTITY_LOTS)->findCategoryLot(true);
+
+        if(is_array($category) && !empty($category)){
+
+            foreach($category as $kCategory => $itemsCategory){
+                //var_dump($itemsCategory); die;
+                if($itemsCategory->getLotCategory()){
+                    $result['list_category'][] = array(
+                        'idCategory' => $itemsCategory->getLotCategory()->getId(),
+                        'category' =>$itemsCategory->getLotCategory()->getCategory()
+                    );
+                }
+
+            }
+        }else{
+            return $this->noCategory();
+        }
+
+        $lots = $this->getRepo(self::ENTITY_LOTS)->findCategoryLot();
+
+        if(is_array($lots) && !empty($lots)){
+            foreach($lots as $kLots => $itemsLots){
+
+                $result['list_lot'][] = array(
+                    'nom' => $itemsLots->getNomLot(),
+                    'nbPointNecessaire' => $itemsLots->getNbPointNecessaire(),
+                    'cheminImage' => 'dplb.arkeup.com/upload/lots/'.$itemsLots->getCheminImage(),
+                    'decription' => $itemsLots->getDescription(),
+                    'categoryId' => $itemsLots->getLotCategory()->getId()
+
+                );
+
+            }
+            $result['code_error'] = 0;
+            $result['error'] = false;
+            $result['success'] = true;
+            $result['message'] = "Success";
+            return new JsonResponse($result);
+        }else{
+            return $this->noLots();
+        }
+    }
+
+    private function noCategory(){
+        $result['code_error'] = 0;
+        $result['error'] = false;
+        $result['success'] = true;
+        $result['message'] = "Aucune catégorie trouvée";
+        return new JsonResponse($result);
+    }
+    private function noLots(){
+        $result['code_error'] = 0;
+        $result['error'] = false;
+        $result['success'] = true;
+        $result['message'] = "Aucun lots trouvé";
+        return new JsonResponse($result);
+    }
     private function noToken(){
         $result['code_error'] = 2;
         $result['error'] = true;

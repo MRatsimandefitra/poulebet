@@ -43,4 +43,6 @@ route_prefix_admin_publicite:
     resource: "@BackAdminBundle/Resources/config/routing/publicite.yml"
     prefix:   /publicites
 
-
+route_prefix_admin_classement:
+    resource: "@BackAdminBundle/Resources/config/routing/classement.yml"
+    prefix:   /classements
