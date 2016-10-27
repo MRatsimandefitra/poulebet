@@ -19,7 +19,8 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class GoalapiMatchsCheckPariCommand extends ContainerAwareCommand implements InterfaceDB{
+class GoalapiMatchsCheckPariCommand extends ContainerAwareCommand implements InterfaceDB
+{
     protected function configure()
     {
         $this
@@ -34,18 +35,58 @@ class GoalapiMatchsCheckPariCommand extends ContainerAwareCommand implements Int
         $em = $container->get('doctrine.orm.entity_manager');
 
         $matchs = $em->getRepository(self::ENTITY_MATCHS)->findBy(array('statusMatch' => 'not_started'));
-        if(is_array($matchs) && !empty($matchs) && count($matchs) > 0 ){
-            foreach($matchs as $kMatchs => $itemsMatchs){
+        if (is_array($matchs) && !empty($matchs) && count($matchs) > 0) {
+            foreach ($matchs as $kMatchs => $itemsMatchs) {
                 $datePari = $itemsMatchs->getDateMatch()->sub(new \DateInterval('PT5M'));
-                $dateMatchs  = $itemsMatchs->getDateMatch();
-                if($dateMatchs == $datePari){
+                $dateMatchs = $itemsMatchs->getDateMatch();
+                $now = new \DateTime('now');
+                if ($now >= $datePari  && $now <= $dateMatchs) {
                     $itemsMatchs->setIsNoPari(true);
-                }
-                $em->flush();
-                $output->writeln("Insertion no pari " .$itemsMatchs->getId());
-            }
-        }else{
+                    $em->flush();
 
+                    $output->writeln("Insertion no pari " . $itemsMatchs->getId());
+                    // notification no pari
+                    $users = $em->getRepository(self::ENTITY_UTILISATEUR)->findAll();
+                    $device_token = array();
+                    foreach ($users as $user) {
+                        $devices = $user->getDevices();
+                        foreach ($devices as $device) {
+                            $device_token[] = $device->getToken();
+                            array_push($device_token, $device->getToken());
+                        }
+                    }
+                    $messageData = array(
+                        "message" => "une mise a jour du liste des concours est requise",
+                        "type" => "concours",
+                        "categorie" => "nopari"
+                    );
+                    $data = array(
+                        'registration_ids' => $device_token,
+                        'data' => $messageData
+                    );
+                    $http = $this->getContainer()->get('http');
+                    $res = $http->sendGCMNotification($data);
+                    $output->writeln($res);
+                    $output->writeln("Notificaton is sended");
+
+                }
+            }
+
+        } else {
+            $output->writeln("Aucun matchs à parier");
         }
+
+        $matchs = $em->getRepository(self::ENTITY_MATCHS)->findBy(array('statusMatch' => 'finished'));
+        if (is_array($matchs) && !empty($matchs) && count($matchs) > 0) {
+            foreach($matchs as $itemsMatchs){
+                $itemsMatchs->setIsNoPari(true);
+                $em->flush();
+                $output->writeln("No pari for matchs ".$itemsMatchs->getId()." status 'is_finished'" );
+            }
+        }
+        $output->writeln("command was finised");
+
     }
+
 }
+

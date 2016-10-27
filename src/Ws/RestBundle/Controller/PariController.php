@@ -139,6 +139,7 @@ class PariController extends ApiController implements InterfaceDB
 
             return new JsonResponse($result);
         } else {
+
             if (!$token) {
                 return $this->noToken();
             }
@@ -215,7 +216,8 @@ class PariController extends ApiController implements InterfaceDB
                         'gainsPotentiel' => $this->getGainsPotentiel($user->getId(), $itemsMatchVote->getMatchs()->getId(), $itemsMatchVote->getId()),
                         'miseTotal' => $this->getMiseTotal($user->getId(), $itemsMatchVote->getMatchs()->getId(), $itemsMatchVote->getId()),
                         'jouer' => true,
-                        'idChampionat' => $itemsMatchVote->getMatchs()->getChampionat()->getId()
+                        'idChampionat' => $itemsMatchVote->getMatchs()->getChampionat()->getId(),
+                        'noPari' => $this->getPariFroSimple($itemsMatchVote->getMatchs()->getId())
                     );
 
                 }
@@ -681,7 +683,7 @@ class PariController extends ApiController implements InterfaceDB
             $mvtCredit = new MvtCredit();
             $mvtCredit->setUtilisateur($user);
             $mvtCredit->setVoteUtilisateur($vu);
-            $mvtCredit->setSortieCredit($gainsPotentiel);
+            $mvtCredit->setSortieCredit($miseTotal);
             $mvtCredit->setSoldeCredit($mvtCreditLast->getSoldeCredit() - $miseTotal);
             $mvtCredit->setDateMvt(new \DateTime('now'));
             $mvtCredit->setTypeCredit('JOUER COMBINE');
@@ -726,6 +728,19 @@ class PariController extends ApiController implements InterfaceDB
             $this->sendGCMNotification($data);
 
             return new JsonResponse($result);
+        }
+    }
+
+    public function getPariFroSimple($matchsId){
+
+        $match = $this->getObjectRepoFrom(self::ENTITY_MATCHS, array('id' => $matchsId));
+        if(!$match or is_null($match)){
+            return false;
+        }
+        if($match->getIsNoPari() === true){
+            return true;
+        }else{
+            return false;
         }
     }
 }
