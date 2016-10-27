@@ -70,3 +70,6 @@ route_prefix_ws_rest_achats_prono:
 route_prefix_ws_rest_credit:
     resource: "@WsRestBundle/Resources/config/routing/credit.yml"
     prefix:   /credit
+route_prefix_ws_rest_publicite:
+    resource: "@WsRestBundle/Resources/config/routing/publicite.yml"
+    prefix:   /publicites

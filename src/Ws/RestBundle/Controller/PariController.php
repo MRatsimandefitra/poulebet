@@ -102,7 +102,8 @@ class PariController extends ApiController implements InterfaceDB
                         'cote_pronostic_1' => $matchsItems->getCot1Pronostic(),
                         'cote_pronostic_n' => $matchsItems->getCoteNPronistic(),
                         'cote_pronostic_2' => $matchsItems->getCote2Pronostic(),
-                        'idChampionat' => $matchsItems->getChampionat()->getId()
+                        'idChampionat' => $matchsItems->getChampionat()->getId(),
+                        'noPari'=> $this->getPariFroSimple($matchsItems->getId())
                     );
                     $cote1 = $matchsItems->getCot1Pronostic();
                     $coteN = $matchsItems->getCoteNPronistic();
@@ -122,6 +123,11 @@ class PariController extends ApiController implements InterfaceDB
                         $value = $value * $itemsResultCode;
                     }
                 }
+                $pub = $this->getObjectRepoFrom(self::ENTITY_PUB, array('isPopup' => false));
+                if(is_object($pub) && $pub){
+                    $result['banniere'] = 'dplb.arkeup.com/upload/admin/publicite/'.$pub->getCheminPub();
+                }
+
                 $result['gain_potentiel_max'] = round($value);
                 $result['itemTotal'] = $nbRecapTotal;
                 $result['code_error'] = 0;
@@ -139,6 +145,7 @@ class PariController extends ApiController implements InterfaceDB
 
             return new JsonResponse($result);
         } else {
+
             if (!$token) {
                 return $this->noToken();
             }
@@ -155,18 +162,12 @@ class PariController extends ApiController implements InterfaceDB
                 die('pas de concour');
             }
             $idConcour = $concourEncour[0]->getId();
-            //var_dump($idConcour); die;
             $matchs = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForPari($date, $championatWs, null, $idConcour);
-            //var_dump($date); die;
-          //  $matchs = $this->getRepo(self::ENTITY_MATCHS)->findBy(array('dateMatch'=> $date, 'championat' => $championatWs , 'concours' => $concourEncour[0]->getId()));
-          //  $matchs = $this->getRepo(self::ENTITY_MATCHS)->findMatchsPariSimple($idConcour, $date, $championatWs);
-            // $matchs = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForPariNoJouer($date, $championatWs, null, $user->getId(), $matchs->getId());
-                $userId = $user->getId();
+            $userId = $user->getId();
             $matchsVote = $this->getRepo(self::ENTITY_MATCHS)->findMatchVote($userId, $date, $championatWs);
 
             $championat = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForPari($date, $championatWs, true, $idConcour);
-            $resultTmp = array();
-            //championat
+
             if ($championat) {
                 foreach ($championat as $kChampionat => $itemsChampionat) {
 
@@ -176,10 +177,6 @@ class PariController extends ApiController implements InterfaceDB
                         'fullNameChampionat' => $itemsChampionat->getChampionat()->getFullNameChampionat()
                     );
                 }
-                /*    $result['code_error'] = 0;
-                    $result['error'] = false;
-                    $result['success'] = true;
-                    $result['message'] = "success";*/
             } else {
                 $result['code_error'] = 0;
                 $result['error'] = false;
@@ -215,7 +212,9 @@ class PariController extends ApiController implements InterfaceDB
                         'gainsPotentiel' => $this->getGainsPotentiel($user->getId(), $itemsMatchVote->getMatchs()->getId(), $itemsMatchVote->getId()),
                         'miseTotal' => $this->getMiseTotal($user->getId(), $itemsMatchVote->getMatchs()->getId(), $itemsMatchVote->getId()),
                         'jouer' => true,
-                        'idChampionat' => $itemsMatchVote->getMatchs()->getChampionat()->getId()
+                        'noPari' => $this->getPariFroSimple($itemsMatchVote->getMatchs()->getId()),
+                        'idChampionat' => $itemsMatchVote->getMatchs()->getChampionat()->getId(),
+
                     );
 
                 }
@@ -245,9 +244,15 @@ class PariController extends ApiController implements InterfaceDB
                             'cote_pronostic_n' => $matchsItems->getCoteNPronistic(),
                             'cote_pronostic_2' => $matchsItems->getCote2Pronostic(),
                             'jouer' => false,
+                            'noPari' => $this->getPariFroSimple($itemsMatchVote->getMatchs()->getId()),
                             'idChampionat' => $matchsItems->getChampionat()->getId(),
                         );
                     }
+                }
+
+                $pub = $this->getObjectRepoFrom(self::ENTITY_PUB, array('isPopup' => false));
+                if(is_object($pub) && $pub){
+                    $result['banniere'] = 'dplb.arkeup.com/upload/admin/publicite/'.$pub->getCheminPub();
                 }
 
                 $result['itemTotal'] = $nbRecapTotal;
@@ -630,11 +635,6 @@ class PariController extends ApiController implements InterfaceDB
         }else{
             return $this->noMatchs();
         }
-        /*if(array_key_exists('deviseToken', $data)){
-            $deviceToken = $data['deviceToken'];
-        }else{
-            return $this->noDeviceToken();
-        }*/
         $deviceToken = null;
         $user = $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
         $deviceToken = $this->getObjectRepoFrom(self::ENTITY_CONNECTED, array('username' => $user->getEMail()))->getDevice();
@@ -681,7 +681,7 @@ class PariController extends ApiController implements InterfaceDB
             $mvtCredit = new MvtCredit();
             $mvtCredit->setUtilisateur($user);
             $mvtCredit->setVoteUtilisateur($vu);
-            $mvtCredit->setSortieCredit($gainsPotentiel);
+            $mvtCredit->setSortieCredit($miseTotal);
             $mvtCredit->setSoldeCredit($mvtCreditLast->getSoldeCredit() - $miseTotal);
             $mvtCredit->setDateMvt(new \DateTime('now'));
             $mvtCredit->setTypeCredit('JOUER COMBINE');
@@ -726,6 +726,19 @@ class PariController extends ApiController implements InterfaceDB
             $this->sendGCMNotification($data);
 
             return new JsonResponse($result);
+        }
+    }
+
+    public function getPariFroSimple($matchsId){
+
+        $match = $this->getObjectRepoFrom(self::ENTITY_MATCHS, array('id' => $matchsId));
+        if(!$match or is_null($match)){
+            return false;
+        }
+        if($match->getIsNoPari() === true){
+            return true;
+        }else{
+            return false;
         }
     }
 }

@@ -7,6 +7,7 @@ use Api\CommonBundle\Fixed\InterfaceDB;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class PubliciteController extends ApiController implements InterfaceDB
 {
@@ -19,9 +20,9 @@ class PubliciteController extends ApiController implements InterfaceDB
      *      }
      * )
      */
-    public function getPublicite(Request $request){
+    public function postGetPubliciteAction(Request $request){
         $isPopup = $request->get('isPopup');
-        if($isPopup===NULL){
+        if(is_null($isPopup)){
             return $this->noIsPopup();
         }
         $pub = $this->getObjectRepoFrom(self::ENTITY_PUB, array('isPopup' => $isPopup));
