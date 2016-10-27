@@ -144,21 +144,25 @@ class AchatLotController extends ApiController implements InterfaceDB
 
         }
         if($lots){
-
+            $pricesLot = array();
             foreach($lots as $kLots => $itemsLots){
                 $lotCategory = $itemsLots->getLotCategory();
                 $quantity = $itemsLots->getQuantity();
                 if($quantity > 0){
+                    $pricesLot[$itemsLots->getNbPointNecessaire()] = $itemsLots->getNbPointNecessaire();
                     $result['list_lot'][] = array(
                         'idLot' => $itemsLots->getId(),
                         'nomLot' => $itemsLots->getNomLot(),
-                        'nbPointNecessaire' => $itemsLots->getId(),
+                        'nbPointNecessaire' => $itemsLots->getNbPointNecessaire(),
                         'description' => $itemsLots->getDescription(),
                         'image' => $request->getHttpHost().'/upload/lots/'.$itemsLots->getCheminImage(),
                         'idLotCategory' => $lotCategory->getId(),
                         'qteDisponible' => $quantity
                     );                    
                 }
+            }
+            foreach($pricesLot as $price){
+                $result['prix_lot'][] = $price;                
             }
             $result['code_error'] = 0;
             $result['success'] = true;

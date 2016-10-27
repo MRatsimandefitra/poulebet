@@ -43,13 +43,13 @@
                         </td>
                         <td>{{ row.nbPointNecessaire }}</td>
                         <td>
+                            {{ row.getQuantity }}
+                        </td>
+                        <td>
                             {% if row.lotCategory.category is defined %}
                             {#{{ dump(row.lotCategory) }}#}
                             {{ row.lotCategory.category }}
                                 {% endif %}
-                        </td>
-                        <td>
-                            {{ row.getQuantity }}
                         </td>
                         <td>
                             {{ row.createdAt|date('d-m-Y') }}
