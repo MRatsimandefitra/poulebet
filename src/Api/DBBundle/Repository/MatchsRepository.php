@@ -555,4 +555,14 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         $result = $query->getResult();
         return count($result);
     }
+
+    public function findClassement($dateDebut = null, $dateFinale = null ){
+        $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
+                LEFT JOIN vu.matchs m where vu.dateMise BETWEEN :dateDebut AND :dateFinale
+                AND vu.
+                GROUP BY vu.idMise";
+        $query = $this->getEntityManager()->createQuery($dql);
+        $query->setParameters(array('dateDebut' => $dateDebut, 'dateFinale' => $dateFinale));
+        return $query->getResult();
+    }
 }
