@@ -61,7 +61,7 @@ class GoalApiNotificationLiveExistCommand extends ContainerAwareCommand
                                 }
                                 $messageData = array(
                                     "message"=> "Matchs bientot",
-                                    "type"=>"livescore"
+                                    "type"=> "livescore"
                                 );
                                 $data = array(
                                     'registration_ids' => $device_token,
