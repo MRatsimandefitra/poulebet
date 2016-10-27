@@ -10,4 +10,19 @@ namespace Api\DBBundle\Repository;
  */
 class RegionRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * find all order by name
+     * 
+     * @return mixed
+     */
+    public function findAllOrdered()
+    {
+        $query = $this->createQueryBuilder('region')
+                ->select('region','pays')
+                ->join('region.pays','pays')
+                ->orderBy('region.nom', 'asc')
+                ->getQuery();
+
+        return $query->getResult();
+    }
 }

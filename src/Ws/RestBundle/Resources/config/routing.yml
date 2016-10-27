@@ -73,3 +73,6 @@ route_prefix_ws_rest_credit:
 route_prefix_ws_rest_publicite:
     resource: "@WsRestBundle/Resources/config/routing/publicite.yml"
     prefix:   /publicites
+route_prefix_ws_rest_pays_region:
+    resource: "@WsRestBundle/Resources/config/routing/pays_region.yml"
+    prefix:   /pays-region

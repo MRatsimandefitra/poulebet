@@ -1,0 +1,4 @@
+ws_rest_pays_region:
+    path:     /get-list
+    defaults: { _controller: WsRestBundle:PaysRegion:getAll }
+    methods: GET

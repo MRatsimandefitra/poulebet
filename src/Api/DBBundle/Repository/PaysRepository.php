@@ -10,4 +10,18 @@ namespace Api\DBBundle\Repository;
  */
 class PaysRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * find all order by name
+     * 
+     * @return mixed
+     */
+    public function findAllOrdered()
+    {
+        $query = $this->createQueryBuilder('pays')
+                ->select('pays')
+                ->orderBy('pays.nomPays', 'asc')
+                ->getQuery();
+
+        return $query->getResult();
+    }
 }
