@@ -151,16 +151,18 @@ class InscriptionController extends ApiRestController
 
         $username = $request->query->get('username');
         $data = $this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_UTILISATEUR)->findBy(array('username' => $username));
-        if (!$data) {
+        $response = array();
+        if (is_array($data) && count($data) <= 0 && empty($data)) {
             return new JsonResponse(array(
-                'code' => 'error.exist',
-                'code_erreur' => 1,
-                'isexist' => false,
-                'message' => 'Utilisateur existant'
+                'code_error' => 4,
+                'success' => true,
+                'error' => false,
+                'message' => 'Utilisateur inexistant'
             ));
         }
+
         foreach ($data as $vData) {
-            $response = array(
+            $response['profil'][] = array(
                 'photo' => $vData->getCheminPhoto(),
                 'nom' => $vData->getNom(),
                 'prenom' => $vData->getPrenom(),
@@ -179,7 +181,10 @@ class InscriptionController extends ApiRestController
                 'pays' => $vData->getPays(),
             );
         }
-
+        $response['code_error'] = 0;
+        $response['success'] = true;
+        $response['error'] = false;
+        $response['message']= "Success";
         return new JsonResponse($response);
     }
 
@@ -198,34 +203,32 @@ class InscriptionController extends ApiRestController
         $username = $request->get('username');
         $utilisateur = $this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_UTILISATEUR)->findOneBy(array('username' => $username));
         if (!$utilisateur) {
-            return new JsonResponse(array(
-                'code' => 'not.exist',
-                'isexist' => false,
-                'code_erreur' => 4,
-                'error' => 'not.found.utilisateur',
+            $result = array(
+                'code_error' => 4,
                 'success' => false,
-                'error' => false,
-                'message' => 'Utilisateur non trouvé'
-            ));
+                'error' => true,
+                'message' => 'Aucun utilisateur trouvé'
+            );
+            return new JsonResponse($result);
         }
 
-        if ($this->setDataInUtilisateur($utilisateur, $request)) {
-            return new JsonResponse(array(
-                'code' => 'OK',
-                'code_erreur' => 0,
-                'success' => true,
-                'error' => false,
-                'message' => 'Utilisateur a bien été inserer'
-            ));
+        if (!$this->setDataInUtilisateur($utilisateur, $request)) {
+            $result = array(
+                'code_error' => 4,
+                'success' => false,
+                'error' => true,
+                'message' => 'Une erreur est survenue lors de insertion'
+            );
+            return new JsonResponse($result);
         }
+        $result = array(
+            'code_error' => 0,
+            'success' => true,
+            'error' => false,
+            'message' => 'success'
+        );
+        return new JsonResponse($result);
 
-        return new JsonResponse(array(
-            'code' => 'NOK',
-            'success' => false,
-            'code_erreur' => 2,
-            'error' => true,
-            'message' => 'Une erreur est survenue lors d ajout utilisateur'
-        ));
     }
 
     /**

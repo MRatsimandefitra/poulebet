@@ -1,0 +1,4 @@
+ws_rest_get_publicite:
+    path:     /get-publicite
+    defaults: { _controller: WsRestBundle:Publicite:postGetPublicite }
+    methods: POST

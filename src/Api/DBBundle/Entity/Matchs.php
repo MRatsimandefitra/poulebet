@@ -228,6 +228,13 @@ class Matchs
     private $isGagne;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="isNoPari", type="boolean", nullable=true)
+     */
+    private $isNoPari;
+
+    /**
     * @ORM\OneToMany(targetEntity="Api\DBBundle\Entity\MatchsEvent", mappedBy="matchs")
     */
     private $matchsEvents;
@@ -1102,5 +1109,29 @@ class Matchs
     public function getIsGagne()
     {
         return $this->isGagne;
+    }
+
+    /**
+     * Set isNoPari
+     *
+     * @param boolean $isNoPari
+     *
+     * @return Matchs
+     */
+    public function setIsNoPari($isNoPari)
+    {
+        $this->isNoPari = $isNoPari;
+
+        return $this;
+    }
+
+    /**
+     * Get isNoPari
+     *
+     * @return boolean
+     */
+    public function getIsNoPari()
+    {
+        return $this->isNoPari;
     }
 }
