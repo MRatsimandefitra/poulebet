@@ -177,8 +177,12 @@ class AchatLotController extends ApiController implements InterfaceDB
         $lastSolde = $this->getRepo(self::ENTITY_MVT_CREDIT)->findLastSolde($user->getId());
         $idLast = $lastSolde[0][1];
         $mvtCreditLast = $this->getObjectRepoFrom(self::ENTITY_MVT_CREDIT, array('id' => $idLast));
-        $lastCredit = $mvtCreditLast->getSoldeCredit();
-        $result['credit'] = $lastCredit;
+        if($mvtCreditLast){
+            $lastCredit = $mvtCreditLast->getSoldeCredit();
+            $result['credit'] = $lastCredit;            
+        } else {
+            $result['credit'] = 0;            
+        }
         return new JsonResponse($result);
     }
 
