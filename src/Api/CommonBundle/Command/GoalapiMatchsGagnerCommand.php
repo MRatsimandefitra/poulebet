@@ -33,7 +33,7 @@ class GoalapiMatchsGagnerCommand extends ContainerAwareCommand implements Interf
        $matchs =  $em->getRepository(self::ENTITY_MATCHS)->findMatchsFinished();
         if(is_array($matchs) && count($matchs) > 0 ){
             foreach($matchs as $kMatchs => $itemsMatchs){
-                $statusMatchs = $itemsMatchs->getStatusMatchs();
+                $statusMatchs = $itemsMatchs->getStatusMatch();
                 if($statusMatchs ==='finished'){
                     $scoreDomicile = substr($itemsMatchs->getScore(), 0, 1);
                     $scoreVisiteur = substr($itemsMatchs->getScore(), -1, 1);

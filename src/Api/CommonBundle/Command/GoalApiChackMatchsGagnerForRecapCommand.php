@@ -77,7 +77,6 @@ class GoalApiChackMatchsGagnerForRecapCommand extends ContainerAwareCommand impl
                     $isCombined  = $itemsVoteMatchs->getIsCombined();
                     $tmpArrayGagner = array();
                     if($vote === $gagnant){
-
                         $count = $count + 1;
                         $itemsVoteMatchs->setGagnant(true);
 
@@ -99,10 +98,7 @@ class GoalApiChackMatchsGagnerForRecapCommand extends ContainerAwareCommand impl
                     }else{
                         $itemsVoteMatchs->setGagnant(false);
                     }
-
-
-                  /*  $em->persist($itemsVoteMatchs);
-                    $em->flush();*/
+                    $em->flush();
                     $output->writeln("Mise a Gagnant ");
                 }
 
@@ -112,7 +108,7 @@ class GoalApiChackMatchsGagnerForRecapCommand extends ContainerAwareCommand impl
             //var_dump($arrayGagner); die;/$resultMatchs = array();
             $tmpResultMatchs = array();
             $resultMatchs = array();
-            var_dump($arrayGagner); die;
+           // var_dump($arrayGagner); die;
             foreach($arrayGagner as $kAg => $itemsKg){
               //  var_dump($itemsKg['IdVote']); die;
 
@@ -124,8 +120,6 @@ class GoalApiChackMatchsGagnerForRecapCommand extends ContainerAwareCommand impl
                     );
                    // $resultMatchs = $tmpResultMatchs;
             }
-            var_dump($tmpResultMatchs); die;
-            die('okok');
 
 
             foreach($arrayGagner as $kArrayGagner => $itemsArrayGagner){

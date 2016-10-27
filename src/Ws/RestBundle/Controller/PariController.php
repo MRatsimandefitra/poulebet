@@ -525,7 +525,7 @@ class PariController extends ApiController implements InterfaceDB
             $vu->setIsCombined(false);
             $vu->setIdMise(uniqid(sha1("Mise simple")));
             $vu->setDateMise(new \DateTime('now'));
-            $vu->setClassement($gainsPotentiel + $miseTotal / 2);
+            $vu->setClassement(($gainsPotentiel + $miseTotal) / 2);
           //  var_dump($matchs->getCot1Pronostic()); die;
             $vu->setCote1($matchs->getCot1Pronostic());
             $vu->setCoteN($matchs->getCoteNPronistic());

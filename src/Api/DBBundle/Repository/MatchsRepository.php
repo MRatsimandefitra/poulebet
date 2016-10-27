@@ -529,7 +529,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
     }
 
     public function findMatchsFinished(){
-        $dql = "SELECT m from ApiDBBundle:Matchs m where m.statusMatchs";
+        $dql = "SELECT m from ApiDBBundle:Matchs m where m.statusMatch = 'finished'";
         $query = $this->getEntityManager()->createQuery($dql);
         return $query->getResult();
     }
@@ -557,12 +557,32 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
     }
 
     public function findClassement($dateDebut = null, $dateFinale = null ){
+
         $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
-                LEFT JOIN vu.matchs m where vu.dateMise BETWEEN :dateDebut AND :dateFinale
-                AND vu.
-                GROUP BY vu.idMise";
-        $query = $this->getEntityManager()->createQuery($dql);
-        $query->setParameters(array('dateDebut' => $dateDebut, 'dateFinale' => $dateFinale));
+                LEFT JOIN vu.matchs m
+                LEFT JOIN vu.utilisateur u";
+        $where = array();
+        $params = array();
+
+        if($dateDebut && $dateFinale){
+            $where[] = " m.dateMatch BETWEEN :dateDebut AND :dateFinale ";
+            $params['dateDebut'] = $dateDebut;
+            $params['dateFinale'] = $dateFinale;
+        }
+
+        $where[] = " vu.gagnant = true ";
+
+
+        if(!empty($where)){
+            $dql .= ' WHERE ' . implode(' AND ', $where);
+        }
+        $dql .=" GROUP BY vu.idMise ";
+        if(empty($params)){
+            $query = $this->getEntityManager()->createQuery($dql);
+        }else{
+            $query = $this->getEntityManager()->createQuery($dql)->setParameters($params);
+        }
+
         return $query->getResult();
     }
 }
