@@ -1,0 +1,49 @@
+{% extends 'BackAdminBundle::layout_match.html.twig' %}
+{% block title %} {{ parent() }} {% endblock %}
+{% block ariane %} {{ parent() }} {% endblock %}
+
+{% block page %}
+    <div class="col-lg-12">
+
+        <div class="col-lg-12">
+            <div class="link">
+                <a href="{{ path('add_pays') }}">{{ 'Ajout pays'|trans }}</a>&nbsp;  &nbsp; |
+                <a href="{{ path('index_region') }}">{{ 'Régions'|trans }}</a> &nbsp;  &nbsp;
+            </div>
+            <table class="table-list">
+                <tr>
+                    <thead>
+                    <th>{{ 'ID' }}</th>
+                    <th>{{ 'Nom'|trans }}</th>
+                    <td>{{ 'Actions'|trans }}</td>
+                    </thead>
+                </tr>
+                {% if pays|length > 0 %}
+                    {% for row in pays %}
+                        <tr>
+                            <td>
+                                {{ row.id }}
+                            </td>
+                            <td>
+                                {{ row.nomPays }}
+                            </td>
+                            <td>
+                                <a href="{{ path('edit_pays', {'id': row.id }) }}"> <span class="glyphicon glyphicon-pencil orange" aria-hidden="true"></span> Modifier </a> |
+                                <a onclick="supprimer('Etes vous sur de vouloir supprimer ?');" href="{{ path('delete_pays', {'id': row.id}) }}"><span class="glyphicon glyphicon-remove red" aria-hidden="true"></span> Supprimer </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="3">
+                            {{ 'Aucune Donnée ' }}
+                        </td>
+                    </tr>
+
+                {% endif %}
+
+            </table>
+
+        </div>
+    </div>
+{% endblock %}

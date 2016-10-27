@@ -9,6 +9,12 @@
         <div class="col-lg-12">
             {{ 'Listes des droits'|trans }}
             <div class="link">
+                <a href="{{ path('index_pays') }}">
+                    {{ 'Pays' }}
+                </a> &nbsp;&nbsp; | &nbsp;&nbsp;
+                <a href="{{ path('index_region') }}">
+                    {{ 'Région' }}
+                </a> &nbsp;&nbsp; | &nbsp;&nbsp;
                 <a href="{{ path('edit_publicite', {'isPopup': 1 } ) }}">
                     {{ 'Popup' }}
                 </a> &nbsp;&nbsp; | &nbsp;&nbsp;

@@ -1,0 +1,15 @@
+index_region:
+    path:     /
+    defaults: { _controller: BackAdminBundle:Region:indexRegion }
+
+add_region:
+    path:     /add-region
+    defaults: { _controller: BackAdminBundle:Region:addRegion }
+
+edit_region:
+    path:     /edit-region/{id}
+    defaults: { _controller: BackAdminBundle:Region:editRegion }
+
+delete_region:
+    path:     /delete-region/{id}
+    defaults: { _controller: BackAdminBundle:Region:deleteRegion }
