@@ -134,14 +134,14 @@ class AchatLotController extends ApiController implements InterfaceDB
         $lots = $this->getAllEntity(self::ENTITY_LOTS);
         $category = $this->getRepo(self::ENTITY_LOTS)->findCategoryLot();
 
-        if($category){
+        if(!empty($category)){
 
             foreach($category as $kCategory => $itemsCategory){
-                //var_dump($itemsCategory->getLotCategory()); die;
+
                 if($itemsCategory->getLotCategory()){
                     $result['category_lot'][] = array(
-                        //     'category' => $itemsCategory->getLotCategory()->getCategory(),
-                        //  'id' => $itemsCategory->getLotCategory()->getId()
+                             'category' => $itemsCategory->getLotCategory()->getCategory(),
+                          'id' => $itemsCategory->getLotCategory()->getId()
                     );
                 }
 
