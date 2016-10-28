@@ -131,7 +131,18 @@ class AchatController extends ApiController implements InterfaceDB
      *  description="Ws, Listes des lots"
      * )
      */
-    public function getListLotAction(){
+    public function getListLotAction(Request $request){
+
+        $token = $request->get('token');
+        if(!$token){
+            return $this->noToken();
+        }
+
+        $user = $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
+        if(!$user){
+            return $this->noUser();
+        }
+
         $result = array();
 
         $category = $this->getRepo(self::ENTITY_LOTS)->findCategoryLot(true);
@@ -174,6 +185,15 @@ class AchatController extends ApiController implements InterfaceDB
             }
             foreach($pricesLot as $price){
                 $result['prix_lot'][] = $price;
+            }
+            $lastSolde = $this->getRepo(self::ENTITY_MVT_CREDIT)->findLastSolde($user->getId());
+            $idLast = $lastSolde[0][1];
+            $mvtCreditLast = $this->getObjectRepoFrom(self::ENTITY_MVT_CREDIT, array('id' => $idLast));
+            if($mvtCreditLast){
+                $lastCredit = $mvtCreditLast->getSoldeCredit();
+                $result['credit'] = $lastCredit;
+            } else {
+                $result['credit'] = 0;
             }
             $result['code_error'] = 0;
             $result['error'] = false;

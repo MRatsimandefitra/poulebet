@@ -9,4 +9,4 @@ ws_rest_pari_insert_achats:
 ws_rest_get_liste_lots:
     path:     /get-list-lot
     defaults: { _controller: WsRestBundle:Achat:getListLot }
-    methods: GET # token, oeufs, productSKU
+    methods: POST # token, oeufs, productSKU
