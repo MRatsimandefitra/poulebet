@@ -302,6 +302,7 @@ class AchatLotController extends ApiController implements InterfaceDB
             //credit
             $this->addMvtCredit($user, $lot, $lastSolde);
             //mails
+            /*
             $admins = $this->getRepo(self::ENTITY_ADMIN)->findAll();
             $parameter = $this->getParameterMail();
             $subject = 'Echange de lot';
@@ -330,7 +331,7 @@ class AchatLotController extends ApiController implements InterfaceDB
                 $message = 'Votre demande a été prise en charge, nous reviendrons vers vous dans les plus brefs délais.';
                 $this->sendMail($user, $subject, $message,$parameter);                                       
             }
-            
+            */
             $addressLivraison = new AddressLivraison();
             $addressLivraison->setCodePostal($codePostal);
             $addressLivraison->setNomcomplet($nomComplet);
