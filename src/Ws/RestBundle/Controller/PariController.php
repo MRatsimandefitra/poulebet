@@ -150,6 +150,7 @@ class PariController extends ApiController implements InterfaceDB
                 return $this->noToken();
             }
             $user = $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
+
             $nbRecapTotal = $this->getRepo(self::ENTITY_MATCHS)->findNbRecapMatchsSimpleAndCombined($user->getId());
             if (!$user) {
                 return $this->noUser();
@@ -161,9 +162,12 @@ class PariController extends ApiController implements InterfaceDB
                 //die('no Conour');
                 die('pas de concour');
             }
+
             $idConcour = $concourEncour[0]->getId();
+
             $matchs = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForPari($date, $championatWs, null, $idConcour);
             $userId = $user->getId();
+
             $matchsVote = $this->getRepo(self::ENTITY_MATCHS)->findMatchVote($userId, $date, $championatWs);
 
             $championat = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForPari($date, $championatWs, true, $idConcour);
@@ -218,6 +222,11 @@ class PariController extends ApiController implements InterfaceDB
                     );
 
                 }
+            }else{
+                $result['code_error'] = 0;
+                $result['error'] = false;
+                $result['success'] = true;
+                $result['message'] = "Aucun matchs";
             }
             if ($matchs) {
 
@@ -244,7 +253,7 @@ class PariController extends ApiController implements InterfaceDB
                             'cote_pronostic_n' => $matchsItems->getCoteNPronistic(),
                             'cote_pronostic_2' => $matchsItems->getCote2Pronostic(),
                             'jouer' => false,
-                            'noPari' => $this->getPariFroSimple($itemsMatchVote->getMatchs()->getId()),
+                            'noPari' => $this->getPariFroSimple($matchsItems->getMatchs()->getId()),
                             'idChampionat' => $matchsItems->getChampionat()->getId(),
                         );
                     }

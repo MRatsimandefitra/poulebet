@@ -545,13 +545,18 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
     }
 
     public function findNbRecapMatchsSimpleAndCombined($userId){
+
         $dql  ="SELECT vu from ApiDBBundle:VoteUtilisateur vu
                 LEFT JOIN vu.utilisateur u
                 LEFT JOIN vu.matchs m
                 LEFT JOIN m.championat ch
                 WHERE u.id = :userId group by vu.idMise ";
+
         $query = $this->getEntityManager()->createQuery($dql);
+
         $query->setParameter('userId', $userId);
+
+
         $result = $query->getResult();
         return count($result);
     }
