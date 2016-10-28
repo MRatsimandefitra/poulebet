@@ -584,14 +584,21 @@ class PariController extends ApiController implements InterfaceDB
             $device_token = array();
             $messageData = array("message"=> "1","type"=>"concours","categorie"=> "recap");
            // $users = $this->getRepo(self::ENTITY_UTILISATEUR)->findAll();
-            $users = $this->getRepoFormId(self::ENTITY_UTILISATEUR, array('id' => $user->getId()));
+         //   $users = $this->getRepoFrom(self::ENTITY_UTILISATEUR, array('id' => $user->getId()));
+           // var_dump($user); die;
+
+            $users = $this->getObjectRepoFrom(self::ENTITY_CONNECTED, array('username' => $user->getEmail()));
+
+            array_push($device_token, $users->getDevice());
+            /*var_dump($device_token); die;
             foreach($users as $user){
                 $devices = $user->getDevices();
                 foreach ($devices as $device){
                     //$device_token[] = $device->getToken();
                     array_push($device_token, $device->getToken());
                 }
-            }
+            }*/
+
             $data = array(
                 'registration_ids' => $device_token,
                 'data' => $messageData
@@ -721,14 +728,8 @@ class PariController extends ApiController implements InterfaceDB
             //user
             $device_token = array();
             $messageData = array("message"=> "1","type"=>"concours","categorie"=> "recap");
-          //  $users = $this->getRepo(self::ENTITY_UTILISATEUR)->findAll();
-        //   foreach($users as $user){
-                $devices = $user->getDevices();
-             //   foreach ($devices as $device){*/
-                    //$device_token[] = $device->getToken();
-                    array_push($device_token, $devices->getToken());
-           /*     }
-            }*/
+            $users = $this->getObjectRepoFrom(self::ENTITY_CONNECTED, array('username' => $user->getEmail()));
+            array_push($device_token, $users->getDevice());
             $data = array(
                 'registration_ids' => $device_token,
                 'data' => $messageData
