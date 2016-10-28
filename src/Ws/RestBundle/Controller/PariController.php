@@ -589,7 +589,7 @@ class PariController extends ApiController implements InterfaceDB
                 $devices = $user->getDevices();
                 foreach ($devices as $device){
                     //$device_token[] = $device->getToken();
-                    array_push($device_token, $devices->getToken());
+                    array_push($device_token, $device->getToken());
                 }
             }
             $data = array(
