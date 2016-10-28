@@ -76,3 +76,6 @@ route_prefix_ws_rest_publicite:
 route_prefix_ws_rest_pays_region:
     resource: "@WsRestBundle/Resources/config/routing/pays_region.yml"
     prefix:   /pays-region
+route_prefix_get_profil:
+    resource: "@WsRestBundle/Resources/config/routing/inscription.yml"
+    prefix:   /users

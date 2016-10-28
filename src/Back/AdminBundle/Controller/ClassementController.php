@@ -18,6 +18,7 @@ class ClassementController extends ApiController implements InterfaceDB
             $total = $total + $itemsClassement->getClassement();
             $result = array(
                 'id' => $itemsClassement->getUtilisateur()->getId(),
+
                 'nom' =>   $itemsClassement->getUtilisateur()->getNom(),
                 'prenom' =>   $itemsClassement->getUtilisateur()->getPrenom(),
                 'photo' => $itemsClassement->getUtilisateur()->getCheminPhoto(),
@@ -32,18 +33,7 @@ class ClassementController extends ApiController implements InterfaceDB
     public function detailsClassementAction(Request $request, $id)
     {
 
-        $classement = $this->getRepo(self::ENTITY_MATCHS)->findClassement();
-        $total = 0;
-        foreach($classement as $itemsClassement){
-            $total = $total + $itemsClassement->getClassement();
-            $result = array(
-                'id' => $itemsClassement->getUtilisateur()->getId(),
-                'nom' =>   $itemsClassement->getUtilisateur()->getNom(),
-                'prenom' =>   $itemsClassement->getUtilisateur()->getPrenom(),
-                'photo' => $itemsClassement->getUtilisateur()->getCheminPhoto(),
-                'classement' => $total
-            );
-        }
+        $classement = $this->getRepo(self::ENTITY_MATCHS)->findClassement(null, null, $id);
         return $this->render('BackAdminBundle:Classement:details_classement.html.twig', array(
             'classement' => $classement,
         ));

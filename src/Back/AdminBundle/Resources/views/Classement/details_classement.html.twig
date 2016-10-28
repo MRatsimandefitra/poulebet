@@ -50,32 +50,27 @@
                     <th>
                         {{ 'Classement'|trans }}
                     </th>
-                    <th>
-                        {{ "Action"|trans }}
-                    </th>
+
                 </tr>
                 {% if classement is defined and classement %}
-
+                    {% for row in classement %}
                     <tr>
                         <td>
                             <img src="{#{{ asset('upload/') }}#}" alt="" width="50" height="50"/>
 
                         </td>
                         <td>
-                            {{ result['nom'] }}
+                            {{ row.utilisateur.nom }}
                         </td>
                         <td>
-                            {{ result['prenom'] }}
+                            {{ row.utilisateur.prenom }}
                         </td>
                         <td>
-                            {{ result['classement'] }}
+                            {{ row.classement }}
                         </td>
-                        <td>
-                            <a href="#">
-                                {{ 'Détails' }}
-                            </a>
-                        </td>
+
                     </tr>
+                        {% endfor %}
                 {% else %}
                     <tr>
                         <td colspan="8"> {{ 'Aucun matchs \'a été trouvé' }}</td>

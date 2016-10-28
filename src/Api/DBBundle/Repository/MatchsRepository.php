@@ -545,18 +545,23 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
     }
 
     public function findNbRecapMatchsSimpleAndCombined($userId){
+
         $dql  ="SELECT vu from ApiDBBundle:VoteUtilisateur vu
                 LEFT JOIN vu.utilisateur u
                 LEFT JOIN vu.matchs m
                 LEFT JOIN m.championat ch
                 WHERE u.id = :userId group by vu.idMise ";
+
         $query = $this->getEntityManager()->createQuery($dql);
+
         $query->setParameter('userId', $userId);
+
+
         $result = $query->getResult();
         return count($result);
     }
 
-    public function findClassement($dateDebut = null, $dateFinale = null ){
+    public function findClassement($dateDebut = null, $dateFinale = null, $idUser =null ){
 
         $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
                 LEFT JOIN vu.matchs m
@@ -568,6 +573,10 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
             $where[] = " m.dateMatch BETWEEN :dateDebut AND :dateFinale ";
             $params['dateDebut'] = $dateDebut;
             $params['dateFinale'] = $dateFinale;
+        }
+        if($idUser){
+            $where[] = " u.id = :idUser";
+            $params['idUser'] = $idUser;
         }
 
         $where[] = " vu.gagnant = true ";
@@ -584,5 +593,25 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         }
 
         return $query->getResult();
+    }
+
+    public function findAllRecapitulation($idUser, $isGroup = null){
+        $dql= "SELECT vu from ApiDBBundle:VoteUtilisateur vu
+               LEFT JOIN vu.utilisateur u
+               LEFT JOIN vu.matchs m
+               LEFT JOIN m.championat ch
+               WHERE u.id = :idUser
+               GROUP BY vu.idMise
+               ";
+        if($isGroup){
+            $dql .=" , ch.nomChampionat ";
+        }
+        $query = $this->getEntityManager()->createQuery($dql);
+        $query->setParameter('idUser', $idUser);
+        return $query->getResult();
+    }
+
+    public function findAllChampionatRecapitulation(){
+        $dql = "SELECT ";
     }
 }

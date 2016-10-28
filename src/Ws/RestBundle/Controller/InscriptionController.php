@@ -71,6 +71,8 @@ class InscriptionController extends ApiRestController
                  $device->setToken($deviceToken);
                  $device->setUtilisateur($utilisateur);
                  $this->insert($device);
+             }else{
+                 $result['message'] = "no device token";
              }
 
              $userObject = $this->getEm()->getRepository(self::ENTITY_UTILISATEUR)->findOneByEmail($utilisateur->getEmail());
@@ -149,8 +151,14 @@ class InscriptionController extends ApiRestController
     public function getProfilUtilisateurAction(Request $request)
     {
 
-        $username = $request->query->get('username');
-        $data = $this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_UTILISATEUR)->findBy(array('username' => $username));
+        $token = $request->get('token');
+        if(!$token){
+            return $this->noToken();
+        }
+        $data = $this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_UTILISATEUR)->findOneBy(array('userTokenAuth' => $token));
+        if(!$data){
+            return $this->noUser();
+        }
         $response = array();
         if (is_array($data) && count($data) <= 0 && empty($data)) {
             return new JsonResponse(array(
@@ -160,27 +168,22 @@ class InscriptionController extends ApiRestController
                 'message' => 'Utilisateur inexistant'
             ));
         }
-
-        foreach ($data as $vData) {
             $response['profil'][] = array(
-                'photo' => $vData->getCheminPhoto(),
-                'nom' => $vData->getNom(),
-                'prenom' => $vData->getPrenom(),
-                'sexe' => $vData->getSexe(),
-                'days' => $vData->getDateNaissance()->format('d'),
-                'month' => $vData->getDateNaissance()->format('m'),
-                'years' => $vData->getDateNaissance()->format('Y'),
-                'telephone' => $vData->getTelephone(),
-                'fax' => $vData->getFax(),
-                'username' => $vData->getUsername(),
-                'email' => $vData->getEmail(),
-                'adresse1' => $vData->getAdresse1(),
-                'adresse2' => $vData->getAdresse2(),
-                'adresse3' => $vData->getAdresse3(),
-                'ville' => $vData->getVille(),
-                'pays' => $vData->getPays(),
+                'photo' => $data->getCheminPhoto(),
+                'nom' => $data->getNom(),
+                'prenom' => $data->getPrenom(),
+                'sexe' => $data->getSexe(),
+                'telephone' => $data->getTelephone(),
+                'fax' => $data->getFax(),
+                'username' => $data->getUsername(),
+                'email' => $data->getEmail(),
+                'adresse1' => $data->getAdresse1(),
+                'adresse2' => $data->getAdresse2(),
+                'adresse3' => $data->getAdresse3(),
+                'ville' => $data->getVille(),
+                'pays' => $data->getPays(),
             );
-        }
+
         $response['code_error'] = 0;
         $response['success'] = true;
         $response['error'] = false;
@@ -342,7 +345,7 @@ class InscriptionController extends ApiRestController
 
             $this->get('doctrine.orm.entity_manager')->persist($utilisateur);
             $this->get('doctrine.orm.entity_manager')->flush();
-            return true;
+            return $utilisateur;
         } catch (\Exception $e) {
             return false;
         }
