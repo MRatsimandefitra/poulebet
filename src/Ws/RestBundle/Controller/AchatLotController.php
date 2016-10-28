@@ -5,6 +5,8 @@ namespace Ws\RestBundle\Controller;
 use Api\CommonBundle\Controller\ApiController;
 use Api\CommonBundle\Fixed\InterfaceDB;
 use Api\DBBundle\Entity\AddressLivraison;
+use Api\DBBundle\Entity\MvtLot;
+use Api\DBBundle\Entity\MvtCredit;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -218,56 +220,117 @@ class AchatLotController extends ApiController implements InterfaceDB
      * @ApiDoc(
      *   description="Ws, Insert addresse de livraison ",
      *   parameters = {
-     *          {"name" = "token", "dataType"="string" ,"required"=false, "description"= "Token de l'utilisateur "},
-     *          {"name" = "ville", "dataType"="string" ,"required"=false, "description"= "Ville de livraison "},
-     *          {"name" = "pays", "dataType"="string" ,"required"=false, "description"= "Pays de livraison "},
-     *          {"name" = "voie", "dataType"="string" ,"required"=false, "description"= "voie de livraison "},
-     *          {"name" = "region", "dataType"="string" ,"required"=false, "description"= "region de livraison "},
-     *          {"name" = "codePostal", "dataType"="string" ,"required"=false, "description"= "codePostal de livraison "},
-     *          {"name" = "nomComplet", "dataType"="string" ,"required"=false, "description"= "Nom complet "},
-     *          {"name" = "numero", "dataType"="string" ,"required"=false, "description"= "Numero de livraison "}
+     *          {"name" = "token", "dataType"="string" ,"required"=true, "description"= "Token de l'utilisateur "},
+     *          {"name" = "ville", "dataType"="string" ,"required"=true, "description"= "Ville de livraison "},
+     *          {"name" = "id_pays", "dataType"="int" ,"required"=true, "description"= "ID du pays de livraison "},
+     *          {"name" = "voie", "dataType"="string" ,"required"=true, "description"= "voie de livraison "},
+     *          {"name" = "id_region", "dataType"="int" ,"required"=true, "description"= "ID de la région de livraison "},
+     *          {"name" = "codePostal", "dataType"="string" ,"required"=true, "description"= "codePostal de livraison "},
+     *          {"name" = "nomComplet", "dataType"="string" ,"required"=true, "description"= "Nom complet "},
+     *          {"name" = "numero", "dataType"="string" ,"required"=true, "description"= "Numero de livraison "},
+     *          {"name" = "id_lot", "dataType"="int" ,"required"=true, "description"= "ID du lot "}
      *      }
      * )
      */
     public function postInsertAddressLivraisonAction(Request $request){
         $ville = $request->request->get('ville');
-        if(!$ville){
+        if(!$this->checkParamWs($ville)){
             return $this->noVille();
         }
-        $pays = $request->request->get('pays');
-        if(!$pays){
+        $paysId = $request->request->get('id_pays');
+        $pays = $this->checkParamWs($paysId,self::ENTITY_PAYS);
+        if($pays === false){
             return $this->noPays();
-        }
+        } 
         $voie = $request->request->get('voie');
-        if(!$voie){
+        if(!$this->checkParamWs($voie)){
             return $this->noVoie();
         }
-        $region = $request->request->get('region');
-        if(!$region){
+        $regionId = $request->request->get('id_region');
+        $region = $this->checkParamWs($regionId,self::ENTITY_REGION);
+        if($region === false){
             return $this->noRegion();
         }
         $codePostal = $request->request->get('codePostal');
-        if(!$codePostal){
+        if(!$this->checkParamWs($codePostal)){
             return $this->noCodePostal();
         }
         $nomComplet = $request->request->get('nomComplet');
-        if(!$nomComplet){
+        if(!$this->checkParamWs($nomComplet)){
             return $this->noName();
         }
         $numero = $request->request->get('numero');
-        if(!$numero){
+        if(!$this->checkParamWs($numero)){
             return $this->noNumero();
         }
 
         $token = $request->request->get('token');
-        if(!$token){
+        if(!$this->checkParamWs($token)){
             return $this->noToken();
         }
+        
+        $lotId = $request->request->get('id_lot');
+        $lot = $this->checkParamWs($lotId,self::ENTITY_LOTS);
+        if($lot === false){
+            return $this->noLot();
+        }
+        
         $user = $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
         if(!$user){
             return $this->noUser();
         }
         try{
+            $lastSolde = $this->checkIfUserCanBy($user, $lot);
+            if($lastSolde === false){
+                $result['code_error'] = 2;
+                $result['error'] = true;
+                $result['success'] = false;
+                $result['message'] = "Crédit insuffisant";
+                return new JsonResponse($result);
+            } 
+            $quantity = $lot->getQuantity();
+            if($quantity === 0){
+                $result['code_error'] = 2;
+                $result['error'] = true;
+                $result['success'] = false;
+                $result['message'] = "Quantité insuffisante";
+                return new JsonResponse($result);
+            }
+            //lot
+            $solde = (int) $quantity - 1;
+            $this->addMvtLot($user, $lot, $solde, 1, 0);
+            //credit
+            $this->addMvtCredit($user, $lot, $lastSolde);
+            //mails
+            $admins = $this->getRepo(self::ENTITY_ADMIN)->findAll();
+            $parameter = $this->getParameterMail();
+            $subject = 'Echange de lot';
+            if($parameter){
+                $message = 'Cette personne a commandé: <br><br>'
+                        . 'Lot: '
+                        . '<ul>'
+                        . '<li>Nom: ' . $lot->getNomLot() . '</li>'
+                        . '<li>NomLong: ' . $lot->getNomLong() . '</li>'
+                        . '<li>Nb point nécessaire: ' . $lot->getNbPointNecessaire() . '</li>'
+                        . '<li>Description: ' . $lot->getDescription() . '</li>'
+                        . '</ul><br>'
+                        . ' Adresse de livraison: '
+                        . '<ul>'
+                        . '<li>Nom: ' . $nomComplet . '</li>'
+                        . '<li>Numéro: ' . $numero . '</li>'
+                        . '<li>Voie: ' . $voie . '</li>'
+                        . '<li>Ville: ' . $ville . '</li>'
+                        . '<li>Région: ' . $region->getNom() . '</li>'
+                        . '<li>Pays: ' . $pays->getNomPays() . '</li>'
+                        . '</ul>'
+                        ;
+                foreach($admins as $admin){
+                    $this->sendMail($admin, $subject, $message,$parameter);  
+                }                
+                $message = 'Votre demande a été prise en charge, nous reviendrons vers vous dans les plus brefs délais.';
+                $this->sendMail($user, $subject, $message,$parameter);                                       
+            }
+            
             $addressLivraison = new AddressLivraison();
             $addressLivraison->setCodePostal($codePostal);
             $addressLivraison->setNomcomplet($nomComplet);
@@ -290,6 +353,94 @@ class AchatLotController extends ApiController implements InterfaceDB
         }
         return new JsonResponse($result);
     }
+    
+    private function sendMail($user,$subject,$message,$parameter){
+        $mailerService = $this->getMailerService();
+        $mailerService->setSubject($subject);
+        $mailerService->setFrom($parameter->getEmailSite());
+        $mailerService->setTo($user->getEmail());
+        $mailerService->addParams('body',$message);
+        $mailerService->send();
+    }
+    
+    protected function getParameterMail() {
+       $params = $this->getEm()->getRepository('ApiDBBundle:ParameterMail')->findAll();
+       if($params){
+           return $params[count($params)-1];
+       }
+       return false;
+    }
+    
+    protected function getMailerService(){
+        return $this->get('mail.manager');
+    }
+    
+    protected function addMvtCredit($user,$lot,$lastSolde){
+        $mvtCredit = new MvtCredit();
+        $mvtCredit->setTypeCredit("ACHAT LOT");
+        $mvtCredit->setUtilisateur($user);
+        $mvtCredit->setSortieCredit($lot->getNbPointNecessaire());
+        $mvtCredit->setDateMvt(new \DateTime('now'));
+        $soldeCredit = $lastSolde - $lot->getNbPointNecessaire();
+        if($soldeCredit <= 0){
+            $soldeCredit = 0;
+        }
+        $mvtCredit->setSoldeCredit($soldeCredit);
+        $this->getEm()->persist($mvtCredit);
+    }
+    
+    /**
+     * Add MvtLot for Lot entity
+     * 
+     * @param string $token
+     * @param Lot $lot
+     * @param int $out output
+     */
+    protected function addMvtLot($user,$lot,$solde,$out,$input){
+        $mvtLot = new MvtLot();
+        $mvtLot->setLot($lot);
+        $mvtLot->setUtilisateur($user);
+        $mvtLot->setSortieLot($out);
+        $mvtLot->setSoldeLot($solde);
+        $mvtLot->setEntreeLot($input);
+        $this->getEm()->persist($mvtLot);
+    }
+    
+    private function checkIfUserCanBy($user,$lot){
+        // last Solde
+        $credit = $this->getRepoFrom(self::ENTITY_MVT_CREDIT, array('utilisateur' => $user),array('id' => 'DESC'));
+        $dernierSolde = 0;
+        if (!empty($credit)) {
+            if(is_object($credit[0])){
+                $idLast = $credit[0]->getId();
+            }else{
+                $idLast = $credit[0][1];
+            }
+            $soldes = $this->getRepoFrom(self::ENTITY_MVT_CREDIT, array('id' => $idLast));
+
+            foreach ($soldes as $solde) {
+                $dernierSolde = $solde->getSoldeCredit();
+            }
+        }
+        if($dernierSolde >= $lot->getNbPointNecessaire()){
+            return $dernierSolde;
+        }
+        return false;
+    }
+    private function checkParamWs($value,$entityClass = '',$param = 'id'){
+        if(empty($value)){
+            return false;
+        }
+        if(empty($entityClass)){
+            return true;
+        }
+        $entity = $this->getObjectRepoFrom($entityClass,array($param => $value));
+        if(!$entity){
+            return false;
+        }
+        return $entity;
+    }
+    
     private function noVille(){
         $result['code_error'] = 2;
         $result['error'] = true;

@@ -27,9 +27,10 @@ class AddressLivraison
     private $id;
 
     /**
-     * @var string
+     * @var Pays
      *
-     * @ORM\Column(name="pays", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="Pays", inversedBy="addressLivraisons")
+     * @ORM\JoinColumn(name="pays_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $pays;
 
@@ -69,9 +70,10 @@ class AddressLivraison
     private $ville;
 
     /**
-     * @var string
+     * @var Region
      *
-     * @ORM\Column(name="region", type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity="Region", inversedBy="addressLivraisons")
+     * @ORM\JoinColumn(name="region_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $region;
 
@@ -84,30 +86,6 @@ class AddressLivraison
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set pays
-     *
-     * @param string $pays
-     *
-     * @return AddressLivraison
-     */
-    public function setPays($pays)
-    {
-        $this->pays = $pays;
-
-        return $this;
-    }
-
-    /**
-     * Get pays
-     *
-     * @return string
-     */
-    public function getPays()
-    {
-        return $this->pays;
     }
 
     /**
@@ -231,30 +209,6 @@ class AddressLivraison
     }
 
     /**
-     * Set region
-     *
-     * @param string $region
-     *
-     * @return AddressLivraison
-     */
-    public function setRegion($region)
-    {
-        $this->region = $region;
-
-        return $this;
-    }
-
-    /**
-     * Get region
-     *
-     * @return string
-     */
-    public function getRegion()
-    {
-        return $this->region;
-    }
-
-    /**
      * Set user
      *
      * @param \Api\DBBundle\Entity\Utilisateur $user
@@ -276,5 +230,53 @@ class AddressLivraison
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set pays
+     *
+     * @param \Api\DBBundle\Entity\Pays $pays
+     *
+     * @return AddressLivraison
+     */
+    public function setPays(\Api\DBBundle\Entity\Pays $pays = null)
+    {
+        $this->pays = $pays;
+
+        return $this;
+    }
+
+    /**
+     * Get pays
+     *
+     * @return \Api\DBBundle\Entity\Pays
+     */
+    public function getPays()
+    {
+        return $this->pays;
+    }
+
+    /**
+     * Set region
+     *
+     * @param \Api\DBBundle\Entity\Region $region
+     *
+     * @return AddressLivraison
+     */
+    public function setRegion(\Api\DBBundle\Entity\Region $region = null)
+    {
+        $this->region = $region;
+
+        return $this;
+    }
+
+    /**
+     * Get region
+     *
+     * @return \Api\DBBundle\Entity\Region
+     */
+    public function getRegion()
+    {
+        return $this->region;
     }
 }
