@@ -1,0 +1,15 @@
+index_pays:
+    path:     /
+    defaults: { _controller: BackAdminBundle:Pays:indexPays }
+
+add_pays:
+    path:     /add-pays
+    defaults: { _controller: BackAdminBundle:Pays:addPays }
+
+edit_pays:
+    path:     /edit-pays/{id}
+    defaults: { _controller: BackAdminBundle:Pays:editPays }
+
+delete_pays:
+    path:     /delete-pays/{id}
+    defaults: { _controller: BackAdminBundle:Pays:deletePays }

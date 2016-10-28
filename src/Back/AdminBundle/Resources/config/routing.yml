@@ -42,6 +42,12 @@ route_prefix_admin_achats:
 route_prefix_admin_publicite:
     resource: "@BackAdminBundle/Resources/config/routing/publicite.yml"
     prefix:   /publicites
+route_prefix_admin_pays:
+    resource: "@BackAdminBundle/Resources/config/routing/pays.yml"
+    prefix:   /pays
+route_prefix_admin_region:
+    resource: "@BackAdminBundle/Resources/config/routing/region.yml"
+    prefix:   /regions
 
 route_prefix_admin_classement:
     resource: "@BackAdminBundle/Resources/config/routing/classement.yml"

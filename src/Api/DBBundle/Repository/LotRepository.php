@@ -28,13 +28,15 @@ class LotRepository extends \Doctrine\ORM\EntityRepository
      */
     public function getLotsByCategory($categoryId)
     {
-        $query = $this->createQueryBuilder('lot')
+        $qb = $this->createQueryBuilder('lot')
             ->select('lot')
-            ->join('lot.lotCategory', 'lotCategory')
-            ->andWhere('lotCategory.id = :categoryId')
-            ->setParameter('categoryId', $categoryId)
-            ->orderBy('lot.id', 'asc')
-            ->getQuery();
+            ->join('lot.lotCategory', 'lotCategory');
+        if(!empty($categoryId)){
+            $qb->andWhere('lotCategory.id = :categoryId')
+                  ->setParameter('categoryId', $categoryId);            
+        }
+        $query = $qb->orderBy('lot.id', 'asc')
+                    ->getQuery();
 
         return $results = $query->getResult();
     }

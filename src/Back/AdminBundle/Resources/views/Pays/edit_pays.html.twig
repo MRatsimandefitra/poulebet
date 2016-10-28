@@ -1,0 +1,22 @@
+{% extends 'BackAdminBundle::layout.html.twig' %}
+{% block title %} {{ parent() }} {% endblock %}
+{% block ariane %} {{ parent() }} {% endblock %}
+
+{% block page %}
+
+    <div class="box-header-response">
+        {{ 'Modifier un pays'|trans }}
+    </div>
+    <div class="col-lg-12">
+        <div class="col-lg-8">
+            {{form_start(form)}}
+                <div>{{form_label(form.nomPays)}}</div> 
+                <div>{{form_widget(form.nomPays ,{'attr': {'class': 'form-control'  }})}}</div>
+                <div><input type="submit" value="Enregistrer" class="btn btn-primary"></div> 
+            {{form_end(form)}}
+        </div>
+        <div class="col-lg-2">
+            
+        </div>
+    </div>    
+{% endblock %}

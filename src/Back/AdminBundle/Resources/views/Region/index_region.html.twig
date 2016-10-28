@@ -1,0 +1,52 @@
+{% extends 'BackAdminBundle::layout_match.html.twig' %}
+{% block title %} {{ parent() }} {% endblock %}
+{% block ariane %} {{ parent() }} {% endblock %}
+
+{% block page %}
+    <div class="col-lg-12">
+
+        <div class="col-lg-12">
+            <div class="link">
+                <a href="{{ path('add_region') }}">{{ 'Ajout region'|trans }}</a>&nbsp;  &nbsp; 
+            </div>
+            <table class="table-list">
+                <tr>
+                    <thead>
+                    <th>{{ 'ID' }}</th>
+                    <th>{{ 'Nom'|trans }}</th>
+                    <th>{{ 'Pays'|trans }}</th>
+                    <td>{{ 'Actions'|trans }}</td>
+                    </thead>
+                </tr>
+                {% if regions|length > 0 %}
+                    {% for row in regions %}
+                        <tr>
+                            <td>
+                                {{ row.id }}
+                            </td>
+                            <td>
+                                {{ row.nom }}
+                            </td>
+                            <td>
+                                {{ row.pays }}
+                            </td>
+                            <td>
+                                <a href="{{ path('edit_region', {'id': row.id }) }}"> <span class="glyphicon glyphicon-pencil orange" aria-hidden="true"></span> Modifier </a> |
+                                <a onclick="supprimer('Etes vous sur de vouloir supprimer ?');" href="{{ path('delete_region', {'id': row.id}) }}"><span class="glyphicon glyphicon-remove red" aria-hidden="true"></span> Supprimer </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="4">
+                            {{ 'Aucune Donnée ' }}
+                        </td>
+                    </tr>
+
+                {% endif %}
+
+            </table>
+
+        </div>
+    </div>
+{% endblock %}

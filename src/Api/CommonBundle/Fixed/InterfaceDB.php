@@ -33,5 +33,8 @@ interface InterfaceDB {
     const ENTITY_MATCHS_FLUX_COTE = 'ApiDBBundle:MatchsFluxCote';
     const ENTITY_PUB  = 'ApiDBBundle:Publicite';
     const FORM_PUB ='Api\DBBundle\Form\PubliciteType';
-
+    const ENTITY_PAYS = 'ApiDBBundle:Pays';
+    const FORM_PAYS ='Api\DBBundle\Form\PaysType';
+    const ENTITY_REGION = 'ApiDBBundle:Region';
+    const FORM_REGION ='Api\DBBundle\Form\RegionType';
 }
