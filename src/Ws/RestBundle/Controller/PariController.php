@@ -125,7 +125,7 @@ class PariController extends ApiController implements InterfaceDB
                 }
                 $pub = $this->getObjectRepoFrom(self::ENTITY_PUB, array('isPopup' => false));
                 if(is_object($pub) && $pub){
-                    $result['banniere'] = 'dplb.arkeup.com/upload/admin/publicite/'.$pub->getCheminPub();
+                    $result['banniere'] = 'http://dplb.arkeup.com/upload/admin/publicite/'.$pub->getCheminPub();
                 }
 
                 $result['gain_potentiel_max'] = round($value);

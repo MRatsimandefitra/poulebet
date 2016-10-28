@@ -40,7 +40,6 @@ class InscriptionController extends ApiRestController
      */
      public function postUserFromAndroidAction(Request $request)
      {
-
          $username = $request->get('username');
          $prenom = $request->get('prenom');
          $email = $request->get('email');
@@ -52,6 +51,7 @@ class InscriptionController extends ApiRestController
                  'message' => "Veuillez remplir les champs requis"
              ));
          }
+
          $data = $this->get('doctrine.orm.default_entity_manager')->getRepository(self::ENTITY_UTILISATEUR)->testIfUserExist($username, $email);
          if ($data) {
              return new JsonResponse(array(
@@ -183,7 +183,7 @@ class InscriptionController extends ApiRestController
                 'ville' => $data->getVille(),
                 'pays' => $data->getPays(),
             );
-
+        die('plpl');
         $response['code_error'] = 0;
         $response['success'] = true;
         $response['error'] = false;
