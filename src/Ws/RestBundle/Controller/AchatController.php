@@ -143,6 +143,10 @@ class AchatController extends ApiController implements InterfaceDB
         if(!$user){
             return $this->noUser();
         }
+
+
+        $result = array();
+
         // all category
         $categories = $this->getAllEntity(self::ENTITY_LOT_CATEGORY);
         if(!empty($categories)){
@@ -163,12 +167,10 @@ class AchatController extends ApiController implements InterfaceDB
             '7' => '> 5000'
         );
         $result['list_prix'] = $prix;
+
         //categery
-        $category = $this->get('category');
-        $prix = $this->get('prix');
-
-        $result = array();
-
+        $category = $request->get('category');
+        $prix = $request->get('prix');
         $category = $this->getRepo(self::ENTITY_LOTS)->findCategoryLot(true, $category, $prix);
 
         if(is_array($category) && !empty($category)){
