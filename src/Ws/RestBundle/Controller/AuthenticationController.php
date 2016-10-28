@@ -75,7 +75,6 @@ class AuthenticationController extends ApiRestController{
                         $connected->setDevice($gcm_device_token);
                         if($newConnected){
                             $this->getEm()->persist($connected);
-
                         }
                         $this->getEm()->flush();
                     }

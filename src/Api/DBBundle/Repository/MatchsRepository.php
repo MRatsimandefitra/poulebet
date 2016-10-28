@@ -589,4 +589,24 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
 
         return $query->getResult();
     }
+
+    public function findAllRecapitulation($idUser, $isGroup = null){
+        $dql= "SELECT vu from ApiDBBundle:VoteUtilisateur vu
+               LEFT JOIN vu.utilisateur u
+               LEFT JOIN vu.matchs m
+               LEFT JOIN m.championat ch
+               WHERE u.id = :idUser
+               GROUP BY vu.idMise
+               ";
+        if($isGroup){
+            $dql .=" , ch.nomChampionat ";
+        }
+        $query = $this->getEntityManager()->createQuery($dql);
+        $query->setParameter('idUser', $idUser);
+        return $query->getResult();
+    }
+
+    public function findAllChampionatRecapitulation(){
+        $dql = "SELECT ";
+    }
 }

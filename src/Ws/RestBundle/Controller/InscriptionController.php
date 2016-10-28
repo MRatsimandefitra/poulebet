@@ -71,6 +71,8 @@ class InscriptionController extends ApiRestController
                  $device->setToken($deviceToken);
                  $device->setUtilisateur($utilisateur);
                  $this->insert($device);
+             }else{
+                 $result['message'] = "no device token";
              }
 
              $userObject = $this->getEm()->getRepository(self::ENTITY_UTILISATEUR)->findOneByEmail($utilisateur->getEmail());
@@ -343,7 +345,7 @@ class InscriptionController extends ApiRestController
 
             $this->get('doctrine.orm.entity_manager')->persist($utilisateur);
             $this->get('doctrine.orm.entity_manager')->flush();
-            return true;
+            return $utilisateur;
         } catch (\Exception $e) {
             return false;
         }

@@ -37,4 +37,7 @@ interface InterfaceDB {
     const FORM_PAYS ='Api\DBBundle\Form\PaysType';
     const ENTITY_REGION = 'ApiDBBundle:Region';
     const FORM_REGION ='Api\DBBundle\Form\RegionType';
+
+    const ENTITY_PARAMETER_MAIL = 'ApiDBBundle:ParameterMail';
+
 }
