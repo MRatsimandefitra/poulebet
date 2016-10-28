@@ -153,6 +153,7 @@ class AchatLotController extends ApiController implements InterfaceDB
         }
 
         if($lots){
+            $result['list_lot'] = array();
             $pricesLot = array();
             foreach($lots as $kLots => $itemsLots){
                 $lotCategory = $itemsLots->getLotCategory();
@@ -177,6 +178,7 @@ class AchatLotController extends ApiController implements InterfaceDB
                 }
             }
             sort($pricesLot);
+            $result['prix_lot'] = array();
             foreach($pricesLot as $price){
                 $result['prix_lot'][] = $price;                
             }
