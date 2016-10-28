@@ -2,6 +2,8 @@
 
 namespace Ws\RestBundle\Controller;
 
+use Api\CommonBundle\Controller\ApiController;
+use Api\CommonBundle\Fixed\InterfaceDB;
 use Api\DBBundle\Entity\Connected;
 use Api\DBBundle\Entity\Utilisateur;
 use Api\DBBundle\Entity\Device;
@@ -16,7 +18,7 @@ use Symfony\Component\Validator\Constraints\DateTime;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 
-class InscriptionController extends ApiRestController
+class InscriptionController extends ApiController implements InterfaceDB
 {
     const ENTITY_UTILISATEUR = 'ApiDBBundle:Utilisateur';
 
@@ -183,7 +185,11 @@ class InscriptionController extends ApiRestController
                 'ville' => $data->getVille(),
                 'pays' => $data->getPays(),
             );
-        die('plpl');
+
+        $userId = $data->getId();
+        $recapitulation = $this->getRepoFrom(self::ENTITY_MATCHS)->findRecapitulationForProfil($userId);
+        $championat = $this->getRepoFrom(self::ENTITY_MATCHS)->findRecapitulationForChampionat($userId);
+
         $response['code_error'] = 0;
         $response['success'] = true;
         $response['error'] = false;

@@ -614,4 +614,20 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
     public function findAllChampionatRecapitulation(){
         $dql = "SELECT ";
     }
+
+    public function findRecapitulationForProfil(){
+        $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
+                LEFT JOIN vu.matchs m
+                LEFT JOIN vu.utilisateur u
+                GR";
+    }
+    public function findRecapitulationForChampionat(){
+        $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
+                LEFT JOIN vu.matchs m
+                LEFT JOIN m.championat ch
+                LEFT JOIN vu.utilisateur u
+                GROUP BY ch.nomChampionat  ";
+        $query = $this->getEntityManager()->createQuery($dql);
+        return $query->getResult();
+    }
 }
