@@ -133,7 +133,7 @@ class AchatLotController extends ApiController implements InterfaceDB
         $categoryId = $request->request->get('category_id');
         $nbPoint = $request->request->get('nbPointNecessaire');
         $result = array();
-        $lots = $this->getRepo(self::ENTITY_LOTS)->getLotsByCategory($categoryId);
+        $lots = $this->getAllEntity(self::ENTITY_LOTS);
         $category = $this->getRepo(self::ENTITY_LOTS)->findCategoryLot();
 
         if(!empty($category)){
@@ -160,11 +160,14 @@ class AchatLotController extends ApiController implements InterfaceDB
                 $quantity = $itemsLots->getQuantity();
                 $hasFound = true;
                 if($quantity > 0){
+                    if(!empty($categoryId) && ($categoryId != $lotCategory->getId())){
+                        $hasFound = false;
+                    }
                     if(!empty($nbPoint) && ($nbPoint != $itemsLots->getNbPointNecessaire())){
                         $hasFound = false;
                     } 
+                    $pricesLot[$itemsLots->getNbPointNecessaire()] = $itemsLots->getNbPointNecessaire();
                     if($hasFound) {
-                        $pricesLot[$itemsLots->getNbPointNecessaire()] = $itemsLots->getNbPointNecessaire();
                         $result['list_lot'][$lotCategory->getId()][] = array(
                             'idLot' => $itemsLots->getId(),
                             'nomLot' => $itemsLots->getNomLot(),
