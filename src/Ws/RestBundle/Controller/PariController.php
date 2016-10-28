@@ -729,7 +729,6 @@ class PariController extends ApiController implements InterfaceDB
             $device_token = array();
             $messageData = array("message"=> "1","type"=>"concours","categorie"=> "recap");
             $users = $this->getObjectRepoFrom(self::ENTITY_CONNECTED, array('username' => $user->getEmail()));
-
             array_push($device_token, $users->getDevice());
             $data = array(
                 'registration_ids' => $device_token,
