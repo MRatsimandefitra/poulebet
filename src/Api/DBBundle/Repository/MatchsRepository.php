@@ -556,7 +556,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         return count($result);
     }
 
-    public function findClassement($dateDebut = null, $dateFinale = null ){
+    public function findClassement($dateDebut = null, $dateFinale = null, $idUser =null ){
 
         $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
                 LEFT JOIN vu.matchs m
@@ -568,6 +568,10 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
             $where[] = " m.dateMatch BETWEEN :dateDebut AND :dateFinale ";
             $params['dateDebut'] = $dateDebut;
             $params['dateFinale'] = $dateFinale;
+        }
+        if($idUser){
+            $where[] = " u.id = :idUser";
+            $params['idUser'] = $idUser;
         }
 
         $where[] = " vu.gagnant = true ";
