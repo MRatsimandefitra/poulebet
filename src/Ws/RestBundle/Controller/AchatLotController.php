@@ -5,6 +5,8 @@ namespace Ws\RestBundle\Controller;
 use Api\CommonBundle\Controller\ApiController;
 use Api\CommonBundle\Fixed\InterfaceDB;
 use Api\DBBundle\Entity\AddressLivraison;
+use Api\DBBundle\Entity\MvtLot;
+use Api\DBBundle\Entity\MvtCredit;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -219,13 +221,14 @@ class AchatLotController extends ApiController implements InterfaceDB
      *   description="Ws, Insert addresse de livraison ",
      *   parameters = {
      *          {"name" = "token", "dataType"="string" ,"required"=true, "description"= "Token de l'utilisateur "},
-     *          {"name" = "ville", "dataType"="string" ,"required"=false, "description"= "Ville de livraison "},
-     *          {"name" = "id_pays", "dataType"="string" ,"required"=false, "description"= "Pays de livraison "},
-     *          {"name" = "voie", "dataType"="string" ,"required"=false, "description"= "voie de livraison "},
-     *          {"name" = "id_region", "dataType"="string" ,"required"=false, "description"= "region de livraison "},
-     *          {"name" = "codePostal", "dataType"="string" ,"required"=false, "description"= "codePostal de livraison "},
-     *          {"name" = "nomComplet", "dataType"="string" ,"required"=false, "description"= "Nom complet "},
-     *          {"name" = "numero", "dataType"="string" ,"required"=false, "description"= "Numero de livraison "}
+     *          {"name" = "ville", "dataType"="string" ,"required"=true, "description"= "Ville de livraison "},
+     *          {"name" = "id_pays", "dataType"="int" ,"required"=true, "description"= "ID du pays de livraison "},
+     *          {"name" = "voie", "dataType"="string" ,"required"=true, "description"= "voie de livraison "},
+     *          {"name" = "id_region", "dataType"="int" ,"required"=true, "description"= "ID de la région de livraison "},
+     *          {"name" = "codePostal", "dataType"="string" ,"required"=true, "description"= "codePostal de livraison "},
+     *          {"name" = "nomComplet", "dataType"="string" ,"required"=true, "description"= "Nom complet "},
+     *          {"name" = "numero", "dataType"="string" ,"required"=true, "description"= "Numero de livraison "},
+     *          {"name" = "id_lot", "dataType"="int" ,"required"=true, "description"= "ID du lot "}
      *      }
      * )
      */
@@ -265,11 +268,40 @@ class AchatLotController extends ApiController implements InterfaceDB
         if(!$this->checkParamWs($token)){
             return $this->noToken();
         }
+        
+        $lotId = $request->request->get('id_lot');
+        $lot = $this->checkParamWs($lotId,self::ENTITY_LOTS);
+        if($lot === false){
+            return $this->noLot();
+        }
+        
         $user = $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
         if(!$user){
             return $this->noUser();
         }
         try{
+            $lastSolde = $this->checkIfUserCanBy($user, $lot);
+            if($lastSolde === false){
+                $result['code_error'] = 2;
+                $result['error'] = true;
+                $result['success'] = false;
+                $result['message'] = "Crédit insuffisant";
+                return new JsonResponse($result);
+            } 
+            $quantity = $lot->getQuantity();
+            if($quantity === 0){
+                $result['code_error'] = 2;
+                $result['error'] = true;
+                $result['success'] = false;
+                $result['message'] = "Quantité insuffisante";
+                return new JsonResponse($result);
+            }
+            //lot
+            $solde = (int) $quantity - 1;
+            $this->addMvtLot($user, $lot, $solde, 1, 0);
+            //credit
+            $this->addMvtCredit($user, $lot, $lastSolde);
+            
             $addressLivraison = new AddressLivraison();
             $addressLivraison->setCodePostal($codePostal);
             $addressLivraison->setNomcomplet($nomComplet);
@@ -293,6 +325,58 @@ class AchatLotController extends ApiController implements InterfaceDB
         return new JsonResponse($result);
     }
     
+    protected function addMvtCredit($user,$lot,$lastSolde){
+        $mvtCredit = new MvtCredit();
+        $mvtCredit->setTypeCredit("ACHAT LOT");
+        $mvtCredit->setUtilisateur($user);
+        $mvtCredit->setSortieCredit($lot->getNbPointNecessaire());
+        $mvtCredit->setDateMvt(new \DateTime('now'));
+        $soldeCredit = $lastSolde - $lot->getNbPointNecessaire();
+        if($soldeCredit <= 0){
+            $soldeCredit = 0;
+        }
+        $mvtCredit->setSoldeCredit($soldeCredit);
+        $this->getEm()->persist($mvtCredit);
+    }
+    
+    /**
+     * Add MvtLot for Lot entity
+     * 
+     * @param string $token
+     * @param Lot $lot
+     * @param int $out output
+     */
+    protected function addMvtLot($user,$lot,$solde,$out,$input){
+        $mvtLot = new MvtLot();
+        $mvtLot->setLot($lot);
+        $mvtLot->setUtilisateur($user);
+        $mvtLot->setSortieLot($out);
+        $mvtLot->setSoldeLot($solde);
+        $mvtLot->setEntreeLot($input);
+        $this->getEm()->persist($mvtLot);
+    }
+    
+    private function checkIfUserCanBy($user,$lot){
+        // last Solde
+        $credit = $this->getRepoFrom(self::ENTITY_MVT_CREDIT, array('utilisateur' => $user),array('id' => 'DESC'));
+        $dernierSolde = 0;
+        if (!empty($credit)) {
+            if(is_object($credit[0])){
+                $idLast = $credit[0]->getId();
+            }else{
+                $idLast = $credit[0][1];
+            }
+            $soldes = $this->getRepoFrom(self::ENTITY_MVT_CREDIT, array('id' => $idLast));
+
+            foreach ($soldes as $solde) {
+                $dernierSolde = $solde->getSoldeCredit();
+            }
+        }
+        if($dernierSolde >= $lot->getNbPointNecessaire()){
+            return $dernierSolde;
+        }
+        return false;
+    }
     private function checkParamWs($value,$entityClass = '',$param = 'id'){
         if(empty($value)){
             return false;
