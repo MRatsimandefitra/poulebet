@@ -102,9 +102,6 @@ class ClassementController extends ApiController implements InterfaceDB
                             'classement' => $total
 
                         );
-
-
-
                 }
                 $result['code_error'] = 0;
                 $result['success'] = true;
