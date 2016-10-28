@@ -133,6 +133,7 @@ class AchatController extends ApiController implements InterfaceDB
      */
     public function getListLotAction(Request $request){
 
+        // token
         $token = $request->get('token');
         if(!$token){
             return $this->noToken();
@@ -142,10 +143,33 @@ class AchatController extends ApiController implements InterfaceDB
         if(!$user){
             return $this->noUser();
         }
+        // all category
+        $categories = $this->getAllEntity(self::ENTITY_LOT_CATEGORY);
+        if(!empty($categories)){
+            foreach($categories as $itemsCategories){
+                $result['all_category'][] = array(
+                    'id' => $itemsCategories->getId(),
+                    'category' => $itemsCategories->getCategory()
+                );
+            }
+        }
+        $prix = array(
+            '1' => '1-100',
+            '2' => '100-250',
+            '3' => '250-500',
+            '4' => '500-1000',
+            '5' => '1000-2000',
+            '6' => '2000-5000',
+            '7' => '> 5000'
+        );
+        $result['list_prix'] = $prix;
+        //categery
+        $category = $this->get('category');
+        $prix = $this->get('prix');
 
         $result = array();
 
-        $category = $this->getRepo(self::ENTITY_LOTS)->findCategoryLot(true);
+        $category = $this->getRepo(self::ENTITY_LOTS)->findCategoryLot(true, $category, $prix);
 
         if(is_array($category) && !empty($category)){
 

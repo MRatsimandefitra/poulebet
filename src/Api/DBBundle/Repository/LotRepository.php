@@ -10,9 +10,9 @@ namespace Api\DBBundle\Repository;
  */
 class LotRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function findCategoryLot($isGroup = null){
+    public function findCategoryLot($isGroup = null, $category = null, $prix){
 
-        $dql = "SELECT l from ApiDBBundle:Lot l LEFT JOIN l.lotCategory lc";
+        $dql = "SELECT l from ApiDBBundle:Lot l LEFT JOIN l.lotCategory lc ";
         if($isGroup === true){
             $dql .= " GROUP BY lc.category";
         }
