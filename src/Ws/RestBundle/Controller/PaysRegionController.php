@@ -9,9 +9,6 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class PaysRegionController extends ApiController
 {
-    const ENTITY_MENTION = 'ApiDBBundle:Mention';
-
-
     /**
      * @ApiDoc(
      *      description="Recuperer tous les pays et les régions"

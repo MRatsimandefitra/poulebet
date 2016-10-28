@@ -130,8 +130,10 @@ class AchatLotController extends ApiController implements InterfaceDB
         if(!$user){
             return $this->noUser();
         }
+        $categoryId = $request->request->get('category_id');
+        $nbPoint = $request->request->get('nbPointNecessaire');
         $result = array();
-        $lots = $this->getAllEntity(self::ENTITY_LOTS);
+        $lots = $this->getRepo(self::ENTITY_LOTS)->getLotsByCategory($categoryId);
         $category = $this->getRepo(self::ENTITY_LOTS)->findCategoryLot();
 
         if(!empty($category)){
@@ -155,19 +157,26 @@ class AchatLotController extends ApiController implements InterfaceDB
             foreach($lots as $kLots => $itemsLots){
                 $lotCategory = $itemsLots->getLotCategory();
                 $quantity = $itemsLots->getQuantity();
+                $hasFound = true;
                 if($quantity > 0){
-                    $pricesLot[$itemsLots->getNbPointNecessaire()] = $itemsLots->getNbPointNecessaire();
-                    $result['list_lot'][] = array(
-                        'idLot' => $itemsLots->getId(),
-                        'nomLot' => $itemsLots->getNomLot(),
-                        'nbPointNecessaire' => $itemsLots->getNbPointNecessaire(),
-                        'description' => $itemsLots->getDescription(),
-                        'image' => $request->getHttpHost().'/upload/lots/'.$itemsLots->getCheminImage(),
-                        'idLotCategory' => $lotCategory->getId(),
-                        'qteDisponible' => $quantity
-                    );                    
+                    if(!empty($nbPoint) && ($nbPoint != $itemsLots->getNbPointNecessaire())){
+                        $hasFound = false;
+                    } 
+                    if($hasFound) {
+                        $pricesLot[$itemsLots->getNbPointNecessaire()] = $itemsLots->getNbPointNecessaire();
+                        $result['list_lot'][$lotCategory->getId()][] = array(
+                            'idLot' => $itemsLots->getId(),
+                            'nomLot' => $itemsLots->getNomLot(),
+                            'nbPointNecessaire' => $itemsLots->getNbPointNecessaire(),
+                            'description' => $itemsLots->getDescription(),
+                            'image' => $request->getHttpHost().'/upload/lots/'.$itemsLots->getCheminImage(),
+                            'idLotCategory' => $lotCategory->getId(),
+                            'qteDisponible' => $quantity
+                        ); 
+                    }
                 }
             }
+            sort($pricesLot);
             foreach($pricesLot as $price){
                 $result['prix_lot'][] = $price;                
             }
