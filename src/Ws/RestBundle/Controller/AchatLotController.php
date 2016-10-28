@@ -176,6 +176,7 @@ class AchatLotController extends ApiController implements InterfaceDB
                         $result['list_lot'][$lotCategory->getId()][] = array(
                             'idLot' => $itemsLots->getId(),
                             'nomLot' => $itemsLots->getNomLot(),
+                            'nomLong' => $itemsLots->getNomLong(),
                             'nbPointNecessaire' => $itemsLots->getNbPointNecessaire(),
                             'description' => $itemsLots->getDescription(),
                             'image' => $request->getHttpHost().'/upload/lots/'.$itemsLots->getCheminImage(),
