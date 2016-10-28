@@ -125,7 +125,100 @@ class AchatController extends ApiController implements InterfaceDB
 
 
     }
+    /**
+     * Ws, Listes des lots
+     * @ApiDoc(
+     *  description="Ws, Listes des lots"
+     * )
+     */
+    public function getListLotAction(Request $request){
 
+        $token = $request->get('token');
+        if(!$token){
+            return $this->noToken();
+        }
+
+        $user = $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
+        if(!$user){
+            return $this->noUser();
+        }
+
+        $result = array();
+
+        $category = $this->getRepo(self::ENTITY_LOTS)->findCategoryLot(true);
+
+        if(is_array($category) && !empty($category)){
+
+            foreach($category as $kCategory => $itemsCategory){
+                //var_dump($itemsCategory); die;
+                if($itemsCategory->getLotCategory()){
+                    $result['list_category'][] = array(
+                        'idCategory' => $itemsCategory->getLotCategory()->getId(),
+                        'category' =>$itemsCategory->getLotCategory()->getCategory()
+                    );
+                }
+
+            }
+        }else{
+            return $this->noCategory();
+        }
+
+        $lots = $this->getRepo(self::ENTITY_LOTS)->findCategoryLot();
+
+        if(is_array($lots) && !empty($lots)){
+            $pricesLot = array();
+            foreach($lots as $kLots => $itemsLots){
+                $quantity = $itemsLots->getQuantity();
+                if($quantity > 0) {
+                    $pricesLot[$itemsLots->getNbPointNecessaire()] = $itemsLots->getNbPointNecessaire();
+                    $result['list_lot'][] = array(
+                        'nom' => $itemsLots->getNomLot(),
+                        'nbPointNecessaire' => $itemsLots->getNbPointNecessaire(),
+                        'cheminImage' => 'dplb.arkeup.com/upload/lots/' . $itemsLots->getCheminImage(),
+                        'decription' => $itemsLots->getDescription(),
+                        'nomLong' => $itemsLots->getNomLong(),
+                        'idLotCategory' => $itemsLots->getLotCategory()->getId(),
+                        'qteDisponible' => $quantity
+                    );
+                }
+
+            }
+            foreach($pricesLot as $price){
+                $result['prix_lot'][] = $price;
+            }
+            $lastSolde = $this->getRepo(self::ENTITY_MVT_CREDIT)->findLastSolde($user->getId());
+            $idLast = $lastSolde[0][1];
+            $mvtCreditLast = $this->getObjectRepoFrom(self::ENTITY_MVT_CREDIT, array('id' => $idLast));
+            if($mvtCreditLast){
+                $lastCredit = $mvtCreditLast->getSoldeCredit();
+                $result['credit'] = $lastCredit;
+            } else {
+                $result['credit'] = 0;
+            }
+            $result['code_error'] = 0;
+            $result['error'] = false;
+            $result['success'] = true;
+            $result['message'] = "Success";
+            return new JsonResponse($result);
+        }else{
+            return $this->noLots();
+        }
+    }
+
+    private function noCategory(){
+        $result['code_error'] = 0;
+        $result['error'] = false;
+        $result['success'] = true;
+        $result['message'] = "Aucune catégorie trouvée";
+        return new JsonResponse($result);
+    }
+    private function noLots(){
+        $result['code_error'] = 0;
+        $result['error'] = false;
+        $result['success'] = true;
+        $result['message'] = "Aucun lots trouvé";
+        return new JsonResponse($result);
+    }
     private function noToken(){
         $result['code_error'] = 2;
         $result['error'] = true;
