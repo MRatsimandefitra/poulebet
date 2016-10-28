@@ -301,6 +301,35 @@ class AchatLotController extends ApiController implements InterfaceDB
             $this->addMvtLot($user, $lot, $solde, 1, 0);
             //credit
             $this->addMvtCredit($user, $lot, $lastSolde);
+            //mails
+            $admins = $this->getRepo(self::ENTITY_ADMIN)->findAll();
+            $parameter = $this->getParameterMail();
+            $subject = 'Echange de lot';
+            if($parameter){
+                $message = 'Cette personne a commandé: <br><br>'
+                        . 'Lot: '
+                        . '<ul>'
+                        . '<li>Nom: ' . $lot->getNomLot() . '</li>'
+                        . '<li>NomLong: ' . $lot->getNomLong() . '</li>'
+                        . '<li>Nb point nécessaire: ' . $lot->getNbPointNecessaire() . '</li>'
+                        . '<li>Description: ' . $lot->getDescription() . '</li>'
+                        . '</ul><br>'
+                        . ' Adresse de livraison: '
+                        . '<ul>'
+                        . '<li>Nom: ' . $nomComplet . '</li>'
+                        . '<li>Numéro: ' . $numero . '</li>'
+                        . '<li>Voie: ' . $voie . '</li>'
+                        . '<li>Ville: ' . $ville . '</li>'
+                        . '<li>Région: ' . $region->getNom() . '</li>'
+                        . '<li>Pays: ' . $pays->getNomPays() . '</li>'
+                        . '</ul>'
+                        ;
+                foreach($admins as $admin){
+                    $this->sendMail($admin, $subject, $message,$parameter);  
+                }                
+                $message = 'Votre demande a été prise en charge, nous reviendrons vers vous dans les plus brefs délais.';
+                $this->sendMail($user, $subject, $message,$parameter);                                       
+            }
             
             $addressLivraison = new AddressLivraison();
             $addressLivraison->setCodePostal($codePostal);
@@ -323,6 +352,27 @@ class AchatLotController extends ApiController implements InterfaceDB
             $result['message'] = "Error";
         }
         return new JsonResponse($result);
+    }
+    
+    private function sendMail($user,$subject,$message,$parameter){
+        $mailerService = $this->getMailerService();
+        $mailerService->setSubject($subject);
+        $mailerService->setFrom($parameter->getEmailSite());
+        $mailerService->setTo($user->getEmail());
+        $mailerService->addParams('body',$message);
+        $mailerService->send();
+    }
+    
+    protected function getParameterMail() {
+       $params = $this->getEm()->getRepository('ApiDBBundle:ParameterMail')->findAll();
+       if($params){
+           return $params[count($params)-1];
+       }
+       return false;
+    }
+    
+    protected function getMailerService(){
+        return $this->get('mail.manager');
     }
     
     protected function addMvtCredit($user,$lot,$lastSolde){
