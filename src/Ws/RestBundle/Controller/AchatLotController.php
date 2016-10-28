@@ -173,7 +173,7 @@ class AchatLotController extends ApiController implements InterfaceDB
                     } 
                     $pricesLot[$itemsLots->getNbPointNecessaire()] = $itemsLots->getNbPointNecessaire();
                     if($hasFound) {
-                        $result['list_lot'][$lotCategory->getId()][] = array(
+                        $result['list_lot'][] = array(
                             'idLot' => $itemsLots->getId(),
                             'nomLot' => $itemsLots->getNomLot(),
                             'nomLong' => $itemsLots->getNomLong(),
