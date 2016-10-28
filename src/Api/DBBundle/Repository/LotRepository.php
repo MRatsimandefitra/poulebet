@@ -13,6 +13,18 @@ class LotRepository extends \Doctrine\ORM\EntityRepository
     public function findCategoryLot($isGroup = null, $category = null, $prix = null){
 
         $dql = "SELECT l from ApiDBBundle:Lot l LEFT JOIN l.lotCategory lc ";
+        $where = array();
+        $params = array();
+        if($category){
+            $where[] = " lc.category LIKE :category ";
+            $params['category'] = $category;
+        }
+        if(is_array($prix)){
+           /* switch($prix){
+                case:
+
+            }*/
+        }
         if($isGroup === true){
             $dql .= " GROUP BY lc.category";
         }
