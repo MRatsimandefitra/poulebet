@@ -36,6 +36,11 @@ class Pays
     private $regions;
     
     /**
+     * @ORM\OneToMany(targetEntity="AddressLivraison", mappedBy="pays")
+     */
+    private $addressLivraisons;
+    
+    /**
      * Get id
      *
      * @return int
@@ -75,6 +80,7 @@ class Pays
     public function __construct()
     {
         $this->regions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->addressLivraisons = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -113,5 +119,39 @@ class Pays
     
     public function __toString() {
         return $this->nomPays;
+    }
+
+    /**
+     * Add addressLivraison
+     *
+     * @param \Api\DBBundle\Entity\AddressLivraison $addressLivraison
+     *
+     * @return Pays
+     */
+    public function addAddressLivraison(\Api\DBBundle\Entity\AddressLivraison $addressLivraison)
+    {
+        $this->addressLivraisons[] = $addressLivraison;
+
+        return $this;
+    }
+
+    /**
+     * Remove addressLivraison
+     *
+     * @param \Api\DBBundle\Entity\AddressLivraison $addressLivraison
+     */
+    public function removeAddressLivraison(\Api\DBBundle\Entity\AddressLivraison $addressLivraison)
+    {
+        $this->addressLivraisons->removeElement($addressLivraison);
+    }
+
+    /**
+     * Get addressLivraisons
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAddressLivraisons()
+    {
+        return $this->addressLivraisons;
     }
 }

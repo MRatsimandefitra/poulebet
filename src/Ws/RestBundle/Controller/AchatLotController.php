@@ -218,11 +218,11 @@ class AchatLotController extends ApiController implements InterfaceDB
      * @ApiDoc(
      *   description="Ws, Insert addresse de livraison ",
      *   parameters = {
-     *          {"name" = "token", "dataType"="string" ,"required"=false, "description"= "Token de l'utilisateur "},
+     *          {"name" = "token", "dataType"="string" ,"required"=true, "description"= "Token de l'utilisateur "},
      *          {"name" = "ville", "dataType"="string" ,"required"=false, "description"= "Ville de livraison "},
-     *          {"name" = "pays", "dataType"="string" ,"required"=false, "description"= "Pays de livraison "},
+     *          {"name" = "id_pays", "dataType"="string" ,"required"=false, "description"= "Pays de livraison "},
      *          {"name" = "voie", "dataType"="string" ,"required"=false, "description"= "voie de livraison "},
-     *          {"name" = "region", "dataType"="string" ,"required"=false, "description"= "region de livraison "},
+     *          {"name" = "id_region", "dataType"="string" ,"required"=false, "description"= "region de livraison "},
      *          {"name" = "codePostal", "dataType"="string" ,"required"=false, "description"= "codePostal de livraison "},
      *          {"name" = "nomComplet", "dataType"="string" ,"required"=false, "description"= "Nom complet "},
      *          {"name" = "numero", "dataType"="string" ,"required"=false, "description"= "Numero de livraison "}
@@ -231,36 +231,38 @@ class AchatLotController extends ApiController implements InterfaceDB
      */
     public function postInsertAddressLivraisonAction(Request $request){
         $ville = $request->request->get('ville');
-        if(!$ville){
+        if(!$this->checkParamWs($ville)){
             return $this->noVille();
         }
-        $pays = $request->request->get('pays');
-        if(!$pays){
+        $paysId = $request->request->get('id_pays');
+        $pays = $this->checkParamWs($paysId,self::ENTITY_PAYS);
+        if($pays === false){
             return $this->noPays();
-        }
+        } 
         $voie = $request->request->get('voie');
-        if(!$voie){
+        if(!$this->checkParamWs($voie)){
             return $this->noVoie();
         }
-        $region = $request->request->get('region');
-        if(!$region){
+        $regionId = $request->request->get('id_region');
+        $region = $this->checkParamWs($regionId,self::ENTITY_REGION);
+        if($region === false){
             return $this->noRegion();
         }
         $codePostal = $request->request->get('codePostal');
-        if(!$codePostal){
+        if(!$this->checkParamWs($codePostal)){
             return $this->noCodePostal();
         }
         $nomComplet = $request->request->get('nomComplet');
-        if(!$nomComplet){
+        if(!$this->checkParamWs($nomComplet)){
             return $this->noName();
         }
         $numero = $request->request->get('numero');
-        if(!$numero){
+        if(!$this->checkParamWs($numero)){
             return $this->noNumero();
         }
 
         $token = $request->request->get('token');
-        if(!$token){
+        if(!$this->checkParamWs($token)){
             return $this->noToken();
         }
         $user = $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
@@ -290,6 +292,21 @@ class AchatLotController extends ApiController implements InterfaceDB
         }
         return new JsonResponse($result);
     }
+    
+    private function checkParamWs($value,$entityClass = '',$param = 'id'){
+        if(empty($value)){
+            return false;
+        }
+        if(empty($entityClass)){
+            return true;
+        }
+        $entity = $this->getObjectRepoFrom($entityClass,array($param => $value));
+        if(!$entity){
+            return false;
+        }
+        return $entity;
+    }
+    
     private function noVille(){
         $result['code_error'] = 2;
         $result['error'] = true;
