@@ -55,26 +55,27 @@
                     </th>
                 </tr>
                 {% if classement is defined and classement %}
-                        <tr>
-                           <td>
-                               <img src="{#{{ asset('upload/') }}#}" alt="" width="50" height="50"/>
-                        
-                            </td>
-                            <td>
-                                    {{ result['nom'] }}
-                            </td>
-                            <td>
-                                    {{ result['prenom'] }}
-                            </td>
-                            <td>
-                                {{ result['classement'] }}
-                            </td>
-                            <td>
-                                <a href="#">
-                                    {{ 'Détails' }}
-                                </a>
-                            </td>
-                        </tr>
+
+                    <tr>
+                        <td>
+                            <img src="{#{{ asset('upload/') }}#}" alt="" width="50" height="50"/>
+
+                        </td>
+                        <td>
+                            {{ result['nom'] }}
+                        </td>
+                        <td>
+                            {{ result['prenom'] }}
+                        </td>
+                        <td>
+                            {{ result['classement'] }}
+                        </td>
+                        <td>
+                            <a href="#">
+                                {{ 'Détails' }}
+                            </a>
+                        </td>
+                    </tr>
                 {% else %}
                     <tr>
                         <td colspan="8"> {{ 'Aucun matchs \'a été trouvé' }}</td>

@@ -362,6 +362,10 @@ div.classement div.form-search-classement{
     width: 100px;
     height: 30px;
 }
+div.classement table{
+    width: 100%;
+    display: block;
+}
 table.form{
     border: none;
 }

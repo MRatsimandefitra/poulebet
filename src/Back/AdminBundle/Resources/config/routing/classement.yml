@@ -1,7 +1,9 @@
 index_classement:
     path:     /
     defaults: { _controller: BackAdminBundle:Classement:indexClassement }
-
+details_classement:
+    path:     /details-classement/{id}
+    defaults: { _controller: BackAdminBundle:Classement:detailsClassement }
 add_classement:
     path:     /add-classement
     defaults: { _controller: BackAdminBundle:Classement:addClassement }
