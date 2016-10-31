@@ -2,6 +2,7 @@
 
 namespace Api\CommonBundle\Controller;
 
+use Api\CommonBundle\Fixed\InterfaceDB;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
@@ -9,8 +10,12 @@ use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class ApiController extends Controller
+class ApiController extends Controller implements InterfaceDB
 {
+
+    protected function generateToken($userToken){
+        return "".time()."_".$userToken."_".(time() + (1 * 24 * 60 * 60));
+    }
 
     public function generateQueryBuilder($request)
     {
@@ -361,5 +366,33 @@ class ApiController extends Controller
         $mailerService->setTo($user->getEmail());
         $mailerService->addParams('body',$message);
         return $mailerService->send();
+    }
+
+
+    protected function isExpiredToken($token){
+        $res = split('_', $token);
+        $time = intval($res[2]);
+        if ($time < time()){
+            return true;
+        }
+        return false;
+    }
+    protected function generatePassword($length = 5){
+        return substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
+
+    }
+    protected function sendEmail($message){
+        $res = $this->get('mailer')->send($message);
+        return true;
+    }
+    protected function getMailerService(){
+        return $this->get('mail.manager');
+    }
+    protected function getParameterMail() {
+        $params = $this->getEm()->getRepository(self::ENTITY_PARAMETER_MAIL)->findAll();
+        if($params){
+            return $params[count($params)-1];
+        }
+        return false;
     }
 }

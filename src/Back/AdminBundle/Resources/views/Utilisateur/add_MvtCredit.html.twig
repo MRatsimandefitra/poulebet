@@ -7,7 +7,7 @@
         <div class="box-header-response">
             {{ 'Ajout un mouvement de crédit'|trans }}
             <div class="link">
-                    <a href="{{ path('mvtCredit_utilisateur',{'id':utilisateur.id}) }}">{{ 'Liste des crédits'|trans }}</a>
+                <a href="{{ path('mvtCredit_utilisateur',{'id':utilisateur.id}) }}">{{ 'Liste des crédits'|trans }}</a>
             </div>
             <div class="clear">
 
@@ -15,21 +15,25 @@
         </div>
     </div>
     <div class="box-response">
-        <div class= "edit-profil-admin">
-            {{ form_start(form) }}
-            <div class="row">
-                <label>{{form_label(form.sortieCredit)}}</label>
-                {{form_widget(form.sortieCredit)}}
-            </div>
-            <div class="row">
-                <label>{{form_label(form.credit)}}</label>
-                {{form_widget(form.credit)}}
-            </div>
-            <div>
-                <input class ="btn btn-primary" type="submit" value="{{"Enregistrer"|trans}}">
-            </div>
-           
-            {{ form_end (form)}}
-        <div>
-    </div>        
+    <div class="edit-profil-admin">
+    {{ form_start(form) }}
+    <div class="row">
+        <label>{{ form_label(form.entreeCredit) }}</label>
+        {{ form_widget(form.entreeCredit) }}
+    </div>
+    <div class="row">
+        <label>{{ form_label(form.sortieCredit) }}</label>
+        {{ form_widget(form.sortieCredit) }}
+    </div>
+    <div class="row">
+        <label>{{ form_label(form.credit) }}</label>
+        {{ form_widget(form.credit) }}
+    </div>
+    <div>
+        <input class="btn btn-primary" type="submit" value="{{ "Enregistrer"|trans }}">
+    </div>
+
+    {{ form_end (form) }}
+    <div>
+    </div>
 {% endblock %}

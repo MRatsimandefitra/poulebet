@@ -127,6 +127,12 @@ class RecapitulationController extends ApiController implements InterfaceDB
                             'gagnantCombine' => $dataIsGagne,
                             'statusCombine' => $dataStatus
                         );
+                        $banniere = $this->getObjectRepoFrom(self::ENTITY_PUB, array('isPopup' => false ));
+                        if($banniere && is_object($banniere)){
+                                $result['banniere'] = 'http://dplb.arkeup.com/upload/publicite/'.$banniere->getCheminPub();
+                        }else{
+                            $result['banniere'] = null;
+                        }
                         $result['pagination']['total'] = $totalItems;
                         $result['pagination']['perPage'] = $perPage;
                         $result['pagination']['pageNow'] = $pageNow;
@@ -229,6 +235,13 @@ class RecapitulationController extends ApiController implements InterfaceDB
                 $result['pagination']['perPage'] = $perPage;
                 $result['pagination']['pageNow'] = $pageNow;
                 $result['pagination']['nbPage'] = $nbPage;
+
+                $banniere = $this->getObjectRepoFrom(self::ENTITY_PUB, array('isPopup' => false ));
+                if($banniere && is_object($banniere)){
+                    $result['banniere'] = 'http://dplb.arkeup.com/upload/publicite/'.$banniere->getCheminPub();
+                }else{
+                    $result['banniere'] = null;
+                }
 
                 $result['itemTotal'] = $nbRecapTotal;
 
