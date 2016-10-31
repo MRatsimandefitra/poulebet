@@ -33,7 +33,8 @@ class ParameterMailType extends AbstractType
             ->add('subject_inscription')
             ->add('template_mdp_oublie')
             ->add('subject_mdp_oublie')    
-            
+            ->add('subjectAchatLot')
+            ->add('templateAchatLot')    
         ;
     }
 

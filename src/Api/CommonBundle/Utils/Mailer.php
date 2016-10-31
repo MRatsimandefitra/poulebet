@@ -195,7 +195,7 @@ class Mailer
             $mailer->send($message);
             return true;
         }
-        catch(Exception $ex){
+        catch(\Exception $ex){
             return false;
         }
         return false;
