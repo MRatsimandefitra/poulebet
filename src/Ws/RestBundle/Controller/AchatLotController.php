@@ -87,7 +87,8 @@ class AchatLotController extends ApiController implements InterfaceDB
                 $dernierSolde = 0;            
             }
             $output['response'] = false;
-            if($dernierSolde >= $lot->getNbPointNecessaire()){
+            $quantity = $lot->getQuantity();
+            if(($dernierSolde >= $lot->getNbPointNecessaire()) && ($quantity > 0)){
                 $output['response'] = true;
             }
             $output['code_error'] = 0;
