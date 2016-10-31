@@ -225,7 +225,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
                 $result['success'] = true;
                 $result['message'] = "Success";
 
-                $result['pagination']['totalItems'] = $totalItems;
+                $result['pagination']['total'] = $totalItems;
                 $result['pagination']['perPage'] = $perPage;
                 $result['pagination']['pageNow'] = $pageNow;
                 $result['pagination']['nbPage'] = $nbPage;

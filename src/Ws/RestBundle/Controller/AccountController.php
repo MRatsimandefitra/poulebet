@@ -49,11 +49,7 @@ class AccountController extends ApiController implements InterfaceDB
                 $totalGains = $totalGains + $itemsGains->getGainPotentiel();
             }
             $result['totalGain'] = $totalGains;
-            $result['code_error'] = 0;
-            $result['error'] = false;
-            $result['success'] = true;
-            $result['message'] = "Success";
-            return new JsonResponse($result);
+
         }else{
             $result['code_error'] = 0;
             $result['error'] = false;
@@ -65,6 +61,7 @@ class AccountController extends ApiController implements InterfaceDB
         $recapitulation = $this->getRepo(self::ENTITY_MATCHS)->findRecapitulationForUser($user->getId());
         if(is_array($recapitulation)&& count($recapitulation) > 0){
 
+            foreach($recapitulation as $kRecait)
         }else{
             $result['code_error']= 0;
             $result['error'] = false;
