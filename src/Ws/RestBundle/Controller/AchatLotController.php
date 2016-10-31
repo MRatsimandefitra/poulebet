@@ -289,37 +289,44 @@ class AchatLotController extends ApiController implements InterfaceDB
             $this->addMvtLot($user, $lot, $solde, 1, 0);
             //credit
             $this->addMvtCredit($user, $lot, $lastSolde);
+            
             //mails
             $admins = $this->getRepo(self::ENTITY_ADMIN)->findAll();
-            $parameter = $this->getParameterMail();
-            $subject = 'Echange de lot';
-            /*
+            $parameter = $this->getParameterMail();            
             if($parameter){
-                $message = 'Cette personne a commandé: <br><br>'
-                        . 'Lot: '
-                        . '<ul>'
-                        . '<li>Nom: ' . $lot->getNomLot() . '</li>'
-                        . '<li>NomLong: ' . $lot->getNomLong() . '</li>'
-                        . '<li>Nb point nécessaire: ' . $lot->getNbPointNecessaire() . '</li>'
-                        . '<li>Description: ' . $lot->getDescription() . '</li>'
-                        . '</ul><br>'
-                        . ' Adresse de livraison: '
-                        . '<ul>'
-                        . '<li>Nom: ' . $nomComplet . '</li>'
-                        . '<li>Numéro: ' . $numero . '</li>'
-                        . '<li>Voie: ' . $voie . '</li>'
-                        . '<li>Ville: ' . $ville . '</li>'
-                        . '<li>Région: ' . $region->getNom() . '</li>'
-                        . '<li>Pays: ' . $pays->getNomPays() . '</li>'
-                        . '</ul>'
-                        ;
+                $subject = ($parameter->getSubjectAchatLot()) ? $parameter->getSubjectAchatLot() : 'Echange de lot';
+                $template = $this->container->get("templating")->render(
+                        'ApiCommonBundle:Email:defaultTplLotAdmin.html.twig',
+                        array(
+                            'lot' => $lot,
+                            'nomComplet'  => $nomComplet,
+                            'numero' => $numero,
+                            'voie'  => $voie,
+                            'ville' => $ville,
+                            'region' => $region,
+                            'pays'   => $pays
+                        )
+   
+                );
+                //all admin
                 foreach($admins as $admin){
-                    $this->sendMail($admin, $subject, $message,$parameter);  
-                }                
-                $message = 'Votre demande a été prise en charge, nous reviendrons vers vous dans les plus brefs délais.';
+                    if($admin->isEnabled()){
+                        $this->sendMail($admin, $subject, $template,$parameter);                          
+                    }
+                } 
+                $now =new \DateTime('now');
+                $message = $parameter->getTemplateAchatLot();
+                $message = $this->processBddTemplating($message, array(
+                    '{{lot.nomLong}}' => $lot->getNomLong(),
+                    '{{logo}}' => $request->getSchemeAndHttpHost() . '/bundles/apitheme/img/poulebet.gif',
+                    '{{lot.image}}' => $request->getSchemeAndHttpHost().'/upload/lots/'.$lot->getCheminImage(),
+                    '{{date}}'      => $now->format('Y')
+                    )
+                );
+                //customer
                 $this->sendMail($user, $subject, $message,$parameter);                                       
             }
-            */
+            
             $addressLivraison = new AddressLivraison();
             $addressLivraison->setCodePostal($codePostal);
             $addressLivraison->setNomcomplet($nomComplet);
@@ -341,6 +348,20 @@ class AchatLotController extends ApiController implements InterfaceDB
             $result['message'] = "Error";
         }
         return new JsonResponse($result);
+    }
+    
+    /**
+     * Replace params in template 
+     * 
+     * @param string $template
+     * @param array $params
+     * @return string
+     */
+    protected function processBddTemplating($template,$params){
+        foreach($params as $param => $value){
+            $template = str_replace($param,$value,$template);
+        }
+        return $template;
     }
     
     protected function getParameterMail() {

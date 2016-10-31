@@ -354,12 +354,12 @@ class ApiController extends Controller
      * @param string $message
      * @param ParameterMail $parameter
      */
-    protected function sendMail($user,$subject,$message,$parameter){
+    protected function sendMail($user,$subject,$message,$parameter,$function = 'send',$params = array()){
         $mailerService = $this->get('mail.manager');
         $mailerService->setSubject($subject);
         $mailerService->setFrom($parameter->getEmailSite());
         $mailerService->setTo($user->getEmail());
         $mailerService->addParams('body',$message);
-        return $mailerService->send();
+        return call_user_func_array(array($mailerService,$function),$params);
     }
 }
