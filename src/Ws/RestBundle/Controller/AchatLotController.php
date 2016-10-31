@@ -7,7 +7,6 @@ use Api\CommonBundle\Fixed\InterfaceDB;
 use Api\DBBundle\Entity\AddressLivraison;
 use Api\DBBundle\Entity\MvtLot;
 use Api\DBBundle\Entity\MvtCredit;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,7 +26,7 @@ class AchatLotController extends ApiController implements InterfaceDB
     public function getListLotCategoryAction(Request $request){
         $categoryId = $request->request->get('category_id');
         if(!$categoryId){
-            return $this->noCategory();
+            return $this->sendJsonErrorMsg("La catégorie doit etre précisé");
         }
         $lots = $this->getRepo(self::ENTITY_LOTS)->getLotsByCategory($categoryId);
         $output = array();
@@ -68,14 +67,14 @@ class AchatLotController extends ApiController implements InterfaceDB
         $lotId = $request->request->get('lot_id');
         $token = $request->request->get('token');
         if(!$lotId){
-            return $this->noLot();
+            return $this->sendJsonErrorMsg("Le lot doit etre précisé");
         }
         if(!$token){
-            return $this->noToken();
+            return $this->sendJsonErrorMsg("Le token doit etre précisé");
         }
         $user = $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
         if(!$user){
-            return $this->noUser();
+            return $this->sendJsonErrorMsg("Aucun utilisateur");
         }
         $lot = $this->getRepo(self::ENTITY_LOTS)->findOneById($lotId);
         $output = array();
@@ -126,11 +125,11 @@ class AchatLotController extends ApiController implements InterfaceDB
     public function postGetListLotAction(Request $request){
         $token = $request->request->get('token');
         if(!$token){
-            return $this->noToken();
+            return $this->sendJsonErrorMsg("Le token doit etre précisé");
         }
         $user = $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
         if(!$user){
-            return $this->noUser();
+            return $this->sendJsonErrorMsg("Aucun utilisateur");
         }
         $categoryId = $request->request->get('category_id');
         $nbPoint = $request->request->get('nbPointNecessaire');
@@ -203,12 +202,9 @@ class AchatLotController extends ApiController implements InterfaceDB
             $result['error'] = false;
             $result['message'] = "Aucun lots disponible";
         }
-        $lastSolde = $this->getRepo(self::ENTITY_MVT_CREDIT)->findLastSolde($user->getId());
-        $idLast = $lastSolde[0][1];
-        $mvtCreditLast = $this->getObjectRepoFrom(self::ENTITY_MVT_CREDIT, array('id' => $idLast));
-        if($mvtCreditLast){
-            $lastCredit = $mvtCreditLast->getSoldeCredit();
-            $result['credit'] = $lastCredit;            
+        $lastSolde = $this->getRepo(self::ENTITY_MVT_CREDIT)->getLastByUser($user);
+        if($lastSolde !== false){
+            $result['credit'] = $lastSolde->getSoldeCredit();            
         } else {
             $result['credit'] = 0;            
         }
@@ -235,66 +231,58 @@ class AchatLotController extends ApiController implements InterfaceDB
     public function postInsertAddressLivraisonAction(Request $request){
         $ville = $request->request->get('ville');
         if(!$this->checkParamWs($ville)){
-            return $this->noVille();
+            return $this->sendJsonErrorMsg("La ville doit etre précisé");
         }
         $paysId = $request->request->get('id_pays');
         $pays = $this->checkParamWs($paysId,self::ENTITY_PAYS);
         if($pays === false){
-            return $this->noPays();
+            return $this->sendJsonErrorMsg("Le pays doit etre précisé");
         } 
         $voie = $request->request->get('voie');
         if(!$this->checkParamWs($voie)){
-            return $this->noVoie();
+            return $this->sendJsonErrorMsg("La voie doit etre précisé");
         }
         $regionId = $request->request->get('id_region');
         $region = $this->checkParamWs($regionId,self::ENTITY_REGION);
         if($region === false){
-            return $this->noRegion();
+            return $this->sendJsonErrorMsg("La région doit etre précisé");
         }
         $codePostal = $request->request->get('codePostal');
         if(!$this->checkParamWs($codePostal)){
-            return $this->noCodePostal();
+            return $this->sendJsonErrorMsg("Le code postal doit etre précisé");
         }
         $nomComplet = $request->request->get('nomComplet');
         if(!$this->checkParamWs($nomComplet)){
-            return $this->noName();
+            return $this->sendJsonErrorMsg("Le nom complet doit etre précisé");
         }
         $numero = $request->request->get('numero');
         if(!$this->checkParamWs($numero)){
-            return $this->noNumero();
+            return $this->sendJsonErrorMsg("Le numéro doit etre précisé");
         }
 
         $token = $request->request->get('token');
         if(!$this->checkParamWs($token)){
-            return $this->noToken();
+            return $this->sendJsonErrorMsg("Le token doit etre précisé");
         }
         
         $lotId = $request->request->get('id_lot');
         $lot = $this->checkParamWs($lotId,self::ENTITY_LOTS);
         if($lot === false){
-            return $this->noLot();
+            return $this->sendJsonErrorMsg("Le lot doit etre précisé");
         }
         
         $user = $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
         if(!$user){
-            return $this->noUser();
+            return $this->sendJsonErrorMsg("Aucun utilisateur");
         }
         try{
-            $lastSolde = $this->checkIfUserCanBy($user, $lot);
+            $lastSolde = $this->checkIfUserCanBuy($user, $lot->getNbPointNecessaire());
             if($lastSolde === false){
-                $result['code_error'] = 2;
-                $result['error'] = true;
-                $result['success'] = false;
-                $result['message'] = "Crédit insuffisant";
-                return new JsonResponse($result);
+                return $this->sendJsonErrorMsg("Crédit insuffisant");
             } 
             $quantity = $lot->getQuantity();
             if($quantity === 0){
-                $result['code_error'] = 2;
-                $result['error'] = true;
-                $result['success'] = false;
-                $result['message'] = "Quantité insuffisante";
-                return new JsonResponse($result);
+                return $this->sendJsonErrorMsg("Quantité insuffisante");
             }
             //lot
             $solde = (int) $quantity - 1;
@@ -302,10 +290,10 @@ class AchatLotController extends ApiController implements InterfaceDB
             //credit
             $this->addMvtCredit($user, $lot, $lastSolde);
             //mails
-            /*
             $admins = $this->getRepo(self::ENTITY_ADMIN)->findAll();
             $parameter = $this->getParameterMail();
             $subject = 'Echange de lot';
+            /*
             if($parameter){
                 $message = 'Cette personne a commandé: <br><br>'
                         . 'Lot: '
@@ -355,25 +343,12 @@ class AchatLotController extends ApiController implements InterfaceDB
         return new JsonResponse($result);
     }
     
-    private function sendMail($user,$subject,$message,$parameter){
-        $mailerService = $this->getMailerService();
-        $mailerService->setSubject($subject);
-        $mailerService->setFrom($parameter->getEmailSite());
-        $mailerService->setTo($user->getEmail());
-        $mailerService->addParams('body',$message);
-        $mailerService->send();
-    }
-    
     protected function getParameterMail() {
        $params = $this->getEm()->getRepository('ApiDBBundle:ParameterMail')->findAll();
        if($params){
            return $params[count($params)-1];
        }
        return false;
-    }
-    
-    protected function getMailerService(){
-        return $this->get('mail.manager');
     }
     
     protected function addMvtCredit($user,$lot,$lastSolde){
@@ -405,121 +380,5 @@ class AchatLotController extends ApiController implements InterfaceDB
         $mvtLot->setSoldeLot($solde);
         $mvtLot->setEntreeLot($input);
         $this->getEm()->persist($mvtLot);
-    }
-    
-    private function checkIfUserCanBy($user,$lot){
-        // last Solde
-        $credit = $this->getRepoFrom(self::ENTITY_MVT_CREDIT, array('utilisateur' => $user),array('id' => 'DESC'));
-        $dernierSolde = 0;
-        if (!empty($credit)) {
-            if(is_object($credit[0])){
-                $idLast = $credit[0]->getId();
-            }else{
-                $idLast = $credit[0][1];
-            }
-            $soldes = $this->getRepoFrom(self::ENTITY_MVT_CREDIT, array('id' => $idLast));
-
-            foreach ($soldes as $solde) {
-                $dernierSolde = $solde->getSoldeCredit();
-            }
-        }
-        if($dernierSolde >= $lot->getNbPointNecessaire()){
-            return $dernierSolde;
-        }
-        return false;
-    }
-    private function checkParamWs($value,$entityClass = '',$param = 'id'){
-        if(empty($value)){
-            return false;
-        }
-        if(empty($entityClass)){
-            return true;
-        }
-        $entity = $this->getObjectRepoFrom($entityClass,array($param => $value));
-        if(!$entity){
-            return false;
-        }
-        return $entity;
-    }
-    
-    private function noVille(){
-        $result['code_error'] = 2;
-        $result['error'] = true;
-        $result['success'] = false;
-        $result['message'] = "La ville doit etre précisé";
-        return new JsonResponse($result);
-    }
-    private function noNumero(){
-        $result['code_error'] = 2;
-        $result['error'] = true;
-        $result['success'] = false;
-        $result['message'] = "La ville doit etre précisé";
-        return new JsonResponse($result);
-    }
-    private function noPays(){
-        $result['code_error'] = 2;
-        $result['error'] = true;
-        $result['success'] = false;
-        $result['message'] = "Le numero doit etre précisé";
-        return new JsonResponse($result);
-    }
-    private function noVoie(){
-        $result['code_error'] = 2;
-        $result['error'] = true;
-        $result['success'] = false;
-        $result['message'] = "La voie doit etre précisé";
-        return new JsonResponse($result);
-    }
-    private function noRegion(){
-        $result['code_error'] = 2;
-        $result['error'] = true;
-        $result['success'] = false;
-        $result['message'] = "La region doit etre précisé";
-        return new JsonResponse($result);
-    }
-    private function noCodePostal(){
-        $result['code_error'] = 2;
-        $result['error'] = true;
-        $result['success'] = false;
-        $result['message'] = "Le code postal  doit etre précisé";
-        return new JsonResponse($result);
-    }
-    private function noName(){
-        $result['code_error'] = 2;
-        $result['error'] = true;
-        $result['success'] = false;
-        $result['message'] = "Le nom complet doit etre précisé";
-        return new JsonResponse($result);
-    }
-    private function noToken(){
-        $result['code_error'] = 2;
-        $result['error'] = true;
-        $result['success'] = false;
-        $result['message'] = "Le token doit etre précisé";
-        return new JsonResponse($result);
-    }
-
-    private function noUser(){
-        $result['code_error'] = 0;
-        $result['error'] = false;
-        $result['success'] = true;
-        $result['message'] = "Aucun utilisateur";
-        return new JsonResponse($result);
-    }
-    
-    private function noCategory(){
-        $result['code_error'] = 2;
-        $result['error'] = true;
-        $result['success'] = false;
-        $result['message'] = "L'ID de la categorie doit etre précisé";
-        return new JsonResponse($result);
-    }
-    
-    private function noLot(){
-        $result['code_error'] = 2;
-        $result['error'] = true;
-        $result['success'] = false;
-        $result['message'] = "L'ID du lot doit etre précisé";
-        return new JsonResponse($result);
     }
 }

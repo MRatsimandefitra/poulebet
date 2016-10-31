@@ -16,4 +16,23 @@ class MvtCreditRepository extends \Doctrine\ORM\EntityRepository
         $query->setParameter('idUser', $idUser);
         return $query->getResult();
     }
+    
+    /**
+     * Get last by user
+     * 
+     * @param Utilisateur $user
+     * @return object|null
+     */
+    public function getLastByUser($user){
+        $qb = $this->createQueryBuilder('mc')
+                    ->select('mc')
+                    ->join('mc.utilisateur', 'user')
+                    ->andWhere('user.id = :userId')
+                    ->setParameter('userId', $user->getId())
+                    ->orderBy('mc.id', 'DESC')
+                    ->setMaxResults(1);            
+        $query = $qb->getQuery();
+
+        return $results = $query->getOneOrNullResult();
+    }
 }

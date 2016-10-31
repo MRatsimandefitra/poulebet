@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ApiController extends Controller
 {
@@ -286,5 +287,79 @@ class ApiController extends Controller
         $http->setRawPostData(json_encode($data));
         $response = $http->execute();
         return $response;
+    }
+    
+    /**
+     * Check if param sending is valid
+     * 
+     * @param type $value
+     * @param type $entityClass entity class when param is entity (id)
+     * @param type $param field to check (default ID)
+     * @return boolean|object if not valid, you must check in the condition with operator $returnValue === false
+     */
+    protected function checkParamWs($value,$entityClass = '',$param = 'id'){
+        if(empty($value)){
+            return false;
+        }
+        if(empty($entityClass)){
+            return true;
+        }
+        //check if entity exist
+        $entity = $this->getObjectRepoFrom($entityClass,array($param => $value));
+        if(!$entity){
+            return false;
+        }
+        return $entity;
+    }
+    
+    /**
+     * Check if user can buy
+     * 
+     * @param Utilisateur $user
+     * @param int $needle
+     * @return boolean|object if not valid, you must check in the condition with operator $returnValue === false
+     */
+    protected function checkIfUserCanBuy($user,$needle){
+        // last Solde
+        $credit = $this->getRepo('ApiDBBundle:MvtCredit')->getLastByUser($user);
+        $dernierSolde = 0;
+        if ($credit) {
+            $dernierSolde = $credit->getSoldeCredit();
+        }
+        if($dernierSolde >= $needle){
+            return $dernierSolde;
+        }
+        return false;
+    }    
+    
+    /**
+     * Output json error message
+     * 
+     * @param string $message
+     * @return JsonResponse
+     */
+    protected function sendJsonErrorMsg($message){
+        $out['code_error'] = 2;
+        $out['error'] = true;
+        $out['success'] = false;
+        $out['message'] = $message;
+        return new JsonResponse($out);
+    }
+    
+    /**
+     * Send email
+     * 
+     * @param Utilisateur $user
+     * @param string $subject
+     * @param string $message
+     * @param ParameterMail $parameter
+     */
+    protected function sendMail($user,$subject,$message,$parameter){
+        $mailerService = $this->get('mail.manager');
+        $mailerService->setSubject($subject);
+        $mailerService->setFrom($parameter->getEmailSite());
+        $mailerService->setTo($user->getEmail());
+        $mailerService->addParams('body',$message);
+        return $mailerService->send();
     }
 }
