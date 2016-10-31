@@ -80,20 +80,11 @@ class AchatLotController extends ApiController implements InterfaceDB
         $output = array();
         if($lot){
             // last Solde
-            $credit = $this->getRepoFrom(self::ENTITY_MVT_CREDIT, array('utilisateur' => $user),array('id' => 'DESC'));
-            if (!empty($credit)) {
-                if(is_object($credit[0])){
-                    $idLast = $credit[0]->getId();
-                }else{
-                    $idLast = $credit[0][1];
-                }
-                $soldes = $this->getRepoFrom(self::ENTITY_MVT_CREDIT, array('id' => $idLast));
-
-                foreach ($soldes as $solde) {
-                    $dernierSolde = $solde->getSoldeCredit();
-                }
+            $lastSolde = $this->getRepo(self::ENTITY_MVT_CREDIT)->getLastByUser($user);
+            if($lastSolde !== false){
+                $dernierSolde = $lastSolde->getSoldeCredit();            
             } else {
-                $dernierSolde = 0;
+                $dernierSolde = 0;            
             }
             $output['response'] = false;
             if($dernierSolde >= $lot->getNbPointNecessaire()){
