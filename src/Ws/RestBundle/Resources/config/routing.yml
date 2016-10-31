@@ -79,3 +79,6 @@ route_prefix_ws_rest_pays_region:
 route_prefix_get_profil:
     resource: "@WsRestBundle/Resources/config/routing/inscription.yml"
     prefix:   /users
+route_prefix_account:
+    resource: "@WsRestBundle/Resources/config/routing/account.yml"
+    prefix:   /accounts

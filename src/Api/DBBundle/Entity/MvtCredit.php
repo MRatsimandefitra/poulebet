@@ -19,7 +19,6 @@ class MvtCredit
     private $utilisateur;
     /**
      * @ORM\ManyToOne(targetEntity="VoteUtilisateur", cascade={"persist","remove"})
-     * @ORM\JoinColumn(name="voteutilisateur_id", nullable=true)
      */
     private $voteUtilisateur;
     /**

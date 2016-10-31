@@ -34,6 +34,7 @@ class PariController extends ApiController implements InterfaceDB
         $date = $request->get('date');
         $championatWs = $request->get('championat');
         $token = $request->get('token');
+
         if (!$token) {
             return $this->noToken();
         }
