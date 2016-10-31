@@ -36,7 +36,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
         $result = array();
         if ($isCombined) {
             $nbRecap = $this->getRepo(self::ENTITY_MATCHS)->findNbMatchsForRecapCombined($user->getId());
-
+            //var_dump($nbRecap); die;
             if (!empty($nbRecap)) {
                 $count = 0;
                 $championat = $this->getRepo(self::ENTITY_MATCHS)->findChampionatForRecapCombined($user->getId());
@@ -65,17 +65,18 @@ class RecapitulationController extends ApiController implements InterfaceDB
                     $pageNow = $nbPage;
                 }
                 $countTotalRow = $page * $perPage;
-                $countRow = 0;
+
+                //$countRow = 0;
                 $count = 0;
+                $countRow = $countTotalRow - $perPage;
 
                 foreach ($idMise as $k => $itemsIdMise) {
-
-                    $countRow = $countTotalRow - $perPage;
-
+                    $count = $count + 1;
                     if ($countRow == $k) {
                         $matchs = array();
-                        $count = $count + 1;
+                        $countRow= $countRow + 1;
                         $ss = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForRecapCombined($user->getId(), $itemsIdMise);
+
                         if ($ss) {
                             $dataIsGagne = true;
                             $dataStatus = null;
