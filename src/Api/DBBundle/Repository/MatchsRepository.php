@@ -629,5 +629,31 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
                 GROUP BY ch.nomChampionat  ";
         $query = $this->getEntityManager()->createQuery($dql);
         return $query->getResult();
+
+    }
+
+    public function findTotalGainsOfUser($userId, $is){
+        $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
+                LEFT JOIN vu.matchs m
+                LEFT JOIN m.championat ch
+                LEFT JOIN vu.utilisateur u
+                WHERE vu.id = :userId
+                AND vu.gagnant = true
+                GROUP BY vu.idMise";
+        $query = $this->getEntityManager()->createQuery($dql);
+        $query->setParameter('userId' , $userId);
+        return $query->getResult();
+    }
+
+    public function findRecapitulationForUser($userId){
+        $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
+                LEFT JOIN vu.matchs m
+                LEFT JOIN vu.championat ch
+                LEFT JOIN vu.utilisateur u
+                WHERE u.id = :userId
+                GROUP BY vu.idMise";
+        $query= $this->getEntityManager()->createQuery($dql);
+        $query->setParameter('userId', $userId);
+        return $query->getResult();
     }
 }

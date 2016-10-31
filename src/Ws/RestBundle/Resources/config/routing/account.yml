@@ -1,0 +1,4 @@
+ws_accountprofil:
+    path:     /profil
+    defaults: { _controller: WsRestBundle:Account:postGetAccountProfil }
+    methods: POST # token, prix
