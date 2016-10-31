@@ -20,8 +20,6 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class InscriptionController extends ApiController implements InterfaceDB
 {
-
-
     /**
      * @ApiDoc(
      *      description="Inscription utilisateur ws via android ",

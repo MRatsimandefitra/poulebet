@@ -141,4 +141,8 @@ class Region
     {
         return $this->addressLivraisons;
     }
+    
+    public function __toString() {
+        return $this->nom;
+    }
 }
