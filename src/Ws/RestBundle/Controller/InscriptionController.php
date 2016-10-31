@@ -20,7 +20,6 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class InscriptionController extends ApiController implements InterfaceDB
 {
-    const ENTITY_UTILISATEUR = 'ApiDBBundle:Utilisateur';
 
     const ENTITY_PARAMETER_MAIL = 'ApiDBBundle:ParameterMail';
 
