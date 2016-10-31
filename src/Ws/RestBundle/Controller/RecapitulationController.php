@@ -35,7 +35,6 @@ class RecapitulationController extends ApiController implements InterfaceDB
         $nbRecapTotal = $this->getRepo(self::ENTITY_MATCHS)->findNbRecapMatchsSimpleAndCombined($user->getId());
         $result = array();
         if ($isCombined) {
-
             $nbRecap = $this->getRepo(self::ENTITY_MATCHS)->findNbMatchsForRecapCombined($user->getId());
 
             if (!empty($nbRecap)) {
