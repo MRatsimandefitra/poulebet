@@ -24,7 +24,6 @@ class InscriptionController extends ApiController implements InterfaceDB
     const ENTITY_PARAMETER_MAIL = 'ApiDBBundle:ParameterMail';
 
     const ENTITY_DROIT_ADMIN = '';
-    const ENTITY_DROIT = 'ApiDBBundle:';
 
     /**
      * @ApiDoc(
