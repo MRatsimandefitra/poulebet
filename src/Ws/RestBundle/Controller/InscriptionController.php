@@ -2,6 +2,8 @@
 
 namespace Ws\RestBundle\Controller;
 
+use Api\CommonBundle\Controller\ApiController;
+use Api\CommonBundle\Fixed\InterfaceDB;
 use Api\DBBundle\Entity\Connected;
 use Api\DBBundle\Entity\Utilisateur;
 use Api\DBBundle\Entity\Device;
@@ -16,7 +18,7 @@ use Symfony\Component\Validator\Constraints\DateTime;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 
-class InscriptionController extends ApiRestController
+class InscriptionController extends ApiController implements InterfaceDB
 {
     const ENTITY_UTILISATEUR = 'ApiDBBundle:Utilisateur';
 
@@ -40,7 +42,6 @@ class InscriptionController extends ApiRestController
      */
      public function postUserFromAndroidAction(Request $request)
      {
-
          $username = $request->get('username');
          $prenom = $request->get('prenom');
          $email = $request->get('email');
@@ -52,6 +53,7 @@ class InscriptionController extends ApiRestController
                  'message' => "Veuillez remplir les champs requis"
              ));
          }
+
          $data = $this->get('doctrine.orm.default_entity_manager')->getRepository(self::ENTITY_UTILISATEUR)->testIfUserExist($username, $email);
          if ($data) {
              return new JsonResponse(array(
@@ -183,6 +185,10 @@ class InscriptionController extends ApiRestController
                 'ville' => $data->getVille(),
                 'pays' => $data->getPays(),
             );
+
+        $userId = $data->getId();
+        $recapitulation = $this->getRepoFrom(self::ENTITY_MATCHS)->findRecapitulationForProfil($userId);
+        $championat = $this->getRepoFrom(self::ENTITY_MATCHS)->findRecapitulationForChampionat($userId);
 
         $response['code_error'] = 0;
         $response['success'] = true;
