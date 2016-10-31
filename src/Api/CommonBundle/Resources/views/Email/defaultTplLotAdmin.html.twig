@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>PouleBet</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <style type="text/css">
+        body { margin: 0; padding: 0; }
+        div, p, a, li, td { -webkit-text-size-adjust:none; }
+    </style>
+</head>
+<body style="margin: 0; padding: 0;">
+<table class="structure" width="100%" cellspacing="0" cellpadding="0" border="0">
+    <tr>
+        <td class="main-content" align="center">
+            <table class="container" width="640" cellspacing="0" cellpadding="0" border="0">
+                <tr>
+                    <td align="left" style="padding: 0 15px; font-family: 'Lucida Grande', 'Optima', 'Segoe', 'Segoe UI', 'Candara', 'Calibri', 'Arial', sans-serif; font-size: 12px; color: #777; line-height: 18px;">
+                        <div style="margin: 30px 0;">
+                            <p>Cette personne a commandé:</p>
+                            <table style="font-size: 11px; width: 50%; margin-bottom: 10px; color: #4b4b4d;">
+                                <tr>
+                                    <th style="text-align: left;">Lot:</th>
+                                    <th style="text-align: right;"></th>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;">Nom:</td>
+                                    <td style="text-align: right;">{{ lot.nomLong }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;">Nb point nécessaire:</td>
+                                    <td style="text-align: right;">{{ lot.nbPointNecessaire }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;">Description:</td>
+                                    <td style="text-align: right;">{{ lot.description }}</td>
+                                </tr>
+                            </table>
+                            <table style="font-size: 11px; width: 50%; margin-bottom: 10px; color: #4b4b4d;">
+                                <tr>
+                                    <th style="text-align: left;">Adresse de livraison:</th>
+                                    <th style="text-align: right;"></th>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;">Nom:</td>
+                                    <td style="text-align: right;">{{ nomComplet }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;">Numéro:</td>
+                                    <td style="text-align: right;">{{ numero }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;">Voie:</td>
+                                    <td style="text-align: right;">{{ voie }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;">Ville:</td>
+                                    <td style="text-align: right;">{{ ville }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;">Région:</td>
+                                    <td style="text-align: right;">{{ region.nom }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: left;">Pays:</td>
+                                    <td style="text-align: right;">{{ pays.nomPays }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

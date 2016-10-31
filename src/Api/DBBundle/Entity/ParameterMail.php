@@ -118,6 +118,20 @@ class ParameterMail
     private $template_mdp_oublie;
     
     /**
+     * @var \string
+     *
+     * @ORM\Column(name="subject_achat_lot", type="string", length=255, nullable=true)
+     */
+    private $subjectAchatLot;
+    
+     /**
+     * @var \string
+     *
+     * @ORM\Column(name="template_achat_lot", type="text", nullable=true)
+     */
+    private $templateAchatLot;
+    
+    /**
      * Get id
      *
      * @return int
@@ -461,5 +475,53 @@ class ParameterMail
     public function getTemplateMdpOublie()
     {
         return $this->template_mdp_oublie;
+    }
+
+    /**
+     * Set subjectAchatLot
+     *
+     * @param string $subjectAchatLot
+     *
+     * @return ParameterMail
+     */
+    public function setSubjectAchatLot($subjectAchatLot)
+    {
+        $this->subjectAchatLot = $subjectAchatLot;
+
+        return $this;
+    }
+
+    /**
+     * Get subjectAchatLot
+     *
+     * @return string
+     */
+    public function getSubjectAchatLot()
+    {
+        return $this->subjectAchatLot;
+    }
+
+    /**
+     * Set templateAchatLot
+     *
+     * @param string $templateAchatLot
+     *
+     * @return ParameterMail
+     */
+    public function setTemplateAchatLot($templateAchatLot)
+    {
+        $this->templateAchatLot = $templateAchatLot;
+
+        return $this;
+    }
+
+    /**
+     * Get templateAchatLot
+     *
+     * @return string
+     */
+    public function getTemplateAchatLot()
+    {
+        return $this->templateAchatLot;
     }
 }
