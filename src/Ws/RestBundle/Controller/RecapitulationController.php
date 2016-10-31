@@ -58,12 +58,12 @@ class RecapitulationController extends ApiController implements InterfaceDB
                     $idMise[] = $itemsNbRecap->getIdMise();
                 }
                 // pagination
-                $totalPage = count($idMise);
+                $totalItems = count($idMise);
                 $perPage = 10;
-                $nbPage = ceil($totalPage / $perPage);
+                $nbPage = ceil($totalItems / $perPage);
                 $pageNow = $page;
-                if ($pageNow >= $totalPage) {
-                    $pageNow = $totalPage;
+                if ($pageNow >= $nbPage) {
+                    $pageNow = $nbPage;
                 }
                 $countTotalRow = $page * $perPage;
                 $countRow = 0;
@@ -73,7 +73,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
 
                     $countRow = $countRow + 1;
 
-                    if ($countRow <= $countTotalRow) {
+                    if ($countRow == $k) {
                         $matchs = array();
                         $count = $count + 1;
                         $ss = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForRecapCombined($user->getId(), $itemsIdMise);
@@ -127,7 +127,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
                             'gagnantCombine' => $dataIsGagne,
                             'statusCombine' => $dataStatus
                         );
-                        $result['pagination']['total'] = $totalPage;
+                        $result['pagination']['total'] = $totalItems;
                         $result['pagination']['perPage'] = $perPage;
                         $result['pagination']['pageNow'] = $pageNow;
                         $result['pagination']['nbPage'] = $nbPage;
@@ -149,7 +149,6 @@ class RecapitulationController extends ApiController implements InterfaceDB
                 return new JsonResponse($result);
             }
         } else {
-
             // championat
             $championat = $this->getRepo(self::ENTITY_MATCHS)->findChampionatVoteSimple($user->getId());
             #$championat = $this->getRepo(self::ENTITY_MATCHS)->findChampionatVoteSimpleDQL($user->getId());
@@ -169,20 +168,27 @@ class RecapitulationController extends ApiController implements InterfaceDB
             $nbRecap = $this->getRepo(self::ENTITY_MATCHS)->findNbMatchsVoteSimple($user->getId());
 
             // pagination
-            $totalPage = count($nbRecap);
+            $totalItems = count($nbRecap);
+
             $perPage = 10;
-            $nbPage = ceil($totalPage / $perPage);
+            $nbPage = ceil($totalItems / $perPage);
             $pageNow = $page;
-            if ($pageNow >= $totalPage) {
-                $pageNow = $totalPage;
+            if ($pageNow >= $nbPage) {
+                $pageNow = $nbPage;
             }
-            $countBoucle = $pageNow * 10;
+
+            $countBoucle = $page * $perPage;
 
             if (!empty($nbRecap)) {
-                $count = 0;
+                $count = $countBoucle - $perPage;
+
                 foreach ($nbRecap as $k => $vItems) {
-                    $count = $count + 1;
-                    if ($count < $countBoucle) {
+
+
+                    //var_dump($k); die;
+                    if ($count == $k) {
+
+
                         $result['list_match'][] = array(
                             'idMatch' => $vItems->getMatchs()->getId(),
                             'dateMatch' => $vItems->getMatchs()->getDateMatch(),
@@ -209,7 +215,9 @@ class RecapitulationController extends ApiController implements InterfaceDB
                             'voted_equipe' => $vItems->getVote(),
                             'isGagne' => $this->getIsGagne($vItems->getId(), $vItems->getIdMise(), $vItems->getDateMise())
                         );
+                        $count = $count + 1;
                     }
+
                 }
               //  $result['nb'] = count($nbRecap);
                 $result['code_error'] = 0;
@@ -217,7 +225,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
                 $result['success'] = true;
                 $result['message'] = "Success";
 
-                $result['pagination']['total'] = $totalPage;
+                $result['pagination']['totalItems'] = $totalItems;
                 $result['pagination']['perPage'] = $perPage;
                 $result['pagination']['pageNow'] = $pageNow;
                 $result['pagination']['nbPage'] = $nbPage;
