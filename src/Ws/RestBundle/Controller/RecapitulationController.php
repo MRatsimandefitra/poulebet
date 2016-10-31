@@ -71,7 +71,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
 
                 foreach ($idMise as $k => $itemsIdMise) {
 
-                    $countRow = $countRow + 1;
+                    $countRow = $countTotalRow - $perPage;
 
                     if ($countRow == $k) {
                         $matchs = array();

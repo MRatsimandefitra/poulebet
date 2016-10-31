@@ -24,11 +24,23 @@ class AccountController extends ApiController implements InterfaceDB
         if($user && is_object($user)){
             $result['account'] = array(
                 'photo'=> 'http://dplb.arkeup.com/upload/utilisateur/'. $user->getCheminPhoto(),
-                'nom' => $user->getNom(),
-                'prenom' => $user->getPrenom(),
-            );
-        }
 
+            );
+            if($user->getUsername()){
+                $result['account']['nomAffiche'] = $user->getUsername();
+            }elseif($user->getPrenom()){
+                $result['account']['nomAffiche'] = $user->getPrenom();
+            }
+        }
+        //nbPoulet
+        $lastSolde = $this->getRepo(self::ENTITY_MVT_CREDIT)->findLastSolde($user->getId());
+        $idLast = $lastSolde[0][1];
+        $mvtCreditLast = $this->getObjectRepoFrom(self::ENTITY_MVT_CREDIT, array('id' => $idLast));
+        if ($mvtCreditLast) {
+            $result['solde'] = $mvtCreditLast->getSoldeCredit();
+        }else{
+            $result['solde'] = 0;
+        }
         // gains
         $gains = $this->getRepo(self::ENTITY_MATCHS)->findTotalGainsOfUser($user->getId(), true);
         if(is_array($gains) && count($gains) > 0){
