@@ -35,82 +35,108 @@ class ClassementController extends ApiController implements InterfaceDB
             $tmpSunday = new \DateTime('now');
             $sunday = $tmpSunday->modify('next sunday');
 
-            $classement = $this->getRepo(self::ENTITY_MATCHS)->findClassement($monday, $sunday);
+            $userClassement  =  $this->getRepo(self::ENTITY_MATCHS)->findClassement($monday, $sunday, null, true);
+            foreach($userClassement as $kUserClassement => $itemsUserClassement){
+                $classement = $this->getRepo(self::ENTITY_MATCHS)->findClassement($monday, $sunday, $itemsUserClassement->getUtilisateur()->getId());
+                if (is_array($classement) && count($classement) > 0) {
+                    $total = 0;
+                    foreach ($classement as $kClassement => $itemsClassement) {
+                        $total = $total + $itemsClassement->getClassement();
+                        $nom = $itemsClassement->getUtilisateur()->getNom();
+                        $prenom  = $itemsClassement->getUtilisateur()->getPrenom();
+                        $photo = $itemsClassement->getUtilisateur()->getCheminPhoto();
+                        $tmpResult = array(
+                            'id' => $itemsClassement->getUtilisateur()->getId(),
+                            'nom' =>   $nom,
+                            'prenom' =>  $prenom,
+                            'photo' => $photo,
+                            'classement' => $total
+                        );
 
-            if (is_array($classement) && count($classement) > 0) {
-                $total = 0;
-                foreach ($classement as $kClassement => $itemsClassement) {
-                    $total = $total + $itemsClassement->getClassement();
-                    $result['classement'][] = array(
-                        'photo' => $itemsClassement->getUtilisateur()->getCheminPhoto(),
-                        'nom' => $itemsClassement->getUtilisateur()->getNom(),
-                        'prenom' => $itemsClassement->getUtilisateur()->getPrenom(),
-                        'classement' => $total
+                    }
+                    $result['list-classement'][] = $tmpResult;
 
-                    );
+                } else {
+                    return $this->noClassement();
                 }
-                $result['code_error'] = 0;
-                $result['success'] = true;
-                $result['error'] = false;
-                $result['message'] = "Success";
-                return new JsonResponse($result);
-            } else {
-                return $this->noClassement();
             }
+            $result['code_error'] = 0;
+            $result['success'] = true;
+            $result['error'] = false;
+            $result['message'] = "Success";
+            return new JsonResponse($result);
         } elseif ($time === 'last') {
             $monday = new \DateTime('now');
             $monday = $monday->modify('last week');
             $sunday = new \DateTime('now');
             $sunday = $sunday->modify('last sunday');
-            $classement = $this->getRepo(self::ENTITY_MATCHS)->findClassement($monday, $sunday);
 
-            if (is_array($classement) && count($classement) > 0) {
-                $total = 0;
-                foreach ($classement as $kClassement => $itemsClassement) {
-                    $total = $total + $itemsClassement->getClassement();
-                    $result['classement'] = array(
-                        'photo' => $itemsClassement->getUtilisateur()->getCheminPhoto(),
-                        'nom' => $itemsClassement->getUtilisateur()->getNom(),
-                        'prenom' => $itemsClassement->getUtilisateur()->getPrenom(),
-                        'classement' => $total
+            $userClassement  =  $this->getRepo(self::ENTITY_MATCHS)->findClassement($monday, $sunday, null, true);
+            foreach($userClassement as $kUserClassement => $itemsUserClassement){
+                $classement = $this->getRepo(self::ENTITY_MATCHS)->findClassement($monday, $sunday, $itemsUserClassement->getUtilisateur()->getId());
+                if (is_array($classement) && count($classement) > 0) {
+                    $total = 0;
+                    foreach ($classement as $kClassement => $itemsClassement) {
+                        $total = $total + $itemsClassement->getClassement();
+                        $nom = $itemsClassement->getUtilisateur()->getNom();
+                        $prenom  = $itemsClassement->getUtilisateur()->getPrenom();
+                        $photo = $itemsClassement->getUtilisateur()->getCheminPhoto();
+                        $tmpResult = array(
+                            'id' => $itemsClassement->getUtilisateur()->getId(),
+                            'nom' =>   $nom,
+                            'prenom' =>  $prenom,
+                            'photo' => $photo,
+                            'classement' => $total
+                        );
 
-                    );
+                    }
+                    $result['list-classement'][] = $tmpResult;
+
+                } else {
+                    return $this->noClassement();
                 }
-                $result['code_error'] = 0;
-                $result['success'] = true;
-                $result['error'] = false;
-                $result['message'] = "Success";
-                return new JsonResponse($result);
-            } else {
-                return $this->noClassement();
             }
+            $result['code_error'] = 0;
+            $result['success'] = true;
+            $result['error'] = false;
+            $result['message'] = "Success";
+            return new JsonResponse($result);
+
+
+
 
         } elseif ($time === 'global') {
 
-            $classement = $this->getRepo(self::ENTITY_MATCHS)->findClassement();
-            if (is_array($classement) && count($classement) > 0) {
-                $total = 0;
-                foreach ($classement as $kClassement => $itemsClassement) {
+            $userClassement  =  $this->getRepo(self::ENTITY_MATCHS)->findClassement(null, null, null, true);
+            foreach($userClassement as $kUserClassement => $itemsUserClassement){
+                $classement = $this->getRepo(self::ENTITY_MATCHS)->findClassement(null, null, $itemsUserClassement->getUtilisateur()->getId());
+                if (is_array($classement) && count($classement) > 0) {
+                    $total = 0;
+                    foreach ($classement as $kClassement => $itemsClassement) {
                         $total = $total + $itemsClassement->getClassement();
-
-                        $result['classement'] = array(
-                            'idUtilisateur' => $itemsClassement->getUtilisateur()->getId(),
-                            'idMise' =>$itemsClassement->getIdMise(),
-                            'photo' => $itemsClassement->getUtilisateur()->getCheminPhoto(),
-                            'nom' => $itemsClassement->getUtilisateur()->getNom(),
-                            'prenom' => $itemsClassement->getUtilisateur()->getPrenom(),
+                        $nom = $itemsClassement->getUtilisateur()->getNom();
+                        $prenom  = $itemsClassement->getUtilisateur()->getPrenom();
+                        $photo = $itemsClassement->getUtilisateur()->getCheminPhoto();
+                        $tmpResult = array(
+                            'id' => $itemsClassement->getUtilisateur()->getId(),
+                            'nom' =>   $nom,
+                            'prenom' =>  $prenom,
+                            'photo' => $photo,
                             'classement' => $total
-
                         );
+
+                    }
+                    $result['list-classement'][] = $tmpResult;
+
+                } else {
+                    return $this->noClassement();
                 }
-                $result['code_error'] = 0;
-                $result['success'] = true;
-                $result['error'] = false;
-                $result['message'] = "Success";
-                return new JsonResponse($result);
-            } else {
-                return $this->noClassement();
             }
+            $result['code_error'] = 0;
+            $result['success'] = true;
+            $result['error'] = false;
+            $result['message'] = "Success";
+            return new JsonResponse($result);
         }
         $result = array();
 

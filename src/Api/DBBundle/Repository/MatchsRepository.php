@@ -561,7 +561,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         return count($result);
     }
 
-    public function findClassement($dateDebut = null, $dateFinale = null, $idUser =null ){
+    public function findClassement($dateDebut = null, $dateFinale = null, $idUser =null , $groupUser =null ){
 
         $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
                 LEFT JOIN vu.matchs m
@@ -585,7 +585,12 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         if(!empty($where)){
             $dql .= ' WHERE ' . implode(' AND ', $where);
         }
-        $dql .=" GROUP BY vu.idMise ";
+        if($groupUser){
+            $dql .=" GROUP BY u.id ";
+        }else{
+            $dql .=" GROUP BY vu.idMise ";
+        }
+      //  var_dump($dql); die;
         if(empty($params)){
             $query = $this->getEntityManager()->createQuery($dql);
         }else{

@@ -54,27 +54,29 @@
                         {{ "Action"|trans }}
                     </th>
                 </tr>
-                {% if classement is defined and classement %}
+                {% if result is defined and result %}
+                    {% for row in result %}
                         <tr>
                            <td>
                                <img src="{#{{ asset('upload/') }}#}" alt="" width="50" height="50"/>
                         
                             </td>
                             <td>
-                                    {{ result['nom'] }}
+                                    {{ row['nom'] }}
                             </td>
                             <td>
-                                    {{ result['prenom'] }}
+                                    {{ row['prenom'] }}
                             </td>
                             <td>
-                                {{ result['classement'] }}
+                                {{ row['classement'] }}
                             </td>
                             <td>
-                                <a href="{{ path('details_classement', {'id': result['id']}) }}">
+                                <a href="{{ path('details_classement', {'id': row['id']}) }}">
                                     {{ 'Détails' }}
                                 </a>
                             </td>
                         </tr>
+                        {% endfor %}
                 {% else %}
                     <tr>
                         <td colspan="8"> {{ 'Aucun matchs \'a été trouvé' }}</td>
