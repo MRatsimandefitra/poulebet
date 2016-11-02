@@ -22,7 +22,13 @@ class MvtLot
      * @ORM\ManyToOne(targetEntity="Lot", cascade={"persist"}, inversedBy="mvtLots")
      * @ORM\JoinColumn(name="lot_id", onDelete="CASCADE")
      */
-    private $lot;
+    private $lot; 
+    
+    /**
+     * @ORM\OneToOne(targetEntity="AddressLivraison", mappedBy="mvtLot")
+     */
+    private $addressLivraison;
+    
     /**
      * @var int
      *
@@ -222,5 +228,29 @@ class MvtLot
     public function setCreated()
     {
         $this->dateMvtLot = new \DateTime();
+    }
+
+    /**
+     * Set addressLivraison
+     *
+     * @param \Api\DBBundle\Entity\AddressLivraison $addressLivraison
+     *
+     * @return MvtLot
+     */
+    public function setAddressLivraison(\Api\DBBundle\Entity\AddressLivraison $addressLivraison = null)
+    {
+        $this->addressLivraison = $addressLivraison;
+
+        return $this;
+    }
+
+    /**
+     * Get addressLivraison
+     *
+     * @return \Api\DBBundle\Entity\AddressLivraison
+     */
+    public function getAddressLivraison()
+    {
+        return $this->addressLivraison;
     }
 }

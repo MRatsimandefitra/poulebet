@@ -61,7 +61,7 @@
                             {% if droitAdmin.suppression is defined and droitAdmin.suppression  %}
                                 <a onclick="supprimer('Etes vous sur de vouloir supprimer ?');" href="{{ path('remove_lots', {'id': row.id}) }}"><span class="glyphicon glyphicon-remove red" aria-hidden="true"></span> Supprimer </a>
                             {% endif %}
-
+                            | <a href="{{ path('history_lots', {'id': row.id }) }}"> <span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Historique </a> |
                         </td>
                     </tr>
                 {% endfor %}
