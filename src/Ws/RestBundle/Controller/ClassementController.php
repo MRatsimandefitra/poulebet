@@ -60,12 +60,32 @@ class ClassementController extends ApiController implements InterfaceDB
                     return $this->noClassement();
                 }
             }
+            $arrayListClassement = array();
+            foreach($result['list_classement'] as $kListClassement => $itemsListClassement){
+                $arrayListClassement[] = $itemsListClassement['classement'];
+            }
+            arsort($arrayListClassement);
+            foreach($arrayListClassement as $k => $itemsArrayListClassement){
+                if($itemsArrayListClassement === $result['list_classement'][$k]['classement']){
+
+                    $arrayResult[] = array(
+                        'id' => $result['list_classement'][$k]['id'],
+                        'nom' =>  $result['list_classement'][$k]['nom'],
+                        'prenom' =>  $result['list_classement'][$k]['prenom'],
+                        'photo' => $result['list_classement'][$k]['photo'],
+                        'classement' => $itemsArrayListClassement
+                    );
+                }
+
+            }
+            $result['list_classement'] = $arrayResult;
             $result['code_error'] = 0;
             $result['success'] = true;
             $result['error'] = false;
             $result['message'] = "Success";
             return new JsonResponse($result);
         } elseif ($time === 'last') {
+
             $monday = new \DateTime('now');
             $monday = $monday->modify('last week');
             $sunday = new \DateTime('now');
@@ -96,6 +116,25 @@ class ClassementController extends ApiController implements InterfaceDB
                     return $this->noClassement();
                 }
             }
+            $arrayListClassement = array();
+            foreach($result['list_classement'] as $kListClassement => $itemsListClassement){
+                $arrayListClassement[] = $itemsListClassement['classement'];
+            }
+            arsort($arrayListClassement);
+            foreach($arrayListClassement as $k => $itemsArrayListClassement){
+                if($itemsArrayListClassement === $result['list_classement'][$k]['classement']){
+
+                    $arrayResult[] = array(
+                        'id' => $result['list_classement'][$k]['id'],
+                        'nom' =>  $result['list_classement'][$k]['nom'],
+                        'prenom' =>  $result['list_classement'][$k]['prenom'],
+                        'photo' => $result['list_classement'][$k]['photo'],
+                        'classement' => $itemsArrayListClassement
+                    );
+                }
+
+            }
+            $result['list_classement'] = $arrayResult;
             $result['code_error'] = 0;
             $result['success'] = true;
             $result['error'] = false;
