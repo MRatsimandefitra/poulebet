@@ -31,6 +31,11 @@ class Lot
     private $mvtLots;
     
     /**
+     * @ORM\OneToMany(targetEntity="AddressLivraison", mappedBy="lot")
+     */
+    private $addressLivraisons;
+    
+    /**
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -267,6 +272,7 @@ class Lot
     public function __construct()
     {
         $this->mvtLots = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->addressLivraisons = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -339,5 +345,39 @@ class Lot
     public function getNomLong()
     {
         return $this->nomLong;
+    }
+
+    /**
+     * Add addressLivraison
+     *
+     * @param \Api\DBBundle\Entity\AddressLivraison $addressLivraison
+     *
+     * @return Lot
+     */
+    public function addAddressLivraison(\Api\DBBundle\Entity\AddressLivraison $addressLivraison)
+    {
+        $this->addressLivraisons[] = $addressLivraison;
+
+        return $this;
+    }
+
+    /**
+     * Remove addressLivraison
+     *
+     * @param \Api\DBBundle\Entity\AddressLivraison $addressLivraison
+     */
+    public function removeAddressLivraison(\Api\DBBundle\Entity\AddressLivraison $addressLivraison)
+    {
+        $this->addressLivraisons->removeElement($addressLivraison);
+    }
+
+    /**
+     * Get addressLivraisons
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAddressLivraisons()
+    {
+        return $this->addressLivraisons;
     }
 }

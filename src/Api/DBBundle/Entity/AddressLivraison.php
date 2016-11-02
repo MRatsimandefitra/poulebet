@@ -17,6 +17,15 @@ class AddressLivraison
      * @ORM\JoinColumn(nullable=true)
      */
     private $user;
+    
+    /**
+     * @var Lot
+     *
+     * @ORM\ManyToOne(targetEntity="Lot", inversedBy="addressLivraisons")
+     * @ORM\JoinColumn(name="lot_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    private $lot;
+    
     /**
      * @var int
      *
@@ -278,5 +287,29 @@ class AddressLivraison
     public function getRegion()
     {
         return $this->region;
+    }
+
+    /**
+     * Set lot
+     *
+     * @param \Api\DBBundle\Entity\Lot $lot
+     *
+     * @return AddressLivraison
+     */
+    public function setLot(\Api\DBBundle\Entity\Lot $lot = null)
+    {
+        $this->lot = $lot;
+
+        return $this;
+    }
+
+    /**
+     * Get lot
+     *
+     * @return \Api\DBBundle\Entity\Lot
+     */
+    public function getLot()
+    {
+        return $this->lot;
     }
 }

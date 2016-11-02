@@ -328,6 +328,7 @@ class AchatLotController extends ApiController implements InterfaceDB
             $addressLivraison->setPays($pays);
             $addressLivraison->setRegion($region);
             $addressLivraison->setUser($user);
+            $addressLivraison->setLot($lot);
             $this->insert($addressLivraison, array('success' => 'success' , 'error' => 'error'));
             $result['code_error'] = 0;
             $result['success'] = true;
