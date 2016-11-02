@@ -109,6 +109,12 @@ class LotsController extends ApiController implements InterfaceDB
         return $this->redirectToRoute('index_lots');
     }
 
+    public function historyLotAction(Lot $lot){
+        return $this->render('BackAdminBundle:Lots:history_lot.html.twig', array(
+            'lot' => $lot
+        ));
+    }
+    
     private function getDroitAdmin($droit)
     {
 

@@ -21,6 +21,14 @@ class AddressLivraison
     /**
      * @var Lot
      *
+     * @ORM\OneToOne(targetEntity="MvtLot", inversedBy="addressLivraison")
+     * @ORM\JoinColumn(name="mvtlot_id", referencedColumnName="id", onDelete="CASCADE")
+     */
+    private $mvtLot;
+    
+    /**
+     * @var Lot
+     *
      * @ORM\ManyToOne(targetEntity="Lot", inversedBy="addressLivraisons")
      * @ORM\JoinColumn(name="lot_id", referencedColumnName="id", onDelete="CASCADE")
      */
@@ -311,5 +319,29 @@ class AddressLivraison
     public function getLot()
     {
         return $this->lot;
+    }
+
+    /**
+     * Set mvtLot
+     *
+     * @param \Api\DBBundle\Entity\MvtLot $mvtLot
+     *
+     * @return AddressLivraison
+     */
+    public function setMvtLot(\Api\DBBundle\Entity\MvtLot $mvtLot = null)
+    {
+        $this->mvtLot = $mvtLot;
+
+        return $this;
+    }
+
+    /**
+     * Get mvtLot
+     *
+     * @return \Api\DBBundle\Entity\MvtLot
+     */
+    public function getMvtLot()
+    {
+        return $this->mvtLot;
     }
 }

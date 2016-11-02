@@ -1,0 +1,81 @@
+{% extends 'BackAdminBundle::layout.html.twig' %}
+{% block title %} {{ parent() }} {% endblock %}
+{% block ariane %} {{ parent() }} {% endblock %}
+
+{% block page %}
+
+    {#<div class="box-header-response">
+        {{ 'Liste des lots'|trans }}
+    </div>#}
+    <div class="col-lg-12">
+    <div class="col-lg-12">
+        {% if droitAdmin.lecture is defined and droitAdmin.lecture %}
+        <span class="glyphicon glyphicon-plus green" aria-hidden="true"></span>
+        {% endif %}
+        {% if droitAdmin.ajout is defined and droitAdmin.ajout %}
+            <div class="link">
+            <a href="{{ path('add_lots') }}">{{ 'Ajout lots'|trans }}</a>&nbsp;  &nbsp; |
+                <a href="{{ path('index_lots_category') }}">{{ 'Category Lots' }}</a> &nbsp;  &nbsp;
+            </div>
+        {% endif %}
+        <div class="list">
+            <table>
+                <tr>
+                    <td>{{ 'Nom utilisateur'|trans }}</td>
+                    <td style="min-width: 200px">{{ 'Email'|trans }}</td>
+                    <td style="max-width: 500px">{{ 'Date mouvement'|trans }}</td>
+                    <td>{{ 'Date entrée'|trans }}</td>
+                    <td>{{ 'Date sortie'|trans }}</td>
+                    <td>{{ 'Solde' }}</td>
+                    <td>{{ 'Adresse de livraison'|trans }}</td>
+                </tr>
+                {% for mvtLot in lot.mvtLots %}
+                    <tr>
+                        <td>
+                            {{ mvtLot.utilisateur.username }}
+                        </td>
+                        <td>
+                            {{ mvtLot.utilisateur.email }}
+                        </td>
+                        <td>
+                            {{ mvtLot.dateMvtLot|date('d-m-Y') }}
+                        </td>
+                        <td>
+                            {{ mvtLot.entreeLot }}
+                        </td>
+                        <td>
+                            {{ mvtLot.sortieLot }}
+                        </td>
+                        <td>
+                            {{ mvtLot.soldeLot }}
+                        </td>
+                        <td>
+                            {% if mvtLot.entreeLot == 0 %}
+                                {% set address = mvtLot.addressLivraison %}
+                                {% if address %}
+                                <dl class="dl-horizontal">
+                                    <dt>Pays</dt>
+                                    <dd>{{ address.pays.nomPays }}</dd>
+                                    <dt>Nom Prénom</dt>
+                                    <dd>{{ address.nomcomplet }}</dd>
+                                    <dt>Voie</dt>
+                                    <dd>{{ address.voie }}</dd>
+                                    <dt>Numéro</dt>
+                                    <dd>{{ address.numero }}</dd>
+                                    <dt>Code Postal</dt>
+                                    <dd>{{ address.codePostal }}</dd>
+                                    <dt>Ville</dt>
+                                    <dd>{{ address.ville }}</dd>
+                                    <dt>Région</dt>
+                                    <dd>{{ address.region.nom }}</dd>
+                                </dl>
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    </div>
+{% endblock %}

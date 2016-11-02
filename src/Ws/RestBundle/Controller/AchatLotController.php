@@ -278,7 +278,7 @@ class AchatLotController extends ApiController implements InterfaceDB
             }
             //lot
             $solde = (int) $quantity - 1;
-            $this->addMvtLot($user, $lot, $solde, 1, 0);
+            $mvtLot = $this->addMvtLot($user, $lot, $solde, 1, 0);
             //credit
             $this->addMvtCredit($user, $lot, $lastSolde);
             
@@ -330,6 +330,11 @@ class AchatLotController extends ApiController implements InterfaceDB
             $addressLivraison->setUser($user);
             $addressLivraison->setLot($lot);
             $this->insert($addressLivraison, array('success' => 'success' , 'error' => 'error'));
+            //update address and set mvtLot
+            $addressLivraison->setMvtLot($mvtLot);
+            $this->getEm()->persist($addressLivraison);
+            $this->getEm()->flush();
+            
             $result['code_error'] = 0;
             $result['success'] = true;
             $result['error'] = false;
@@ -377,6 +382,7 @@ class AchatLotController extends ApiController implements InterfaceDB
         }
         $mvtCredit->setSoldeCredit($soldeCredit);
         $this->getEm()->persist($mvtCredit);
+        return $mvtCredit;
     }
     
     /**
@@ -385,6 +391,7 @@ class AchatLotController extends ApiController implements InterfaceDB
      * @param string $token
      * @param Lot $lot
      * @param int $out output
+     * @return MvtLot
      */
     protected function addMvtLot($user,$lot,$solde,$out,$input){
         $mvtLot = new MvtLot();
@@ -394,5 +401,6 @@ class AchatLotController extends ApiController implements InterfaceDB
         $mvtLot->setSoldeLot($solde);
         $mvtLot->setEntreeLot($input);
         $this->getEm()->persist($mvtLot);
+        return $mvtLot;
     }
 }
