@@ -161,6 +161,7 @@ class AccountController extends ApiController implements InterfaceDB
                             'cote_pronostic_n' => $itemsRecapitulation->getCoteN(),
                             'cote_pronostic_2' => $itemsRecapitulation->getCote2(),
                             'voted_equipe' => $itemsRecapitulation->getVote(),
+                            'isCombined'=> $itemsRecapitulation->getIsCombined()
                           //  'isGagne' => $this->getStatusRecap($itemsRecapitulation->getId())
                         ),
                         'gagnantCombine' => $dataIsGagne,
