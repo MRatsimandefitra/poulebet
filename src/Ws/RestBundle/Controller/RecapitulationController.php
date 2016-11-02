@@ -72,7 +72,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
 
                 foreach ($idMise as $k => $itemsIdMise) {
                     $count = $count + 1;
-                    if ($countRow == $k && $count < $countRow) {
+                    if ($countRow == $k && $countRow < $countTotalRow) {
                         $matchs = array();
                         $countRow= $countRow + 1;
                         $ss = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForRecapCombined($user->getId(), $itemsIdMise);
