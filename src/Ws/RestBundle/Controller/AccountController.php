@@ -75,6 +75,8 @@ class AccountController extends ApiController implements InterfaceDB
                 $totalEnCour = $totalEnCour + $itemsTotalEnCours->getMiseTotale();
             }
             $result['totalEnCours'] =$totalEnCour;
+        }else{
+            $result['totalEnCours'] = null;
         }
          //   var_dump($result); die;
         // championat
