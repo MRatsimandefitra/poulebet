@@ -54,7 +54,7 @@ class ClassementController extends ApiController implements InterfaceDB
                         );
 
                     }
-                    $result['list-classement'][] = $tmpResult;
+                    $result['list_classement'][] = $tmpResult;
 
                 } else {
                     return $this->noClassement();
@@ -90,7 +90,7 @@ class ClassementController extends ApiController implements InterfaceDB
                         );
 
                     }
-                    $result['list-classement'][] = $tmpResult;
+                    $result['list_classement'][] = $tmpResult;
 
                 } else {
                     return $this->noClassement();
@@ -126,7 +126,7 @@ class ClassementController extends ApiController implements InterfaceDB
                         );
 
                     }
-                    $result['list-classement'][] = $tmpResult;
+                    $result['list_classement'][] = $tmpResult;
 
                 } else {
                     return $this->noClassement();
