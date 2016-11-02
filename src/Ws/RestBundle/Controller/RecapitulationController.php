@@ -251,10 +251,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
                 $result['message'] = "Aucun donne disponible";
                 return new JsonResponse($result);
             }
-
-
         }
-
     }
 
 

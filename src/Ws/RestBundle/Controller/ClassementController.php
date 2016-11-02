@@ -128,10 +128,39 @@ class ClassementController extends ApiController implements InterfaceDB
                     }
                     $result['list_classement'][] = $tmpResult;
 
+                    /*
+                    $classementArray = array();
+                    foreach($result['list_classement'] as $kListClassement =>$itemsListClassement){
+                        $classementArray[] = $itemsListClassement['classement'];
+                        var_dump($itemsListClassement['classement']);
+                    }
+                    die('okok');
+                    var_dump($classementArray); die;
+                    var_dump($result); die;*/
                 } else {
                     return $this->noClassement();
                 }
             }
+            //var_dump($result['list_classement']); die;
+            $arrayListClassement = array();
+            foreach($result['list_classement'] as $kListClassement => $itemsListClassement){
+                $arrayListClassement[] = $itemsListClassement['classement'];
+            }
+            arsort($arrayListClassement);
+            foreach($arrayListClassement as $k => $itemsArrayListClassement){
+                if($itemsArrayListClassement === $result['list_classement'][$k]['classement']){
+
+                    $arrayResult[] = array(
+                        'id' => $result['list_classement'][$k]['id'],
+                        'nom' =>  $result['list_classement'][$k]['nom'],
+                        'prenom' =>  $result['list_classement'][$k]['prenom'],
+                        'photo' => $result['list_classement'][$k]['photo'],
+                        'classement' => $itemsArrayListClassement
+                    );
+                }
+
+            }
+            $result['list_classement'] = $arrayResult;
             $result['code_error'] = 0;
             $result['success'] = true;
             $result['error'] = false;
