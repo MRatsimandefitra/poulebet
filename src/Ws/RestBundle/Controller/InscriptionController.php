@@ -33,72 +33,78 @@ class InscriptionController extends ApiController implements InterfaceDB
      * @param Request $request
      * @return JsonResponse
      */
-     public function postUserFromAndroidAction(Request $request)
-     {
-         $username = $request->get('username');
-         $prenom = $request->get('prenom');
-         $email = $request->get('email');
-         $password = $request->get('password');
-         if(!$email || !$prenom || !$password){
-             return new JsonResponse(array(
-                 'success' => false,
-                 'code_error' => 4,
-                 'message' => "Veuillez remplir les champs requis"
-             ));
-         }
+    public function postUserFromAndroidAction(Request $request)
+    {
+        $username = $request->get('username');
+        $prenom = $request->get('prenom');
+        $email = $request->get('email');
+        $password = $request->get('password');
+        if (!$email || !$prenom || !$password) {
+            return new JsonResponse(array(
+                'success' => false,
+                'code_error' => 4,
+                'message' => "Veuillez remplir les champs requis"
+            ));
+        }
 
-         $data = $this->get('doctrine.orm.default_entity_manager')->getRepository(self::ENTITY_UTILISATEUR)->testIfUserExist($username, $email);
-         if ($data) {
-             return new JsonResponse(array(
-                 'success' => false,
-                 'code_erreur' => 2,
-                 'message' => 'Cet E-mail existe déjà'
-             ));
-         }
-         $utilisateur = new Utilisateur();
+        $data = $this->get('doctrine.orm.default_entity_manager')->getRepository(self::ENTITY_UTILISATEUR)->testIfUserExist($username, $email);
+        if ($data) {
+            return new JsonResponse(array(
+                'success' => false,
+                'code_erreur' => 2,
+                'message' => 'Cet E-mail existe déjà'
+            ));
+        }
+        $utilisateur = new Utilisateur();
 
-         if ($this->setDataInUtilisateur($utilisateur, $request)) {
-             $user = $this->getEm()->getRepository(self::ENTITY_UTILISATEUR)->findByEmailArray($email);
-             $token = $this->generateToken($user['userToken']);
-             $deviceToken = $request->get("gcm_device_token");
-             if($deviceToken){
-                 $device = new Device();
-                 $device->setToken($deviceToken);
-                 $device->setUtilisateur($utilisateur);
-                 $this->insert($device);
-             }else{
-                 $result['message'] = "no device token";
-             }
+        if ($this->setDataInUtilisateur($utilisateur, $request)) {
+            $user = $this->getEm()->getRepository(self::ENTITY_UTILISATEUR)->findByEmailArray($email);
 
-             $userObject = $this->getEm()->getRepository(self::ENTITY_UTILISATEUR)->findOneByEmail($utilisateur->getEmail());
-             if($userObject){
+            $token = $this->generateToken($user['userToken']);
 
-                 // authentification
-                 $tokenSession = new UsernamePasswordToken($userObject, $userObject->getPassword(), "main", $userObject->getRoles());
-                 $this->get("security.token_storage")->setToken($tokenSession);
-                 // Fire the login event
-                 // Logging the user in above the way we do it doesn't do this automatically
+            $deviceToken = $request->get("gcm_device_token");
 
-                 $event = new InteractiveLoginEvent($request, $tokenSession);
-                 $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
-                 if($tokenSession){
-                     $connected = $this->get('doctrine.orm.entity_manager')->getRepository('ApiDBBundle:Connected')->findOneBy(array('username' => $tokenSession->getUser()->getEmail()));
-                     $newConnected = false;
-                     if(!$connected){
-                         $connected = new Connected();
-                         $newConnected = true;
-                     }
-                     $connected->setTokenSession($this->get("security.token_storage")->getToken()->getCredentials());
-                     $connected->setUsername($tokenSession->getUser()->getEmail());
-                     $connected->setDevice($deviceToken);
-                     if($newConnected){
-                         $this->getEm()->persist($connected);
+            if ($deviceToken) {
+                $device = new Device();
+                $device->setToken($deviceToken);
+                $device->setUtilisateur($utilisateur);
 
-                     }
-                     $this->getEm()->flush();
-                 }
-             }
-             // mail
+                $this->insert($device);
+
+            } else {
+                $result['message'] = "no device token";
+            }
+
+            $userObject = $this->getEm()->getRepository(self::ENTITY_UTILISATEUR)->findOneByEmail($utilisateur->getEmail());
+            if ($userObject) {
+
+                // authentification
+                $tokenSession = new UsernamePasswordToken($userObject, $userObject->getPassword(), "main", $userObject->getRoles());
+                $this->get("security.token_storage")->setToken($tokenSession);
+                // Fire the login event
+                // Logging the user in above the way we do it doesn't do this automatically
+
+                $event = new InteractiveLoginEvent($request, $tokenSession);
+                $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
+                if ($tokenSession) {
+                    $connected = $this->get('doctrine.orm.entity_manager')->getRepository('ApiDBBundle:Connected')->findOneBy(array('username' => $tokenSession->getUser()->getEmail()));
+                    $newConnected = false;
+                    if (!$connected) {
+                        $connected = new Connected();
+                        $newConnected = true;
+                    }
+                    $connected->setTokenSession($this->get("security.token_storage")->getToken()->getCredentials());
+                    $connected->setUsername($tokenSession->getUser()->getEmail());
+                    $connected->setDevice($deviceToken);
+                    if ($newConnected) {
+                        $this->getEm()->persist($connected);
+
+                    }
+                    $this->getEm()->flush();
+                }
+            }
+
+            // mail
             $parameter = $this->getParameterMail();
             $pass = $this->generatePassword();
             $email = $request->get('email');
@@ -106,34 +112,41 @@ class InscriptionController extends ApiController implements InterfaceDB
             $body = $parameter->getTemplateInscription();
 
             $mailerService = $this->getMailerService();
-            $res = str_replace('{{prenom}}',$prenom,$body);
-            $res = str_replace('{{email}}',$email ,$res);
-            $res = str_replace('{{password}}',$pass,$res);
+            $res = str_replace('{{prenom}}', $prenom, $body);
+            $res = str_replace('{{email}}', $email, $res);
+            $res = str_replace('{{password}}', $pass, $res);
             $res = str_replace('{{adresseSociete}}', $parameter->getAdresseSociete(), $res);
 
             $mailerService->setSubject($parameter->getSubjectInscription());
             $mailerService->setFrom($parameter->getEmailSite());
             $mailerService->setTo($email);
-            $mailerService->addParams('body',$res);
+            $mailerService->addParams('body', $res);
             $mailerService->send();
-                
-             /*$mm = $this->get('mail.manager');
-             $mm->setSubject($this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_UTILISATEUR));*/
 
-             return new JsonResponse(array(
-                 'token' => $token,
-                 'infos_users' => $user,
-                 'code_erreur' => 0,
-                 'success' => true,
-                 'message' => "Vous êtes inscrit"
-             ));
-         }
-         return new JsonResponse(array(
+            /*$mm = $this->get('mail.manager');
+            $mm->setSubject($this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_UTILISATEUR));*/
+            $banniere = $this->getObjectRepoFrom(self::ENTITY_PUB, array('isPopup' => false));
+            $result = array();
+
+            if ($banniere && is_object($banniere)) {
+                $result['banniere'] = 'http://dplb.arkeup.com/upload/publicite/' . $banniere->getCheminPub();
+            } else {
+                $result['banniere'] = null;
+            }
+            $result['token'] = $token;
+            $result['infos_users'] = $user;
+            $result['code_erreur'] = 0;
+            $result['success'] = true;
+            $result['message'] = "Vous êtes inscrit";
+
+            return new JsonResponse($result);
+        }
+        return new JsonResponse(array(
             'success' => true,
             'code_erreur' => 0,
             'message' => "OK"
         ));
-     }
+    }
 
 
     /**
@@ -147,11 +160,11 @@ class InscriptionController extends ApiController implements InterfaceDB
     {
 
         $token = $request->get('token');
-        if(!$token){
+        if (!$token) {
             return $this->noToken();
         }
         $data = $this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_UTILISATEUR)->findOneBy(array('userTokenAuth' => $token));
-        if(!$data){
+        if (!$data) {
             return $this->noUser();
         }
         $response = array();
@@ -163,21 +176,21 @@ class InscriptionController extends ApiController implements InterfaceDB
                 'message' => 'Utilisateur inexistant'
             ));
         }
-            $response['profil'][] = array(
-                'photo' => $data->getCheminPhoto(),
-                'nom' => $data->getNom(),
-                'prenom' => $data->getPrenom(),
-                'sexe' => $data->getSexe(),
-                'telephone' => $data->getTelephone(),
-                'fax' => $data->getFax(),
-                'username' => $data->getUsername(),
-                'email' => $data->getEmail(),
-                'adresse1' => $data->getAdresse1(),
-                'adresse2' => $data->getAdresse2(),
-                'adresse3' => $data->getAdresse3(),
-                'ville' => $data->getVille(),
-                'pays' => $data->getPays(),
-            );
+        $response['profil'][] = array(
+            'photo' => $data->getCheminPhoto(),
+            'nom' => $data->getNom(),
+            'prenom' => $data->getPrenom(),
+            'sexe' => $data->getSexe(),
+            'telephone' => $data->getTelephone(),
+            'fax' => $data->getFax(),
+            'username' => $data->getUsername(),
+            'email' => $data->getEmail(),
+            'adresse1' => $data->getAdresse1(),
+            'adresse2' => $data->getAdresse2(),
+            'adresse3' => $data->getAdresse3(),
+            'ville' => $data->getVille(),
+            'pays' => $data->getPays(),
+        );
 
         $userId = $data->getId();
         $recapitulation = $this->getRepoFrom(self::ENTITY_MATCHS)->findRecapitulationForProfil($userId);
@@ -186,7 +199,7 @@ class InscriptionController extends ApiController implements InterfaceDB
         $response['code_error'] = 0;
         $response['success'] = true;
         $response['error'] = false;
-        $response['message']= "Success";
+        $response['message'] = "Success";
         return new JsonResponse($response);
     }
 
@@ -279,9 +292,8 @@ class InscriptionController extends ApiController implements InterfaceDB
             if ($request->get('password')) {
                 $password = $this->encodePassword($request->get('password'));
                 $utilisateur->setPassword($password);
-                
-            }
-            else {
+
+            } else {
 
                 $parameter = $this->getParameterMail();
                 $pass = $this->generatePassword();
@@ -290,17 +302,17 @@ class InscriptionController extends ApiController implements InterfaceDB
                 $body = $parameter->getTemplateInscription();
 
                 $mailerService = $this->getMailerService();
-                $res = str_replace('{{prenom}}',$prenom,$body);
-                $res = str_replace('{{email}}',$email ,$res);
-                $res = str_replace('{{password}}',$pass,$res);
+                $res = str_replace('{{prenom}}', $prenom, $body);
+                $res = str_replace('{{email}}', $email, $res);
+                $res = str_replace('{{password}}', $pass, $res);
                 $res = str_replace('{{adresseSociete}}', $parameter->getAdresseSociete(), $res);
-                
+
                 $mailerService->setSubject($parameter->getSubjectInscription());
                 $mailerService->setFrom($parameter->getEmailSite());
                 $mailerService->setTo($email);
-                $mailerService->addParams('body',$res);
+                $mailerService->addParams('body', $res);
 
-                if($mailerService->send()){
+                if ($mailerService->send()) {
                     $utilisateur->setPassword($this->encodePassword($pass));
                 }
             }

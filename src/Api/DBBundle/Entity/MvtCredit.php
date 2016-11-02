@@ -25,7 +25,8 @@ class MvtCredit
      * @ORM\ManyToOne(targetEntity="Credit", cascade={"persist","remove"})
      * @ORM\JoinColumn(name="credit_id", nullable=true)
      */
-    private $credit;
+    /*private $credit;*/
+
     /**
      * @var int
      *
@@ -68,12 +69,18 @@ class MvtCredit
      * @ORM\Column(name="typeCredit", type="string", length=255, nullable=true)
      */
     private $typeCredit;
+    /**
+     * @var \String
+     *
+     * @ORM\Column(name="credit", type="string", length=255, nullable=true)
+     */
+    private $credit;
 
 
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -97,7 +104,7 @@ class MvtCredit
     /**
      * Get entreeCredit
      *
-     * @return int
+     * @return integer
      */
     public function getEntreeCredit()
     {
@@ -121,7 +128,7 @@ class MvtCredit
     /**
      * Get sortieCredit
      *
-     * @return int
+     * @return integer
      */
     public function getSortieCredit()
     {
@@ -145,7 +152,7 @@ class MvtCredit
     /**
      * Get soldeCredit
      *
-     * @return int
+     * @return integer
      */
     public function getSoldeCredit()
     {
@@ -174,6 +181,54 @@ class MvtCredit
     public function getDateMvt()
     {
         return $this->dateMvt;
+    }
+
+    /**
+     * Set typeCredit
+     *
+     * @param string $typeCredit
+     *
+     * @return MvtCredit
+     */
+    public function setTypeCredit($typeCredit)
+    {
+        $this->typeCredit = $typeCredit;
+
+        return $this;
+    }
+
+    /**
+     * Get typeCredit
+     *
+     * @return string
+     */
+    public function getTypeCredit()
+    {
+        return $this->typeCredit;
+    }
+
+    /**
+     * Set credit
+     *
+     * @param string $credit
+     *
+     * @return MvtCredit
+     */
+    public function setCredit($credit)
+    {
+        $this->credit = $credit;
+
+        return $this;
+    }
+
+    /**
+     * Get credit
+     *
+     * @return string
+     */
+    public function getCredit()
+    {
+        return $this->credit;
     }
 
     /**
@@ -222,53 +277,5 @@ class MvtCredit
     public function getVoteUtilisateur()
     {
         return $this->voteUtilisateur;
-    }
-
-    /**
-     * Set credit
-     *
-     * @param \Api\DBBundle\Entity\Credit $credit
-     *
-     * @return MvtCredit
-     */
-    public function setCredit(\Api\DBBundle\Entity\Credit $credit = null)
-    {
-        $this->credit = $credit;
-
-        return $this;
-    }
-
-    /**
-     * Get credit
-     *
-     * @return \Api\DBBundle\Entity\Credit
-     */
-    public function getCredit()
-    {
-        return $this->credit;
-    }
-
-    /**
-     * Set typeCredit
-     *
-     * @param string $typeCredit
-     *
-     * @return MvtCredit
-     */
-    public function setTypeCredit($typeCredit)
-    {
-        $this->typeCredit = $typeCredit;
-
-        return $this;
-    }
-
-    /**
-     * Get typeCredit
-     *
-     * @return string
-     */
-    public function getTypeCredit()
-    {
-        return $this->typeCredit;
     }
 }
