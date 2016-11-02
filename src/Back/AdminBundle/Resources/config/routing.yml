@@ -52,3 +52,7 @@ route_prefix_admin_region:
 route_prefix_admin_classement:
     resource: "@BackAdminBundle/Resources/config/routing/classement.yml"
     prefix:   /classements
+
+route_prefix_admin_address_livraison:
+    resource: "@BackAdminBundle/Resources/config/routing/delivery_address.yml"
+    prefix:   /adresse-livraisons

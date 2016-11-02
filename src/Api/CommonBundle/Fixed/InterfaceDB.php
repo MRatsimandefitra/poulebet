@@ -41,5 +41,6 @@ interface InterfaceDB {
 
     const ENTITY_PARAMETER_MAIL = 'ApiDBBundle:ParameterMail';
     const ENTITY_ADDRESS_LIVRAISON = 'ApiDBBundle:AddressLivraison';
+    const FORM_ADDRESS_LIVRAISON ='Api\DBBundle\Form\AddressLivraisonType';
 
 }

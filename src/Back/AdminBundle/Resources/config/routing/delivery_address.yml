@@ -1,0 +1,3 @@
+edit_delivery_address:
+    path:     /edit/{id}
+    defaults: { _controller: BackAdminBundle:AddressLivraison:edit }
