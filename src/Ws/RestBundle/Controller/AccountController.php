@@ -66,6 +66,18 @@ class AccountController extends ApiController implements InterfaceDB
         }else{
             $result['totalGain'] = null;
         }
+        $totalEncours = $this->getRepo(self::ENTITY_MATCHS)->findTotalMatchsEnCours($user->getId());
+
+        if(is_array($totalEncours) && count($totalEncours) > 0){
+            ;
+            $totalEnCour  = 0;
+            foreach($totalEncours as $itemsTotalEnCours){
+                $totalEnCour = $totalEnCour + $itemsTotalEnCours->getMiseTotale();
+            }
+            $result['totalEnCours'] =$totalEnCour;
+        }else{
+            $result['totalEnCours'] = null;
+        }
          //   var_dump($result); die;
         // championat
         $championat = $this->getRepo(self::ENTITY_MATCHS)->findRecapitulationForUserForChampionat($user->getId());
@@ -78,35 +90,69 @@ class AccountController extends ApiController implements InterfaceDB
                 );
             }
         }
-
+        // 2 dernier concours
+        $concours = $this->getRepo(self::ENTITY_MATCHS)->findTwoLastConcour();
         //recapitulation par utilisateur
         $recapitulation = $this->getRepo(self::ENTITY_MATCHS)->findRecapitulationForUser($user->getId());
 
 
         if(is_array($recapitulation)&& count($recapitulation) > 0){
             foreach($recapitulation as $kRecapitulation => $itemsRecapitulation){
-                $result['list_matchs'][] = array(
-                    'idMatch' => $itemsRecapitulation->getMatchs()->getId(),
-                    'dateMatch' => $itemsRecapitulation->getMatchs()->getDateMatch(),
-                    'equipeDomicile' => $itemsRecapitulation->getMatchs()->getEquipeDomicile(),
-                    'equipeVisiteur' => $itemsRecapitulation->getMatchs()->getEquipeVisiteur(),
-                    'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $itemsRecapitulation->getMatchs()->getCheminLogoDomicile() . '.png',// $itemsRecapitulationData->getTeamsDomicile()->getLogo(),
-                    'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $itemsRecapitulation->getMatchs()->getCheminLogoVisiteur() . '.png',// $itemsRecapitulationData->getTeamsVisiteur()->getLogo(),
-                    'score' => $itemsRecapitulation->getMatchs()->getScore(),
-                    'scoreDomicile' => substr($itemsRecapitulation->getMatchs()->getScore(), 0, 1),
-                    'scoreVisiteur' => substr($itemsRecapitulation->getMatchs()->getScore(), -1, 1),
-                    'status' => $itemsRecapitulation->getMatchs()->getStatusMatch(),
-                    'tempsEcoules' => $itemsRecapitulation->getMatchs()->getTempsEcoules(),
-                    'live' => ($itemsRecapitulation->getMatchs()->getStatusMatch() == 'active') ? true : false,
-                    'master_prono_1' => $itemsRecapitulation->getMatchs()->getMasterProno1(),
-                    'master_prono_n' => $itemsRecapitulation->getMatchs()->getMasterPronoN(),
-                    'master_prono_2' => $itemsRecapitulation->getMatchs()->getMasterProno2(),
-                    'cote_pronostic_1' => $itemsRecapitulation->getCote1(),
-                    'cote_pronostic_n' => $itemsRecapitulation->getCoteN(),
-                    'cote_pronostic_2' => $itemsRecapitulation->getCote2(),
-                    'voted_equipe' => $itemsRecapitulation->getVote(),
-              //      'isGagne' => $this->getStatusRecap($itemsRecapitulation->getId())
-                );
+                if($itemsRecapitulation->getIsCombined() == true){
+                    $result['list_match_combine'][] = array(
+                        'idMatch' => $itemsRecapitulation->getMatchs()->getId(),
+                        'dateMatch' => $itemsRecapitulation->getMatchs()->getDateMatch(),
+                        'equipeDomicile' => $itemsRecapitulation->getMatchs()->getEquipeDomicile(),
+                        'equipeVisiteur' => $itemsRecapitulation->getMatchs()->getEquipeVisiteur(),
+                        'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $itemsRecapitulation->getMatchs()->getCheminLogoDomicile() . '.png',// $itemsRecapitulationData->getTeamsDomicile()->getLogo(),
+                        'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $itemsRecapitulation->getMatchs()->getCheminLogoVisiteur() . '.png',// $itemsRecapitulationData->getTeamsVisiteur()->getLogo(),
+                        'score' => $itemsRecapitulation->getMatchs()->getScore(),
+                        'scoreDomicile' => substr($itemsRecapitulation->getMatchs()->getScore(), 0, 1),
+                        'scoreVisiteur' => substr($itemsRecapitulation->getMatchs()->getScore(), -1, 1),
+                        'status' => $itemsRecapitulation->getMatchs()->getStatusMatch(),
+                        'tempsEcoules' => $itemsRecapitulation->getMatchs()->getTempsEcoules(),
+                        'live' => ($itemsRecapitulation->getMatchs()->getStatusMatch() == 'active') ? true : false,
+                        'master_prono_1' => $itemsRecapitulation->getMatchs()->getMasterProno1(),
+                        'master_prono_n' => $itemsRecapitulation->getMatchs()->getMasterPronoN(),
+                        'master_prono_2' => $itemsRecapitulation->getMatchs()->getMasterProno2(),
+                        'cote_pronostic_1' => $itemsRecapitulation->getCote1(),
+                        'cote_pronostic_n' => $itemsRecapitulation->getCoteN(),
+                        'cote_pronostic_2' => $itemsRecapitulation->getCote2(),
+                        'voted_equipe' => $itemsRecapitulation->getVote(),
+                        'isCombined' => $itemsRecapitulation->getIsCombined(),
+                        'gainsPotentiel' => $itemsRecapitulation->getGainPotentiel(),
+                        'miseTotale' => $itemsRecapitulation->getMiseTotale(),
+                        'idChampionat' => $itemsRecapitulation->getMatchs()->getChampionat()->getId()
+                    );
+
+                }else{
+                    $result['list_match_simple'][] = array(
+                        'idMatch' => $itemsRecapitulation->getMatchs()->getId(),
+                        'dateMatch' => $itemsRecapitulation->getMatchs()->getDateMatch(),
+                        'equipeDomicile' => $itemsRecapitulation->getMatchs()->getEquipeDomicile(),
+                        'equipeVisiteur' => $itemsRecapitulation->getMatchs()->getEquipeVisiteur(),
+                        'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $itemsRecapitulation->getMatchs()->getCheminLogoDomicile() . '.png',// $itemsRecapitulationData->getTeamsDomicile()->getLogo(),
+                        'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $itemsRecapitulation->getMatchs()->getCheminLogoVisiteur() . '.png',// $itemsRecapitulationData->getTeamsVisiteur()->getLogo(),
+                        'score' => $itemsRecapitulation->getMatchs()->getScore(),
+                        'scoreDomicile' => substr($itemsRecapitulation->getMatchs()->getScore(), 0, 1),
+                        'scoreVisiteur' => substr($itemsRecapitulation->getMatchs()->getScore(), -1, 1),
+                        'status' => $itemsRecapitulation->getMatchs()->getStatusMatch(),
+                        'tempsEcoules' => $itemsRecapitulation->getMatchs()->getTempsEcoules(),
+                        'live' => ($itemsRecapitulation->getMatchs()->getStatusMatch() == 'active') ? true : false,
+                        'master_prono_1' => $itemsRecapitulation->getMatchs()->getMasterProno1(),
+                        'master_prono_n' => $itemsRecapitulation->getMatchs()->getMasterPronoN(),
+                        'master_prono_2' => $itemsRecapitulation->getMatchs()->getMasterProno2(),
+                        'cote_pronostic_1' => $itemsRecapitulation->getCote1(),
+                        'cote_pronostic_n' => $itemsRecapitulation->getCoteN(),
+                        'cote_pronostic_2' => $itemsRecapitulation->getCote2(),
+                        'voted_equipe' => $itemsRecapitulation->getVote(),
+                        'isCombined' => $itemsRecapitulation->getIsCombined(),
+                        'gainsPotentiel' => $itemsRecapitulation->getGainPotentiel(),
+                        'miseTotale' => $itemsRecapitulation->getMiseTotale(),
+                        'idChampionat' => $itemsRecapitulation->getMatchs()->getChampionat()->getId()
+                    );
+
+                }
 
                 $result['code_error'] = 0;
                 $result['error'] = false;

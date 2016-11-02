@@ -125,11 +125,11 @@ class InscriptionController extends ApiController implements InterfaceDB
 
             /*$mm = $this->get('mail.manager');
             $mm->setSubject($this->get('doctrine.orm.entity_manager')->getRepository(self::ENTITY_UTILISATEUR));*/
-            $banniere = $this->getObjectRepoFrom(self::ENTITY_PUB, array('isPopup' => false));
+            $banniere = $this->getObjectRepoFrom(self::ENTITY_PUB, array('isPopup' => true));
             $result = array();
 
             if ($banniere && is_object($banniere)) {
-                $result['banniere'] = 'http://dplb.arkeup.com/upload/publicite/' . $banniere->getCheminPub();
+                $result['banniere'] = 'http://dplb.arkeup.com/upload/admin/publicite/' . $banniere->getCheminPub();
             } else {
                 $result['banniere'] = null;
             }

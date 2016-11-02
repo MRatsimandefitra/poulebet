@@ -678,4 +678,27 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         return $query->getResult();
 
     }
+
+    public function findTwoLastConcour(){
+        $dql = "SELECT co from ApiDBBundle:Concours co
+                WHERE CURRENT_DATE() BETWEEN co.dateDebut and co.dateFinale
+                ORDER BY co.id DESC";
+        $query = $this->getEntityManager()->createQuery($dql);
+        return $query->getResult();
+    }
+
+    public function findTotalMatchsEnCours($userId){
+        $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
+                LEFT JOIN vu.matchs m
+                LEFT JOIN vu.utilisateur u
+                LEFT JOIN m.championat ch
+                WHERE m.statusMatch = 'active' or m.statusMatch = 'not_started'
+                AND u.id = :userId
+                GROUP BY vu.idMise ";
+
+        $query = $this->getEntityManager()->createQuery($dql);
+        $query->setParameter('userId', $userId);
+        return $query->getResult();
+
+    }
 }

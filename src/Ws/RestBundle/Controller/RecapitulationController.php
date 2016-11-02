@@ -129,7 +129,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
                         );
                         $banniere = $this->getObjectRepoFrom(self::ENTITY_PUB, array('isPopup' => false ));
                         if($banniere && is_object($banniere)){
-                                $result['banniere'] = 'http://dplb.arkeup.com/upload/publicite/'.$banniere->getCheminPub();
+                                $result['banniere'] = 'http://dplb.arkeup.com/upload/admin/publicite/'.$banniere->getCheminPub();
                         }else{
                             $result['banniere'] = null;
                         }
@@ -234,7 +234,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
 
                 $banniere = $this->getObjectRepoFrom(self::ENTITY_PUB, array('isPopup' => false ));
                 if($banniere && is_object($banniere)){
-                    $result['banniere'] = 'http://dplb.arkeup.com/upload/publicite/'.$banniere->getCheminPub();
+                    $result['banniere'] = 'http://dplb.arkeup.com/upload/admin/publicite/'.$banniere->getCheminPub();
                 }else{
                     $result['banniere'] = null;
                 }
