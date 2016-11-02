@@ -110,8 +110,10 @@ class LotsController extends ApiController implements InterfaceDB
     }
 
     public function historyLotAction(Lot $lot){
+        $currentDroitAdmin = $this->getDroitAdmin('Lots concours');
         return $this->render('BackAdminBundle:Lots:history_lot.html.twig', array(
-            'lot' => $lot
+            'lot' => $lot,
+            'droitAdmin' => $currentDroitAdmin[0]
         ));
     }
     

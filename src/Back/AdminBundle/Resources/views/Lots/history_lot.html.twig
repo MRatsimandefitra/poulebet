@@ -28,8 +28,10 @@
                     <td>{{ 'Sortie'|trans }}</td>
                     <td>{{ 'Solde' }}</td>
                     <td>{{ 'Adresse de livraison'|trans }}</td>
+                    <td>{{ 'Actions'|trans }}</td>
                 </tr>
                 {% for mvtLot in lot.mvtLots %}
+                    {% set address = mvtLot.addressLivraison %}
                     <tr>
                         <td>
                             {{ mvtLot.utilisateur.username }}
@@ -50,9 +52,7 @@
                             {{ mvtLot.soldeLot }}
                         </td>
                         <td>
-                            {% if mvtLot.entreeLot == 0 %}
-                                {% set address = mvtLot.addressLivraison %}
-                                {% if address %}
+                            {% if mvtLot.entreeLot == 0 and address %}     
                                 <dl class="dl-horizontal">
                                     <dt>Pays</dt>
                                     <dd>{{ address.pays.nomPays }}</dd>
@@ -69,6 +69,12 @@
                                     <dt>Région</dt>
                                     <dd>{{ address.region.nom }}</dd>
                                 </dl>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if mvtLot.entreeLot == 0 and address %}
+                                {% if droitAdmin.modification is defined and droitAdmin.modification %}
+                                    <a href="{{ path('edit_delivery_address', {'id': address.id }) }}"> <span class="glyphicon glyphicon-pencil orange" aria-hidden="true"></span> Modifier Adresse </a> 
                                 {% endif %}
                             {% endif %}
                         </td>
