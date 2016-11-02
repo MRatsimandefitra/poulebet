@@ -190,11 +190,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
 
                 foreach ($nbRecap as $k => $vItems) {
 
-
-                    //var_dump($k); die;
-                    if ($count == $k) {
-
-
+                    if ($count == $k && $count < $countBoucle ) {
                         $result['list_match'][] = array(
                             'idMatch' => $vItems->getMatchs()->getId(),
                             'dateMatch' => $vItems->getMatchs()->getDateMatch(),
