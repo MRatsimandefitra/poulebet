@@ -66,6 +66,16 @@ class AccountController extends ApiController implements InterfaceDB
         }else{
             $result['totalGain'] = null;
         }
+        $totalEncours = $this->getRepo(self::ENTITY_MATCHS)->findTotalMatchsEnCours($user->getId());
+
+        if(is_array($totalEncours) && count($totalEncours) > 0){
+            ;
+            $totalEnCour  = 0;
+            foreach($totalEncours as $itemsTotalEnCours){
+                $totalEnCour = $totalEnCour + $itemsTotalEnCours->getMiseTotale();
+            }
+            $result['totalEnCours'] =$totalEnCour;
+        }
          //   var_dump($result); die;
         // championat
         $championat = $this->getRepo(self::ENTITY_MATCHS)->findRecapitulationForUserForChampionat($user->getId());
@@ -78,7 +88,8 @@ class AccountController extends ApiController implements InterfaceDB
                 );
             }
         }
-
+        // 2 dernier concours
+        $concours = $this->getRepo(self::ENTITY_MATCHS)->findTwoLastConcour();
         //recapitulation par utilisateur
         $recapitulation = $this->getRepo(self::ENTITY_MATCHS)->findRecapitulationForUser($user->getId());
 
@@ -105,7 +116,10 @@ class AccountController extends ApiController implements InterfaceDB
                     'cote_pronostic_n' => $itemsRecapitulation->getCoteN(),
                     'cote_pronostic_2' => $itemsRecapitulation->getCote2(),
                     'voted_equipe' => $itemsRecapitulation->getVote(),
-              //      'isGagne' => $this->getStatusRecap($itemsRecapitulation->getId())
+                    'isCombined' => $itemsRecapitulation->getIsCombined(),
+                    'gainsPotentiel' => $itemsRecapitulation->getGainPotentiel(),
+                    'miseTotale' => $itemsRecapitulation->getMiseTotale(),
+                    'idChampionat' => $itemsRecapitulation->getMatchs()->getChampionat()->getId()
                 );
 
                 $result['code_error'] = 0;
