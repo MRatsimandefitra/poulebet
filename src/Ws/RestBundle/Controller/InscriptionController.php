@@ -91,7 +91,6 @@ class InscriptionController extends ApiController implements InterfaceDB
                     $connected = $this->get('doctrine.orm.entity_manager')->getRepository('ApiDBBundle:Connected')->findOneBy(array('username' => $tokenSession->getUser()->getEmail()));
                     $newConnected = false;
                     if (!$connected) {
-                        die('pas connected');
                         $connected = new Connected();
                         $newConnected = true;
                     }
@@ -99,7 +98,6 @@ class InscriptionController extends ApiController implements InterfaceDB
                     $connected->setUsername($tokenSession->getUser()->getEmail());
                     $connected->setDevice($deviceToken);
                     if ($newConnected) {
-                        die('insert connected');
                         $this->getEm()->persist($connected);
 
                     }
