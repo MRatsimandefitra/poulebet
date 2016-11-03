@@ -92,6 +92,9 @@ class AccountController extends ApiController implements InterfaceDB
         }
         // 2 dernier concours
         $concours = $this->getRepo(self::ENTITY_MATCHS)->findTwoLastConcour();
+        if($concours){
+
+        }
         //recapitulation par utilisateur
         $recapitulation = $this->getRepo(self::ENTITY_MATCHS)->findRecapitulationForUser($user->getId());
 
