@@ -193,19 +193,23 @@ class LiveScoreController extends ApiController implements InterfaceDB
      * @return JsonResponse
      */
     public function getMatchLiveScoreTodayAction(Request $request){
-        die('okok');
         $matchsToday = $this->getRepo(self::ENTITY_MATCHS)->findMatchsToday();
         $championatToday = $this->getRepo(self::ENTITY_MATCHS)->findChampionatToday();
         $result = array();
+
         if(is_array($championatToday) && count($championatToday) > 0 ){
-            $result['list_championat'][] = array(
-                'idChampionat' =>$championatToday->getChampionat()->getId(),
-                'nomChampionat' => $championatToday->getChampionat()->getNomChampionat(),
-                'fullNameChampionat' => $championatToday->getChampionat()->getFullNameChampionat()
-            );
+            foreach($championatToday as $kChampionatToday => $itemsChampionatToday){
+                $result['list_championat'][] = array(
+                    'idChampionat' =>$itemsChampionatToday->getChampionat()->getId(),
+                    'nomChampionat' => $itemsChampionatToday->getChampionat()->getNomChampionat(),
+                    'fullNameChampionat' => $itemsChampionatToday->getChampionat()->getFullNameChampionat()
+                );
+            }
+
         }else{
             return $this->noChampionat();
         }
+
 
         if(is_array($matchsToday) && count($matchsToday) > 0 ){
 
