@@ -361,7 +361,7 @@ class PariController extends ApiController implements InterfaceDB
         $dql = " SELECT vu from ApiDBBundle:VoteUtilisateur vu
                 LEFT JOIN  vu.matchs m
                 LEFT JOIN vu.utilisateur u
-                WHERE m.id = :matchId AND u.id = :userId group by vu.idMise";
+                WHERE m.id = :matchId AND u.id = :userId AND vu.isCombined = false group by vu.idMise";
         $query = $this->get('doctrine.orm.entity_manager')->createQuery($dql);
         $query->setParameters(array('matchId' => $matchId, 'userId' => $userId));
         return count($query->getResult());
