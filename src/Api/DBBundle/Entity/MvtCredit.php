@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="mvt_credit")
  * @ORM\Entity(repositoryClass="Api\DBBundle\Repository\MvtCreditRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class MvtCredit
 {
@@ -277,5 +278,14 @@ class MvtCredit
     public function getVoteUtilisateur()
     {
         return $this->voteUtilisateur;
+    }
+    
+    /**
+     * @ORM\PrePersist
+     * 
+     */
+    public function setCreated()
+    {
+        $this->dateMvt = new \DateTime('now');
     }
 }
