@@ -9,14 +9,13 @@
     </div>#}
     <div class="col-lg-12">
     <div class="col-lg-12">
-        {% if droitAdmin.lecture is defined and droitAdmin.lecture %}
-        <span class="glyphicon glyphicon-plus green" aria-hidden="true"></span>
-        {% endif %}
         {% if droitAdmin.ajout is defined and droitAdmin.ajout %}
             <div class="link">
-            <a href="{{ path('add_lots') }}">{{ 'Ajout lots'|trans }}</a>&nbsp;  &nbsp; |
-                <a href="{{ path('index_lots_category') }}">{{ 'Category Lots' }}</a> &nbsp;  &nbsp;
+                <a href="{{ path('add_lots') }}"><span class="glyphicon glyphicon-plus green" aria-hidden="true"></span> {{ 'Ajout lots'|trans }}</a>&nbsp;  &nbsp; |
+                <a href="{{ path('index_lots_category') }}">{{ 'Catégorie Lots' }}</a> &nbsp;  &nbsp;
             </div>
+        {% elseif droitAdmin.lecture is defined and droitAdmin.lecture %}
+        <span class="glyphicon glyphicon-plus green" aria-hidden="true"></span>
         {% endif %}
         <div class="list">
             <table>
