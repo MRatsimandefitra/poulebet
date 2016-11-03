@@ -210,7 +210,49 @@ class LiveScoreController extends ApiController implements InterfaceDB
             return $this->noChampionat();
         }
 
+        $matchsActive = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForToday('active');
+        $arrayMatchsActive = array();
+        if(is_array($matchsActive) && count($matchsActive)){
+            foreach($matchsActive as $kMatchsActive => $itemsMatchsActive){
+                $arrayMatchsActive[] = $itemsMatchsActive;
+            }
+        }
 
+        $matchsNotStart = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForToday('not_started');
+        $arrayMatchNotStarted = array();
+        if(is_array($matchsNotStart) && count($matchsNotStart) > 0 ){
+            foreach($matchsNotStart as $kMatchsNotStarted => $itemsMatchsNotStarted){
+               // $arrayMatchNotStarted[] = $itemsMatchsNotStarted;
+                $arrayMatchNotStarted[] = array(
+                    'teamsDomicile' => $itemsMatchsNotStarted->getTeamsDomicile()->getFullNameClub(),
+                    'teamsVisiteur' => $itemsMatchsNotStarted->getTeamsVisiteur()->getFullNameClub(),
+                    'score' => $itemsMatchsNotStarted->getScore(),
+                    'scoreDomicile' => substr($itemsMatchsNotStarted->getScore(), 0, 1),
+                    'scoreVisiteur' => substr($itemsMatchsNotStarted->getScore(), -1, 1),
+                    'live' => ($itemsMatchsNotStarted->getStatusMatch() == 'active') ? true : false,
+                    'current-state' => array(
+                        'period' => $itemsMatchsNotStarted->getPeriod(),
+                        'minute' => $itemsMatchsNotStarted->getMinute()
+                    ),
+                    'championat' => $itemsMatchsNotStarted->getChampionat()->getId(),
+                    'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $itemsMatchsNotStarted->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
+                    'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $itemsMatchsNotStarted->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
+                    'statusMatch'=> $itemsMatchsNotStarted->getStatusMatch()
+                );
+            }
+        }
+        //var_dump($arrayMatchNotStarted); die;
+        $matchsEnd = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForToday('finished');
+        $arrayMatchsEnd = array();
+        if(is_array($matchsEnd) && count($matchsEnd) > 0){
+            foreach($matchsEnd as $kMatchsEnd => $itemsMatchsEnd){
+                $arrayMatchsEnd[] = $itemsMatchsEnd;
+            }
+        }
+        $matchsArray = array();
+          //  $matchsArray = array_merge($arrayMatchsActive, $arrayMatchNotStarted,$arrayMatchNotStarted );
+        $matchsArray = $arrayMatchsActive  + $arrayMatchNotStarted + $arrayMatchNotStarted;
+        var_dump($matchsArray); die;
         if(is_array($matchsToday) && count($matchsToday) > 0 ){
 
             foreach($matchsToday as $kMatchsToday => $itemsMatchsToday){
@@ -228,11 +270,14 @@ class LiveScoreController extends ApiController implements InterfaceDB
                     'championat' => $itemsMatchsToday->getChampionat()->getId(),
                     'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $itemsMatchsToday->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
                     'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $itemsMatchsToday->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
+                    'statusMatch'=> $itemsMatchsToday->getStatusMatch()
                 );
             }
         }else{
             return $this->noMatchs();
         }
+
+
 
         $result['code_error'] = 0;
         $result['success']= true;
