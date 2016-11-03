@@ -30,15 +30,12 @@ class NotificationController extends ApiController {
     public function notifyAction(Request $request){
         // utilistateurs
         $session = new Session();
-        
         $session->set("current_page","Notification");
-        
         $tri = $request->get('tri');
         $champ = $request->get('champ');
         $users_id = $request->get('users');
         $all_user = $request->get("all_user");
-        
-        $nbpage = 10; 
+        $nbpage = 10;
         $criteria = array("criteria_username"=>null,"criteria_email"=>null);
         if($request->get('nbpage')){
             $nbpage = $request->get('nbpage');
@@ -90,11 +87,13 @@ class NotificationController extends ApiController {
             //insertion dans la base de donnée
             $this->insert($notification);
             $users = $notification->getUtilisateurs();
+
             $device_token = array();
             $message = $notification->getMessage();
             $messageData = array("message"=>$message,"type"=>"poulebet");
             foreach($users as $user){
                 $devices = $user->getDevices();
+                var_dump(count($devices));
                 foreach ($devices as $device){
                     //$device_token[] = $device->getToken();
                     array_push($device_token, $device->getToken());

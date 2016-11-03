@@ -2,3 +2,7 @@ ws_accountprofil:
     path:     /profil
     defaults: { _controller: WsRestBundle:Account:postGetAccountProfil }
     methods: POST # token, prix
+ws_account_profil_upload_photo:
+    path:     /profil/upload-photo
+    defaults: { _controller: WsRestBundle:Account:postGetUploadPhoto }
+    methods: POST # token, prix
