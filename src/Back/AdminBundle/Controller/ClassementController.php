@@ -11,9 +11,34 @@ class ClassementController extends ApiController implements InterfaceDB
 {
     public function indexClassementAction(Request $request)
     {
-        $classemenGroupUser= $this->getRepo(self::ENTITY_MATCHS)->findClassement(null,null,null,true);
+        $dateDebut =null;
+        $dateFinale = null;
+        $params = array();
+        if($request->getContent()){
+            if($request->request->get('dateDebut')){
+                $dateDebut = $request->request->get('dateDebut');
+                $params['dateDebut'] = $dateDebut;
+            }
+            if($request->request->get('dateFinale')){
+                $dateFinale = $request->request->get('dateFinale');
+                $params['dateFinale'] = $dateFinale;
+            }
+        }
+
+
+        if($dateDebut != null && $dateFinale != null){
+            //var_dump($dateDebut); die;
+            $classemenGroupUser= $this->getRepo(self::ENTITY_MATCHS)->findClassement($dateDebut,$dateFinale,null,true);
+        }else{
+            $classemenGroupUser= $this->getRepo(self::ENTITY_MATCHS)->findClassement(null,null,null,true);
+        }
+        $result = array();
         foreach($classemenGroupUser as $kGroupUser => $itemsGroupUser){
-            $classement = $this->getRepo(self::ENTITY_MATCHS)->findClassement(null, null, $itemsGroupUser->getUtilisateur()->getId());
+            if($dateDebut && $dateFinale){
+                $classement = $this->getRepo(self::ENTITY_MATCHS)->findClassement($dateDebut, $dateFinale, $itemsGroupUser->getUtilisateur()->getId());
+            }else{
+                $classement = $this->getRepo(self::ENTITY_MATCHS)->findClassement(null, null, $itemsGroupUser->getUtilisateur()->getId());
+            }
             $total= 0;
             foreach($classement as $kClassement => $itemsClassement){
                 $total = $total + $itemsClassement->getClassement();
@@ -29,16 +54,31 @@ class ClassementController extends ApiController implements InterfaceDB
                 );
 
             }
-            $result[] = $tmpResult;
+            $resultTmp[] = $tmpResult;
+
+
         }
 
-
+        $arrayClasssement=  array();
+        if(!empty($resultTmp)){
+            foreach($resultTmp as $kResult => $itemsResult){
+                $arrayClasssement[] = $itemsResult['classement'];
+            }
+            arsort($arrayClasssement);
+            foreach($arrayClasssement as $kArrayClassement => $itemsArrayClassement){
+                if($itemsArrayClassement == $resultTmp[$kArrayClassement]['classement']){
+                    $result[] = $resultTmp[$kArrayClassement];
+                }
+            }
+        }
 
         return $this->render('BackAdminBundle:Classement:index_classement.html.twig', array(
-            'classement' => $classement,
-            'result' => $result
+          //  'classement' => $classement,
+            'result' => $result,
+            'params' => $params
         ));
     }
+
     public function detailsClassementAction(Request $request, $id)
     {
         $classement = $this->getRepo(self::ENTITY_MATCHS)->findClassement(null, null, $id);

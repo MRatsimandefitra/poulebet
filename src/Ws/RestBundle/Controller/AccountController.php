@@ -121,7 +121,7 @@ class AccountController extends ApiController implements InterfaceDB
                         'voted_equipe' => $itemsMatch->getVote(),
                         'isCombined' => $itemsMatch->getIsCombined(),
                         'gainsPotentiel' => $itemsMatch->getGainPotentiel(),
-                        'miseTotale' => $itemsMatch->getMiseTotale(),
+                        'miseTotal' => $itemsMatch->getMiseTotale(),
                         'idChampionat' => $itemsMatch->getMatchs()->getChampionat()->getId()
                     );
 
@@ -160,7 +160,7 @@ class AccountController extends ApiController implements InterfaceDB
                             'cote_pronostic_n' => $itemsMatch->getCoteN(),
                             'cote_pronostic_2' => $itemsMatch->getCote2(),
                             'voted_equipe' => $itemsMatch->getVote(),
-                            'isCombined'=> $itemsMatch->getIsCombined()
+
                             //  'isGagne' => $this->getStatusRecap($itemsMatch->getId())
                         );
                     }
@@ -170,8 +170,8 @@ class AccountController extends ApiController implements InterfaceDB
                         'miseTotal' => $itemsMatch->getMiseTotale(),
                         'matchs' => $arrayMatch,
                         'gagnantCombine' => $dataIsGagne,
-                        'statusCombine' => $dataStatus
-
+                        'statusCombine' => $dataStatus,
+                        'isCombined'=> $itemsMatch->getIsCombined()
                     );
                 }
 
@@ -195,16 +195,36 @@ class AccountController extends ApiController implements InterfaceDB
         if(!$binaryPhoto){
             return $this->noImage();
         }
+        $token = $request->get('token');
+        if(!$token){
+            return $this->noToken();
+        }
+        $user= $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
+        if(!$user){
+            return $this->noUser();
+        }
 
-            $baseUrl = get_site_url() . '/' ;
+        $uploadUrl = $this->get('kernel')->getRootDir().'/../web/upload/admin/users/';
+        $binary = base64_decode($binaryPhoto);
+        $namePhoto = uniqid(new \DateTime('now'));
+        $binary->move(
+            $uploadUrl,
+            $namePhoto
+        );
+        $user->setCheminPhoto($namePhoto);
+
+        $this->get('doctrine.orm.entity_manager')->persist($user);
+        $this->get('doctrine.orm.entity_manager')->flush();
+
+        /*    $baseUrl = get_site_url() . '/' ;
             $date_now = new \DateTime( 'now' ) ;
             $timestamp = $date_now->format('Ymdhis') ;
             $filename = 'wp-content/uploads/image_'. $timestamp . '.png' ;
-            $binary=base64_decode($binaryPhoto);
+
             $file = fopen($filename, 'wb');
             fwrite($file, $binary);
             fclose($file);
-            return $baseUrl.$filename ;
+            return $baseUrl.$filename ;*/
     }
 
     //private function no
