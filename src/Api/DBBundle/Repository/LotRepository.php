@@ -52,4 +52,20 @@ class LotRepository extends \Doctrine\ORM\EntityRepository
 
         return $results = $query->getResult();
     }
+    
+    /**
+     * get Lots 
+     *
+     * @return mixed
+     */
+    public function findAllOrderedByDate()
+    {
+        $query = $this->createQueryBuilder('lot')
+            ->select('lot')
+            ->join('lot.lotCategory', 'lotCategory')
+            ->orderBy('lot.createdAt', 'desc')
+            ->getQuery();
+
+        return $query->getResult();
+    }
 }

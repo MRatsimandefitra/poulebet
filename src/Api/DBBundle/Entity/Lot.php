@@ -14,8 +14,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Lot
 {
     /**
-     * @ORM\ManyToOne(targetEntity="LotCategory", cascade={"persist","remove"})
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\ManyToOne(targetEntity="LotCategory", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true,onDelete="CASCADE")
      */
     private $lotCategory;
 
@@ -227,7 +227,9 @@ class Lot
      */
     public function setCreatedAt($createdAt)
     {
-        $this->createdAt = $createdAt;
+        if(empty($this->createdAt)){
+            $this->createdAt = $createdAt;            
+        }
 
         return $this;
     }

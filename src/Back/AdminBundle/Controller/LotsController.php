@@ -36,7 +36,7 @@ class LotsController extends ApiController implements InterfaceDB
         $session = new Session();
         
         $session->set("current_page","Lots");
-        $lots = $this->getAllEntity(self::ENTITY_LOTS);
+        $lots = $this->getRepo(self::ENTITY_LOTS)->findAllOrderedByDate();
         $currentDroitAdmin = $this->getDroitAdmin('Lots concours');
         return $this->render('BackAdminBundle:Lots:index.html.twig', array(
             'entities' => $lots,
