@@ -188,7 +188,7 @@ class UtilisateurController extends ApiController
         $droit = $this->getRepo(self::ENTITY_DROIT)->findOneByFonctionnalite('Utilisateurs');
         $currentDroitAdmin = $this->getRepo(self::ENTITY_DROIT_ADMIN)->findOneBy(array('admin' => $this->getUser(), 'droit' => $droit ));
         $user = $this->getRepo(self::ENTITY_UTILISATEUR)->find($id);
-        $mvtCredit = $this->getRepo(self::ENTITY_MVTCREDIT)->findByUtilisateur($user);
+        $mvtCredit = $this->getRepo(self::ENTITY_MVTCREDIT)->findByUtilisateur($user,array('dateMvt' => 'DESC'));
         return $this->render("BackAdminBundle:Utilisateur:mvtCredit.html.twig", array(
             'mvtCredit' =>$mvtCredit,
             'utilisateur' =>$user,
@@ -203,13 +203,20 @@ class UtilisateurController extends ApiController
         $form->handleRequest($request);
         if($form->isValid()){
             // initialisation des données
-            $entity->setEntreeCredit($entity->getCredit()->getTypeCredit());
             $entity->setDateMvt(new \DateTime('now'));
             $entity->setUtilisateur($utilisateur);
-            $solde = $entity->getEntreeCredit()-$entity->getSortieCredit();
+            $solde = $utilisateur->getLastBalance();
+            if(!empty($entity->getEntreeCredit())){
+                $solde += intval($entity->getEntreeCredit());
+            }
+            if(!empty($entity->getSortieCredit())){
+                $solde -= intval($entity->getSortieCredit());
+            }
             $entity->setSoldeCredit($solde);
             //insertion 
-            $this->insert($entity, array('success' => 'success', 'error' => 'error'));
+            if($solde >= 0){
+                $this->insert($entity, array('success' => 'success', 'error' => 'error'));                
+            }
             return $this->redirectToRoute('mvtCredit_utilisateur',array('id'=>$id));
         }
         return $this->render('BackAdminBundle:Utilisateur:add_MvtCredit.html.twig', array(

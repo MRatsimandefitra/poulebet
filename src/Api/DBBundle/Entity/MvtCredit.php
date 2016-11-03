@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 class MvtCredit
 {
     /**
-     * @ORM\ManyToOne(targetEntity="Utilisateur", cascade={"persist","remove"})
+     * @ORM\ManyToOne(targetEntity="Utilisateur", cascade={"persist","remove"}, inversedBy="mvtCredits")
      * @ORM\JoinColumn(name="utilisateur_id", nullable=true)
      */
     private $utilisateur;

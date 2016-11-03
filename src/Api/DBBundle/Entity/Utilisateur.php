@@ -199,6 +199,12 @@ class Utilisateur
      * @ORM\Column(name="town", type="string", length=100, nullable=true)
      */
     private $town;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="MvtCredit", mappedBy="utilisateur")
+     */
+    private $mvtCredits;
+    
     /**
     * @ORM\OneToMany(targetEntity="Api\DBBundle\Entity\Device", mappedBy="utilisateur")
     */
@@ -789,6 +795,7 @@ class Utilisateur
     public function __construct()
     {
         $this->devices = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->mvtCredits = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     
@@ -962,5 +969,53 @@ class Utilisateur
     public function getDeviceToken()
     {
         return $this->deviceToken;
+    }
+
+    /**
+     * Add mvtCredit
+     *
+     * @param \Api\DBBundle\Entity\MvtCredit $mvtCredit
+     *
+     * @return Utilisateur
+     */
+    public function addMvtCredit(\Api\DBBundle\Entity\MvtCredit $mvtCredit)
+    {
+        $this->mvtCredits[] = $mvtCredit;
+
+        return $this;
+    }
+
+    /**
+     * Remove mvtCredit
+     *
+     * @param \Api\DBBundle\Entity\MvtCredit $mvtCredit
+     */
+    public function removeMvtCredit(\Api\DBBundle\Entity\MvtCredit $mvtCredit)
+    {
+        $this->mvtCredits->removeElement($mvtCredit);
+    }
+
+    /**
+     * Get mvtCredits
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getMvtCredits()
+    {
+        return $this->mvtCredits;
+    }
+    
+    /**
+     * Get last balance
+     * 
+     * @return int
+     */
+    public function getLastBalance(){
+        $mvtCredits = array();
+        foreach($this->getMvtCredits() as $mvt){
+            $mvtCredits[$mvt->getId()] = $mvt->getSoldeCredit();
+        }
+        reset($mvtCredits);
+        return end($mvtCredits);
     }
 }
