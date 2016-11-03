@@ -87,6 +87,7 @@ class InscriptionController extends ApiController implements InterfaceDB
                 $event = new InteractiveLoginEvent($request, $tokenSession);
                 $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
                 if ($tokenSession) {
+
                     $connected = $this->get('doctrine.orm.entity_manager')->getRepository('ApiDBBundle:Connected')->findOneBy(array('username' => $tokenSession->getUser()->getEmail()));
                     $newConnected = false;
                     if (!$connected) {

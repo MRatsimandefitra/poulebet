@@ -18,22 +18,29 @@
         <br/>
 
         <div class="col-lg-12">
+            <div class="form-serach-classement">
+                <form action="" method="post">
+                    {{ 'Date début' }}
+                    {% if params['dateDebut'] is defined and params['dateDebut'] %}
+                        <input type="text" name="dateDebut" value="{{ params['dateDebut'] }}" class="datepic"/>
+                    {% else %}
+                        <input type="text" name="dateDebut" value="" class="datepic"/>
+                    {% endif %}
+
+                    {{ 'Date finale' }}
+                    {% if params['dateFinale'] is defined and params['dateFinale'] %}
+                        <input type="text" name="dateFinale" value="{{ params['dateFinale'] }}" class="datepic"/>
+                    {% else %}
+                        <input type="text" name="dateFinale" value="" class="datepic"/>
+                    {% endif %}
+
+                    <input type="submit" value="{{ 'Chercher' }}"/>
+                </form>
+            </div>
+        </div>
+        <div class="col-lg-12">
             <div class="header-table">
-                {#{{ 'Nombre de match'|trans }} : {{ totalMatch }}#}
-                {# <div class="count">
-                     <span class="label black">{{ 'Total recherche'|trans }}
-                         : {{ pagination.getTotalItemCount }}</span>&nbsp;&nbsp; | &nbsp;&nbsp;
-                     <span class="label black">{{ 'Total Matchs Finis'|trans }}
-                         : {{ totalItemsFinished }}</span>&nbsp;&nbsp;| &nbsp;&nbsp;
-                     <span class="label black">{{ 'Total Matchs Active'|trans }}
-                         : {{ totalItemsActif }}</span>&nbsp;&nbsp;| &nbsp;&nbsp;
-                     <span class="label black">{{ 'Total Matchs Non commencé'|trans }}
-                         : {{ totalItemsNotStarted }}</span>&nbsp;&nbsp;| &nbsp;&nbsp;
-                     <span class="label black">{{ 'Total de tous les Matchs'|trans }}
-                         : {{ totalItemsMatchs }}</span>&nbsp;&nbsp;
 
-
-                 </div>#}
             </div>
             <table class="table-list">
                 <tr>
@@ -57,15 +64,15 @@
                 {% if result is defined and result %}
                     {% for row in result %}
                         <tr>
-                           <td>
-                               <img src="{#{{ asset('upload/') }}#}" alt="" width="50" height="50"/>
-                        
+                            <td>
+                                <img src="{#{{ asset('upload/') }}#}" alt="" width="50" height="50"/>
+
                             </td>
                             <td>
-                                    {{ row['nom'] }}
+                                {{ row['nom'] }}
                             </td>
                             <td>
-                                    {{ row['prenom'] }}
+                                {{ row['prenom'] }}
                             </td>
                             <td>
                                 {{ row['classement'] }}
@@ -76,7 +83,7 @@
                                 </a>
                             </td>
                         </tr>
-                        {% endfor %}
+                    {% endfor %}
                 {% else %}
                     <tr>
                         <td colspan="8"> {{ 'Aucun matchs \'a été trouvé' }}</td>

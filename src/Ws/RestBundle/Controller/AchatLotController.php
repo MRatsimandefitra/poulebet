@@ -195,7 +195,7 @@ class AchatLotController extends ApiController implements InterfaceDB
             $result['message'] = "Aucun lots disponible";
         }
         $lastSolde = $this->getRepo(self::ENTITY_MVT_CREDIT)->getLastByUser($user);
-        if($lastSolde !== false){
+        if($lastSolde){
             $result['credit'] = $lastSolde->getSoldeCredit();            
         } else {
             $result['credit'] = 0;            

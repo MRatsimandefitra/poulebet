@@ -372,3 +372,7 @@ table.form{
 table.form tr, table.form tr td{
     border: none;
 }
+div.form-serach-classement{
+    min-height: 40px ;padding: 10px;
+    background-color: #a3a4ae;
+}

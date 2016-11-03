@@ -3,14 +3,15 @@
 namespace Ws\RestBundle\Controller;
 
 use Api\CommonBundle\Controller\ApiController;
+use Api\CommonBundle\Fixed\InterfaceDB;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
-class LiveScoreController extends ApiController
+class LiveScoreController extends ApiController implements InterfaceDB
 {
-    const ENTITY_MATCHS = 'ApiDBBundle:Matchs';
+
 
     /**
      * @ApiDoc(
@@ -192,19 +193,23 @@ class LiveScoreController extends ApiController
      * @return JsonResponse
      */
     public function getMatchLiveScoreTodayAction(Request $request){
-
         $matchsToday = $this->getRepo(self::ENTITY_MATCHS)->findMatchsToday();
         $championatToday = $this->getRepo(self::ENTITY_MATCHS)->findChampionatToday();
         $result = array();
+
         if(is_array($championatToday) && count($championatToday) > 0 ){
-            $result['list_championat'][] = array(
-                'idChampionat' =>$championatToday->getChampionat()->getId(),
-                'nomChampionat' => $championatToday->getChampionat()->getNomChampionat(),
-                'fullNameChampionat' => $championatToday->getChampionat()->getFullNameChampionat()
-            );
+            foreach($championatToday as $kChampionatToday => $itemsChampionatToday){
+                $result['list_championat'][] = array(
+                    'idChampionat' =>$itemsChampionatToday->getChampionat()->getId(),
+                    'nomChampionat' => $itemsChampionatToday->getChampionat()->getNomChampionat(),
+                    'fullNameChampionat' => $itemsChampionatToday->getChampionat()->getFullNameChampionat()
+                );
+            }
+
         }else{
             return $this->noChampionat();
         }
+
 
         if(is_array($matchsToday) && count($matchsToday) > 0 ){
 
