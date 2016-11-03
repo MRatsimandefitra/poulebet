@@ -281,9 +281,11 @@ class LiveScoreController extends ApiController implements InterfaceDB
                 );
             }
         }
-       // $matchsArray = array();
-          //  $matchsArray = array_merge($arrayMatchsActive, $arrayMatchNotStarted,$arrayMatchNotStarted );
+       // var_dump(count($arrayMatchsActive)); die;
+          $matchsArray = array();
+
         $matchsArray = $arrayMatchsActive  + $arrayMatchNotStarted + $arrayMatchsEnd;
+       // var_dump(count($matchsArray)); die;
         /*
         if(is_array($matchsToday) && count($matchsToday) > 0 ){
 
