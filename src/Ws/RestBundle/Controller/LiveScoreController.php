@@ -214,7 +214,22 @@ class LiveScoreController extends ApiController implements InterfaceDB
         $arrayMatchsActive = array();
         if(is_array($matchsActive) && count($matchsActive)){
             foreach($matchsActive as $kMatchsActive => $itemsMatchsActive){
-                $arrayMatchsActive[] = $itemsMatchsActive;
+                $arrayMatchsActive[] = array(
+                    'teamsDomicile' => $itemsMatchsActive->getTeamsDomicile()->getFullNameClub(),
+                    'teamsVisiteur' => $itemsMatchsActive->getTeamsVisiteur()->getFullNameClub(),
+                    'score' => $itemsMatchsActive->getScore(),
+                    'scoreDomicile' => substr($itemsMatchsActive->getScore(), 0, 1),
+                    'scoreVisiteur' => substr($itemsMatchsActive->getScore(), -1, 1),
+                    'live' => ($itemsMatchsActive->getStatusMatch() == 'active') ? true : false,
+                    'current-state' => array(
+                        'period' => $itemsMatchsActive->getPeriod(),
+                        'minute' => $itemsMatchsActive->getMinute()
+                    ),
+                    'championat' => $itemsMatchsActive->getChampionat()->getId(),
+                    'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $itemsMatchsActive->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
+                    'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $itemsMatchsActive->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
+                    'statusMatch'=> $itemsMatchsActive->getStatusMatch()
+                );
             }
         }
 
@@ -246,13 +261,28 @@ class LiveScoreController extends ApiController implements InterfaceDB
         $arrayMatchsEnd = array();
         if(is_array($matchsEnd) && count($matchsEnd) > 0){
             foreach($matchsEnd as $kMatchsEnd => $itemsMatchsEnd){
-                $arrayMatchsEnd[] = $itemsMatchsEnd;
+                $arrayMatchsEnd[] = array(
+                    'teamsDomicile' => $itemsMatchsEnd->getTeamsDomicile()->getFullNameClub(),
+                    'teamsVisiteur' => $itemsMatchsEnd->getTeamsVisiteur()->getFullNameClub(),
+                    'score' => $itemsMatchsEnd->getScore(),
+                    'scoreDomicile' => substr($itemsMatchsEnd->getScore(), 0, 1),
+                    'scoreVisiteur' => substr($itemsMatchsEnd->getScore(), -1, 1),
+                    'live' => ($itemsMatchsEnd->getStatusMatch() == 'active') ? true : false,
+                    'current-state' => array(
+                        'period' => $itemsMatchsEnd->getPeriod(),
+                        'minute' => $itemsMatchsEnd->getMinute()
+                    ),
+                    'championat' => $itemsMatchsEnd->getChampionat()->getId(),
+                    'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $itemsMatchsEnd->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
+                    'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $itemsMatchsEnd->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
+                    'statusMatch'=> $itemsMatchsEnd->getStatusMatch()
+                );
             }
         }
-        $matchsArray = array();
+       // $matchsArray = array();
           //  $matchsArray = array_merge($arrayMatchsActive, $arrayMatchNotStarted,$arrayMatchNotStarted );
         $matchsArray = $arrayMatchsActive  + $arrayMatchNotStarted + $arrayMatchNotStarted;
-        var_dump($matchsArray); die;
+        /*
         if(is_array($matchsToday) && count($matchsToday) > 0 ){
 
             foreach($matchsToday as $kMatchsToday => $itemsMatchsToday){
@@ -276,8 +306,8 @@ class LiveScoreController extends ApiController implements InterfaceDB
         }else{
             return $this->noMatchs();
         }
-
-
+*/
+        $result['list_matchs'] = $matchsArray;
 
         $result['code_error'] = 0;
         $result['success']= true;
