@@ -151,21 +151,16 @@ class PariController extends ApiController implements InterfaceDB
                 return $this->noToken();
             }
             $user = $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
-
-            $nbRecapTotal = $this->getRepo(self::ENTITY_MATCHS)->findNbRecapMatchsSimpleAndCombined($user->getId());
             if (!$user) {
                 return $this->noUser();
             }
-
+            $nbRecapTotal = $this->getRepo(self::ENTITY_MATCHS)->findNbRecapMatchsSimpleAndCombined($user->getId());
             $concourEncour = $this->getRepo(self::ENTITY_MATCHS)->findIdConcourByDate();
-           // var_dump($concourEncour[0]->getId()); die;
             if(!$concourEncour){
-                //die('no Conour');
-                die('pas de concour');
+                return $this->noConcour();
             }
 
             $idConcour = $concourEncour[0]->getId();
-
             $matchs = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForPari($date, $championatWs, null, $idConcour);
             $userId = $user->getId();
 
@@ -191,7 +186,7 @@ class PariController extends ApiController implements InterfaceDB
             }
 
             //
-            if ($matchsVote) {
+            /*if ($matchsVote) {
                 foreach ($matchsVote as $kMatchsVote => $itemsMatchVote) {
                     $result['list_matchs'][] = array(
                         'idVote' => $itemsMatchVote->getId(),
@@ -228,13 +223,44 @@ class PariController extends ApiController implements InterfaceDB
                 $result['error'] = false;
                 $result['success'] = true;
                 $result['message'] = "Aucun matchs";
-            }
+            }*/
+            $resultMatch = array();
             if ($matchs) {
 
                 foreach ($matchs as $kMatchs => $matchsItems) {
                    // var_dump(); die;
+                  //  if (!$this->getJouer($matchsItems->getId(), $user->getId())) {
+                    if($this->isMatchsVoted($matchsItems->getId(), $user->getId())){
+
+                        $nbVote = $this->getNbVote($matchsItems->getId(), $user->getId());
+                        $resultMatch[] = array(
+                            'idMatch' => $matchsItems->getId(),
+                            'dateMatch' => $matchsItems->getDateMatch(),
+                            'equipeDomicile' => $matchsItems->getEquipeDomicile(),
+                            'equipeVisiteur' => $matchsItems->getEquipeVisiteur(),
+                            'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $matchsItems->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
+                            'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $matchsItems->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
+                            'score' => $matchsItems->getScore(),
+                            'scoreDomicile' => substr($matchsItems->getScore(), 0, 1),
+                            'scoreVisiteur' => substr($matchsItems->getScore(), -1, 1),
+                            'status' => $matchsItems->getStatusMatch(),
+                            'tempsEcoules' => $matchsItems->getTempsEcoules(),
+                            'live' => ($matchsItems->getStatusMatch() == 'active') ? true : false,
+                            'master_prono_1' => $matchsItems->getMasterProno1(),
+                            'master_prono_n' => $matchsItems->getMasterPronoN(),
+                            'master_prono_2' => $matchsItems->getMasterProno2(),
+                            'cote_pronostic_1' => $matchsItems->getCot1Pronostic(),
+                            'cote_pronostic_n' => $matchsItems->getCoteNPronistic(),
+                            'cote_pronostic_2' => $matchsItems->getCote2Pronostic(),
+                            'jouer' => false,
+                            'noPari' => $this->getPariFroSimple($matchsItems->getId()),
+                            'idChampionat' => $matchsItems->getChampionat()->getId(),
+                            'nbVote' => $nbVote
+                        );
+                    }
                     if (!$this->getJouer($matchsItems->getId(), $user->getId())) {
-                        $result['list_matchs'][] = array(
+
+                        $resultMatch[] = array(
                             'idMatch' => $matchsItems->getId(),
                             'dateMatch' => $matchsItems->getDateMatch(),
                             'equipeDomicile' => $matchsItems->getEquipeDomicile(),
@@ -258,7 +284,38 @@ class PariController extends ApiController implements InterfaceDB
                             'idChampionat' => $matchsItems->getChampionat()->getId(),
                         );
                     }
+                       /* $resultMatch['list_matchs'][] = array(
+                            'idMatch' => $matchsItems->getId(),
+                            'dateMatch' => $matchsItems->getDateMatch(),
+                            'equipeDomicile' => $matchsItems->getEquipeDomicile(),
+                            'equipeVisiteur' => $matchsItems->getEquipeVisiteur(),
+                            'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $matchsItems->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
+                            'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $matchsItems->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
+                            'score' => $matchsItems->getScore(),
+                            'scoreDomicile' => substr($matchsItems->getScore(), 0, 1),
+                            'scoreVisiteur' => substr($matchsItems->getScore(), -1, 1),
+                            'status' => $matchsItems->getStatusMatch(),
+                            'tempsEcoules' => $matchsItems->getTempsEcoules(),
+                            'live' => ($matchsItems->getStatusMatch() == 'active') ? true : false,
+                            'master_prono_1' => $matchsItems->getMasterProno1(),
+                            'master_prono_n' => $matchsItems->getMasterPronoN(),
+                            'master_prono_2' => $matchsItems->getMasterProno2(),
+                            'cote_pronostic_1' => $matchsItems->getCot1Pronostic(),
+                            'cote_pronostic_n' => $matchsItems->getCoteNPronistic(),
+                            'cote_pronostic_2' => $matchsItems->getCote2Pronostic(),
+                            'jouer' => false,
+                            'noPari' => $this->getPariFroSimple($matchsItems->getId()),
+                            'idChampionat' => $matchsItems->getChampionat()->getId(),
+                        );*/
+                 /*   }else{
+
+                    }*/
                 }
+              /*  if($matchsVote){
+                    foreach($matchsVote as $kMatchsVote => $itemsMatchVote){
+                     //   var_dump($resultMatch['list_matchs']); die;
+                    }
+                }*/
 
                 $pub = $this->getObjectRepoFrom(self::ENTITY_PUB, array('isPopup' => false));
                 if(is_object($pub) && $pub){
@@ -266,6 +323,7 @@ class PariController extends ApiController implements InterfaceDB
                 }
 
                 $result['itemTotal'] = $nbRecapTotal;
+                $result['list_matchs'] = $resultMatch;
                 $result['code_error'] = 0;
                 $result['error'] = false;
                 $result['success'] = true;
@@ -299,7 +357,29 @@ class PariController extends ApiController implements InterfaceDB
         $result['message'] = "Le json data  doit être spécifié";
         return new JsonResponse($result);
     }
-
+    private function getNbVote($matchId, $userId){
+        $dql = " SELECT vu from ApiDBBundle:VoteUtilisateur vu
+                LEFT JOIN  vu.matchs m
+                LEFT JOIN vu.utilisateur u
+                WHERE m.id = :matchId AND u.id = :userId";
+        $query = $this->get('doctrine.orm.entity_manager')->createQuery($dql);
+        $query->setParameters(array('matchId' => $matchId, 'userId' => $userId));
+        return count($query->getResult());
+    }
+    private function isMatchsVoted($matchId, $userId){
+        $dql = " SELECT vu from ApiDBBundle:VoteUtilisateur vu
+                LEFT JOIN  vu.matchs m
+                LEFT JOIN vu.utilisateur u
+                WHERE m.id = :matchId AND u.id = :userId";
+        $query = $this->get('doctrine.orm.entity_manager')->createQuery($dql);
+        $query->setParameters(array('matchId' => $matchId, 'userId' => $userId));
+        $data = $query->getResult();
+        if(is_array($data) && count($data) > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
     private function getJouer($matchsId, $userId, $date = null, $championnat = null)
     {
         $matchsVote = $this->getRepo(self::ENTITY_MATCHS)->findMatchVote($userId);
@@ -753,4 +833,12 @@ class PariController extends ApiController implements InterfaceDB
             return false;
         }
     }
+    private function noConcour(){
+        $result['code_error'] = 0;
+        $result['error']= false;
+        $result['success'] = true;
+        $result['message'] = "Aucun concour en cours";
+        return new JsonResponse($result);
+    }
+
 }
