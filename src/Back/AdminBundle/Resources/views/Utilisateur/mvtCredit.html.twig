@@ -4,7 +4,7 @@
 {% block page %}
     <div class="col-lg-12">
         <div class="box-header-response">
-            {{ 'Mouvement de crédit'|trans }}
+            {{ 'Mouvement de crédit'|trans }} : {% if utilisateur.username %}{{ utilisateur.username }}{% else %}{{ utilisateur.email }}{% endif %}
             <div class="link">
                     {% if currentAdmin.ajout == true %}
                         <a href="{{ path('add_mvtCredit_utilisateur',{'id_utilisateur':utilisateur.id}) }}">{{ 'Ajouter un mouvement de crédit'|trans }}</a>
@@ -23,7 +23,6 @@
                 <td>{{ "Sortie crédit "|trans }}</td>
                 <td>{{ "Solde "|trans }}</td>
                 <td>{{ "Type crédit "|trans }}</td>
-                <td>{{ "Actions "|trans }}</td>
             </thead>
             <tbody>
                 {% for row in mvtCredit %}
@@ -49,14 +48,6 @@
                             {% endif %}#}
                             {{ row.typeCredit }}
                         </td>
-                            <td>
-                                {% if currentAdmin.modification == true %}
-                                <a href="{{path('update_mvtCredit_utilisateur',{'id_mvtCredit':row.id})}}">{{"Modifier" |trans }}</a>|
-                                {% endif %}
-                                {% if currentAdmin.suppression == true %}
-                                <a href="{{path('remove_mvtCredit_utilisateur',{'id_mvtCredit':row.id})}}">{{"Supprimer" |trans }}</a>
-                                {% endif %}
-                            </td>
                     </tr>
                 {% endfor %}
             </tbody>
