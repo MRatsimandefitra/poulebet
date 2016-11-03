@@ -701,4 +701,21 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         return $query->getResult();
 
     }
+
+    public function findMatchsForToday($status){
+        $date1 = new \DateTime('now');
+        $date1 = $date1->format("Y-m-d");
+        $date1 = $date1. ' 00:00:00';
+        $date2 = new \DateTime('now');
+        $date2 = $date2->format("Y-m-d");
+        $date2 = $date2.' 23:59:59';
+        $dql  = "SELECT m from ApiDBBundle:Matchs m
+                 WHERE m.statusMatch = :status AND m.dateMatch BETWEEN :date1 AND :date2";
+
+        $query  = $this->getEntityManager()->createQuery($dql);
+        $query->setParameters(array('date1' => $date1, 'date2' => $date2, 'status' => $status));
+        return $query->getResult();
+    }
+
+
 }

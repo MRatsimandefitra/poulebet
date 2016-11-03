@@ -195,30 +195,32 @@ class AccountController extends ApiController implements InterfaceDB
     }
 
     public function postGetUploadPhotoAction(Request $request){
-        $binaryPhoto = $request->get('image');
-        if(!$binaryPhoto){
+        $binaryPhoto = $request->files;
+        if(!$binaryPhoto) {
             return $this->noImage();
         }
-        $token = $request->get('token');
+        /*$token = $request->get('token');
         if(!$token){
             return $this->noToken();
         }
+
         $user= $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
         if(!$user){
             return $this->noUser();
-        }
-
+        }*/
         $uploadUrl = $this->get('kernel')->getRootDir().'/../web/upload/admin/users/';
+       // var_dump($binaryPhoto); die;
         $binary = base64_decode($binaryPhoto);
         $namePhoto = uniqid(new \DateTime('now'));
+
         $binary->move(
             $uploadUrl,
             $namePhoto
         );
-        $user->setCheminPhoto($namePhoto);
+       // $user->setCheminPhoto($namePhoto);
 
-        $this->get('doctrine.orm.entity_manager')->persist($user);
-        $this->get('doctrine.orm.entity_manager')->flush();
+       // $this->get('doctrine.orm.entity_manager')->persist($user);
+       // $this->get('doctrine.orm.entity_manager')->flush();
 
         /*    $baseUrl = get_site_url() . '/' ;
             $date_now = new \DateTime( 'now' ) ;
@@ -263,4 +265,13 @@ class AccountController extends ApiController implements InterfaceDB
             }
         }
     }
+
+    private function noImage(){
+        $result['code_error'] = 4;
+        $result['error'] = false;
+        $result['success'] = true;
+        $result['message'] = "Image doit être précisé";
+        return new JsonResponse($result);
+    }
+
 }
