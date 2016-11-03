@@ -1,4 +1,8 @@
 services:
-#    api_db.example:
-#        class: Api\DBBundle\Example
-#        arguments: ["@service_id", "plain_value", %parameter%]
+    poulebet.mvt_credit_validator:
+        class: Api\DBBundle\Form\Validator\Constraints\MvtCreditValidator
+        tags:
+            - { name: validator.constraint_validator, alias: poulebet.mvt_credit_validator }
+        arguments:
+            - "@request_stack"
+            - "@doctrine.orm.entity_manager"

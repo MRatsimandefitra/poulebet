@@ -58,7 +58,7 @@
                             <a href="{{ path('edit_lots', {'id': row.id }) }}"> <span class="glyphicon glyphicon-pencil orange" aria-hidden="true"></span> Modifier </a> |
                                 {% endif %}
                             {% if droitAdmin.suppression is defined and droitAdmin.suppression  %}
-                                <a onclick="supprimer('Etes vous sur de vouloir supprimer ?');" href="{{ path('remove_lots', {'id': row.id}) }}"><span class="glyphicon glyphicon-remove red" aria-hidden="true"></span> Supprimer </a>
+                                <a onclick="return confirm('Etes vous sur de vouloir supprimer ?');" href="{{ path('remove_lots', {'id': row.id}) }}"><span class="glyphicon glyphicon-remove red" aria-hidden="true"></span> Supprimer </a>
                             {% endif %}
                             | <a href="{{ path('history_lots', {'id': row.id }) }}"> Historique </a>
                         </td>

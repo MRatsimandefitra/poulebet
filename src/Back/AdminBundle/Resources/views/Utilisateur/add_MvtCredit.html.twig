@@ -5,7 +5,7 @@
 {% block page %}
     <div class="col-lg-12">
         <div class="box-header-response">
-            {{ 'Ajout un mouvement de crédit'|trans }}
+            {{ 'Ajout un mouvement de crédit'|trans }} : {% if utilisateur.username %}{{ utilisateur.username }}{% else %}{{ utilisateur.email }}{% endif %}
             <div class="link">
                 <a href="{{ path('mvtCredit_utilisateur',{'id':utilisateur.id}) }}">{{ 'Liste des crédits'|trans }}</a>
             </div>
@@ -18,16 +18,38 @@
     <div class="edit-profil-admin">
     {{ form_start(form) }}
     <div class="row">
+        <label>{{ form_label(form.soldeCredit) }}</label>
+        {{ form_widget(form.soldeCredit,{'attr':{'value' : utilisateur.lastBalance }}) }}
+    </div>
+    <div class="row">
         <label>{{ form_label(form.entreeCredit) }}</label>
         {{ form_widget(form.entreeCredit) }}
     </div>
     <div class="row">
         <label>{{ form_label(form.sortieCredit) }}</label>
         {{ form_widget(form.sortieCredit) }}
+        {% if form.sortieCredit.vars.errors|length > 0 %}
+            <div>
+                <ul class="help-block list-unstyled">
+                    {% for error in form.sortieCredit.vars.errors %}
+                        <li class="text-danger"><span class="glyphicon glyphicon-exclamation-sign"></span> {{ error.message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
     </div>
     <div class="row">
-        <label>{{ form_label(form.credit) }}</label>
-        {{ form_widget(form.credit) }}
+        <label>{{ form_label(form.typeCredit) }}</label>
+        {{ form_widget(form.typeCredit) }}
+        {% if form.typeCredit.vars.errors|length > 0 %}
+            <div>
+                <ul class="help-block list-unstyled">
+                    {% for error in form.typeCredit.vars.errors %}
+                        <li class="text-danger"><span class="glyphicon glyphicon-exclamation-sign"></span> {{ error.message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
     </div>
     <div>
         <input class="btn btn-primary" type="submit" value="{{ "Enregistrer"|trans }}">
