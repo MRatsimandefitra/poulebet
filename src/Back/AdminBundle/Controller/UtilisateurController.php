@@ -203,7 +203,6 @@ class UtilisateurController extends ApiController
         $form->handleRequest($request);
         if($form->isValid()){
             // initialisation des données
-            $entity->setDateMvt(new \DateTime('now'));
             $entity->setUtilisateur($utilisateur);
             $solde = $utilisateur->getLastBalance();
             if(!empty($entity->getEntreeCredit())){
