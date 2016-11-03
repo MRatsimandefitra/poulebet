@@ -3,14 +3,15 @@
 namespace Ws\RestBundle\Controller;
 
 use Api\CommonBundle\Controller\ApiController;
+use Api\CommonBundle\Fixed\InterfaceDB;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
-class LiveScoreController extends ApiController
+class LiveScoreController extends ApiController implements InterfaceDB
 {
-    const ENTITY_MATCHS = 'ApiDBBundle:Matchs';
+
 
     /**
      * @ApiDoc(
@@ -192,7 +193,7 @@ class LiveScoreController extends ApiController
      * @return JsonResponse
      */
     public function getMatchLiveScoreTodayAction(Request $request){
-
+        die('okok');
         $matchsToday = $this->getRepo(self::ENTITY_MATCHS)->findMatchsToday();
         $championatToday = $this->getRepo(self::ENTITY_MATCHS)->findChampionatToday();
         $result = array();

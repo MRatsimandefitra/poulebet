@@ -252,7 +252,7 @@ class PariController extends ApiController implements InterfaceDB
                             'cote_pronostic_1' => $matchsItems->getCot1Pronostic(),
                             'cote_pronostic_n' => $matchsItems->getCoteNPronistic(),
                             'cote_pronostic_2' => $matchsItems->getCote2Pronostic(),
-                            'jouer' => false,
+                            'jouer' => true,
                             'noPari' => $this->getPariFroSimple($matchsItems->getId()),
                             'idChampionat' => $matchsItems->getChampionat()->getId(),
                             'nbVote' => $nbVote

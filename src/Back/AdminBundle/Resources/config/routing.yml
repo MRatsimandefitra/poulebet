@@ -56,3 +56,6 @@ route_prefix_admin_classement:
 route_prefix_admin_address_livraison:
     resource: "@BackAdminBundle/Resources/config/routing/delivery_address.yml"
     prefix:   /adresse-livraisons
+route_prefix_live_score:
+    resource: "@BackAdminBundle/Resources/config/routing/livescore.yml"
+    prefix:   /live-score
