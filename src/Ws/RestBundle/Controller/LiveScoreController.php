@@ -239,6 +239,7 @@ class LiveScoreController extends ApiController implements InterfaceDB
             foreach($matchsNotStart as $kMatchsNotStarted => $itemsMatchsNotStarted){
                // $arrayMatchNotStarted[] = $itemsMatchsNotStarted;
                 $arrayMatchNotStarted[] = array(
+                    'idMatch' =>$itemsMatchsNotStarted->getId(),
                     'teamsDomicile' => $itemsMatchsNotStarted->getTeamsDomicile()->getFullNameClub(),
                     'teamsVisiteur' => $itemsMatchsNotStarted->getTeamsVisiteur()->getFullNameClub(),
                     'score' => $itemsMatchsNotStarted->getScore(),
