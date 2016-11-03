@@ -7,6 +7,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Api\DBBundle\Form\Validator\Constraints\MvtCreditConstraint;
 
 class MvtCreditType extends AbstractType
@@ -22,12 +23,13 @@ class MvtCreditType extends AbstractType
             ->add('sortieCredit')
             ->add('typeCredit', TextType::class,array(
                 'label' => 'Type de credit',
-                'required' => true
+                'required' => true,
+                'constraints' => new NotBlank()
             ))
             ->add('soldeCredit', TextType::class,array(
                 'mapped'   => false,
                 'required' => false,
-                'disabled' => true
+                'disabled' => true                
             ))
   
         ;

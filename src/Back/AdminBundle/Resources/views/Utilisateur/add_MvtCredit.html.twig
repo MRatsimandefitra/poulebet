@@ -41,6 +41,15 @@
     <div class="row">
         <label>{{ form_label(form.typeCredit) }}</label>
         {{ form_widget(form.typeCredit) }}
+        {% if form.typeCredit.vars.errors|length > 0 %}
+            <div>
+                <ul class="help-block list-unstyled">
+                    {% for error in form.typeCredit.vars.errors %}
+                        <li class="text-danger"><span class="glyphicon glyphicon-exclamation-sign"></span> {{ error.message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
     </div>
     <div>
         <input class="btn btn-primary" type="submit" value="{{ "Enregistrer"|trans }}">
