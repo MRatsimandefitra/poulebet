@@ -122,11 +122,12 @@ class AccountController extends ApiController implements InterfaceDB
                         'isCombined' => $itemsMatch->getIsCombined(),
                         'gainsPotentiel' => $itemsMatch->getGainPotentiel(),
                         'miseTotal' => $itemsMatch->getMiseTotale(),
-                        'idChampionat' => $itemsMatch->getMatchs()->getChampionat()->getId()
+                        'idChampionat' => $itemsMatch->getMatchs()->getChampionat()->getId(),
+                        'isGagne' => $this->getStatusRecap($itemsMatch->getId())
                     );
 
                 }else{
-
+                    $dataIsGagne = true;
                     if ($this->getStatusRecap($itemsMatch->getId(), $itemsMatch->getIdMise(), $itemsMatch->getDateMise()) === false) {
                         $dataIsGagne = false;
                     }
