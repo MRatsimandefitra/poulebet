@@ -252,7 +252,8 @@ class LiveScoreController extends ApiController implements InterfaceDB
                     'championat' => $itemsMatchsNotStarted->getChampionat()->getId(),
                     'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $itemsMatchsNotStarted->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
                     'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $itemsMatchsNotStarted->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
-                    'statusMatch'=> $itemsMatchsNotStarted->getStatusMatch()
+                    'statusMatch'=> $itemsMatchsNotStarted->getStatusMatch(),
+                    'heureDebut' => $itemsMatchsNotStarted->getDateMatch()->format("H:i")
                 );
             }
         }
