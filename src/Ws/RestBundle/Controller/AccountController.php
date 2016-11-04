@@ -80,6 +80,13 @@ class AccountController extends ApiController implements InterfaceDB
         }else{
             $result['totalEnCours'] = null;
         }
+        // photo profil
+        $photo = $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('id' => $user->getId()));
+        $namePhoto = $photo->getCheminPhoto();
+        if($namePhoto){
+            $result['photo'] = 'http://dplb.arkeup.com/upload/admin/users'.$namePhoto;
+        }
+
          //   var_dump($result); die;
         // championat
         $championat = $this->getRepo(self::ENTITY_MATCHS)->findRecapitulationForUserForChampionat($user->getId());
@@ -219,7 +226,6 @@ class AccountController extends ApiController implements InterfaceDB
         $ifp = fopen($uploadUrl, "w+");
         fwrite($ifp, base64_decode($binaryPhoto));
         fclose($ifp);
-        $user = new Utilisateur();
         $user->setCheminPhoto($nameImage);
         $this->insert($user, array('success' => 'success' , 'error' => 'error'));
         $photo= $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
