@@ -84,7 +84,7 @@ class AccountController extends ApiController implements InterfaceDB
         $photo = $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('id' => $user->getId()));
         $namePhoto = $photo->getCheminPhoto();
         if($namePhoto){
-            $result['photo'] = 'http://dplb.arkeup.com/upload/admin/users'.$namePhoto;
+            $result['photo'] = 'http://dplb.arkeup.com/upload/admin/users/'.$namePhoto;
         }
 
          //   var_dump($result); die;
