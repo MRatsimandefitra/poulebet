@@ -26,9 +26,9 @@ class AccountController extends ApiController implements InterfaceDB
 
         $result = array();
         if($user && is_object($user)){
-            $result['account'] = array(
+          /*  $result['account'] = array(
                 'photo'=> 'http://dplb.arkeup.com/upload/utilisateur/'. $user->getCheminPhoto(),
-            );
+            );*/
             if($user->getUsername()){
                 $result['account']['nomAffiche'] = $user->getUsername();
             }elseif($user->getPrenom()){
