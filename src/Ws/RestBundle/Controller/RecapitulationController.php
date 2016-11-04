@@ -104,7 +104,8 @@ class RecapitulationController extends ApiController implements InterfaceDB
                                     'cote_pronostic_n' => $v->getCoteN(),
                                     'cote_pronostic_2' => $v->getCote2(),
                                     'voted_equipe' => $v->getVote(),
-                                    'isGagne' => $this->getStatusRecap($v->getId())
+                                    'isGagne' => $this->getStatusRecap($v->getId()),
+                                    'imageFacebook' => ($this->getStatusRecap($v->getId()))? $this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImageOeuf() : $this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImagePoulebet()
                                 );
                                 if ($this->getStatusRecap($v->getId(), $v->getIdMise(), $v->getDateMise()) === false) {
                                     $dataIsGagne = false;
@@ -215,7 +216,8 @@ class RecapitulationController extends ApiController implements InterfaceDB
                             'state' => $this->getMatchsState($vItems->getId()),
                             'idChampionat' => $vItems->getMatchs()->getChampionat()->getId(),
                             'voted_equipe' => $vItems->getVote(),
-                            'isGagne' => $this->getIsGagne($vItems->getId(), $vItems->getIdMise(), $vItems->getDateMise())
+                            'isGagne' => $this->getIsGagne($vItems->getId(), $vItems->getIdMise(), $vItems->getDateMise()),
+                            'imageFacebook' => ($this->getIsGagne($vItems->getId(), $vItems->getIdMise(), $vItems->getDateMise())) ? 'http://dplb.arkeup.com/upload/admin/facebook/'.$this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImageOeuf() : 'http://dplb.arkeup.com/upload/admin/facebook/'.$this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImagePoulebet()
                         );
                         $count = $count + 1;
                     }

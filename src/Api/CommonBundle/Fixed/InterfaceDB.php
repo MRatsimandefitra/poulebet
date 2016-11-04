@@ -42,5 +42,12 @@ interface InterfaceDB {
     const ENTITY_PARAMETER_MAIL = 'ApiDBBundle:ParameterMail';
     const ENTITY_ADDRESS_LIVRAISON = 'ApiDBBundle:AddressLivraison';
     const FORM_ADDRESS_LIVRAISON ='Api\DBBundle\Form\AddressLivraisonType';
+    const FORM_MENTION = 'Api\DBBundle\Form\MentionType';
+    const ENTITY_MENTION = 'ApiDBBundle:Mention';
+    const ENTITY_APIKEY = 'ApiDBBundle:ApiKey';
+    const FORM_APIKEY = 'Api\DBBundle\Form\ApiKeyType';
+    const ENTITY_FACEBOOK = 'ApiDBBundle:Facebook';
+    const FORM_FACEBOOK = 'Api\DBBundle\Form\FacebookType';
+
 
 }

@@ -4,3 +4,6 @@ add_admin_mention:
 edit_api_key:
     path:     /edit/api-key
     defaults: { _controller: BackAdminBundle:Mention:editApiKey }
+index_facebook:
+    path:     /edit-facebook
+    defaults: { _controller: BackAdminBundle:Mention:editFacebook }

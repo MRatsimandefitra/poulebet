@@ -104,7 +104,7 @@ class PariController extends ApiController implements InterfaceDB
                         'cote_pronostic_n' => $matchsItems->getCoteNPronistic(),
                         'cote_pronostic_2' => $matchsItems->getCote2Pronostic(),
                         'idChampionat' => $matchsItems->getChampionat()->getId(),
-                        'noPari'=> $this->getPariFroSimple($matchsItems->getId())
+                        'noPari'=> $this->getPariFroSimple($matchsItems->getId()),
                     );
                     $cote1 = $matchsItems->getCot1Pronostic();
                     $coteN = $matchsItems->getCoteNPronistic();

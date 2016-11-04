@@ -1,0 +1,40 @@
+{% extends 'BackAdminBundle::layout.html.twig' %}
+{% block title %} {{ parent() }} {% endblock %}
+{% block ariane %} {{ parent() }} {% endblock %}
+
+{% block page %}
+
+    <div class="col-lg-12">
+        <div class="col-lg-12">
+            <div class="col-lg-4">
+                <div class="form-edit-facebook">
+                    {{ form_start(form) }}
+                    <div class="input">
+                        {{ 'Image oeuf' }}
+                        {{ form_widget(form.imageOeuf) }}
+                        {{ form_errors(form.imageOeuf) }}
+                    </div>
+                    <div class="input">
+                        {{ 'Image poulebet' }}
+                        {{ form_widget(form.imagePoulebet) }}
+                        {{ form_errors(form.imagePoulebet) }}
+                    </div>
+                    <div class="input">
+                        <input type="submit" value="{{ 'Ajouter' }}"/>
+                    </div>
+
+                    {{ form_end(form) }}
+                </div>
+            </div>
+            {% if facebook is defined and facebook %}
+                <div class="col-lg-3">
+                    <img src="{{ asset('upload/admin/facebook/'~ facebook.imageOeuf) }}" alt=""/>
+                </div>
+                <div class="col-lg-3">
+                    <img src="{{ asset('upload/admin/facebook/'~ facebook.imagePoulebet) }}" alt=""/>
+                </div>
+            {% endif %}
+        </div>
+
+    </div>
+{% endblock %}
