@@ -113,17 +113,9 @@ class GoalApiMatchsManuelCommand extends ContainerAwareCommand
                 $data = $this->getUrlByChampionat($vChampionat->getId(), $dateDebut, $dateFinale);
                 if($data){
                     foreach ($data['items'] as $vItems) {
-                        // var_dump($vItems['teams']); die;
-                        /* $sDateMatch = \DateTime::createFromFormat('Y-m-d h:i', date('Y-m-d h:i', $vItems['timestamp_starts']));
-                         if($dateDebut){
-                             $sDateDebutGoalApi = \DateTime::createFromFormat('Y-m-d h:i', date('Y-m-d h:i', $dateDebut));
-                         }
-                         if($dateFinale){
-                             $sDateFinaleGoalApi = \DateTime::createFromFormat('Y-m-d h:i', date('Y-m-d h:i', $dateFinale));
-                         }*/
 
                         if($dateDebut && $dateFinale or $dateDebut or $dateFinale){
-                            $dateCurrentMatchs = date('Y-m-d h:i:s', $vItems['timestamp_starts']);
+                            $dateCurrentMatchs = date('Y-m-d H:i:s', $vItems['timestamp_starts']);
                             if($dateCurrentMatchs > $dateDebut and $dateCurrentMatchs < $dateFinale){
                                 $this->treatementDataToMatch($vItems, $vChampionat, $output, $data, $dateDebut, $dateFinale);
                             }elseif($dateCurrentMatchs > $dateDebut && !$dateFinale){

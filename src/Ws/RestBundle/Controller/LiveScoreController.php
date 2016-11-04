@@ -283,8 +283,9 @@ class LiveScoreController extends ApiController implements InterfaceDB
         }
        // var_dump(count($arrayMatchsActive)); die;
           $matchsArray = array();
-
-        $matchsArray = $arrayMatchsActive  + $arrayMatchNotStarted + $arrayMatchsEnd;
+       // array_push($matchsArray, $arrayMatchNotStarted);
+        //var_dump($matchsArray); die;
+        $matchsArray[] = $arrayMatchsActive  + $arrayMatchNotStarted + $arrayMatchsEnd;
        // var_dump(count($matchsArray)); die;
         /*
         if(is_array($matchsToday) && count($matchsToday) > 0 ){

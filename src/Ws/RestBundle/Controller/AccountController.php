@@ -5,6 +5,7 @@ namespace Ws\RestBundle\Controller;
 use Api\CommonBundle\Controller\ApiController;
 use Api\CommonBundle\Fixed\InterfaceDB;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -25,7 +26,6 @@ class AccountController extends ApiController implements InterfaceDB
         if($user && is_object($user)){
             $result['account'] = array(
                 'photo'=> 'http://dplb.arkeup.com/upload/utilisateur/'. $user->getCheminPhoto(),
-
             );
             if($user->getUsername()){
                 $result['account']['nomAffiche'] = $user->getUsername();
@@ -54,7 +54,7 @@ class AccountController extends ApiController implements InterfaceDB
             $result['totalMiseTotal'] = $totalMise;
 
         }else{
-            $result['totalMiseTotal'] = null;
+            $result['totalMiseTotal'] = 0;
         }
         if(is_array($gains) && count($gains) > 0){
             $totalGains = 0;
@@ -64,7 +64,7 @@ class AccountController extends ApiController implements InterfaceDB
             $result['totalGain'] = $totalGains;
 
         }else{
-            $result['totalGain'] = null;
+            $result['totalGain'] = 0;
         }
         $totalEncours = $this->getRepo(self::ENTITY_MATCHS)->findTotalMatchsEnCours($user->getId());
 
@@ -144,6 +144,7 @@ class AccountController extends ApiController implements InterfaceDB
                     $matchs=  $this->getRepo(self::ENTITY_MATCHS)->findMatchsForRecapCombined($user->getId(), $itemsMatch->getIdMise());
                     $arrayMatch =array();
                     foreach($matchs as $kMatchs => $itemsMatch){
+//                        var_dump($itemsMatch); die;
                         $arrayMatch[] = array(
                             'idMatch' => $itemsMatch->getMatchs()->getId(),
                             'dateMatch' => $itemsMatch->getMatchs()->getDateMatch(),
@@ -195,7 +196,7 @@ class AccountController extends ApiController implements InterfaceDB
     }
 
     public function postGetUploadPhotoAction(Request $request){
-        $binaryPhoto = $request->files;
+        $binaryPhoto = $request->get('image');
         if(!$binaryPhoto) {
             return $this->noImage();
         }
@@ -211,8 +212,24 @@ class AccountController extends ApiController implements InterfaceDB
         $uploadUrl = $this->get('kernel')->getRootDir().'/../web/upload/admin/users/';
        // var_dump($binaryPhoto); die;
         $binary = base64_decode($binaryPhoto);
-        $namePhoto = uniqid(new \DateTime('now'));
 
+        $namePhoto = uniqid();
+        //decode back to image data and create image
+        $image      = imagecreatefromstring($binary);
+       // imagepng($image, $uploadUrl);
+
+
+
+     //   $file->move($this->targetDir, $fileName);
+
+        $uploadFile = new UploadedFile($uploadUrl.$image, 'okok');
+        $fileName = md5(uniqid()).'.'.$image->guessExtension();
+        die('okok');
+        $uploadFile->move(
+            $uploadUrl,
+            sha1($namePhoto)
+        );
+        die('okok');
         $binary->move(
             $uploadUrl,
             $namePhoto
