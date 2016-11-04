@@ -105,7 +105,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
                                     'cote_pronostic_2' => $v->getCote2(),
                                     'voted_equipe' => $v->getVote(),
                                     'isGagne' => $this->getStatusRecap($v->getId()),
-                                    'imageFacebook' => ($this->getStatusRecap($v->getId()))? $this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImageOeuf() : $this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImagePoulebet()
+
                                 );
                                 if ($this->getStatusRecap($v->getId(), $v->getIdMise(), $v->getDateMise()) === false) {
                                     $dataIsGagne = false;
@@ -126,6 +126,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
                             'miseTotal' => $miseTotal,
                             'matchs' => $matchs,
                             'gagnantCombine' => $dataIsGagne,
+                            'imageFacebook' => ($dataIsGagne)? $this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImageOeuf() : $this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImagePoulebet(),
                             'statusCombine' => $dataStatus
                         );
                         $banniere = $this->getObjectRepoFrom(self::ENTITY_PUB, array('isPopup' => false ));

@@ -4,7 +4,9 @@ namespace Ws\RestBundle\Controller;
 
 use Api\CommonBundle\Controller\ApiController;
 use Api\CommonBundle\Fixed\InterfaceDB;
+use Api\DBBundle\Entity\Utilisateur;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -126,7 +128,9 @@ class AccountController extends ApiController implements InterfaceDB
                         'gainsPotentiel' => $itemsMatch->getGainPotentiel(),
                         'miseTotal' => $itemsMatch->getMiseTotale(),
                         'idChampionat' => $itemsMatch->getMatchs()->getChampionat()->getId(),
-                        'isGagne' => $this->getStatusRecap($itemsMatch->getId())
+                    //    'isGagne' => $this->getStatusRecap($itemsMatch->getId()),
+                        'isGagne' => $this->getIsGagne($itemsMatch->getId(), $itemsMatch->getIdMise(), $itemsMatch->getDateMise()),
+                        'imageFacebook' => ($this->getIsGagne($itemsMatch->getId(), $itemsMatch->getIdMise(), $itemsMatch->getDateMise())) ? 'http://dplb.arkeup.com/upload/admin/facebook/'.$this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImageOeuf() : 'http://dplb.arkeup.com/upload/admin/facebook/'.$this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImagePoulebet()
                     );
 
                 }else{
@@ -175,6 +179,7 @@ class AccountController extends ApiController implements InterfaceDB
                         'miseTotal' => $itemsMatch->getMiseTotale(),
                         'matchs' => $arrayMatch,
                         'gagnantCombine' => $dataIsGagne,
+                        'imageFacebook' => ($dataIsGagne)? $this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImageOeuf() : $this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImagePoulebet(),
                         'statusCombine' => $dataStatus,
                         'isCombined'=> $itemsMatch->getIsCombined()
                     );
@@ -200,7 +205,7 @@ class AccountController extends ApiController implements InterfaceDB
         if(!$binaryPhoto) {
             return $this->noImage();
         }
-        /*$token = $request->get('token');
+        $token = $request->get('token');
         if(!$token){
             return $this->noToken();
         }
@@ -208,46 +213,23 @@ class AccountController extends ApiController implements InterfaceDB
         $user= $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
         if(!$user){
             return $this->noUser();
-        }*/
-        $uploadUrl = $this->get('kernel')->getRootDir().'/../web/upload/admin/users/';
-       // var_dump($binaryPhoto); die;
-        $binary = base64_decode($binaryPhoto);
+        }
+        $nameImage = uniqid().'.png';
+        $uploadUrl = $this->get('kernel')->getRootDir().'/../web/upload/admin/users/'.$nameImage;
+        $ifp = fopen($uploadUrl, "w+");
+        fwrite($ifp, base64_decode($binaryPhoto));
+        fclose($ifp);
+        $user = new Utilisateur();
+        $user->setCheminPhoto($nameImage);
+        $this->insert($user, array('success' => 'success' , 'error' => 'error'));
+        $photo= $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
+        $result['photo'] = $photo->getCheminPhoto();
+        $result['code_error'] = 0;
+        $result['success'] = true;
+        $result['error']= false;
+        $result['message'] = "image envoyé avec succes";
+        return new JsonResponse($result);
 
-        $namePhoto = uniqid();
-        //decode back to image data and create image
-        $image      = imagecreatefromstring($binary);
-       // imagepng($image, $uploadUrl);
-
-
-
-     //   $file->move($this->targetDir, $fileName);
-
-        $uploadFile = new UploadedFile($uploadUrl.$image, 'okok');
-        $fileName = md5(uniqid()).'.'.$image->guessExtension();
-        die('okok');
-        $uploadFile->move(
-            $uploadUrl,
-            sha1($namePhoto)
-        );
-        die('okok');
-        $binary->move(
-            $uploadUrl,
-            $namePhoto
-        );
-       // $user->setCheminPhoto($namePhoto);
-
-       // $this->get('doctrine.orm.entity_manager')->persist($user);
-       // $this->get('doctrine.orm.entity_manager')->flush();
-
-        /*    $baseUrl = get_site_url() . '/' ;
-            $date_now = new \DateTime( 'now' ) ;
-            $timestamp = $date_now->format('Ymdhis') ;
-            $filename = 'wp-content/uploads/image_'. $timestamp . '.png' ;
-
-            $file = fopen($filename, 'wb');
-            fwrite($file, $binary);
-            fclose($file);
-            return $baseUrl.$filename ;*/
     }
 
     //private function no
@@ -290,5 +272,25 @@ class AccountController extends ApiController implements InterfaceDB
         $result['message'] = "Image doit être précisé";
         return new JsonResponse($result);
     }
-
+    private function getIsGagne($idVote, $idMise, $date)
+    {
+        $matchs = $this->getRepo(self::ENTITY_MATCHS)->findRecapMatchGagnant($idVote, $idMise, $date);
+        if (is_array($matchs) && count($matchs) > 0) {
+            foreach ($matchs as $kMatchs => $itemsMatchs) {
+                $statusMatchs = $itemsMatchs->getMatchs()->getStatusMatchs();
+                if ($statusMatchs === 'finished') {
+                    $gagnant = $itemsMatchs->getGagnat();
+                    if ($gagnant === 1) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+            }
+        } else {
+            return false;
+        }
+    }
 }
