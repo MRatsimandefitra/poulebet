@@ -229,7 +229,7 @@ class AccountController extends ApiController implements InterfaceDB
         $user->setCheminPhoto($nameImage);
         $this->insert($user, array('success' => 'success' , 'error' => 'error'));
         $photo= $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
-        $result['photo'] = $photo->getCheminPhoto();
+        $result['photo'] = 'http://dplb.arkeup.com/upload/admin/users/'.$photo->getCheminPhoto();
         $result['code_error'] = 0;
         $result['success'] = true;
         $result['error']= false;
