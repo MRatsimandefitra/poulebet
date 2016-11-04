@@ -13,25 +13,36 @@ use Symfony\Component\HttpFoundation\Request;
 
 class AccountController extends ApiController implements InterfaceDB
 {
-    public function postGetAccountProfilAction(Request $request){
+    public function postGetAccountProfilAction(Request $request)
+    {
         $token = $request->get('token');
 
-        if(!$token){
+        if (!$token) {
             return $this->noToken();
         }
         $user = $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
-        if(!$user){
+        if (!$user) {
             return $this->noUser();
         }
 
         $result = array();
-        if($user && is_object($user)){
-          /*  $result['account'] = array(
-                'photo'=> 'http://dplb.arkeup.com/upload/utilisateur/'. $user->getCheminPhoto(),
-            );*/
-            if($user->getUsername()){
+        if ($user && is_object($user)) {
+            $result['account'] = array();
+            /*  $result['account'] = array(
+                  'photo'=> 'http://dplb.arkeup.com/upload/utilisateur/'. $user->getCheminPhoto(),
+              );*/
+            $photo = $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
+          //  $result['photo'] = 'http://dplb.arkeup.com/upload/admin/users/' . $photo->getCheminPhoto();
+            if ($photo) {
+                $result['account'] = array(
+                   'photo'=>  'http://dplb.arkeup.com/upload/admin/users/' . $photo->getCheminPhoto()
+            );
+            }
+
+
+            if ($user->getUsername()) {
                 $result['account']['nomAffiche'] = $user->getUsername();
-            }elseif($user->getPrenom()){
+            } elseif ($user->getPrenom()) {
                 $result['account']['nomAffiche'] = $user->getPrenom();
             }
         }
@@ -41,57 +52,52 @@ class AccountController extends ApiController implements InterfaceDB
         $mvtCreditLast = $this->getObjectRepoFrom(self::ENTITY_MVT_CREDIT, array('id' => $idLast));
         if ($mvtCreditLast) {
             $result['solde'] = $mvtCreditLast->getSoldeCredit();
-        }else{
+        } else {
             $result['solde'] = 0;
         }
         //mise
         $this->getRepo(self::ENTITY_MATCHS)->findTotalGainsOfUser($user->getId());
         // gains
         $gains = $this->getRepo(self::ENTITY_MATCHS)->findTotalGainsOfUser($user->getId());
-        if(is_array($gains) && count($gains) > 0){
+        if (is_array($gains) && count($gains) > 0) {
             $totalGains = 0;
-            foreach($gains as $kGains => $itemsGains){
+            foreach ($gains as $kGains => $itemsGains) {
                 $totalMise = $totalGains + $itemsGains->getMiseTotale();
             }
             $result['totalMiseTotal'] = $totalMise;
 
-        }else{
+        } else {
             $result['totalMiseTotal'] = 0;
         }
-        if(is_array($gains) && count($gains) > 0){
+        if (is_array($gains) && count($gains) > 0) {
             $totalGains = 0;
-            foreach($gains as $kGains => $itemsGains){
+            foreach ($gains as $kGains => $itemsGains) {
                 $totalGains = $totalGains + $itemsGains->getGainPotentiel();
             }
             $result['totalGain'] = $totalGains;
 
-        }else{
+        } else {
             $result['totalGain'] = 0;
         }
         $totalEncours = $this->getRepo(self::ENTITY_MATCHS)->findTotalMatchsEnCours($user->getId());
 
-        if(is_array($totalEncours) && count($totalEncours) > 0){
+        if (is_array($totalEncours) && count($totalEncours) > 0) {
             ;
-            $totalEnCour  = 0;
-            foreach($totalEncours as $itemsTotalEnCours){
+            $totalEnCour = 0;
+            foreach ($totalEncours as $itemsTotalEnCours) {
                 $totalEnCour = $totalEnCour + $itemsTotalEnCours->getMiseTotale();
             }
-            $result['totalEnCours'] =$totalEnCour;
-        }else{
+            $result['totalEnCours'] = $totalEnCour;
+        } else {
             $result['totalEnCours'] = null;
         }
         // photo profil
-        $photo = $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('id' => $user->getId()));
-        $namePhoto = $photo->getCheminPhoto();
-        if($namePhoto){
-            $result['photo'] = 'http://dplb.arkeup.com/upload/admin/users/'.$namePhoto;
-        }
 
-         //   var_dump($result); die;
+        //   var_dump($result); die;
         // championat
         $championat = $this->getRepo(self::ENTITY_MATCHS)->findRecapitulationForUserForChampionat($user->getId());
-        if(is_array($championat) && count($championat) > 0){
-            foreach($championat as $kChampionat => $itemsChampionat){
+        if (is_array($championat) && count($championat) > 0) {
+            foreach ($championat as $kChampionat => $itemsChampionat) {
                 $result['list_championat'][] = array(
                     'idChampionat' => $itemsChampionat->getMatchs()->getChampionat()->getId(),
                     'nomChampionat' => $itemsChampionat->getMatchs()->getChampionat()->getNomChampionat(),
@@ -101,16 +107,16 @@ class AccountController extends ApiController implements InterfaceDB
         }
         // 2 dernier concours
         $concours = $this->getRepo(self::ENTITY_MATCHS)->findTwoLastConcour();
-        if($concours){
+        if ($concours) {
 
         }
         //recapitulation par utilisateur
         $recapitulation = $this->getRepo(self::ENTITY_MATCHS)->findRecapitulationForUser($user->getId());
 
 
-        if(is_array($recapitulation)&& count($recapitulation) > 0){
-            foreach($recapitulation as $kRecapitulation => $itemsMatch){
-                if($itemsMatch->getIsCombined() === false) {
+        if (is_array($recapitulation) && count($recapitulation) > 0) {
+            foreach ($recapitulation as $kRecapitulation => $itemsMatch) {
+                if ($itemsMatch->getIsCombined() === false) {
                     $result['list_match'][] = array(
                         'idMatch' => $itemsMatch->getMatchs()->getId(),
                         'dateMatch' => $itemsMatch->getMatchs()->getDateMatch(),
@@ -135,12 +141,12 @@ class AccountController extends ApiController implements InterfaceDB
                         'gainsPotentiel' => $itemsMatch->getGainPotentiel(),
                         'miseTotal' => $itemsMatch->getMiseTotale(),
                         'idChampionat' => $itemsMatch->getMatchs()->getChampionat()->getId(),
-                    //    'isGagne' => $this->getStatusRecap($itemsMatch->getId()),
+                        //    'isGagne' => $this->getStatusRecap($itemsMatch->getId()),
                         'isGagne' => $this->getIsGagne($itemsMatch->getId(), $itemsMatch->getIdMise(), $itemsMatch->getDateMise()),
-                        'imageFacebook' => ($this->getIsGagne($itemsMatch->getId(), $itemsMatch->getIdMise(), $itemsMatch->getDateMise())) ? 'http://dplb.arkeup.com/upload/admin/facebook/'.$this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImageOeuf() : 'http://dplb.arkeup.com/upload/admin/facebook/'.$this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImagePoulebet()
+                        'imageFacebook' => ($this->getIsGagne($itemsMatch->getId(), 'http://dplb.arkeup.com/upload/admin/facebook/' . $itemsMatch->getIdMise(), $itemsMatch->getDateMise())) ? 'http://dplb.arkeup.com/upload/admin/facebook/' . $this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImageOeuf() : 'http://dplb.arkeup.com/upload/admin/facebook/' . $this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImagePoulebet()
                     );
 
-                }else{
+                } else {
                     $dataIsGagne = true;
                     if ($this->getStatusRecap($itemsMatch->getId(), $itemsMatch->getIdMise(), $itemsMatch->getDateMise()) === false) {
                         $dataIsGagne = false;
@@ -152,9 +158,9 @@ class AccountController extends ApiController implements InterfaceDB
                     } else {
                         $dataStatus = "Terminé";
                     }
-                    $matchs=  $this->getRepo(self::ENTITY_MATCHS)->findMatchsForRecapCombined($user->getId(), $itemsMatch->getIdMise());
-                    $arrayMatch =array();
-                    foreach($matchs as $kMatchs => $itemsMatch){
+                    $matchs = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForRecapCombined($user->getId(), $itemsMatch->getIdMise());
+                    $arrayMatch = array();
+                    foreach ($matchs as $kMatchs => $itemsMatch) {
 //                        var_dump($itemsMatch); die;
                         $arrayMatch[] = array(
                             'idMatch' => $itemsMatch->getMatchs()->getId(),
@@ -181,14 +187,14 @@ class AccountController extends ApiController implements InterfaceDB
                         );
                     }
                     $result['list_match'][] = array(
-                        'miseId' =>$itemsMatch->getIdMise(),
+                        'miseId' => $itemsMatch->getIdMise(),
                         'gainsPotentiel' => $itemsMatch->getGainPotentiel(),
                         'miseTotal' => $itemsMatch->getMiseTotale(),
                         'matchs' => $arrayMatch,
                         'gagnantCombine' => $dataIsGagne,
-                        'imageFacebook' => ($dataIsGagne)? $this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImageOeuf() : $this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImagePoulebet(),
+                        'imageFacebook' => ($dataIsGagne) ? $this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImageOeuf() : $this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImagePoulebet(),
                         'statusCombine' => $dataStatus,
-                        'isCombined'=> $itemsMatch->getIsCombined()
+                        'isCombined' => $itemsMatch->getIsCombined()
                     );
                 }
 
@@ -198,8 +204,8 @@ class AccountController extends ApiController implements InterfaceDB
                 $result['message'] = "Success";
             }
 
-        }else{
-            $result['code_error']= 0;
+        } else {
+            $result['code_error'] = 0;
             $result['error'] = false;
             $result['success'] = true;
             $result['message'] = "Aucune récapitulatio trouvée";
@@ -207,51 +213,54 @@ class AccountController extends ApiController implements InterfaceDB
         return new JsonResponse($result);
     }
 
-    public function postGetUploadPhotoAction(Request $request){
+    public function postGetUploadPhotoAction(Request $request)
+    {
         $binaryPhoto = $request->get('image');
-        if(!$binaryPhoto) {
+        if (!$binaryPhoto) {
             return $this->noImage();
         }
         $token = $request->get('token');
-        if(!$token){
+        if (!$token) {
             return $this->noToken();
         }
 
-        $user= $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
-        if(!$user){
+        $user = $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
+        if (!$user) {
             return $this->noUser();
         }
-        $nameImage = uniqid().'.png';
-        $uploadUrl = $this->get('kernel')->getRootDir().'/../web/upload/admin/users/'.$nameImage;
+        $nameImage = uniqid() . '.png';
+        $uploadUrl = $this->get('kernel')->getRootDir() . '/../web/upload/admin/users/' . $nameImage;
         $ifp = fopen($uploadUrl, "w+");
         fwrite($ifp, base64_decode($binaryPhoto));
         fclose($ifp);
         $user->setCheminPhoto($nameImage);
-        $this->insert($user, array('success' => 'success' , 'error' => 'error'));
-        $photo= $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
-        $result['photo'] = 'http://dplb.arkeup.com/upload/admin/users/'.$photo->getCheminPhoto();
+        $this->insert($user, array('success' => 'success', 'error' => 'error'));
+        $photo = $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
+        $result['photo'] = 'http://dplb.arkeup.com/upload/admin/users/' . $photo->getCheminPhoto();
         $result['code_error'] = 0;
         $result['success'] = true;
-        $result['error']= false;
+        $result['error'] = false;
         $result['message'] = "image envoyé avec succes";
         return new JsonResponse($result);
 
     }
 
     //private function no
-    private function noUser(){
+    private function noUser()
+    {
         $result['code_error'] = 0;
         $result['error'] = false;
         $result['success'] = true;
-        $result['message'] ="Le token doit être spécifié";
+        $result['message'] = "Le token doit être spécifié";
         return new JsonResponse($result);
     }
 
-    private function noToken(){
+    private function noToken()
+    {
         $result['code_error'] = 4;
         $result['error'] = true;
         $result['success'] = false;
-        $result['message'] ="Le token doit être spécifié";
+        $result['message'] = "Le token doit être spécifié";
         return new JsonResponse($result);
     }
 
@@ -271,13 +280,15 @@ class AccountController extends ApiController implements InterfaceDB
         }
     }
 
-    private function noImage(){
+    private function noImage()
+    {
         $result['code_error'] = 4;
         $result['error'] = false;
         $result['success'] = true;
         $result['message'] = "Image doit être précisé";
         return new JsonResponse($result);
     }
+
     private function getIsGagne($idVote, $idMise, $date)
     {
         $matchs = $this->getRepo(self::ENTITY_MATCHS)->findRecapMatchGagnant($idVote, $idMise, $date);
