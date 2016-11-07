@@ -173,7 +173,9 @@ class SondageController extends ApiController
         $dqlMatch= "SELECT m, co, ch from ApiDBBundle:Matchs m
                      JOIN m.concours co
                      LEFT JOIN m.championat ch
-                     WHERE co.id = :idConcours And m.dateMatch >= co.dateDebut and m.dateMatch <= co.dateFinale  ORDER BY ch.rang asc, m.dateMatch asc
+                     WHERE co.id = :idConcours And m.dateMatch BETWEEN co.dateDebut and co.dateFinale
+                     OR m.dateMatch = co.dateDebut OR m.dateMatch = co.dateFinale
+                     ORDER BY ch.rang asc, m.dateMatch asc
                      ";
         $queryMatch = $this->get('doctrine.orm.entity_manager')->createQuery($dqlMatch);
         $queryMatch->setParameter('idConcours', $dataConcour[0]->getId());
