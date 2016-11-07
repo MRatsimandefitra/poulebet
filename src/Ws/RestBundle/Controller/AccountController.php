@@ -89,7 +89,7 @@ class AccountController extends ApiController implements InterfaceDB
             }
             $result['totalEnCours'] = $totalEnCour;
         } else {
-            $result['totalEnCours'] = null;
+            $result['totalEnCours'] = 0;
         }
         // photo profil
 
