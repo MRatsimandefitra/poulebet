@@ -156,6 +156,7 @@ class PariController extends ApiController implements InterfaceDB
             }
             $nbRecapTotal = $this->getRepo(self::ENTITY_MATCHS)->findNbRecapMatchsSimpleAndCombined($user->getId());
             $concourEncour = $this->getRepo(self::ENTITY_MATCHS)->findIdConcourByDate();
+
             if(!$concourEncour){
                 return $this->noConcour();
             }

@@ -170,20 +170,24 @@ class SondageController extends ApiController
             return $this->noDataConcour();
         }
 
-        $dqlMatch= "SELECT m, co, ch from ApiDBBundle:Matchs m
+        /*$dqlMatch= "SELECT m, co, ch from ApiDBBundle:Matchs m
                      JOIN m.concours co
                      LEFT JOIN m.championat ch
                      WHERE co.id = :idConcours And m.dateMatch BETWEEN co.dateDebut and co.dateFinale
-                     OR m.dateMatch = co.dateDebut OR m.dateMatch = co.dateFinale
                      ORDER BY ch.rang asc, m.dateMatch asc
-                     ";
+                     ";*/
+        $dqlMatch= "SELECT m, co, ch from ApiDBBundle:Matchs m
+                             JOIN m.concours co
+                             LEFT JOIN m.championat ch
+                             WHERE co.id = :idConcours
+                             ORDER BY ch.rang asc, m.dateMatch asc
+                             ";
         $queryMatch = $this->get('doctrine.orm.entity_manager')->createQuery($dqlMatch);
         $queryMatch->setParameter('idConcours', $dataConcour[0]->getId());
 
         /*$queryMatch->setParameter('date1', $dataConcour[0]->getDateDebut());
         $queryMatch->setParameter('date2', $dataConcour[0]->getDateFinale());*/
         $data = $queryMatch->getResult();
-
        // var_dump(count($data)); die;
         // vote total
         //$dqlVote = "SELECT co from ApiDBBundle:Concours co   JOIN co.matchs m";
