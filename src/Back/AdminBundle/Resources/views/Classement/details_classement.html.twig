@@ -73,6 +73,15 @@ datemise,matchs,vote,combiné (case à cocher),misetotale,gainpotentiel,cote1,co
                     <th>
                         {{ 'Gain potentiel' }}
                     </th>
+                    <th>
+                        {{ 'Cote 1' }}
+                    </th>
+                    <th>
+                        {{ 'Cote N' }}
+                    </th>
+                    <th>
+                        {{ 'Cote 2' }}
+                    </th>
 
                 </tr>
                 {% if classement is defined and classement %}
@@ -84,11 +93,11 @@ datemise,matchs,vote,combiné (case à cocher),misetotale,gainpotentiel,cote1,co
                             </td>
                             <td>
                                 <img src="{{ asset('images/Flag-foot/' ~ row.matchs.cheminLogoDomicile ) }}" alt=""
-                                     width="50"
-                                     height="50"/> {{ row.matchs.equipeDomicile }} vs <img
+                                     width="20"
+                                     height="20"/> {{ row.matchs.equipeDomicile }} - <img
                                         src="{{ asset('images/Flag-foot/' ~ row.matchs.cheminLogoVisiteur ) }}" alt=""
-                                        width="50"
-                                        height="50"/>{{ row.matchs.equipeVisiteur }}
+                                        width="20"
+                                        height="20"/>{{ row.matchs.equipeVisiteur }}
 
                             </td>
                             <td>
@@ -109,6 +118,13 @@ datemise,matchs,vote,combiné (case à cocher),misetotale,gainpotentiel,cote1,co
                             </td>
                             <td>
                                 {{ row.gainPotentiel }}
+                            </td>
+                            <td>
+                                {{ row.cote1 }}
+                            </td>
+                            <td>{{ row.coteN }}</td>
+                            <td>
+                                {{ row.cote2 }}
                             </td>
 
                         </tr>
