@@ -92,6 +92,7 @@ class ClassementController extends ApiController implements InterfaceDB
             );
         }
 
+
         return $this->render('BackAdminBundle:Classement:details_classement.html.twig', array(
             'classement' => $classement,
             'details' => $details

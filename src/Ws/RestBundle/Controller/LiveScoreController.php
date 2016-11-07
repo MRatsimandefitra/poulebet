@@ -214,7 +214,7 @@ class LiveScoreController extends ApiController implements InterfaceDB
         $arrayMatchsActive = array();
         if(is_array($matchsActive) && count($matchsActive)){
             foreach($matchsActive as $kMatchsActive => $itemsMatchsActive){
-                $arrayMatchsActive[] = array(
+                $arrayMatchsActive['active'][] = array(
                     'teamsDomicile' => $itemsMatchsActive->getTeamsDomicile()->getFullNameClub(),
                     'teamsVisiteur' => $itemsMatchsActive->getTeamsVisiteur()->getFullNameClub(),
                     'score' => $itemsMatchsActive->getScore(),
@@ -238,7 +238,7 @@ class LiveScoreController extends ApiController implements InterfaceDB
         if(is_array($matchsNotStart) && count($matchsNotStart) > 0 ){
             foreach($matchsNotStart as $kMatchsNotStarted => $itemsMatchsNotStarted){
                // $arrayMatchNotStarted[] = $itemsMatchsNotStarted;
-                $arrayMatchNotStarted[] = array(
+                $arrayMatchNotStarted['not_started'][] = array(
                     'idMatch' =>$itemsMatchsNotStarted->getId(),
                     'teamsDomicile' => $itemsMatchsNotStarted->getTeamsDomicile()->getFullNameClub(),
                     'teamsVisiteur' => $itemsMatchsNotStarted->getTeamsVisiteur()->getFullNameClub(),
@@ -263,7 +263,7 @@ class LiveScoreController extends ApiController implements InterfaceDB
         $arrayMatchsEnd = array();
         if(is_array($matchsEnd) && count($matchsEnd) > 0){
             foreach($matchsEnd as $kMatchsEnd => $itemsMatchsEnd){
-                $arrayMatchsEnd[] = array(
+                $arrayMatchsEnd['finished'][] = array(
                     'teamsDomicile' => $itemsMatchsEnd->getTeamsDomicile()->getFullNameClub(),
                     'teamsVisiteur' => $itemsMatchsEnd->getTeamsVisiteur()->getFullNameClub(),
                     'score' => $itemsMatchsEnd->getScore(),
@@ -285,7 +285,7 @@ class LiveScoreController extends ApiController implements InterfaceDB
           $matchsArray = array();
        // array_push($matchsArray, $arrayMatchNotStarted);
         //var_dump($matchsArray); die;
-        $matchsArray[] = $arrayMatchsActive  + $arrayMatchNotStarted + $arrayMatchsEnd;
+        $matchsArray = $arrayMatchsActive + $arrayMatchNotStarted + $arrayMatchsEnd;
        // var_dump(count($matchsArray)); die;
         /*
         if(is_array($matchsToday) && count($matchsToday) > 0 ){

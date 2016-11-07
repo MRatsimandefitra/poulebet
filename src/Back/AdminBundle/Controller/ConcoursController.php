@@ -220,7 +220,6 @@ class ConcoursController extends ApiController {
 
            /* $tmpDateDebut = new \DateTime('now');
             $tmpDateDebut->modify('next monday');
-            $tmpDateDebut = $tmpDateDebut->format('Y-m-d h:i:s');
             if($tmpDateDebut == $dateStart){
                 $searchValue['date_match_debut'] = $dateStart;
             }

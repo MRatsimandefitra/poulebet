@@ -68,7 +68,7 @@ class GoalApiCommand extends ContainerAwareCommand
             $em->flush();
 
             $mId = $vItems['id'];
-            $mDate = \DateTime::createFromFormat('Y-m-d h:i', date('Y-m-d h:i', $vItems['timestamp_starts']));
+            $mDate = \DateTime::createFromFormat('Y-m-d H:i', date('Y-m-d H:i', $vItems['timestamp_starts']));
             /**
              * Equipe
              */
