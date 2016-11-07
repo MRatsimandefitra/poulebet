@@ -74,9 +74,9 @@ datemise,matchs,vote,combiné (case à cocher),misetotale,gainpotentiel,cote1,co
                                 {{ row.matchs.dateMatch|date('d-m-Y H:i') }}
                             </td>
                             <td>
-                                <img src="{{ asset('images/Flag-foot/' ~ row.cheminLogoDomicile ) }}" alt="" width="50"
+                                <img src="{{ asset('images/Flag-foot/' ~ row.matchs.cheminLogoDomicile ) }}" alt="" width="50"
                                      height="50"/> {{ row.matchs.equipeDomicile }} vs <img
-                                        src="{{ asset('images/Flag-foot/' ~ row.cheminLogoVisiteur ) }}" alt=""
+                                        src="{{ asset('images/Flag-foot/' ~ row.matchs.cheminLogoVisiteur ) }}" alt=""
                                         width="50"
                                         height="50"/>{{ row.matchs.equipeVisiteur }}
 
