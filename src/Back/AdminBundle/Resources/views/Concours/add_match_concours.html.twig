@@ -286,7 +286,7 @@
                                     {% elseif rowMatchs.statusMatch is defined and rowMatchs.statusMatch == 'active' and row_selected != 1 %}
                                         <tr class="active">
                                         <td>
-                                            {% if rowMatchs.cot1Pronostic and rowMatchs.coteNPronistic and rowMatchs.cote2Pronosti %}
+                                            {% if rowMatchs.cot1Pronostic and rowMatchs.coteNPronistic and rowMatchs.cote2Pronostic %}
                                             <input type="checkbox" name="select_{{ rowMatchs.id }}"/>
                                                 {% endif %}
                                         </td>
@@ -307,7 +307,7 @@
                                     {% elseif rowMatchs.statusMatch is defined and rowMatchs.statusMatch == 'postphoned' and row_selected != 1 %}
                                         <tr class="postphoned">
                                         <td>
-                                        {% if rowMatchs.cot1Pronostic and rowMatchs.coteNPronistic and rowMatchs.cote2Pronosti %}
+                                        {% if rowMatchs.cot1Pronostic and rowMatchs.coteNPronistic and rowMatchs.cote2Pronostic %}
                                             <input type="checkbox" name="select_{{ rowMatchs.id }}"/>
                                             {% endif %}
                                         </td>
