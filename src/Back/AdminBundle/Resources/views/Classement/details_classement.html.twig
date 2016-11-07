@@ -71,14 +71,14 @@ datemise,matchs,vote,combiné (case à cocher),misetotale,gainpotentiel,cote1,co
                         <tr>
                             <td>
                                 {#<img src="&#123;&#35;{{ asset('upload/') }}&#35;&#125;" alt="" width="50" height="50"/>#}
-                                {{ row.match.dateMatch|date('d-m-Y H:i') }}
+                                {{ row.matchs.dateMatch|date('d-m-Y H:i') }}
                             </td>
                             <td>
                                 <img src="{{ asset('images/Flag-foot/' ~ row.cheminLogoDomicile ) }}" alt="" width="50"
-                                     height="50"/> {{ row.match.equipeDomicile }} vs <img
+                                     height="50"/> {{ row.matchs.equipeDomicile }} vs <img
                                         src="{{ asset('images/Flag-foot/' ~ row.cheminLogoVisiteur ) }}" alt=""
                                         width="50"
-                                        height="50"/>{{ row.match.equipeVisiteur }}
+                                        height="50"/>{{ row.matchs.equipeVisiteur }}
 
                             </td>
                             <td>
