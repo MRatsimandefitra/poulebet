@@ -44,7 +44,7 @@ datemise,matchs,vote,combiné (case à cocher),misetotale,gainpotentiel,cote1,co
                 {% set counter = 0 %}
                 {% for row in classement %}
                     {#{{ count = count + 1 }}#}
-                    {{ counter = counter + 1 }}
+                    {{ count + 1 }}
                     {% if count == 1 %}
                         <div class="photo">
                             <img src="{{ asset('upload/admin/users/' ~ ) }}" width="50" height="50" alt=""/>
