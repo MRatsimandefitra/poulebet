@@ -87,17 +87,21 @@ class NotificationController extends ApiController {
             //insertion dans la base de donnée
             $this->insert($notification);
             $users = $notification->getUtilisateurs();
-
+            //var_dump($users); die;
             $device_token = array();
             $message = $notification->getMessage();
             $messageData = array("message"=>$message,"type"=>"poulebet");
             foreach($users as $user){
-                $devices = $user->getDevices();
-                var_dump(count($devices));
-                foreach ($devices as $device){
+              //  $devices = $user->getDevices();
+                $connected = $this->getObjectRepoFrom(self::ENTITY_CONNECTED, array('username' => $user));
+                if($connected){
+                    //$device_token[] = $connected->getDevice();
+                    array_push($device_token, $connected->getDevice());
+                }
+               /* foreach ($devices as $device){
                     //$device_token[] = $device->getToken();
                     array_push($device_token, $device->getToken());
-                } 
+                } */
             }
             $data = array(
                 'registration_ids' => $device_token,
