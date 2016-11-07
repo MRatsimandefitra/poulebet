@@ -29,3 +29,4 @@ parameters:
     #push notification
     gcm_url_android: https://android.googleapis.com/gcm/send
     apikey: AIzaSyAS-madxMynBNrzfnDTMIuSjBa_9Yi5Iss
+    url_poulebet: http://dplb.arkeup.com
