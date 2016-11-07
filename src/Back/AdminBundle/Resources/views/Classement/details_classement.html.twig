@@ -40,18 +40,18 @@
             remplacer nom photo prénom par
 datemise,matchs,vote,combiné (case à cocher),misetotale,gainpotentiel,cote1,coteN,cote2
             #}
-           {# {% if classement is defined and classement %}
+            {# {% if classement is defined and classement %}
 
-                    &#123;&#35;{{ count = count + 1 }}&#35;&#125;
-                        <div class="photo">
-                            <img src="{{ asset('upload/admin/users/' ~ classement[0].) }}" width="50" height="50" alt=""/>
-                        </div>
-                        &nbsp;&nbsp;
-                        {{ 'Nom' }} : {{ row.nom }}
-                        &nbsp;&nbsp;
-                        {{ 'Prénom' }} : {{ row.prenom }}
-                {% endfor %}
-            {% endif %}#}
+                     &#123;&#35;{{ count = count + 1 }}&#35;&#125;
+                         <div class="photo">
+                             <img src="{{ asset('upload/admin/users/' ~ classement[0].) }}" width="50" height="50" alt=""/>
+                         </div>
+                         &nbsp;&nbsp;
+                         {{ 'Nom' }} : {{ row.nom }}
+                         &nbsp;&nbsp;
+                         {{ 'Prénom' }} : {{ row.prenom }}
+                 {% endfor %}
+             {% endif %}#}
             <table class="table-list">
                 <tr>
 
@@ -64,6 +64,7 @@ datemise,matchs,vote,combiné (case à cocher),misetotale,gainpotentiel,cote1,co
                     <th>
                         {{ 'Vote'|trans }}
                     </th>
+
                     <th>
                         {{ 'Combiné'|trans }}
                     </th>
@@ -109,8 +110,16 @@ datemise,matchs,vote,combiné (case à cocher),misetotale,gainpotentiel,cote1,co
                                     {{ 'Match Null' }}
                                 {% endif %}
                             </td>
-                            <td>
+                        {#    <td>
                                 {{ row.classement }}
+                            </td>#}
+                            <td>
+                                {% if row.isCombined is defined and row.isCombined == true %}
+                                    <input type="checkbox" name="" checked="true"/>
+                                {% else %}
+                                    <input type="checkbox" name=""/>
+                                {% endif %}
+
                             </td>
                             <td>
                                 {{ row.miseTotale }}
