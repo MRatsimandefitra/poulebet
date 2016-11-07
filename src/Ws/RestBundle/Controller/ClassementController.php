@@ -49,7 +49,7 @@ class ClassementController extends ApiController implements InterfaceDB
                             'id' => $itemsClassement->getUtilisateur()->getId(),
                             'nom' =>   $nom,
                             'prenom' =>  $prenom,
-                            'photo' => $photo,
+                            'photo' => 'http://dplb.arkeup.com/upload/admin/users/'.$photo,
                             'classement' => $total
                         );
 
@@ -72,7 +72,7 @@ class ClassementController extends ApiController implements InterfaceDB
                         'id' => $result['list_classement'][$k]['id'],
                         'nom' =>  $result['list_classement'][$k]['nom'],
                         'prenom' =>  $result['list_classement'][$k]['prenom'],
-                        'photo' => $result['list_classement'][$k]['photo'],
+                        'photo' => 'http://dplb.arkeup.com/upload/admin/users/'. $result['list_classement'][$k]['photo'],
                         'classement' => $itemsArrayListClassement
                     );
                 }
