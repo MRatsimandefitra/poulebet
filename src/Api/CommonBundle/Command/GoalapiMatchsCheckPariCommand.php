@@ -41,6 +41,7 @@ class GoalapiMatchsCheckPariCommand extends ContainerAwareCommand implements Int
                 $dateMatchs = $itemsMatchs->getDateMatch();
                 $now = new \DateTime('now');
                 if ($now >= $datePari  && $now <= $dateMatchs) {
+                    var_dump($datePari); die;
                     $itemsMatchs->setIsNoPari(true);
                     $em->flush();
 
