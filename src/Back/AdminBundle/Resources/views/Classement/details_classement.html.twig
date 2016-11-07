@@ -40,9 +40,21 @@
             remplacer nom photo prénom par
 datemise,matchs,vote,combiné (case à cocher),misetotale,gainpotentiel,cote1,coteN,cote2
             #}
-            <div class="photo">
-                <img src="" width="50" height="50" alt=""/>
-            </div>
+            {% if classement is defined and classement %}
+                {% set count = 0 %}
+                {% for row in classement %}
+                    {{ count = count + 1 }}
+                    {% if count == 1 %}
+                        <div class="photo">
+                            <img src="{{ asset('upload/admin/users/' ~ ) }}" width="50" height="50" alt=""/>
+                        </div>
+                        &nbsp;&nbsp;
+                        {{ 'Nom' }} : {{ row.nom }}
+                        &nbsp;&nbsp;
+                        {{ 'Prénom' }} : {{ row.prenom }}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
             <table class="table-list">
                 <tr>
 
@@ -74,7 +86,8 @@ datemise,matchs,vote,combiné (case à cocher),misetotale,gainpotentiel,cote1,co
                                 {{ row.matchs.dateMatch|date('d-m-Y H:i') }}
                             </td>
                             <td>
-                                <img src="{{ asset('images/Flag-foot/' ~ row.matchs.cheminLogoDomicile ) }}" alt="" width="50"
+                                <img src="{{ asset('images/Flag-foot/' ~ row.matchs.cheminLogoDomicile ) }}" alt=""
+                                     width="50"
                                      height="50"/> {{ row.matchs.equipeDomicile }} vs <img
                                         src="{{ asset('images/Flag-foot/' ~ row.matchs.cheminLogoVisiteur ) }}" alt=""
                                         width="50"
