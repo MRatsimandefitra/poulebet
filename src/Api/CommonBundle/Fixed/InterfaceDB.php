@@ -49,5 +49,5 @@ interface InterfaceDB {
     const ENTITY_FACEBOOK = 'ApiDBBundle:Facebook';
     const FORM_FACEBOOK = 'Api\DBBundle\Form\FacebookType';
 
-
+    const ENTITY_DEVICE = 'ApiDBBundle:Device';
 }
