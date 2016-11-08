@@ -37,11 +37,14 @@ class GoalapiMatchsCheckPariCommand extends ContainerAwareCommand implements Int
         $matchs = $em->getRepository(self::ENTITY_MATCHS)->findBy(array('statusMatch' => 'not_started'));
         if (is_array($matchs) && !empty($matchs) && count($matchs) > 0) {
             foreach ($matchs as $kMatchs => $itemsMatchs) {
-                $datePari = $itemsMatchs->getDateMatch()->sub(new \DateInterval('PT5M'));
+              /*  $datePari = $itemsMatchs->getDateMatch()->sub(new \DateInterval('PT5M'));
                 $dateMatchs = $itemsMatchs->getDateMatch();
                 $now = new \DateTime('now');
-                if ($now >= $datePari  && $now <= $dateMatchs) {
-                    var_dump($datePari); die;
+                var_dump($dateMatchs->add()); die;*/
+                $dateMatchs = $itemsMatchs->getDateMatch();
+                $now = new \DateTime('now');
+
+                if ($now >= $dateMatchs->sub(new \DateInterval('PT5M')) /* && $now <= $dateMatchs->add(new \DateInterval('PT5M'))*/) {
                     $itemsMatchs->setIsNoPari(true);
                     $em->flush();
 
@@ -82,7 +85,7 @@ class GoalapiMatchsCheckPariCommand extends ContainerAwareCommand implements Int
             foreach($matchs as $itemsMatchs){
                 $itemsMatchs->setIsNoPari(true);
                 $em->flush();
-                $output->writeln("No pari for matchs ".$itemsMatchs->getId()." status 'is_finished'" );
+                $output->writeln("No pari for matchs ".$itemsMatchs->getId()." status No PARI TRUE" );
             }
         }
         $output->writeln("command was finised");

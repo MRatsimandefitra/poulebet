@@ -718,4 +718,9 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
     }
 
 
+    public function findDifferentNotStared(){
+        $dql ="SELECT m from ApiDBBundle:Matchs m where m.statusMatchs <> 'not_started'";
+        $query  = $this->getEntityManager()->createQuery($dql);
+        return $query->getResult();
+    }
 }
