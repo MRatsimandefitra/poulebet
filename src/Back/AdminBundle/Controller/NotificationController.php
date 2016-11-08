@@ -19,14 +19,14 @@ use Symfony\Component\HttpFoundation\Session\Session;
  */
 
 class NotificationController extends ApiController {
-    
+
     const ENTITY_DEVICE = 'ApiDBBundle:Device';
     const ENTITY_UTILISATEUR = 'ApiDBBundle:Utilisateur';
     const ENTITY_NOTIFICATION = 'ApiDBBundle:Notification';
     const FORM_NOTIFICATION = 'Api\DBBundle\Form\NotificationType';
     const ENTITY_DROIT_ADMIN = 'ApiDBBundle:DroitAdmin';
     const ENTITY_DROIT = 'ApiDBBundle:Droit';
-    
+
     public function notifyAction(Request $request){
         // utilistateurs
         $session = new Session();
@@ -56,13 +56,13 @@ class NotificationController extends ApiController {
             $request->query->getInt('page', 1)/*page number*/,
             $nbpage/*limit per page*/
         );
-        
+
         $notification = new Notification();
         $form = $this->formPost(self::FORM_NOTIFICATION, $notification);
-        $form->handleRequest($request);      
+        $form->handleRequest($request);
         //echo("<pre>");
         //var_dump($notification->getUtilisateurs());
-        
+
         if ($form->isValid()) {
             $admin = $this->getUser();
             $notification->setAdmin($admin);
@@ -75,56 +75,37 @@ class NotificationController extends ApiController {
                 }
             }
             if($users_id){
-                
+
                 if(!$all){
                     foreach($users_id as $id){
                         $usr = $this->getRepo(self::ENTITY_UTILISATEUR)->find($id);
                         $notification->addUtilisateur($usr);
                     }
                 }
-                
+
             }
             //insertion dans la base de donnée
             $this->insert($notification);
-           // $users = $notification->getUtilisateurs();
-            //var_dump($users); die;
-            $users = $this->getRepo(self::ENTITY_DEVICE)->findUserWithDevice();
-
+            $users = $notification->getUtilisateurs();
+            //var_dump(count($users)); die;
             $device_token = array();
             $message = $notification->getMessage();
             $messageData = array("message"=>$message,"type"=>"poulebet");
             foreach($users as $user){
-
-              //  $devices = $user->getDevices();
-               // var_dump($devices); die;
-                //$connected = $this->getObjectRepoFrom(self::ENTITY_CONNECTED, array('username' => $user));
-              /*  if($connected){
-                    //$device_token[] = $connected->getDevice();
-                    array_push($device_token, $connected->getDevice());
-                }*/
-                array_push($device_token, $user->getToken());
-                /*$device_token_tmp = array();
-                var_dump($devices); die;
+                $devices = $user->getDevices();
+    //            var_dump(count($devices));
                 foreach ($devices as $device){
-
-                    $device_token_tmp[] = $device->getToken();
-               //     array_push($device_token, $device->getToken());
-                }*/
-
+                    //$device_token[] = $device->getToken();
+                    array_push($device_token, $device->getToken());
+                }
             }
-            //var_dump($device_token_tmp); die;
-         /*   foreach($device_token_tmp as $itemsDeviceToken){
-
-                var_dump($itemsDeviceToken); die;
-            }*/
-          //  var_dump($device_token); die;
             $data = array(
                 'registration_ids' => $device_token,
                 'data' => $messageData
             );
             $this->sendGCMNotification($data);
             return $this->redirectToRoute('add_notification');
-            
+
         }
         return $this->render('BackAdminBundle:Notification:index.html.twig', array(
             'form' => $form->createView(),
@@ -132,10 +113,8 @@ class NotificationController extends ApiController {
             'criteria'=>$criteria,
             'all_user'=>$all_user
         ));
-        
-       
-        
     }
+
     public function historiqueAction(Request $request){
         $nbpage = 20;
         $notifications = $this->getRepo(self::ENTITY_NOTIFICATION)->findAll();
@@ -171,6 +150,6 @@ class NotificationController extends ApiController {
         $notification = $this->getRepo(self::ENTITY_NOTIFICATION)->find($id);
         $this->remove($notification);
         return $this->redirectToRoute("historique_notification");
-        
+
     }
 }
