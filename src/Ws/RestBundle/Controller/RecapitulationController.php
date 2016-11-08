@@ -170,7 +170,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
                     $result['list_championat'][] = array(
                         'idChampionat' => $itemsChampionat->getMatchs()->getChampionat()->getId(),
                         'nomChampionat' => $itemsChampionat->getMatchs()->getChampionat()->getNomChampionat(),
-                        'fullNameChampionat' => $itemsChampionat->getMatchs()->getChampionat()->getNomChampionat(),
+                        'fullNameChampionat' => $itemsChampionat->getMatchs()->getChampionat()->getFullNameChampionat(),
                     );
                 }
             }
