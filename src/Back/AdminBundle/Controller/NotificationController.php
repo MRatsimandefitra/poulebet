@@ -93,7 +93,6 @@ class NotificationController extends ApiController {
             $messageData = array("message"=>$message,"type"=>"poulebet");
             foreach($users as $user){
                 $devices = $user->getDevices();
-    //            var_dump(count($devices));
                 foreach ($devices as $device){
                     //$device_token[] = $device->getToken();
                     array_push($device_token, $device->getToken());
@@ -105,8 +104,8 @@ class NotificationController extends ApiController {
             );
             $this->sendGCMNotification($data);
             return $this->redirectToRoute('add_notification');
-
         }
+
         return $this->render('BackAdminBundle:Notification:index.html.twig', array(
             'form' => $form->createView(),
             'pagination'=>$pagination,
