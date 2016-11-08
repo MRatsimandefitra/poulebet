@@ -117,6 +117,7 @@ class NotificationController extends ApiController {
 
                 var_dump($itemsDeviceToken); die;
             }*/
+          //  var_dump($device_token); die;
             $data = array(
                 'registration_ids' => $device_token,
                 'data' => $messageData
