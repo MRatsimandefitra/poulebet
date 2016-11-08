@@ -86,23 +86,37 @@ class NotificationController extends ApiController {
             }
             //insertion dans la base de donnée
             $this->insert($notification);
-            $users = $notification->getUtilisateurs();
+           // $users = $notification->getUtilisateurs();
             //var_dump($users); die;
+            $users = $this->getRepo(self::ENTITY_DEVICE)->findUserWithDevice();
+
             $device_token = array();
             $message = $notification->getMessage();
             $messageData = array("message"=>$message,"type"=>"poulebet");
             foreach($users as $user){
+
               //  $devices = $user->getDevices();
-                $connected = $this->getObjectRepoFrom(self::ENTITY_CONNECTED, array('username' => $user));
-                if($connected){
+               // var_dump($devices); die;
+                //$connected = $this->getObjectRepoFrom(self::ENTITY_CONNECTED, array('username' => $user));
+              /*  if($connected){
                     //$device_token[] = $connected->getDevice();
                     array_push($device_token, $connected->getDevice());
-                }
-               /* foreach ($devices as $device){
-                    //$device_token[] = $device->getToken();
-                    array_push($device_token, $device->getToken());
-                } */
+                }*/
+                array_push($device_token, $user->getToken());
+                /*$device_token_tmp = array();
+                var_dump($devices); die;
+                foreach ($devices as $device){
+
+                    $device_token_tmp[] = $device->getToken();
+               //     array_push($device_token, $device->getToken());
+                }*/
+
             }
+            //var_dump($device_token_tmp); die;
+         /*   foreach($device_token_tmp as $itemsDeviceToken){
+
+                var_dump($itemsDeviceToken); die;
+            }*/
             $data = array(
                 'registration_ids' => $device_token,
                 'data' => $messageData

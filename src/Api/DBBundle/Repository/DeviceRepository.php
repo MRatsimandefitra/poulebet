@@ -10,4 +10,10 @@ namespace Api\DBBundle\Repository;
  */
 class DeviceRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findUserWithDevice(){
+        $dql = "SELECT d from ApiDBBundle:Device d
+                LEFT JOIN d.utilisateur u  group by d.token";
+        $query = $this->getEntityManager()->createQuery($dql);
+        return $query->getResult();
+    }
 }
