@@ -293,7 +293,7 @@
                                     {% elseif rowMatchs.statusMatch is defined and rowMatchs.statusMatch == 'not_started' and row_selected != 1 %}
                                         <tr class="not_started">
                                         <td>
-                                        {% if rowMatchs.cot1Pronostic and rowMatchs.coteNPronistic and rowMatchs.cote2Pronosti %}
+                                        {% if rowMatchs.cot1Pronostic and rowMatchs.coteNPronistic and rowMatchs.cote2Pronostic %}
                                             <input type="checkbox" name="select_{{ rowMatchs.id }}"/>
                                             {% endif %}
                                         </td>

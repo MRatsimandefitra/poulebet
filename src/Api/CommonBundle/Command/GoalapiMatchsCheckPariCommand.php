@@ -34,7 +34,8 @@ class GoalapiMatchsCheckPariCommand extends ContainerAwareCommand implements Int
         $container = $this->getContainer();
         $em = $container->get('doctrine.orm.entity_manager');
 
-        $matchs = $em->getRepository(self::ENTITY_MATCHS)->findBy(array('statusMatch' => 'not_started'));
+        #$matchs = $em->getRepository(self::ENTITY_MATCHS)->findBy(array('statusMatch' => 'not_started'));
+        $matchs = $em->getRepository(self::ENTITY_MATCHS)->findMatchsStartedToday();
         if (is_array($matchs) && !empty($matchs) && count($matchs) > 0) {
             foreach ($matchs as $kMatchs => $itemsMatchs) {
               /*  $datePari = $itemsMatchs->getDateMatch()->sub(new \DateInterval('PT5M'));
@@ -42,8 +43,9 @@ class GoalapiMatchsCheckPariCommand extends ContainerAwareCommand implements Int
                 $now = new \DateTime('now');
                 var_dump($dateMatchs->add()); die;*/
                 $dateMatchs = $itemsMatchs->getDateMatch();
+               // var_dump($dateMatchs); die;
                 $now = new \DateTime('now');
-
+             //   var_dump($dateMatchs); die;
                 if ($now >= $dateMatchs->sub(new \DateInterval('PT5M')) /* && $now <= $dateMatchs->add(new \DateInterval('PT5M'))*/) {
                     $itemsMatchs->setIsNoPari(true);
                     $em->flush();
@@ -80,7 +82,9 @@ class GoalapiMatchsCheckPariCommand extends ContainerAwareCommand implements Int
             $output->writeln("Aucun matchs à parier");
         }
 
-        $matchs = $em->getRepository(self::ENTITY_MATCHS)->findBy(array('statusMatch' => 'finished'));
+        #$matchs = $em->getRepository(self::ENTITY_MATCHS)->findBy(array('statusMatch' => 'finished'));
+
+        $matchs = $em->getRepository(self::ENTITY_MATCHS)->findDifferentNotStared();
         if (is_array($matchs) && !empty($matchs) && count($matchs) > 0) {
             foreach($matchs as $itemsMatchs){
                 $itemsMatchs->setIsNoPari(true);
@@ -88,6 +92,8 @@ class GoalapiMatchsCheckPariCommand extends ContainerAwareCommand implements Int
                 $output->writeln("No pari for matchs ".$itemsMatchs->getId()." status No PARI TRUE" );
             }
         }
+
+        //$matchs = $em->getRepository(self::ENTITY_MATCHS)->findMatchsNotRe
         $output->writeln("command was finised");
 
     }

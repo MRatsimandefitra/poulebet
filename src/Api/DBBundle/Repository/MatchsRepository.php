@@ -719,8 +719,43 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
 
 
     public function findDifferentNotStared(){
-        $dql ="SELECT m from ApiDBBundle:Matchs m where m.statusMatchs <> 'not_started'";
+        $dql ="SELECT m from ApiDBBundle:Matchs m where m.statusMatch <> 'not_started'";
         $query  = $this->getEntityManager()->createQuery($dql);
         return $query->getResult();
     }
+
+    public function findDifferentNotStaredToday(){
+        $date1 = new \DateTime('now');
+        $date2 = new \DateTime('now');
+
+        $date1 = $date1->format('Y-m-d');
+
+        $date1 = $date1. ' 00:00:00';
+
+        $date2 = $date2->format('Y-m-d');
+        $date2 = $date2. ' 00:00:00';
+        $dql ="SELECT m from ApiDBBundle:Matchs m where m.statusMatch <> 'not_started' and m.dateMatch BETWEEN :date1 and :date2";
+        $query  = $this->getEntityManager()->createQuery($dql);
+        $query->setParameters(array('date1' => $date1, 'date2' => $date2));
+        return $query->getResult();
+    }
+    public function findMatchsStartedToday(){
+        $date1 = new \DateTime('now');
+        $date2 = new \DateTime('now');
+
+        $date1 = $date1->format('Y-m-d');
+
+        $date1 = $date1. ' 00:00:00';
+
+        $date2 = $date2->format('Y-m-d');
+        $date2 = $date2. ' 00:00:00';
+
+        $dql ="SELECT m from ApiDBBundle:Matchs m where m.statusMatch = 'not_started' and m.dateMatch BETWEEN :date1 and :date2";
+        $query  = $this->getEntityManager()->createQuery($dql);
+        $query->setParameters(array('date1' => $date1, 'date2' => $date2));
+        return $query->getResult();
+    }
+   /* public function findMatchNoPari(){
+        $dql = "SELECT "
+    }*/
 }
