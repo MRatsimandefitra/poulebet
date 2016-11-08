@@ -114,11 +114,11 @@ class InscriptionController extends ApiController implements InterfaceDB
 
             $mailerService = $this->getMailerService();
             $photo = $this->getParameter('url_logo');
-            $res[] = str_replace('{{logo}}', $photo, $body);
-            $res[] = str_replace('{{prenom}}', $prenom, $body);
-            $res[] = str_replace('{{email}}', $email, $res);
-            $res[] = str_replace('{{password}}', $pass, $res);
-            $res[] = str_replace('{{adresseSociete}}', $parameter->getAdresseSociete(), $res);
+            $res = str_replace('{{prenom}}', $prenom, $body);
+            $res = str_replace('{{email}}', $email, $res);
+            $res = str_replace('{{password}}', $pass, $res);
+            $res = str_replace('{{logo}}', $photo, $res);
+            $res = str_replace('{{adresseSociete}}', $parameter->getAdresseSociete(), $res);
 
             $mailerService->setSubject($parameter->getSubjectInscription());
             $mailerService->setFrom($parameter->getEmailSite());
