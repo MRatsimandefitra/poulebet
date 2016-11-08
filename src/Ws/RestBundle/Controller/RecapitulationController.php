@@ -128,7 +128,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
                             'miseTotal' => $miseTotal,
                             'matchs' => $matchs,
                             'gagnantCombine' => $dataIsGagne,
-                            'imageFacebook' => ($dataIsGagne)? $this->getParameter('url_poulebet').'upload/admin/facebook/'.$this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImageOeuf() : $this->getParameter('url_poulebet').'upload/admin/facebook/'. $this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImagePoulebet(),
+                            'imageFacebook' => ($dataIsGagne)? $this->getParameter('url_poulebet').'/upload/admin/facebook/'.$this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImageOeuf() : $this->getParameter('url_poulebet').'/upload/admin/facebook/'. $this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImagePoulebet(),
                             'statusCombine' => $dataStatus
                         );
                         $banniere = $this->getObjectRepoFrom(self::ENTITY_PUB, array('isPopup' => false ));
