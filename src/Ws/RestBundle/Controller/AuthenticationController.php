@@ -40,17 +40,23 @@ class AuthenticationController extends ApiRestController{
             // récupération de token google cloud message du device
             $gcm_device_token=$request->get("gcm_device_token");
 
-            $device = $this->getEm()->getRepository(self::ENTITY_DEVICE)->findByToken($gcm_device_token);
-            if($user){
+            //$device = $this->getEm()->getRepository(self::ENTITY_DEVICE)->findByToken($gcm_device_token);
+            if($userObject){
 
-                if(!$device){
-
-                    $device = new Device();
+                $device_array = $this->getEm()->getRepository(self::ENTITY_DEVICE)->findByUtilisateur($userObject);
+                if($device_array){
+                    $device = $device_array[0];
                     $device->setToken($gcm_device_token);
-                    $userEntity = $this->getEm()->getRepository(self::ENTITY_UTILISATEUR)->find($user['id']);
-
-                    $device->setUtilisateur($userEntity);
-                    $this->insert($device);
+                    //$userEntity = $this->getEm()->getRepository(self::ENTITY_UTILISATEUR)->find($user['id']);
+                    $this->getEm()->persist($device);
+                    $this->getEm()->flush();
+                }
+                else { // cas où le device n'est pas encore enregistré dans la table device
+                   $userEntity = $this->getEm()->getRepository(self::ENTITY_UTILISATEUR)->find($user['id']); 
+                   $device = new Device();
+                   $device->setToken($gcm_device_token);
+                   $device->setUtilisateur($userEntity);
+                   $this->insert($device);
                 }
                 // authentification
                 if($userObject){
