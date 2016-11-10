@@ -95,7 +95,9 @@ class NotificationController extends ApiController {
                 $devices = $user->getDevices();
                 foreach ($devices as $device){
                     //$device_token[] = $device->getToken();
-                    array_push($device_token, $device->getToken());
+                    if (!in_array($device->getToken(), $device_token)){
+                        array_push($device_token, $device->getToken());
+                    }
                 }
             }
             $data = array(
