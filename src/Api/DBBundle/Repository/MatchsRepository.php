@@ -227,7 +227,8 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
 
         $dql = "Select m from ApiDBBundle:Matchs m
                 LEFT JOIN m.championat ch
-                JOIN m.concours co ";
+                JOIN m.concours co 
+                WHERE m.status != 'finished'";
 
 
         $params = array();
