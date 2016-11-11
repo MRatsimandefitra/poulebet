@@ -236,7 +236,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
 
         //$where[] = " m.dateMatch BETWEEN co.dateDebut AND co.dateFinale";
         $where[] = " co.id = :idConcour";
-        $where[] = " m.status != 'finished' ";
+        $where[] = " m.status_match != 'finished' ";
         $params['idConcour'] = $idConcour;
         if($date){
 
