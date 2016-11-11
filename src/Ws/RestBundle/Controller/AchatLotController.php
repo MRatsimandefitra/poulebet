@@ -283,7 +283,8 @@ class AchatLotController extends ApiController implements InterfaceDB
             $this->addMvtCredit($user, $lot, $lastSolde);
             
             //mails
-            $admins = $this->getRepo(self::ENTITY_ADMIN)->findAll();
+            $admins = $this->getRepo(self::ENTITY_ADMIN)->findByRoles("ROLE_SUPER_ADMIN");
+            $admin = $admins[0];
             $parameter = $this->getParameterMail();            
             if($parameter){
                 $subject = ($parameter->getSubjectAchatLot()) ? $parameter->getSubjectAchatLot() : 'Echange de lot';
@@ -301,11 +302,13 @@ class AchatLotController extends ApiController implements InterfaceDB
    
                 );
                 //all admin
-                foreach($admins as $admin){
-                    if($admin->isEnabled()){
-                        $this->sendMail($admin, $subject, $template,$parameter);                          
-                    }
-                } 
+                //foreach($admins as $admin){
+                    
+                //}
+                //die($admin->getEmail());
+                if($admin->isEnabled()){
+                    $this->sendMail($admin, $subject, $template,$parameter);                          
+                }
                 $now =new \DateTime('now');
                 $message = $parameter->getTemplateAchatLot();
                 $message = $this->processBddTemplating($message, array(
