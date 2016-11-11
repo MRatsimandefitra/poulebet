@@ -397,7 +397,8 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
 
     public function findNbMatchsVoteSimple($userId){
         $dql ="SELECT vu from ApiDBBundle:VoteUtilisateur vu LEFT JOIN vu.matchs m LEFT JOIN vu.utilisateur u
-               WHERE u.id = :idUser AND vu.isCombined = false GROUP BY vu.idMise";
+               WHERE u.id = :idUser AND vu.isCombined = false GROUP BY vu.idMise 
+               ORDER BY vu.id DESC";
         $query = $this->getEntityManager()->createQuery($dql);
         $query->setParameter('idUser' , $userId);
         return $query->getResult();

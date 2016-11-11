@@ -259,7 +259,9 @@ class RecapitulationController extends ApiController implements InterfaceDB
         }
     }
 
-
+    function cmp($a,$b){
+       return ($a->dateMatch < $b->dateMatch);
+    }
     private function noToken()
     {
         $result = $this->no();
