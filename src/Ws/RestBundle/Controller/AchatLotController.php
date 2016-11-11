@@ -221,6 +221,7 @@ class AchatLotController extends ApiController implements InterfaceDB
      * )
      */
     public function postInsertAddressLivraisonAction(Request $request){
+           
         $ville = $request->request->get('ville');
         if(!$this->checkParamWs($ville)){
             return $this->sendJsonErrorMsg("La ville doit etre précisé");
@@ -283,8 +284,20 @@ class AchatLotController extends ApiController implements InterfaceDB
             $this->addMvtCredit($user, $lot, $lastSolde);
             
             //mails
-            $admins = $this->getRepo(self::ENTITY_ADMIN)->findByRoles("ROLE_SUPER_ADMIN");
-            $admin = $admins[0];
+            $admins = $this->getRepo(self::ENTITY_ADMIN)->findAll();
+            $admin = null;
+            foreach($admins as $item){
+                $roles = $item->getRoles();
+                foreach($roles as $role){
+                    if ($role == "ROLE_SUPER_ADMIN"){
+                        $admin=$item;
+                        break;
+                    }
+                }
+                if($admin){
+                    break;
+                }
+            }
             $parameter = $this->getParameterMail();            
             if($parameter){
                 $subject = ($parameter->getSubjectAchatLot()) ? $parameter->getSubjectAchatLot() : 'Echange de lot';
@@ -305,7 +318,7 @@ class AchatLotController extends ApiController implements InterfaceDB
                 //foreach($admins as $admin){
                     
                 //}
-                //die($admin->getEmail());
+                
                 if($admin->isEnabled()){
                     $this->sendMail($admin, $subject, $template,$parameter);                          
                 }

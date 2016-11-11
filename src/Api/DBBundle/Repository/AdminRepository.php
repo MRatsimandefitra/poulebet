@@ -10,4 +10,5 @@ namespace Api\DBBundle\Repository;
  */
 class AdminRepository extends \Doctrine\ORM\EntityRepository
 {
+  
 }
