@@ -115,6 +115,7 @@ class AccountController extends ApiController implements InterfaceDB
 
 
         if (is_array($recapitulation) && count($recapitulation) > 0) {
+            $dataIsGagne = true;
             foreach ($recapitulation as $kRecapitulation => $itemsMatch) {
                 if ($itemsMatch->getIsCombined() === false) {
                     $result['list_match'][] = array(
@@ -147,7 +148,7 @@ class AccountController extends ApiController implements InterfaceDB
                     );
 
                 } else {
-                    $dataIsGagne = true;
+                    
                     if ($this->getStatusRecap($itemsMatch->getId(), $itemsMatch->getIdMise(), $itemsMatch->getDateMise()) === false) {
                         $dataIsGagne = false;
                     }
