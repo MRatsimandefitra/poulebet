@@ -662,7 +662,8 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
                 LEFT JOIN vu.matchs m
                 LEFT JOIN m.championat ch
                 LEFT JOIN vu.utilisateur u
-                WHERE u.id = :userId
+                WHERE u.id = :userId 
+                AND vu.idMise != NULL
                 GROUP BY vu.idMise";
 
         $query= $this->getEntityManager()->createQuery($dql);
