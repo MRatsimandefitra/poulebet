@@ -42,7 +42,7 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         $championat = $em->getRepository(self::ENTITY_CHAMPIONAT)->findBy(array('isEnable' => true));
         $count = 0;
-
+        $output->writeln(' ---  championat --- ' . count($championat));
         foreach ($championat as $vChampionat) {
 
             $count = $count + 1;
@@ -137,14 +137,17 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand
 
                         // $vChampionat = $em->getRepository(self::ENTITY_CHAMPIONAT)->findOneBy(array('nomChampionat' => $vItems['details']['contest']['competition']['eng_cs']));
                         // $matchs->setChampionat($vChampionat);
-                        if (array_key_exists('current-state', $vItems)) {
+                        if (array_key_exists('current_state', $vItems)) {
                             $matchs->setPeriod($vItems['current_state']['period']);
                             $matchs->setMinute($vItems['current_state']['minute']);
                         }
 
                         $nbLocalME = $em->getRepository(self::ENTITY_MATCH_EVENT)->findByMatchs($matchs);
-
-                        $nbGoalApiME = $vItems['events'];
+                        $nbGoalApiME = null;
+                        if (array_key_exists('events', $vItems)){
+                           $nbGoalApiME = $vItems['events']; 
+                        }
+                        
                         //   var_dump(count($nbLocalME)); die;
                         if (count($nbLocalME) < count($nbGoalApiME) && count($nbGoalApiME) > 0) {
 
@@ -252,7 +255,7 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand
         // Erreur url  mbol ts ampu date debut todo : test, mettre date debut
         $url = "http://api.xmlscores.com/matches/?c[]=" . $data->getNomChampionat() . "&f=json&e=1&l=128&b=today&open=".$apiKey;
       //  var_dump($url); die;
-    //    $url = $this->getContainer()->get('kernel')->getRootDir().'/../web/json/live1.json';
+        //$url = $this->getContainer()->get('kernel')->getRootDir().'/../web/json/live1.json';
         //var_dump($url); die;
         $content = file_get_contents($url);
         $arrayJson = json_decode($content, true);
