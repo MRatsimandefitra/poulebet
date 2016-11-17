@@ -152,9 +152,10 @@ class GoalApiMatchsParChampionatCommand extends ContainerAwareCommand {
             $this->sendErrorEmail('Error this no api key');
             return false;
         }
-        $url = "http://api.xmlscores.com/matches/?c[]=" . $data->getNomChampionat() . "&f=json&open=".$apiKey;
+        $url = "http://api.xmlscores.com/matches/?e=0&s=0&l=128&c[]=" . $data->getNomChampionat() . "&f=json&open=".$apiKey."&t1=".  time()."";
        // $url = $this->getContainer()->get('kernel')->getRootDir().'/../web/json/matches1.json';
       //  var_dump($url); die;
+        
         $content = file_get_contents($url);
 
         $arrayJson = json_decode($content, true);
