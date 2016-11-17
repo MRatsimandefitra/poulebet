@@ -7,7 +7,8 @@
  */
 
 namespace Api\DBBundle\Repository;
-
+use Symfony\Component\Validator\Constraints\DateTime;
+use Symfony\Component\Validator\Constraints\Date;
 
 class MatchsRepository extends \Doctrine\ORM\EntityRepository
 {
@@ -472,10 +473,17 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
     }
 
     public function findMatchVoteGagnant(){
+        $dateString = date("Y-m-d h:m:s", time());
+        // + une journée
+        $dateStringDemain = date("Y-m-d h:m:s", time()+(60*60*24));
         $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
                 LEFT JOIN vu.matchs m
                 LEFT JOIN vu.utilisateur u
-                WHERE vu.gagnant is null";
+                WHERE vu.gagnant is null 
+                AND vu.idMise IS NOT NULL 
+                AND  m.dateMatch > '".$dateString."' "
+                ." AND m.dateMatch <'".$dateStringDemain."'";
+           
         $query = $this->getEntityManager()->createQuery($dql);
         return $query->getResult();
     }

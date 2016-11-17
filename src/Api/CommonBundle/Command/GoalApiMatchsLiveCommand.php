@@ -285,9 +285,9 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand
         }
 
         // Erreur url  mbol ts ampu date debut todo : test, mettre date debut
-        $url = "http://api.xmlscores.com/matches/?c[]=" . $data->getNomChampionat() . "&f=json&e=1&l=128&b=today&open=".$apiKey;
+        //$url = "http://api.xmlscores.com/matches/?c[]=" . $data->getNomChampionat() . "&f=json&e=1&l=128&b=today&open=".$apiKey;
       //  var_dump($url); die;
-       //$url = $this->getContainer()->get('kernel')->getRootDir().'/../web/json/live1.json';
+       $url = $this->getContainer()->get('kernel')->getRootDir().'/../web/json/live1.json';
         //var_dump($url); die;
         $content = file_get_contents($url);
         $arrayJson = json_decode($content, true);
