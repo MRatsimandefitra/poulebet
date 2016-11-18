@@ -96,7 +96,6 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
                         // SI OUI
                         $voteCombined= $em->getRepository(self::ENTITY_MATCHS)->findUserVoteCombined($utilisateur->getId(),$itemsMatchsVote->getIdMise());
                         $gain = 0;
-                        $gainPotentiel = 0;
                         foreach($voteCombined as $vote){
                             $vt = $vote->getVote();
                             $matchs = $vote->getMatchs();
@@ -119,13 +118,12 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
                                 }
                             }
                             if ($vt == $gagnant ){
-                                $gainPotentiel += $vote->getGainPotentiel();
                                 $gain++;
                             }
                         }
                         if ($gain == count($voteCombined)){
                             // ENTRER LE MVT DE CREDIT
-                           // $gainPotentiel = $itemsMatchsVote->getGainPotentiel();
+                            $gainPotentiel = $itemsMatchsVote->getGainPotentiel();
                             // Set gagnant pour les votes gagants
                             foreach($voteCombined as $vote){
                                 $vote->setGagnant(true);
