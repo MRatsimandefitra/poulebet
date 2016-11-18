@@ -86,8 +86,8 @@ class AuthenticationController extends ApiRestController{
                     }
                 }
                 // photo de profil
-                if($user->getCheminPhoto()){
-                    $user["cheminPhoto"]=self::URL_PHOTO.$user->getCheminPhoto();
+                if($userEntity->getCheminPhoto()){
+                    $user["cheminPhoto"]=self::URL_PHOTO.$userEntity->getCheminPhoto();
                 }    
 
                 $pass_result = $this->encodePassword($password);
