@@ -30,7 +30,6 @@ class AuthenticationController extends ApiRestController{
      * @return JsonResponse
      */
     public function authenticationAction(Request $request){
-        die("ko");
         if($request->get('email') && $request->get('password')){
             $email = $request->get('email');
             $password = $request->get('password');
