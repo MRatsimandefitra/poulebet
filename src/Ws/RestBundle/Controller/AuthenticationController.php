@@ -30,20 +30,20 @@ class AuthenticationController extends ApiRestController{
      * @return JsonResponse
      */
     public function authenticationAction(Request $request){
+        die("ko");
         if($request->get('email') && $request->get('password')){
             $email = $request->get('email');
             $password = $request->get('password');
-            die("ko");
             $user = $this->getEm()->getRepository(self::ENTITY_UTILISATEUR)->findByEmailArray($email);
-            
             $userObject = $this->getEm()->getRepository(self::ENTITY_UTILISATEUR)->findOneByEmail($email);
-            
+
+            $userEntity = $this->getEm()->getRepository(self::ENTITY_UTILISATEUR)->findOneByEmail($email);
             // récupération de token google cloud message du device
             $gcm_device_token=$request->get("gcm_device_token");
-            
+
             //$device = $this->getEm()->getRepository(self::ENTITY_DEVICE)->findByToken($gcm_device_token);
             if($userObject){
-                $userEntity = $userObject;
+
                 $device_array = $this->getEm()->getRepository(self::ENTITY_DEVICE)->findByUtilisateur($userObject);
                 if($device_array){
                     $device = $device_array[0];
@@ -59,7 +59,6 @@ class AuthenticationController extends ApiRestController{
                    $device->setUtilisateur($userEntity);
                    $this->insert($device);
                 }
-                
                 // authentification
                 if($userObject){
 
