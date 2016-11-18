@@ -58,6 +58,7 @@ class AuthenticationController extends ApiRestController{
                    $device->setUtilisateur($userEntity);
                    $this->insert($device);
                 }
+                die("ko");
                 // authentification
                 if($userObject){
 
@@ -67,8 +68,8 @@ class AuthenticationController extends ApiRestController{
                     // Fire the login event
                     // Logging the user in above the way we do it doesn't do this automatically
 
-                    /*$event = new InteractiveLoginEvent($request, $tokenSession);
-                    $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);*/
+                    $event = new InteractiveLoginEvent($request, $tokenSession);
+                    $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
                     if($tokenSession){
                         $connected = $this->get('doctrine.orm.entity_manager')->getRepository('ApiDBBundle:Connected')->findOneBy(array('username' => $tokenSession->getUser()->getEmail()));
                         $newConnected = false;
