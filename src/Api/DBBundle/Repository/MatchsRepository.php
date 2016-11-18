@@ -392,7 +392,14 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         $query->setParameters(array('idUser' => $idUser));
         return $query->getResult();
     }
-
+    public function findUserVoteCombined ($idUser,$idMise){
+        $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu LEFT JOIN vu.matchs m LEFT JOIN vu.utilisateur u
+                WHERE u.id = :idUser AND vu.isCombined = 1 AND vu.idMise = :idMise ";
+        $query = $this->getEntityManager()->createQuery($dql);
+        $query->setParameter('idUser' , $idUser);
+        $query->setParameter("idMise", $idMise);
+        return $query->getResult();
+    }
     public function findNbMatchsForRecapCombined($idUser){
         $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu LEFT JOIN vu.matchs m LEFT JOIN vu.utilisateur u
                 WHERE u.id = :idUser AND vu.isCombined = true GROUP BY vu.idMise ";
