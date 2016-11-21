@@ -614,7 +614,8 @@ class PariController extends ApiController implements InterfaceDB
             $vu->setGainPotentiel($gainsPotentiel);
             $vu->setVote($voteMatchsSimple);
             $vu->setIsCombined(false);
-            $vu->setIdMise(uniqid(sha1("Mise simple")));
+            //$vu->setIdMise(uniqid(sha1("Mise simple")));
+            $vu->setIdMise(time());
             $vu->setDateMise(new \DateTime('now'));
             $vu->setClassement(($gainsPotentiel + $miseTotal) / 2);
           //  var_dump($matchs->getCot1Pronostic()); die;
@@ -739,7 +740,8 @@ class PariController extends ApiController implements InterfaceDB
         $deviceToken = $this->getObjectRepoFrom(self::ENTITY_CONNECTED, array('username' => $user->getEMail()))->getDevice();
 
         if (!empty($matchs)) {
-            $idMise = uniqid(sha1("mise double"));
+            //$idMise = uniqid(sha1("mise double"));
+           $idMise = time();
             $count = 0;
             foreach ($matchs as $kMatchs => $itemsMatchs) {
                 $count = $count + 1;
