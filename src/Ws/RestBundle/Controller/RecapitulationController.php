@@ -79,7 +79,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
                         $matchs = array();
                         $countRow= $countRow + 1;
                         $ss = $this->getRepo(self::ENTITY_MATCHS)->findMatchsForRecapCombined($user->getId(), $itemsIdMise);
-                        die("ko");
+                        
                         if ($ss) {
                             $dataIsGagne = true;
                             $dataStatus = null;
@@ -110,6 +110,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
                                      'isGagne' => $this->getStatusRecap($v->getId()),
 
                                 );
+                                die("ko");
                                 if ($this->getStatusRecap($v->getId(), $v->getIdMise(), $v->getDateMise()) === false) {
                                     $dataIsGagne = false;
                                 }
