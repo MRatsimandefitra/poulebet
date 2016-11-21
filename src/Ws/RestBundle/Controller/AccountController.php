@@ -143,7 +143,7 @@ class AccountController extends ApiController implements InterfaceDB
                         'miseTotal' => $itemsMatch->getMiseTotale(),
                         'idChampionat' => $itemsMatch->getMatchs()->getChampionat()->getId(),
                         //    'isGagne' => $this->getStatusRecap($itemsMatch->getId()),
-                        'isGagne' => $this->getIsGagne($itemsMatch->getId(), $itemsMatch->getIdMise(), $itemsMatch->getDateMise()),
+                        'isGagne' => $itemsMatch->getGagnant(),
                         'imageFacebook' => ($this->getIsGagne($itemsMatch->getId(), 'http://dplb.arkeup.com/upload/admin/facebook/' . $itemsMatch->getIdMise(), $itemsMatch->getDateMise())) ? 'http://dplb.arkeup.com/upload/admin/facebook/' . $this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImageOeuf() : 'http://dplb.arkeup.com/upload/admin/facebook/' . $this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImagePoulebet()
                     );
 
@@ -192,7 +192,7 @@ class AccountController extends ApiController implements InterfaceDB
                         'gainsPotentiel' => $itemsMatch->getGainPotentiel(),
                         'miseTotal' => $itemsMatch->getMiseTotale(),
                         'matchs' => $arrayMatch,
-                        'gagnantCombine' => $dataIsGagne,
+                        'gagnantCombine' => $itemsMatch->getGagnant(),
                         'imageFacebook' => ($dataIsGagne) ? $this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImageOeuf() : 'http://dplb.arkeup.com/upload/admin/facebook/'.$this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImagePoulebet(),
                         'statusCombine' => $dataStatus,
                         'isCombined' => $itemsMatch->getIsCombined()
