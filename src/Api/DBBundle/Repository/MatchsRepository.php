@@ -586,7 +586,8 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
 
         $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
                 LEFT JOIN vu.matchs m
-                LEFT JOIN vu.utilisateur u";
+                LEFT JOIN vu.utilisateur u
+                WHERE vu.gagnant = 1";
         $where = array();
         $params = array();
 
