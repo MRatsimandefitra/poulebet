@@ -680,7 +680,8 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
                 LEFT JOIN vu.utilisateur u
                 WHERE u.id = :userId 
                 AND vu.idMise IS NOT NULL
-                GROUP BY vu.idMise";
+                GROUP BY vu.idMise 
+                ORDER BY vu.id DESC";
 
         $query= $this->getEntityManager()->createQuery($dql);
         $query->setParameter('userId', $userId);
