@@ -71,7 +71,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
                 //$countRow = 0;
                 $count = 0;
                 $countRow = $countTotalRow - $perPage;
-
+                
                 foreach ($idMise as $k => $itemsIdMise) {
                     $count = $count + 1;
                     if ($countRow == $k && $countRow < $countTotalRow) {
@@ -106,7 +106,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
                                     'cote_pronostic_n' => $v->getCoteN(),
                                     'cote_pronostic_2' => $v->getCote2(),
                                     'voted_equipe' => $v->getVote(),
-                                    'isGagne' => $v->getGagnant(),
+                                     'isGagne' => $this->getStatusRecap($v->getId()),
 
                                 );
                                 if ($this->getStatusRecap($v->getId(), $v->getIdMise(), $v->getDateMise()) === false) {
