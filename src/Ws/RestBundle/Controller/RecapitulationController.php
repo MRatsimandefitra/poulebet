@@ -86,6 +86,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
 
                                 $gain = $v->getGainPotentiel();
                                 $miseTotal = $v->getMisetotale();
+                                echo($v->getGagnant());
                                 $matchs[] = array(
                                     'idMatch' => $v->getMatchs()->getId(),
                                     'dateMatch' => $v->getMatchs()->getDateMatch(),
@@ -106,7 +107,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
                                     'cote_pronostic_n' => $v->getCoteN(),
                                     'cote_pronostic_2' => $v->getCote2(),
                                     'voted_equipe' => $v->getVote(),
-                                    'isGagne' => $v->getGagnant(),
+                                    'isGagne' => $this->getStatusRecap($v->getId()),
 
                                 );
                                 if ($this->getStatusRecap($v->getId(), $v->getIdMise(), $v->getDateMise()) === false) {
