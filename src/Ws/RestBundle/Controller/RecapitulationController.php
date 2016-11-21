@@ -122,7 +122,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
                                 }
                             }
                         }
-
+                        die("ko");
                         $result['list_mise'][] = array(
                             'miseId' => $itemsIdMise,
                             'gainsPotentiel' => $gain,
@@ -146,7 +146,6 @@ class RecapitulationController extends ApiController implements InterfaceDB
                         $resultMatchs[$itemsIdMise]['gagnant'] = "";
                     }
                 }
-                die("ko");
                 $result['code_error'] = 0;
                 $result['error'] = false;
                 $result['success'] = true;
