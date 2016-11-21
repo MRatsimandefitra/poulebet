@@ -110,7 +110,6 @@ class RecapitulationController extends ApiController implements InterfaceDB
                                      'isGagne' => $this->getStatusRecap($v->getId()),
 
                                 );
-                                die("ko");
                                 if ($this->getStatusRecap($v->getId(), $v->getIdMise(), $v->getDateMise()) === false) {
                                     $dataIsGagne = false;
                                 }
@@ -147,7 +146,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
                         $resultMatchs[$itemsIdMise]['gagnant'] = "";
                     }
                 }
-
+                die("ko");
                 $result['code_error'] = 0;
                 $result['error'] = false;
                 $result['success'] = true;
