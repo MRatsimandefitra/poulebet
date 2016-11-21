@@ -192,7 +192,7 @@ class AccountController extends ApiController implements InterfaceDB
                         'gainsPotentiel' => $itemsMatch->getGainPotentiel(),
                         'miseTotal' => $itemsMatch->getMiseTotale(),
                         'matchs' => $arrayMatch,
-                        'gagnantCombine' => $itemsMatch->getGagnant(),
+                        'gagnantCombine' => $dataIsGagne,
                         'imageFacebook' => ($dataIsGagne) ? $this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImageOeuf() : 'http://dplb.arkeup.com/upload/admin/facebook/'.$this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImagePoulebet(),
                         'statusCombine' => $dataStatus,
                         'isCombined' => $itemsMatch->getIsCombined()
