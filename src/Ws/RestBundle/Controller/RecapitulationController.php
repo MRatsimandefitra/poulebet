@@ -122,7 +122,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
                                 }
                             }
                         }
-                        die("ko");
+                        
                         $result['list_mise'][] = array(
                             'miseId' => $itemsIdMise,
                             'gainsPotentiel' => $gain,
@@ -132,6 +132,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
                             'imageFacebook' => ($dataIsGagne)? $this->getParameter('url_poulebet').'/upload/admin/facebook/'.$this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImageOeuf() : $this->getParameter('url_poulebet').'/upload/admin/facebook/'. $this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImagePoulebet(),
                             'statusCombine' => $dataStatus
                         );
+                        die("ko");
                         $banniere = $this->getObjectRepoFrom(self::ENTITY_PUB, array('isPopup' => false ));
                         if($banniere && is_object($banniere)){
                                 $result['banniere'] = 'http://dplb.arkeup.com/upload/admin/publicite/'.$banniere->getCheminPub();
