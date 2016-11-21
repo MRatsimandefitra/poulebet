@@ -378,7 +378,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
     public function findMatchsForRecapCombined($idUser, $idMise){
         $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu LEFT JOIN vu.matchs m LEFT JOIN vu.utilisateur u LEFT JOIN m.championat ch
                 WHERE u.id = :idUser And vu.idMise = :idMise 
-                ORDER BY vu.id DESC";
+                ORDER BY vu.id ASC";
         
         $query = $this->getEntityManager()->createQuery($dql);
         $query->setParameters(array('idUser' => $idUser, 'idMise' => $idMise));
