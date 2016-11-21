@@ -109,12 +109,12 @@ class RecapitulationController extends ApiController implements InterfaceDB
                                     'isGagne' => $v->getGagnant(),
 
                                 );
-                                /*if ($this->getStatusRecap($v->getId(), $v->getIdMise(), $v->getDateMise()) === false) {
+                                if ($this->getStatusRecap($v->getId(), $v->getIdMise(), $v->getDateMise()) === false) {
                                     $dataIsGagne = false;
-                                }*/
+                                }
                                 if ($v->getMatchs()->getStatusMatch() != 'finished') {
                                     $dataStatus = 'En cours';
-                                } elseif ($v->getGagnant() === true) {
+                                } elseif ($dataIsGagne === true) {
                                     $dataStatus = "Gagné";
                                 } else {
                                     $dataStatus = "Terminé";
@@ -219,7 +219,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
                             'state' => $this->getMatchsState($vItems->getId()),
                             'idChampionat' => $vItems->getMatchs()->getChampionat()->getId(),
                             'voted_equipe' => $vItems->getVote(),
-                            'isGagne' => $this->getIsGagne($vItems->getId(), $vItems->getIdMise(), $vItems->getDateMise()),
+                            'isGagne' => $vItems->getGagnant(),
                             'imageFacebook' => ($this->getIsGagne($vItems->getId(), $vItems->getIdMise(), $vItems->getDateMise())) ? 'http://dplb.arkeup.com/upload/admin/facebook/'.$this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImageOeuf() : 'http://dplb.arkeup.com/upload/admin/facebook/'.$this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImagePoulebet()
                         );
                         $count = $count + 1;
