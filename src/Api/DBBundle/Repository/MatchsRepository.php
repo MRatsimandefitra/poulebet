@@ -570,7 +570,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         $dql  ="SELECT vu from ApiDBBundle:VoteUtilisateur vu
                 LEFT JOIN vu.utilisateur u
                 LEFT JOIN vu.matchs m
-                LEFT JOIN m.championat ch
+                LEFT JOIN m.championat ch 
                 WHERE u.id = :userId group by vu.idMise ";
 
         $query = $this->getEntityManager()->createQuery($dql);
@@ -586,8 +586,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
 
         $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
                 LEFT JOIN vu.matchs m
-                LEFT JOIN vu.utilisateur u
-                WHERE vu.gagnant = 1";
+                LEFT JOIN vu.utilisateur u ";
         $where = array();
         $params = array();
 
