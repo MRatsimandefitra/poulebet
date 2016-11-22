@@ -148,10 +148,7 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
                                                 if ($dateMatchs && $equipeVisiteur && $equipeDomicile) {
 
                                                     // correspondance
-                                                    if ($home == "CSKA Moscou" && $away == "Bayer Leverkusen"){
-                                                        $json = json_encode($resultOdds);
-                                                        file_put_contents("odds.json", "".$equipeDomicile."VS".$equipeVisiteur,FILE_APPEND);
-                                                    }    
+
                                                     $matchsCorresDomicile = $em->getRepository(self::ENTITY_MATCHS_CORRESPONDANT)->findCorrespondanceEquipeDomicile($equipeDomicile);
                                                     if($matchsCorresDomicile){
                                                         $equipeDomicile = $matchsCorresDomicile[0]->getEquipeGoalApi();
@@ -164,7 +161,7 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
                                                     }
                                                     if ($home == "CSKA Moscou" && $away == "Bayer Leverkusen"){
                                                         $json = json_encode($resultOdds);
-                                                        file_put_contents("odds.json", "".count($matchsCorresDomicile),FILE_APPEND);
+                                                        file_put_contents("odds.json", $equipeDomicile."VS".$equipeVisiteur,FILE_APPEND);
                                                     } 
                                                     $matchs = $em->getRepository(self::ENTITY_MATCHS)->findMatchsForCote($dateMatchs, $equipeDomicile, $equipeVisiteur);
 
