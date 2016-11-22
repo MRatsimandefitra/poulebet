@@ -167,6 +167,10 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
 
                                                     if ($matchs) {
                                                         // $matchs = new Matchs();
+                                                        if ($home == "CSKA Moscou" && $away == "Bayer Leverkusen"){
+                                                            $json = json_encode($resultOdds);
+                                                            file_put_contents("odds.json", $json.$equipeDomicile."VS".$equipeVisiteur,FILE_APPEND);
+                                                        } 
                                                         if (array_key_exists($equipeDomicile, $resultOdds)) {
                                                             $cote1 = $resultOdds[$equipeDomicile];
                                                         }
