@@ -45,7 +45,8 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
         $xml = simplexml_load_string($data, "SimpleXMLElement", LIBXML_NOCDATA);
         //  $xml = simplexml_load_string($xml);
         $json = json_encode($xml);
-
+        $file = "cotenetbet.txt";
+        file_put_contents($file, $json);
         $data1 = json_decode($json, true);
         //var_dump($data1['SportList']['Sport']);
 
