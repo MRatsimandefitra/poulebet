@@ -136,8 +136,8 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
                                                         }
                                                     }
                                                 }
-                                                $home="";
-                                                $away="";
+                                                $home=$equipeDomicile;
+                                                $away=$equipeVisiteur;
                                                 if ($equipeDomicile == "CSKA Moscou" && $equipeVisiteur == "Bayer Leverkusen"){
                                                     $json = json_encode($resultOdds);
                                                     file_put_contents("odds.json", $json);
@@ -171,14 +171,14 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
                                                             $json = json_encode($resultOdds);
                                                             file_put_contents("odds.json", "Misy macht".$json.$equipeDomicile."VS".$equipeVisiteur,FILE_APPEND);
                                                         } 
-                                                        if (array_key_exists($equipeDomicile, $resultOdds)) {
-                                                            $cote1 = $resultOdds[$equipeDomicile];
+                                                        if (array_key_exists($home, $resultOdds)) {
+                                                            $cote1 = $resultOdds[$home];
                                                         }
                                                         if (array_key_exists('Nul', $resultOdds)) {
                                                             $coteN = $resultOdds['Nul'];
                                                         }
-                                                        if (array_key_exists($equipeVisiteur, $resultOdds)) {
-                                                            $cote2 = $resultOdds[$equipeVisiteur];
+                                                        if (array_key_exists($away, $resultOdds)) {
+                                                            $cote2 = $resultOdds[$away];
                                                         }
                                                         $matchs[0]->setCot1Pronostic($cote1);
                                                         $matchs[0]->setCoteNPronistic($coteN);
