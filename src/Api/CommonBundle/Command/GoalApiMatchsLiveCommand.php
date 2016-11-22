@@ -39,7 +39,7 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        file_put_contents("log.txt", "live_".time());
+        file_put_contents("log.txt", "live_".time()."\n", FILE_APPEND);
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
         $championat = $em->getRepository(self::ENTITY_CHAMPIONAT)->findBy(array('isEnable' => true));
         $count = 0;

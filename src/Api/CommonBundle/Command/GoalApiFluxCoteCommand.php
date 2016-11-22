@@ -125,6 +125,7 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
                                                     }
 
                                                 }
+                                                
                                                 foreach ($teams as $kTeams => $itemsTeams) {
                                                     if (array_key_exists('@attributes', $itemsTeams)) {
                                                         if ($itemsTeams['@attributes']['post'] == "home") {
@@ -135,22 +136,36 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
                                                         }
                                                     }
                                                 }
-
+                                                $home="";
+                                                $away="";
+                                                if ($equipeDomicile == "CSKA Moscou" && $equipeVisiteur == "Bayer Leverkusen"){
+                                                    $json = json_encode($resultOdds);
+                                                    file_put_contents("odds.json", $json);
+                                                    $home = "CSKA Moscou";
+                                                    $away="Bayer Leverkusen";
+                                                }
+                                                
                                                 if ($dateMatchs && $equipeVisiteur && $equipeDomicile) {
 
                                                     // correspondance
-
+                                                    if ($home == "CSKA Moscou" && $away == "Bayer Leverkusen"){
+                                                        $json = json_encode($resultOdds);
+                                                        file_put_contents("odds.json", "".$equipeDomicile."VS".$equipeVisiteur,FILE_APPEND);
+                                                    }    
                                                     $matchsCorresDomicile = $em->getRepository(self::ENTITY_MATCHS_CORRESPONDANT)->findCorrespondanceEquipeDomicile($equipeDomicile);
-                                                    if(!empty($matchsCorresDomicile)){
+                                                    if($matchsCorresDomicile){
                                                         $equipeDomicile = $matchsCorresDomicile[0]->getEquipeGoalApi();
                                                     }
 
                                                     $matchsCorresVisiteur = $em->getRepository(self::ENTITY_MATCHS_CORRESPONDANT)->findCorrespondanceEquipeVisiteur($equipeVisiteur);
-                                                    if(!empty($matchsCorresVisiteur)){
+                                                    if($matchsCorresVisiteur){
 
                                                         $equipeVisiteur = $matchsCorresVisiteur[0]->getEquipeGoalApi();
                                                     }
-
+                                                    if ($home == "CSKA Moscou" && $away == "Bayer Leverkusen"){
+                                                        $json = json_encode($resultOdds);
+                                                        file_put_contents("odds.json", "".count($matchsCorresDomicile),FILE_APPEND);
+                                                    } 
                                                     $matchs = $em->getRepository(self::ENTITY_MATCHS)->findMatchsForCote($dateMatchs, $equipeDomicile, $equipeVisiteur);
 
                                                     if ($matchs) {
