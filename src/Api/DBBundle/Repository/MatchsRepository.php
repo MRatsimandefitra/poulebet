@@ -460,14 +460,10 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         $date2 = $date. ' 23:59:59';
 
         $dql = "SELECT m from ApiDBBundle:Matchs m
-                LEFT JOIN m.teamsDomicile td
-                LEFT JOIN m.teamsVisiteur tv
                 WHERE m.dateMatch BETWEEN :date1 AND :date2
-                AND (
-                (td.nomClub LIKE :equipeDomicile OR td.fullNameClub LIKE :equipeDomicile)
-                    OR
-                (tv.nomClub LIKE :equipeVisiteur OR td.fullNameClub LIKE :equipeVisiteur)
-                )";
+                AND  m.equipeDomicile LIKE :equipeDomicile 
+                AND m.equipeVisiteur LIKE :equipeVisiteur
+                ";
 
         $query = $this->getEntityManager()->createQuery($dql);
        // $query->setParameter('dateMatchs', $dateMatchs);
