@@ -176,10 +176,13 @@ class SondageController extends ApiController
                      WHERE co.id = :idConcours And m.dateMatch BETWEEN co.dateDebut and co.dateFinale
                      ORDER BY ch.rang asc, m.dateMatch asc
                      ";*/
+                    //#### AJOUT STATUT
         $dqlMatch= "SELECT m, co, ch from ApiDBBundle:Matchs m
                              JOIN m.concours co
                              LEFT JOIN m.championat ch
                              WHERE co.id = :idConcours
+                             AND m.statusMatch != 'finished' 
+                             AND  m.statusMatch != 'active'
                              ORDER BY ch.rang asc, m.dateMatch asc
                              ";
         $queryMatch = $this->get('doctrine.orm.entity_manager')->createQuery($dqlMatch);
@@ -191,7 +194,8 @@ class SondageController extends ApiController
        // var_dump(count($data)); die;
         // vote total
         //$dqlVote = "SELECT co from ApiDBBundle:Concours co   JOIN co.matchs m";
-        $dqlVote = "SELECT m from ApiDBBundle:Matchs m LEFT JOIN m.concours co";
+        //#### AJOUT STATUT
+        $dqlVote = "SELECT m from ApiDBBundle:Matchs m LEFT JOIN m.concours co WHERE m.statusMatch != 'finished' AND  m.statusMatch != 'active'";
         $queryVote = $this->get('doctrine.orm.entity_manager')->createQuery($dqlVote);
         $dataVote = $queryVote->getResult();
         $nbTotalVote = count($dataVote) + 1;
@@ -202,12 +206,14 @@ class SondageController extends ApiController
         // dat now:
 
         if ($data ) {
-
+//#### AJOUT STATUT
             $dqlChampionat = "SELECT m, ch from ApiDBBundle:Matchs m "
                     . "JOIN m.concours co "
                     . "JOIN m.championat ch "
                     . "WHERE co.dateDebut <= CURRENT_DATE() "
                     . "AND co.dateFinale >= CURRENT_DATE() "
+                    . " AND m.statusMatch != 'finished' "
+                    ."   AND  m.statusMatch != 'active' "
                     . "GROUP BY ch.nomChampionat ORDER BY ch.rang asc, m.dateMatch ASC";
             $queryChampionat = $this->get('doctrine.orm.entity_manager')->createQuery($dqlChampionat);
             $dataChampionat = $queryChampionat->getResult();
