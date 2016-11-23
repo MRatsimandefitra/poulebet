@@ -658,7 +658,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
     public function findTotalGainsOfUser($userId){
         $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
                 LEFT JOIN vu.utilisateur u
-                WHERE vu.id = :userId
+                WHERE u.id = :userId
                 AND vu.gagnant = true
                 GROUP BY vu.idMise";
         $query = $this->getEntityManager()->createQuery($dql);
@@ -668,7 +668,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
     public function findTotalMiseOfUser($userId){
         $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
                 LEFT JOIN vu.utilisateur u
-                WHERE vu.id = :userId
+                WHERE u.id = :userId
                 GROUP BY vu.idMise";
         $query = $this->getEntityManager()->createQuery($dql);
         $query->setParameter('userId' , $userId);
