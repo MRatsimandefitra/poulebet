@@ -61,7 +61,8 @@ class RecapitulationController extends ApiController implements InterfaceDB
                 }
                 // pagination
                 $totalItems = count($idMise);
-                $perPage = 10;
+                //####$perPage = 10;
+                $perPage = 60;
                 $nbPage = ceil($totalItems / $perPage);
                 $pageNow = $page;
                 if ($pageNow >= $nbPage) {
@@ -179,8 +180,8 @@ class RecapitulationController extends ApiController implements InterfaceDB
 
             // pagination
             $totalItems = count($nbRecap);
-
-            $perPage = 10;
+            //####$perPage = 10;
+            $perPage = 60;
             $nbPage = ceil($totalItems / $perPage);
             $pageNow = $page;
             if ($pageNow >= $nbPage) {
@@ -355,8 +356,8 @@ class RecapitulationController extends ApiController implements InterfaceDB
             return false;
         }
     }
-
-    private function paginate($page, $query, $perPage = 10)
+//####$perPage = 10;
+    private function paginate($page, $query, $perPage = 60)
     {
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
