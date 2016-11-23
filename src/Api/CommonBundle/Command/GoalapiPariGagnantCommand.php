@@ -163,7 +163,7 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
 
                 }else{
                     $itemsMatchsVote->setGagnant(false);
-
+                    $em->flush();
                 }
 
             }
