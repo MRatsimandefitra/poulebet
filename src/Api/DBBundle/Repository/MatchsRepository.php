@@ -479,21 +479,14 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         $dateString = date("Y-m-d h:m:s", time());
         // + une journée
         $dateStringDemain = date("Y-m-d h:m:s", time()+(60*60*24));
-        /*$dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
+        $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
                 LEFT JOIN vu.matchs m
                 LEFT JOIN vu.utilisateur u
                 WHERE vu.gagnant is null
                 AND m.statusMatch = 'finished' 
                 AND vu.idMise IS NOT NULL 
                 AND  m.dateMatch > '".$dateString."' "
-                ." AND m.dateMatch <'".$dateStringDemain."'";*/
-        $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu 
-                LEFT JOIN vu.matchs m 
-                LEFT JOIN vu.utilisateur u 
-                WHERE vu.gagnant IS NULL 
-                AND m.statusMatch = 'finished' 
-                AND vu.idMise IS NOT NULL 
-                AND u.id = 235";
+                ." AND m.dateMatch <'".$dateStringDemain."'";
            
         $query = $this->getEntityManager()->createQuery($dql);
         return $query->getResult();
