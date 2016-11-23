@@ -61,9 +61,9 @@ class AccountController extends ApiController implements InterfaceDB
         $gains = $this->getRepo(self::ENTITY_MATCHS)->findTotalGainsOfUser($user->getId());
         
         if ($mises) {
-            $totalGains = 0;
+            $totalMise = 0;
             foreach ($mises as $kGains => $itemsGains) {
-                $totalMise = $totalGains + $itemsGains->getMisetotale();
+                $totalMise += $itemsGains->getMisetotale();
             }
             $result['totalMiseTotal'] = $totalMise;
 
@@ -73,7 +73,7 @@ class AccountController extends ApiController implements InterfaceDB
         if ($gains) {
             $totalGains = 0;
             foreach ($gains as $kGains => $itemsGains) {
-                $totalGains = $totalGains + $itemsGains->getGainPotentiel();
+                $totalGains += $itemsGains->getGainPotentiel();
             }
             $result['totalGain'] = $totalGains;
 
