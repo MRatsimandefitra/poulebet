@@ -59,6 +59,7 @@ class AccountController extends ApiController implements InterfaceDB
         $mises  = $this->getRepo(self::ENTITY_MATCHS)->findTotalMiseOfUser($user->getId());
         // gains
         $gains = $this->getRepo(self::ENTITY_MATCHS)->findTotalGainsOfUser($user->getId());
+        echo(count($mises)."-".count($gains));die();
         if ($mises) {
             $totalGains = 0;
             foreach ($mises as $kGains => $itemsGains) {
