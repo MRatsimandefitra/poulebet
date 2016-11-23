@@ -705,10 +705,8 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
 
     public function findTotalMatchsEnCours($userId){
         $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
-                LEFT JOIN vu.matchs m
-                LEFT JOIN vu.utilisateur u
-                LEFT JOIN m.championat ch
-                WHERE m.statusMatch = 'active' or m.statusMatch = 'not_started'
+                LEFT JOIN vu.utilisateur u              
+                WHERE vu.gagnant IS NULL
                 AND u.id = :userId
                 GROUP BY vu.idMise ";
 
