@@ -59,7 +59,7 @@ class AccountController extends ApiController implements InterfaceDB
         $mises  = $this->getRepo(self::ENTITY_MATCHS)->findTotalMiseOfUser($user->getId());
         // gains
         $gains = $this->getRepo(self::ENTITY_MATCHS)->findTotalGainsOfUser($user->getId());
-        if (is_array($gains) && count($gains) > 0) {
+        if ($mises) {
             $totalGains = 0;
             foreach ($mises as $kGains => $itemsGains) {
                 $totalMise = $totalGains + $itemsGains->getMisetotale();
@@ -69,7 +69,7 @@ class AccountController extends ApiController implements InterfaceDB
         } else {
             $result['totalMiseTotal'] = 0;
         }
-        if (is_array($gains) && count($gains) > 0) {
+        if ($gains) {
             $totalGains = 0;
             foreach ($gains as $kGains => $itemsGains) {
                 $totalGains = $totalGains + $itemsGains->getGainPotentiel();
