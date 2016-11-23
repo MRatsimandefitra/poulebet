@@ -49,6 +49,7 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
                 $utilisateur = $itemsMatchsVote->getUtilisateur();
                 $gagnant= null;
                 if($matchs->getStatusMatch()== 'finished'){
+                    $itemsMatchsVote->setGagnant(false);
                     $scr = $matchs->getScore();
                     //#### FROMAT SOCRE XX-XX
                     /*$scoreDomicile = substr($score, 0, 1);
