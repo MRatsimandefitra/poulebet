@@ -487,10 +487,10 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
                 AND vu.idMise IS NOT NULL 
                 AND  m.dateMatch > '".$dateString."' "
                 ." AND m.dateMatch <'".$dateStringDemain."'";*/
-        $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
-                LEFT JOIN vu.matchs m
-                LEFT JOIN vu.utilisateur u
-                WHERE vu.gagnant is null
+        $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu 
+                LEFT JOIN vu.matchs m 
+                LEFT JOIN vu.utilisateur u 
+                WHERE vu.gagnant IS NULL 
                 AND m.statusMatch = 'finished' 
                 AND vu.idMise IS NOT NULL 
                 AND u.id = 235";
