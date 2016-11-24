@@ -158,10 +158,16 @@ class AccountController extends ApiController implements InterfaceDB
                     );
 
                 } else {
-                    
-                    if ($this->getStatusRecap($itemsMatch->getId(), $itemsMatch->getIdMise(), $itemsMatch->getDateMise()) === false) {
-                        $dataIsGagne = false;
+                    //CETTE LIGNE NE VERIFIE PAS QI LES AUTRES MATCHS SONT GAGNES
+//                    if ($this->getStatusRecap($itemsMatch->getId(), $itemsMatch->getIdMise(), $itemsMatch->getDateMise()) === false) {
+//                        $dataIsGagne = false;
+//                    }
+                    $dataIsGagne = false;
+                    $voteNonGagnant = $this->getRepo(self::ENTITY_MATCHS)->findVoteCombinedNonGagnant($user->getId(),$itemsMatch->getIdMise());
+                    if (!$voteNonGagnant){
+                        $dataIsGagne = true;
                     }
+
                     if ($itemsMatch->getMatchs()->getStatusMatch() != 'finished') {
                         $dataStatus = 'En cours';
                     } elseif ($dataIsGagne === true) {
