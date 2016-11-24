@@ -46,7 +46,7 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
                 $vote = $itemsMatchsVote->getVote();
                 $matchs = $itemsMatchsVote->getMatchs();
                 $utilisateur = $itemsMatchsVote->getUtilisateur();
-                $voteutilisateur = $itemsMatchsVote->getvoteutilisateur();
+                $voteutilisateur = $itemsMatchsVote->getVoteUtilisateur();
 
                 $gagnant= null;
                 if($matchs->getStatusMatch()== 'finished'){
