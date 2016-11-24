@@ -167,6 +167,9 @@ class AccountController extends ApiController implements InterfaceDB
                     if (!$voteNonGagnant){
                         $dataIsGagne = true;
                     }
+                     if ($this->getStatusRecap($itemsMatch->getId(), $itemsMatch->getIdMise(), $itemsMatch->getDateMise()) === false) {
+                       $dataIsGagne = false;
+                    }
 
                     if ($itemsMatch->getMatchs()->getStatusMatch() != 'finished') {
                         $dataStatus = 'En cours';

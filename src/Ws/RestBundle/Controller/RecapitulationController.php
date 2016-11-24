@@ -112,16 +112,14 @@ class RecapitulationController extends ApiController implements InterfaceDB
 
                                 );
                                 //CETTE LIGNE NE VERIFIE PAS QI LES AUTRES MATCHS SONT GAGNES
-//                                if ($this->getStatusRecap($v->getId(), $v->getIdMise(), $v->getDateMise()) === false) {
-//                                    $dataIsGagne = false;
-//                                }
-
                                 $dataIsGagne = false;
                                 $voteNonGagnant = $this->getRepo(self::ENTITY_MATCHS)->findVoteCombinedNonGagnant($user->getId(),$v->getIdMise());
                                 if (!$voteNonGagnant){
                                     $dataIsGagne = true;
                                 }
-
+                                if ($this->getStatusRecap($v->getId(), $v->getIdMise(), $v->getDateMise()) === false) {
+                                    $dataIsGagne = false;
+                                }
                                 if ($v->getMatchs()->getStatusMatch() != 'finished') {
                                     $dataStatus = 'En cours';
                                 } elseif ($dataIsGagne === true) {
