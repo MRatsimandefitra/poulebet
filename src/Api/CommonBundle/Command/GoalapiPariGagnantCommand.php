@@ -43,7 +43,6 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
 
         if($matchsVote){
             foreach($matchsVote as $kMatchsVote => $itemsMatchsVote){
-
                 $vote = $itemsMatchsVote->getVote();
                 $matchs = $itemsMatchsVote->getMatchs();
                 $utilisateur = $itemsMatchsVote->getUtilisateur();
@@ -58,10 +57,9 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
                     $score = explode('-',$scr);
                     $scoreDomicile  = intval($score[0]);
                     $scoreVisiteur = intval($score[1]);
-
+                    //#### MARCHE PAS SI COMPARAISON DE 2 CHAINES
                     if($scoreDomicile > $scoreVisiteur){
                         $gagnant = 1;
-
                     }
                     if($scoreVisiteur > $scoreDomicile){
                         $gagnant = 2;
@@ -69,7 +67,7 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
                     if($scoreVisiteur === $scoreDomicile){
                         $gagnant = 0;
                     }
-                    var_dump($vote." ".$scoreDomicile."  ".$scoreVisiteur."  ".$gagnant);
+                    //var_dump($vote." ".$scoreDomicile."  ".$scoreVisiteur."  ".$gagnant);
 
 
                     if($vote == $gagnant){
@@ -88,6 +86,7 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
                         }else{
                             $solde  = $mvtCreditLast->getSoldeCredit() + $gainPotentiel;
                         }
+                        $mvtCredit->setVoteUtilisateur($itemsMatchsVote->getid());
                         $mvtCredit->setEntreeCredit($gainPotentiel);
                         $mvtCredit->setSoldeCredit($solde);
                         $mvtCredit->setTypeCredit("GAIN PARI SIMPLE ");
@@ -146,6 +145,8 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
                             }else{
                                 $solde  = $mvtCreditLast->getSoldeCredit() + $gainPotentiel;
                             }
+
+                            $mvtCredit->setVoteUtilisateur($itemsMatchsVote->getid());
                             $mvtCredit->setEntreeCredit($gainPotentiel);
                             $mvtCredit->setSoldeCredit($solde);
                             $mvtCredit->setTypeCredit("GAIN PARI COMBINE");
