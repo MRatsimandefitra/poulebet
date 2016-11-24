@@ -39,7 +39,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
         if ($isCombined) {
             $nbRecap = $this->getRepo(self::ENTITY_MATCHS)->findNbMatchsForRecapCombined($user->getId());
             //var_dump($nbRecap); die;
-            
+
             if (!empty($nbRecap)) {
                 $count = 0;
                 $championat = $this->getRepo(self::ENTITY_MATCHS)->findChampionatForRecapCombined($user->getId());
@@ -111,9 +111,17 @@ class RecapitulationController extends ApiController implements InterfaceDB
                                      'isGagne' => $this->getStatusRecap($v->getId()),
 
                                 );
+                                //CETTE LIGNE NE VERIFIE PAS QI LES AUTRES MATCHS SONT GAGNES
                                 if ($this->getStatusRecap($v->getId(), $v->getIdMise(), $v->getDateMise()) === false) {
                                     $dataIsGagne = false;
                                 }
+
+                                $dataIsGagne = false;
+                                $voteNonGagnant = $this->getRepo(self::ENTITY_MATCHS)->findVoteCombinedNonGagnant($user->getId(),$v->getIdMise());
+                                if (!$voteNonGagnant){
+                                    $dataIsGagne = true;
+                                }
+
                                 if ($v->getMatchs()->getStatusMatch() != 'finished') {
                                     $dataStatus = 'En cours';
                                 } elseif ($dataIsGagne === true) {
@@ -324,6 +332,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
         $data = $this->getRepo(self::ENTITY_MATCHS)->findStatusRecap($idVoteUtilisateur);
         if (is_array($data) && count($data) > 0) {
             foreach ($data as $kData => $itemsData) {
+                //CORRECT
                 $gagnant = $itemsData->getGagnant();
                 $vote = $itemsData->getVote();
                 if ($gagnant == $vote) {
