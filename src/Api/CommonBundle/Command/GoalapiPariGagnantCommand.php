@@ -46,8 +46,6 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
                 $vote = $itemsMatchsVote->getVote();
                 $matchs = $itemsMatchsVote->getMatchs();
                 $utilisateur = $itemsMatchsVote->getUtilisateur();
-                $IdMiseutilisateur= $itemsMatchsVote->getIdMise();
-
                 $gagnant= null;
                 if($matchs->getStatusMatch()== 'finished'){
                     $itemsMatchsVote->setGagnant(false);
@@ -88,7 +86,6 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
                         }else{
                             $solde  = $mvtCreditLast->getSoldeCredit() + $gainPotentiel;
                         }
-                        $mvtCredit->setVoteUtilisateur($IdMiseutilisateur);
                         $mvtCredit->setEntreeCredit($gainPotentiel);
                         $mvtCredit->setSoldeCredit($solde);
                         $mvtCredit->setTypeCredit("GAIN PARI SIMPLE ");
@@ -147,8 +144,6 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
                             }else{
                                 $solde  = $mvtCreditLast->getSoldeCredit() + $gainPotentiel;
                             }
-                            var_dump("OKOK");
-                            $mvtCredit->setVoteUtilisateur($IdMiseutilisateur);
                             $mvtCredit->setEntreeCredit($gainPotentiel);
                             $mvtCredit->setSoldeCredit($solde);
                             $mvtCredit->setTypeCredit("GAIN PARI COMBINE");
