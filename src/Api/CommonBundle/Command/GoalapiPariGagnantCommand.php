@@ -40,10 +40,8 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
 
         $arrayCombinedGagnant = array();
         $arrayCombinedPerdu = array();
-        var_dump("test 0");
-        if($matchsVote){
-            var_dump("test ".$matchsVote->getScore());
 
+        if($matchsVote){
             foreach($matchsVote as $kMatchsVote => $itemsMatchsVote){
 
                 $vote = $itemsMatchsVote->getVote();
@@ -56,9 +54,11 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
                     //#### FROMAT SOCRE XX-XX
                     /*$scoreDomicile = substr($score, 0, 1);
                     $scoreVisiteur = substr($score, -1, 1);*/
+                    var_dump($scr);
                     $score = explode('-',$scr);
                     $scoreDomicile  = $score[0];
                     $scoreVisiteur = $score[1];
+
                     if($scoreDomicile > $scoreVisiteur){
                         $gagnant = 1;
                     }
@@ -68,6 +68,7 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
                     if($scoreVisiteur === $scoreDomicile){
                         $gagnant = 0;
                     }
+                    var_dump($vote." ".$scoreDomicile."  ".$scoreVisiteur."  ".$gagnant);
                 }
                 if($vote == $gagnant){
 
