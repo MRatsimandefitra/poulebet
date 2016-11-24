@@ -147,7 +147,7 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
                             }else{
                                 $solde  = $mvtCreditLast->getSoldeCredit() + $gainPotentiel;
                             }
-
+                            var_dump("OKOK");
                             $mvtCredit->setVoteUtilisateur($voteutilisateur);
                             $mvtCredit->setEntreeCredit($gainPotentiel);
                             $mvtCredit->setSoldeCredit($solde);
