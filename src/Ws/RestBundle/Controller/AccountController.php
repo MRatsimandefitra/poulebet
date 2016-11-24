@@ -73,7 +73,16 @@ class AccountController extends ApiController implements InterfaceDB
         if ($gains) {
             $totalGains = 0;
             foreach ($gains as $kGains => $itemsGains) {
-                $totalGains += $itemsGains->getGainPotentiel();
+                if ($itemsGains->getIsCombined()){
+                    $voteNonGagnant = $this->getRepo(self::ENTITY_MATCHS)->findVoteCombinedNonGagnant($user->getId(),$itemsGains->getIdMise());
+                    if (!$voteNonGagnant){
+                        $totalGains += $itemsGains->getGainPotentiel();
+                    }
+                }
+                else{
+                    $totalGains += $itemsGains->getGainPotentiel();
+                }
+
             }
             $result['totalGain'] = $totalGains;
 
