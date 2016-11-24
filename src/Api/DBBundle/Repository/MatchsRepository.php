@@ -493,10 +493,10 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
                 LEFT JOIN vu.matchs m
                 LEFT JOIN vu.utilisateur u
-                WHERE vu.gagnant is null
+                WHERE vu.gagnant is NULL
                 AND m.statusMatch = 'finished' 
                 AND vu.idMise IS NOT NULL 
-                AND  vu.utilisateur_id=237 ";
+                AND  u.id=237 ";
 
 //        $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
 //                LEFT JOIN vu.matchs m
@@ -506,8 +506,8 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
 //                AND vu.idMise IS NOT NULL
 //                AND  m.dateMatch > '".$dateString."' "
 //            ." AND m.dateMatch <'".$dateStringDemain."'";
-//        $query = $this->getEntityManager()->createQuery($dql);
-//        return $query->getResult();
+        $query = $this->getEntityManager()->createQuery($dql);
+        return $query->getResult();
     }
 
     public  function findStateForCombined($utilisateurId){
