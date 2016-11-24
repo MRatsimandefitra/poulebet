@@ -486,8 +486,8 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
     public function findMatchVoteGagnant(){
 
         //#### TEST JOUR PRECEDENT
-        $dateString = date("Y-m-d h:m:s", time()-(60*60*24));
-        $dateStringDemain = date("Y-m-d h:m:s", time());
+        $dateString = date("Y-m-d h:m:s", "1479857089");
+        $dateStringDemain = date("Y-m-d h:m:s", "1480026289");
         //
         //$dateString = date("Y-m-d h:m:s", time());
         //$dateStringDemain = date("Y-m-d h:m:s", time()+(60*60*24));
