@@ -165,7 +165,10 @@ class GoalApiMatchsLiveCommand extends ContainerAwareCommand
                         //#### FAUTE SUR LE TIRET (array_key_exists('current-state', $vItems)) {
                         if (array_key_exists('current_state', $vItems)) {
                             $matchs->setPeriod($vItems['current_state']['period']);
-                            $matchs->setMinute($vItems['current_state']['minute']);
+                            if(isset($vItems['current_state']['minute'])){
+                                $matchs->setMinute($vItems['current_state']['minute']);
+                            }
+
                         }
 
                         $nbLocalME = $em->getRepository(self::ENTITY_MATCH_EVENT)->findByMatchs($matchs);
