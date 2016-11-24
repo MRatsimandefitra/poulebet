@@ -40,7 +40,9 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
 
         $arrayCombinedGagnant = array();
         $arrayCombinedPerdu = array();
+        var_dump("test 0");
         if($matchsVote){
+            var_dump("test ".$matchsVote->getScore());
 
             foreach($matchsVote as $kMatchsVote => $itemsMatchsVote){
 
