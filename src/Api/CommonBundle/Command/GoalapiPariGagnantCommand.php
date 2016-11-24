@@ -56,12 +56,12 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
                     $scoreVisiteur = substr($score, -1, 1);*/
                     //var_dump($scr);
                     $score = explode('-',$scr);
-                    $scoreDomicile  = $score[0];
-                    $scoreVisiteur = $score[1];
+                    $scoreDomicile  = intval($score[0]);
+                    $scoreVisiteur = intval($score[1]);
 
                     if($scoreDomicile > $scoreVisiteur){
                         $gagnant = 1;
-                        var_dump($vote." ".$scoreDomicile."  ".$scoreVisiteur."  ".$gagnant);
+
                     }
                     if($scoreVisiteur > $scoreDomicile){
                         $gagnant = 2;
@@ -69,9 +69,10 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
                     if($scoreVisiteur === $scoreDomicile){
                         $gagnant = 0;
                     }
+                    var_dump($vote." ".$scoreDomicile."  ".$scoreVisiteur."  ".$gagnant);
 
-                }
-                if($vote == $gagnant){
+
+                    if($vote == $gagnant){
 
                     $itemsMatchsVote->setGagnant(true);
                     $gainPotentiel = $itemsMatchsVote->getGainPotentiel();
@@ -167,10 +168,10 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
                     $em->flush();
 
                 }else{
-                    $itemsMatchsVote->setGagnant(false);
-                    $em->flush();
+                        $itemsMatchsVote->setGagnant(false);
+                        $em->flush();
+                    }
                 }
-
             }
             /*if($arrayCombinedGagnant){
                 foreach($arrayCombinedGagnant as $kArrayCombinedG => $itemsArrayCombinedG){
