@@ -486,25 +486,28 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
     public function findMatchVoteGagnant(){
 
         //#### TEST JOUR PRECEDENT
-        $dateString = date("Y-m-d h:m:s", "1479857089");
-        $dateStringDemain = date("Y-m-d h:m:s", "1480026289");
-        //
-        //$dateString = date("Y-m-d h:m:s", time());
-        //$dateStringDemain = date("Y-m-d h:m:s", time()+(60*60*24));
-        // + une journée
 
-        //$dateStringDemain = date("Y-m-d h:m:s", time()+(60*60*24));
+        $dateString = date("Y-m-d h:m:s", time());
+        $dateStringDemain = date("Y-m-d h:m:s", time()+(60*60*24));
+        // + une journée
         $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
                 LEFT JOIN vu.matchs m
                 LEFT JOIN vu.utilisateur u
                 WHERE vu.gagnant is null
                 AND m.statusMatch = 'finished' 
                 AND vu.idMise IS NOT NULL 
-                AND  m.dateMatch > '".$dateString."' "
-                ." AND m.dateMatch <'".$dateStringDemain."'";
-           
-        $query = $this->getEntityManager()->createQuery($dql);
-        return $query->getResult();
+                AND  vu.utilisateur_id=237 ";
+
+//        $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
+//                LEFT JOIN vu.matchs m
+//                LEFT JOIN vu.utilisateur u
+//                WHERE vu.gagnant is null
+//                AND m.statusMatch = 'finished'
+//                AND vu.idMise IS NOT NULL
+//                AND  m.dateMatch > '".$dateString."' "
+//            ." AND m.dateMatch <'".$dateStringDemain."'";
+//        $query = $this->getEntityManager()->createQuery($dql);
+//        return $query->getResult();
     }
 
     public  function findStateForCombined($utilisateurId){
