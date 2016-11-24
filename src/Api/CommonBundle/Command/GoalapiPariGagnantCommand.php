@@ -46,6 +46,8 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
                 $vote = $itemsMatchsVote->getVote();
                 $matchs = $itemsMatchsVote->getMatchs();
                 $utilisateur = $itemsMatchsVote->getUtilisateur();
+                $voteutilisateur = $itemsMatchsVote->getvoteutilisateur();
+
                 $gagnant= null;
                 if($matchs->getStatusMatch()== 'finished'){
                     $itemsMatchsVote->setGagnant(false);
@@ -86,7 +88,7 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
                         }else{
                             $solde  = $mvtCreditLast->getSoldeCredit() + $gainPotentiel;
                         }
-                        $mvtCredit->setVoteUtilisateur($itemsMatchsVote->getid());
+                        $mvtCredit->setVoteUtilisateur($voteutilisateur);
                         $mvtCredit->setEntreeCredit($gainPotentiel);
                         $mvtCredit->setSoldeCredit($solde);
                         $mvtCredit->setTypeCredit("GAIN PARI SIMPLE ");
@@ -146,7 +148,7 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
                                 $solde  = $mvtCreditLast->getSoldeCredit() + $gainPotentiel;
                             }
 
-                            $mvtCredit->setVoteUtilisateur($itemsMatchsVote->getid());
+                            $mvtCredit->setVoteUtilisateur($voteutilisateur);
                             $mvtCredit->setEntreeCredit($gainPotentiel);
                             $mvtCredit->setSoldeCredit($solde);
                             $mvtCredit->setTypeCredit("GAIN PARI COMBINE");
