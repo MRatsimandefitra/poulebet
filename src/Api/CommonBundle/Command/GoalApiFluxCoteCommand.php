@@ -138,12 +138,12 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
                                                 }
                                                 $home=$equipeDomicile;
                                                 $away=$equipeVisiteur;
-                                                if ($equipeDomicile == "CSKA Moscou" && $equipeVisiteur == "Bayer Leverkusen"){
-                                                    $json = json_encode($resultOdds);
-                                                    file_put_contents("odds.json", $json);
-                                                    $home = "CSKA Moscou";
-                                                    $away="Bayer Leverkusen";
-                                                }
+//                                                if ($equipeDomicile == "CSKA Moscou" && $equipeVisiteur == "Bayer Leverkusen"){
+//                                                    $json = json_encode($resultOdds);
+//                                                    file_put_contents("odds.json", $json);
+//                                                    $home = "CSKA Moscou";
+//                                                    $away="Bayer Leverkusen";
+//                                                }
                                                 
                                                 if ($dateMatchs && $equipeVisiteur && $equipeDomicile) {
 
@@ -167,10 +167,10 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
 
                                                     if ($matchs) {
                                                         // $matchs = new Matchs();
-                                                        if ($home == "CSKA Moscou" && $away == "Bayer Leverkusen"){
-                                                            $json = json_encode($resultOdds);
-                                                            file_put_contents("odds.json", "Misy macht".$json.$equipeDomicile."VS".$equipeVisiteur,FILE_APPEND);
-                                                        }
+//                                                        if ($home == "CSKA Moscou" && $away == "Bayer Leverkusen"){
+//                                                            $json = json_encode($resultOdds);
+//                                                            file_put_contents("odds.json", "Misy macht".$json.$equipeDomicile."VS".$equipeVisiteur,FILE_APPEND);
+//                                                        }
                                                         if (array_key_exists($home, $resultOdds)) {
                                                             $cote1 = $resultOdds[$home];
                                                         }
@@ -185,7 +185,7 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
                                                         $matchs[0]->setCote2Pronostic($cote2);
                                                         //### MASTER PRONO A CALCULER SEULEMENT UNE FOIS
 
-                                                        $output->writeln($matchs[0]->getMasterMasterProno1();
+                                                        $output->writeln($matchs[0]->getmaster_prono_1());
                                                         if ($cote1 < $coteN && $cote1 < $cote2) {
                                                             $matchs[0]->setMasterProno1(true);
                                                             $matchs[0]->setMasterPronoN(false);
@@ -207,7 +207,7 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
                                                     else {
 
                                                         $output->writeln("Aucun matchs trouvé - ID : " . $count);
-                                                        
+
                                                     }
                                                 } else {
                                                     $output->writeln("Les arguments datematch equipevisiteur, equipedomicile ne sont pas complet");
