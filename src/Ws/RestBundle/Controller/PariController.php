@@ -608,6 +608,23 @@ class PariController extends ApiController implements InterfaceDB
 
         if ($matchs) {
 
+            //#### TEST DATE
+            // RECUPERER L'HEURE ACTUELLE
+            $dateTemp = new \DateTime('now');
+            // AJOUTER 5 MINUTES
+            // SI HEURE ACTUELLE + 5MINUTES > DATEHEURE MATCH -->>BLOQUER
+            $date5minAvant = $dateTemp->add(new \DateInterval('PT5M'));
+            $dateMatch=$matchs->getMatchs()->getDateMatch();
+            if($date5minAvant>$dateMatch){
+                $result['code_error'] = 0;
+                $result['success'] = false;
+                $result['error'] = true;
+                $result['message'] = "Pari déjà clôturé";
+                return new JsonResponse($result);
+            }
+            //#### TEST DATE
+
+
             $vu = new VoteUtilisateur();
             $vu->setUtilisateur($user);
             $vu->setMisetotale($miseTotal);
@@ -840,7 +857,7 @@ class PariController extends ApiController implements InterfaceDB
         $result['code_error'] = 0;
         $result['error']= false;
         $result['success'] = true;
-        $result['message'] = "Aucun concour en cours";
+        $result['message'] = "Aucun concours en cours";
         return new JsonResponse($result);
     }
 

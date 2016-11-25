@@ -41,39 +41,7 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
         $arrayCombinedGagnant = array();
         $arrayCombinedPerdu = array();
 
-        //#### TEST DATE
-        /*
-        // RECUPERER L'HEURE ACTUELLE
-        $dateTemp = new \DateTime('now');
-        var_dump($dateTemp);
-        // AJOUTER 5 MINUTES
-        // SI HEURE ACTUELLE + 5MINUTES > DATEHEURE MATCH -->>BLOQUER
-//            $dateTest = $matchsVote->get('date');
-        $dateTest = $dateTemp->add(new \DateInterval('PT5M'));
-        var_dump($dateTest);
-        $dateTemp = new \DateTime('now');
-        if($dateTemp>$dateTest){
-            var_dump($dateTemp->format('Y-m-d H:i:s').'>>> '.$dateTest->format('Y-m-d H:i:s'));
-        }
-        else {
-            var_dump($dateTemp->format('Y-m-d H:i:s').'<<<<< '.$dateTest->format('Y-m-d H:i:s'));
-        }
-        $dateTest = $dateTemp->sub(new \DateInterval('PT5M'));
-        var_dump($dateTest);
-        $dateTemp = new \DateTime('now');
-        if($dateTemp>$dateTest){
-            var_dump($dateTemp->format('Y-m-d H:i:s').'>>>> '.$dateTest->format('Y-m-d H:i:s'));
-        }
-        else {
-            var_dump($dateTemp->format('Y-m-d H:i:s').'<<<<< '.$dateTest->format('Y-m-d H:i:s'));
-        }
-
-*/
-        //#### TEST DATE
-
-
         if($matchsVote){
-
 
             foreach($matchsVote as $kMatchsVote => $itemsMatchsVote){
                 $vote = $itemsMatchsVote->getVote();
@@ -101,8 +69,6 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
                         $gagnant = 0;
                     }
 //                    var_dump($vote." ".$scoreDomicile."  ".$scoreVisiteur."  ".$gagnant.($vote == $gagnant));
-
-
 
                     if($vote == $gagnant){
                     $itemsMatchsVote->setGagnant(true);
