@@ -52,19 +52,19 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
         var_dump($dateTest);
 
         if($dateTemp>$dateTest){
-            var_dump($dateTemp.'>>> '.$dateTest);
+            var_dump($dateTemp->format('Y-m-d H:i:s').'>>> '.$dateTest->format('Y-m-d H:i:s'));
         }
         else {
-            var_dump($dateTemp.'<<<<< '.$dateTest);
+            var_dump($dateTemp->format('Y-m-d H:i:s').'<<<<< '.$dateTest->format('Y-m-d H:i:s'));
         }
         $dateTest = $dateTemp->sub(new \DateInterval('PT5M'));
         var_dump($dateTest);
 
         if($dateTemp>$dateTest){
-            var_dump($dateTemp.'>>>> '.$dateTest);
+            var_dump($dateTemp->format('Y-m-d H:i:s').'>>>> '.$dateTest->format('Y-m-d H:i:s'));
         }
         else {
-            var_dump($dateTemp.'<<<<< '.$dateTest);
+            var_dump($dateTemp->format('Y-m-d H:i:s').'<<<<< '.$dateTest->format('Y-m-d H:i:s'));
         }
 
 
