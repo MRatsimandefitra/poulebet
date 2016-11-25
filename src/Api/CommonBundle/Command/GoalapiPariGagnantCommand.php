@@ -51,7 +51,7 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
         // SI HEURE ACTUELLE + 5MINUTES > DATEHEURE MATCH -->>BLOQUER
 //            $dateTest = $matchsVote->get('date');
         $dateTest = $dateTemp->format('Y-m-d ');
-        $dateTest = $dateTest. "15:00:00";
+        $dateTest = $dateTest."13:15:00";
         var_dump($dateTest);
 
         if($dateTemp>$dateTest){
