@@ -201,7 +201,7 @@ class LiveScoreController extends ApiController implements InterfaceDB
             foreach($championatToday as $kChampionatToday => $itemsChampionatToday){
                 $result['list_championat'][] = array(
                     'idChampionat' =>$itemsChampionatToday->getChampionat()->getId(),
-                    'nomChampionat' => $itemsChampionatToday->getChampionat()->getNomChampionat(),
+                    'nomChampionat' => $itemsChampionatToday->getChampionat()->getNomChampionat().'test',
                     'fullNameChampionat' => $itemsChampionatToday->getChampionat()->getFullNameChampionat()
                 );
             }
