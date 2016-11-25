@@ -617,7 +617,8 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         }
 
         $where[] = " vu.gagnant = true ";
-        
+        $where[] = " vu.idMise IS NOT NULL";
+
 
 
         if(!empty($where)){
