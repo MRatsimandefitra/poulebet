@@ -623,11 +623,11 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
             $dql .= ' WHERE ' . implode(' AND ', $where);
         }
         // MISE DOUBLE POUR LES PARIS COMBINES
-//        if($groupUser){
-//            $dql .=" GROUP BY u.id ";
-//        }else{
+        if($groupUser){
+            $dql .=" GROUP BY u.id ";
+        }else{
             $dql .=" GROUP BY vu.idMise ";
-//        }
+        }
       //  var_dump($dql); die;
         if(empty($params)){
             $query = $this->getEntityManager()->createQuery($dql);
