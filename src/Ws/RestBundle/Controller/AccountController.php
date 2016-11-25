@@ -154,7 +154,8 @@ class AccountController extends ApiController implements InterfaceDB
                         'idChampionat' => $itemsMatch->getMatchs()->getChampionat()->getId(),
                         //    'isGagne' => $this->getStatusRecap($itemsMatch->getId()),
                         'isGagne' => $itemsMatch->getGagnant(),
-                        'imageFacebook' => ($this->getIsGagne($itemsMatch->getId(), 'http://dplb.arkeup.com/upload/admin/facebook/' . $itemsMatch->getIdMise(), $itemsMatch->getDateMise())) ? 'http://dplb.arkeup.com/upload/admin/facebook/' . $this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImageOeuf() : 'http://dplb.arkeup.com/upload/admin/facebook/' . $this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImagePoulebet()
+//                        'imageFacebook' => ($this->getIsGagne($itemsMatch->getId(), 'http://dplb.arkeup.com/upload/admin/facebook/' . $itemsMatch->getIdMise(), $itemsMatch->getDateMise())) ? 'http://dplb.arkeup.com/upload/admin/facebook/' . $this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImageOeuf() : 'http://dplb.arkeup.com/upload/admin/facebook/' . $this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImagePoulebet()
+                        'imageFacebook' => ($itemsMatch->getGagnant ? 'http://dplb.arkeup.com/upload/admin/facebook/' . $this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImageOeuf() : 'http://dplb.arkeup.com/upload/admin/facebook/' . $this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImagePoulebet())
                     );
 
                 } else {
