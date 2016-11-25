@@ -197,7 +197,7 @@ class ClassementController extends ApiController implements InterfaceDB
 
                     }
                     $result['list_classement'][] = $tmpResult;
-
+####
                     /*
                     $classementArray = array();
                     foreach($result['list_classement'] as $kListClassement =>$itemsListClassement){
