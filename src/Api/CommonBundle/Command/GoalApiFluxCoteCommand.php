@@ -216,49 +216,10 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
                                                         }
                                                         $em->flush();
                                                         $output->writeln("Insert" . $matchs[0]->getId() . " ---  Numero : " . $count);
-                                                    }/* else {
-
-                                                        $output->writeln("Aucun matchs trouvé - ID : " . $count);
-                                                    //    var_dump($da)
-                                                        $dateMatch = new \DateTime($dateMatchs);
-                                                        $matchsFluxCote = $em->getRepository(self::ENTITY_MATCHS)->findMatchsForCote($dateMatch, $equipeDomicile, $equipeVisiteur);
-                                                        if (array_key_exists($equipeDomicile, $resultOdds)) {
-                                                            $cote1 = $resultOdds[$equipeDomicile];
-                                                            $matchsFluxCote->setCote1($cote1);
-                                                        }
-                                                        if (array_key_exists('Nul', $resultOdds)) {
-                                                            $coteN = $resultOdds['Nul'];
-                                                            $matchsFluxCote->setCoteN($coteN);
-                                                        }
-                                                        if (array_key_exists($equipeVisiteur, $resultOdds)) {
-                                                            $cote2 = $resultOdds[$equipeVisiteur];
-                                                            $matchsFluxCote->setCote2($cote2);
-                                                        }
-
-                                                        $newMatchsFluxCote = false;
-                                                        if(!$matchsFluxCote){
-                                                            $matchsFluxCote  = new MatchsFluxCote();
-                                                            $newMatchsFluxCote = true;
-                                                        }
-
-                                                        $matchsFluxCote->setChampionat($championat);
-                                                        $matchsFluxCote->setDateMatch($dateMatch);
-                                                        $matchsFluxCote->setEquipeDomicile($equipeDomicile);
-                                                        $matchsFluxCote->setEquipeVisiteur($equipeVisiteur);
-                                                        $matchsFluxCote->setRegion($regionName);
-
-
-
-                                                        if($newMatchsFluxCote){
-                                                            $em->persist($matchsFluxCote);
-                                                        }
-
-                                                        $em->flush();
-                                                        //$output->writeln("insert matchs inxistant sur goalapi");
                                                     }
-                                                } else {
+                                                else {
                                                     $output->writeln("Les arguments datematch equipevisiteur, equipedomicile ne sont pas complet");
-                                                }*/
+                                                }
                                             }
 
                                         }
