@@ -187,7 +187,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         $dql = "SELECT m from ApiDBBundle:Matchs m
                 LEFT JOIN m.championat ch
                 WHERE m.statusMatch LIKE :status  
-                 ORDER BY ch.rang";
+                 ORDER BY ch.rang ASC,  m.dateMatch ASC ";
         $query = $this->getEntityManager()->createQuery($dql);
         $query->setParameter('status', 'active');
         return $query->getResult();
