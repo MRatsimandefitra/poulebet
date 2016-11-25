@@ -189,22 +189,22 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
                                                         $output->writeln($matchs[0]->getmaster_prono_1());
                                                         $output->writeln($matchs[0]->getmaster_prono_2());
                                                         $output->writeln($matchs[0]->getmaster_prono_n());
-
-
-                                                        if ($cote1 < $coteN && $cote1 < $cote2) {
-                                                            $matchs[0]->setMasterProno1(true);
-                                                            $matchs[0]->setMasterPronoN(false);
-                                                            $matchs[0]->setMasterProno2(false);
-                                                        }
-                                                        if ($coteN < $cote1 && $coteN < $cote2) {
-                                                            $matchs[0]->setMasterPronoN(true);
-                                                            $matchs[0]->setMasterProno1(false);
-                                                            $matchs[0]->setMasterProno2(false);
-                                                        }
-                                                        if ($cote2 < $cote1 && $cote2 < $coteN) {
-                                                            $matchs[0]->setMasterProno2(true);
-                                                            $matchs[0]->setMasterPronoN(false);
-                                                            $matchs[0]->setMasterProno1(false);
+                                                        if ($matchs[0]->getmaster_prono_1() || $matchs[0]->getmaster_prono_2() || $matchs[0]->getmaster_prono_n())
+                                                            if ($cote1 < $coteN && $cote1 < $cote2) {
+                                                                $matchs[0]->setMasterProno1(true);
+                                                                $matchs[0]->setMasterPronoN(false);
+                                                                $matchs[0]->setMasterProno2(false);
+                                                            }
+                                                            if ($coteN < $cote1 && $coteN < $cote2) {
+                                                                $matchs[0]->setMasterPronoN(true);
+                                                                $matchs[0]->setMasterProno1(false);
+                                                                $matchs[0]->setMasterProno2(false);
+                                                            }
+                                                            if ($cote2 < $cote1 && $cote2 < $coteN) {
+                                                                $matchs[0]->setMasterProno2(true);
+                                                                $matchs[0]->setMasterPronoN(false);
+                                                                $matchs[0]->setMasterProno1(false);
+                                                            }
                                                         }
                                                         $em->flush();
                                                         //$output->writeln("Insert" . $matchs[0]->getId() . " ---  Numero : " . $count);
