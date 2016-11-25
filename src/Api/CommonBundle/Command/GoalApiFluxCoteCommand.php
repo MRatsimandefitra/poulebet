@@ -178,6 +178,7 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
 //                                                        $cote1=NULL;
 //                                                        $coteN=NULL;
 //                                                        $cote2=NULL;
+                                                        $cote1 = $resultOdds[$home];
                                                         if (array_key_exists($home, $resultOdds)) {
                                                             $cote1 = $resultOdds[$home];
                                                         }
