@@ -185,9 +185,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
     function getMatchLiveScore()
     {
         $dql = "SELECT m from ApiDBBundle:Matchs m
-                LEFT JOIN m.championat ch
-                WHERE m.statusMatch LIKE :status  
-                 ORDER BY ch.rang ASC,  m.dateMatch ASC ";
+                WHERE m.statusMatch LIKE :status ";
         $query = $this->getEntityManager()->createQuery($dql);
         $query->setParameter('status', 'active');
         return $query->getResult();
@@ -545,7 +543,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
 
         $dql = "SELECT m from ApiDBBundle:Matchs m
                 LEFT JOIN m.championat ch
-                where m.dateMatch BETWEEN :dateDebut and :dateFinale";
+                where m.dateMatch BETWEEN :dateDebut and :dateFinale ORDER BY ch.rang ASC,m.dateMatch ASC ";
 
         $query = $this->getEntityManager()->createQuery($dql);
         $query->setParameters(array('dateDebut'=> $dateDebut, 'dateFinale' => $dateFinale));
@@ -560,7 +558,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
 
         $dql = "SELECT m from ApiDBBundle:Matchs m
                 LEFT JOIN m.championat ch
-                where m.dateMatch BETWEEN :dateDebut and :dateFinale GROUP by ch.nomChampionat ";
+                where m.dateMatch BETWEEN :dateDebut and :dateFinale GROUP by ch.nomChampionat  ORDER BY ch.rang ASC,m.dateMatch ASC ";
 
         $query = $this->getEntityManager()->createQuery($dql);
         $query->setParameters(array('dateDebut'=> $dateDebut, 'dateFinale' => $dateFinale));
@@ -756,7 +754,8 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         $date2 = $date2->format("Y-m-d");
         $date2 = $date2.' 23:59:59';
         $dql  = "SELECT m from ApiDBBundle:Matchs m
-                 WHERE m.statusMatch = :status AND m.dateMatch BETWEEN :date1 AND :date2";
+                 WHERE m.statusMatch = :status AND m.dateMatch BETWEEN :date1 AND :date2 
+                  ORDER BY m.dateMatch ASC, m.equipeDomicile ASC ";
 
         $query  = $this->getEntityManager()->createQuery($dql);
         $query->setParameters(array('date1' => $date1, 'date2' => $date2, 'status' => $status));
