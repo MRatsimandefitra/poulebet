@@ -216,7 +216,7 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
                                                         }
                                                         $em->flush();
                                                         $output->writeln("Insert" . $matchs[0]->getId() . " ---  Numero : " . $count);
-                                                    } else {
+                                                    }/* else {
 
                                                         $output->writeln("Aucun matchs trouvé - ID : " . $count);
                                                     //    var_dump($da)
@@ -254,11 +254,11 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
                                                         }
 
                                                         $em->flush();
-                                                        $output->writeln("insert matchs inxistant sur goalapi");
+                                                        //$output->writeln("insert matchs inxistant sur goalapi");
                                                     }
                                                 } else {
                                                     $output->writeln("Les arguments datematch equipevisiteur, equipedomicile ne sont pas complet");
-                                                }
+                                                }*/
                                             }
 
                                         }
