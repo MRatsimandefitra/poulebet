@@ -46,31 +46,27 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
         $dateTemp = new \DateTime('now');
         var_dump($dateTemp);
         // AJOUTER 5 MINUTES
-        $dateTemp->add(new \DateInterval('PT5M'));
-        var_dump($dateTemp);
         // SI HEURE ACTUELLE + 5MINUTES > DATEHEURE MATCH -->>BLOQUER
 //            $dateTest = $matchsVote->get('date');
-        $dateTest = $dateTemp->format('Y-m-d ');
-        $dateTest = $dateTest."13:05:00";
+        $dateTest = $dateTemp->add(new \DateInterval('PT5M'));
         var_dump($dateTest);
 
         if($dateTemp>$dateTest){
-            var_dump('plus grand ');
+            var_dump('temp>test ');
         }
         else {
-            var_dump('plus petit');
+            var_dump('temp<test');
         }
-
-        $dateTest = $dateTemp->format('Y-m-d ');
-        $dateTest = $dateTest."13:35:00";
+        $dateTest = $dateTemp->sub(new \DateInterval('PT5M'));
         var_dump($dateTest);
 
         if($dateTemp>$dateTest){
-            var_dump('plus petit');
+            var_dump('temp>test ');
         }
         else {
-            var_dump('plus grand');
+            var_dump('temp<test');
         }
+
 
         //#### TEST DATE
 
