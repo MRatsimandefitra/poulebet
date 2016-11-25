@@ -394,7 +394,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
     }
     public function findVoteCombinedNonGagnant ($idUser,$idMise){
         $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu LEFT JOIN vu.utilisateur u 
-                WHERE u.id = :idUser AND vu.isCombined = 1 AND vu.idMise = :idMise AND (vu.gagnant =NULL OR vu.gagnant =0 ) ";
+                WHERE u.id = :idUser AND vu.isCombined = 1 AND vu.idMise = :idMise AND (vu.gagnant =0 OR vu.gagnant IS NULL ) ";
         $query = $this->getEntityManager()->createQuery($dql);
         $query->setParameter('idUser' , $idUser);
         $query->setParameter("idMise", $idMise);
