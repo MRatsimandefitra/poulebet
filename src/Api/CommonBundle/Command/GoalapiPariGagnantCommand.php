@@ -73,6 +73,9 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
 
                     if($vote == $gagnant){
                         var_dump('gagnant');
+                        //#### TEST
+                    $itemsMatchsVote->setGagnant(3);
+//                    $itemsMatchsVote->setGagnant(true);
                     $itemsMatchsVote->setGagnant(true);
                     $gainPotentiel = $itemsMatchsVote->getGainPotentiel();
                     if($itemsMatchsVote->getIsCombined() == 0){
@@ -167,8 +170,9 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
                     $em->flush();
 
                 }else{
-                        var_dump('KO');
-                        $itemsMatchsVote->setGagnant(false);
+
+                        $itemsMatchsVote->setGagnant(0);
+                        //var_dump($gagnantGagnant());
                         $em->flush();
                     }
                 }
