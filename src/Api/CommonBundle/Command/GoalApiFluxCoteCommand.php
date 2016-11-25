@@ -171,6 +171,10 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
                                                             $json = json_encode($resultOdds);
                                                             file_put_contents("odds.json", "Misy macht".$json.$equipeDomicile."VS".$equipeVisiteur,FILE_APPEND);
                                                         }
+                                                        //### MASTER PRONO A CALCULER SEULEMENT UNE FOIS
+
+                                                        var_dump('TEST');
+                                                        var_dump($matchs[0]->getmaster_prono_1());
                                                         $cote1=NULL;
                                                         $coteN=NULL;
                                                         $cote2=NULL;
@@ -186,10 +190,7 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
                                                         $matchs[0]->setCot1Pronostic($cote1);
                                                         $matchs[0]->setCoteNPronistic($coteN);
                                                         $matchs[0]->setCote2Pronostic($cote2);
-                                                        //### MASTER PRONO A CALCULER SEULEMENT UNE FOIS
 
-                                                        var_dump('TEST');
-                                                        var_dump($matchs[0]->getmaster_prono_1());
                                                         if ($cote1 < $coteN && $cote1 < $cote2) {
                                                             $matchs[0]->setMasterProno1(true);
                                                             $matchs[0]->setMasterPronoN(false);
