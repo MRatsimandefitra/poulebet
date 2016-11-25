@@ -228,8 +228,8 @@ class RecapitulationController extends ApiController implements InterfaceDB
                             'state' => $this->getMatchsState($vItems->getId()),
                             'idChampionat' => $vItems->getMatchs()->getChampionat()->getId(),
                             'voted_equipe' => $vItems->getVote(),
-                            //'isGagne' => $vItems->getGagnant(),
-                            'isGagne' => $this->getStatusRecap($vItems->getId()),
+                            'isGagne' => $vItems->getGagnant(),
+//                            'isGagne' => $this->getStatusRecap($vItems->getId()),
 //                            'imageFacebook' => ($this->getIsGagne($vItems->getId(), $vItems->getIdMise(), $vItems->getDateMise())) ? 'http://dplb.arkeup.com/upload/admin/facebook/'.$this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImageOeuf() : 'http://dplb.arkeup.com/upload/admin/facebook/'.$this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImagePoulebet()
                             'imageFacebook' => ($vItems->getGagnant()) ? 'http://dplb.arkeup.com/upload/admin/facebook/'.$this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImageOeuf() : 'http://dplb.arkeup.com/upload/admin/facebook/'.$this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImagePoulebet()
                         );
