@@ -166,8 +166,9 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
                     $em->flush();
 
                 }else{
+
+                        $itemsMatchsVote->setGagnant(false);
                         var_dump('av ');var_dump($itemsMatchsVote->getGagnant());
-                        $itemsMatchsVote->setGagnant(true);
                         $em->persist($itemsMatchsVote);
                         $em->flush();
                         var_dump('ap ');var_dump($itemsMatchsVote->getGagnant());
