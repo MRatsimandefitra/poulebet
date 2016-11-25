@@ -159,46 +159,33 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
 
                                                         $equipeVisiteur = $matchsCorresVisiteur[0]->getEquipeGoalApi();
                                                     }
-//                                                    if ($home == "CSKA Moscou" && $away == "Bayer Leverkusen"){
-//                                                        $json = json_encode($resultOdds);
-//                                                        file_put_contents("odds.json", $equipeDomicile."VS".$equipeVisiteur,FILE_APPEND);
-//                                                    }
+                                                    if ($home == "CSKA Moscou" && $away == "Bayer Leverkusen"){
+                                                        $json = json_encode($resultOdds);
+                                                        file_put_contents("odds.json", $equipeDomicile."VS".$equipeVisiteur,FILE_APPEND);
+                                                    }
                                                     $matchs = $em->getRepository(self::ENTITY_MATCHS)->findMatchsForCote($dateMatchs, $equipeDomicile, $equipeVisiteur);
 
-                                                    $cote1=NULL;
-                                                    $coteN=NULL;
-                                                    $cote2=NULL;
                                                     if ($matchs) {
                                                         // $matchs = new Matchs();
-//                                                        if ($home == "CSKA Moscou" && $away == "Bayer Leverkusen"){
-//                                                            $json = json_encode($resultOdds);
-//                                                            file_put_contents("odds.json", "Misy macht".$json.$equipeDomicile."VS".$equipeVisiteur,FILE_APPEND);
-//                                                        }
-                                                        //### MASTER PRONO A CALCULER SEULEMENT UNE FOIS
-
-//                                                        var_dump('TEST');
-//                                                        var_dump($matchs[0]->getmaster_prono_1());
-                                                        $cote1=NULL;
-//                                                        $coteN=NULL;
-//                                                        $cote2=NULL;
-
+                                                        if ($home == "CSKA Moscou" && $away == "Bayer Leverkusen"){
+                                                            $json = json_encode($resultOdds);
+                                                            file_put_contents("odds.json", "Misy macht".$json.$equipeDomicile."VS".$equipeVisiteur,FILE_APPEND);
+                                                        }
                                                         if (array_key_exists($home, $resultOdds)) {
                                                             $cote1 = $resultOdds[$home];
-                                                            $matchs[0]->setCot1Pronostic($cote1);
                                                         }
                                                         if (array_key_exists('Nul', $resultOdds)) {
                                                             $coteN = $resultOdds['Nul'];
-                                                            $matchs[0]->setCoteNPronistic($coteN);
-
                                                         }
                                                         if (array_key_exists($away, $resultOdds)) {
                                                             $cote2 = $resultOdds[$away];
-                                                            $matchs[0]->setCote2Pronostic($cote2);
                                                         }
+                                                        $matchs[0]->setCot1Pronostic($cote1);
+                                                        $matchs[0]->setCoteNPronistic($coteN);
+                                                        $matchs[0]->setCote2Pronostic($cote2);
+                                                        //### MASTER PRONO A CALCULER SEULEMENT UNE FOIS
 
-
-
-
+                                                        $output->writeln($matchs[0]->getMasterMasterProno1();
                                                         if ($cote1 < $coteN && $cote1 < $cote2) {
                                                             $matchs[0]->setMasterProno1(true);
                                                             $matchs[0]->setMasterPronoN(false);
@@ -217,7 +204,12 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
                                                         $em->flush();
                                                         $output->writeln("Insert" . $matchs[0]->getId() . " ---  Numero : " . $count);
                                                     }
-                                                else {
+                                                    else {
+
+                                                        $output->writeln("Aucun matchs trouvé - ID : " . $count);
+                                                        
+                                                    }
+                                                } else {
                                                     $output->writeln("Les arguments datematch equipevisiteur, equipedomicile ne sont pas complet");
                                                 }
                                             }
