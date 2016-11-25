@@ -55,12 +55,22 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
         var_dump($dateTest);
 
         if($dateTemp>$dateTest){
-            var_dump('no : interdit');
+            var_dump('plus grand ');
         }
         else {
-            var_dump('oui : passe');
+            var_dump('plus petit');
         }
 
+        $dateTest = $dateTemp->format('Y-m-d ');
+        $dateTest = $dateTest."13:35:00";
+        var_dump($dateTest);
+
+        if($dateTemp>$dateTest){
+            var_dump('plus petit');
+        }
+        else {
+            var_dump('plus grand');
+        }
 
         //#### TEST DATE
 
