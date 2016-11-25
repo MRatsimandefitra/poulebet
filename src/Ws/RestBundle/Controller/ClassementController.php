@@ -57,13 +57,15 @@ class ClassementController extends ApiController implements InterfaceDB
                         $nom = $itemsClassement->getUtilisateur()->getNom();
                         $prenom  = $itemsClassement->getUtilisateur()->getPrenom();
                         $photo = $itemsClassement->getUtilisateur()->getCheminPhoto();
-                        $tmpResult = array(
-                            'id' => $itemsClassement->getUtilisateur()->getId(),
-                            'nom' =>   $nom,
-                            'prenom' =>  $prenom,
-                            'photo' => $photo,
-                            'classement' => $total
-                        );
+                        if ($total>0) {
+                            $tmpResult = array(
+                                'id' => $itemsClassement->getUtilisateur()->getId(),
+                                'nom' => $nom,
+                                'prenom' => $prenom,
+                                'photo' => $photo,
+                                'classement' => $total
+                            );
+                        }
 
                     }
                     $result['list_classement'][] = $tmpResult;
@@ -123,13 +125,15 @@ class ClassementController extends ApiController implements InterfaceDB
                         $nom = $itemsClassement->getUtilisateur()->getNom();
                         $prenom  = $itemsClassement->getUtilisateur()->getPrenom();
                         $photo = $itemsClassement->getUtilisateur()->getCheminPhoto();
-                        $tmpResult = array(
-                            'id' => $itemsClassement->getUtilisateur()->getId(),
-                            'nom' =>   $nom,
-                            'prenom' =>  $prenom,
-                            'photo' => $photo,
-                            'classement' => $total
-                        );
+                        if ($total>0) {
+                            $tmpResult = array(
+                                'id' => $itemsClassement->getUtilisateur()->getId(),
+                                'nom' => $nom,
+                                'prenom' => $prenom,
+                                'photo' => $photo,
+                                'classement' => $total
+                            );
+                        }
 
                     }
                     $result['list_classement'][] = $tmpResult;
@@ -188,13 +192,15 @@ class ClassementController extends ApiController implements InterfaceDB
                         $nom = $itemsClassement->getUtilisateur()->getNom();
                         $prenom  = $itemsClassement->getUtilisateur()->getPrenom();
                         $photo = $itemsClassement->getUtilisateur()->getCheminPhoto();
-                        $tmpResult = array(
-                            'id' => $itemsClassement->getUtilisateur()->getId(),
-                            'nom' =>   $nom,
-                            'prenom' =>  $prenom,
-                            'photo' => $photo,
-                            'classement' => $total
-                        );
+                        if ($total>0) {
+                            $tmpResult = array(
+                                'id' => $itemsClassement->getUtilisateur()->getId(),
+                                'nom' => $nom,
+                                'prenom' => $prenom,
+                                'photo' => $photo,
+                                'classement' => $total
+                            );
+                        }
 
                     }
                     $result['list_classement'][] = $tmpResult;
