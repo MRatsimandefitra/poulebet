@@ -183,6 +183,8 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
                                                         $matchs[0]->setCot1Pronostic($cote1);
                                                         $matchs[0]->setCoteNPronistic($coteN);
                                                         $matchs[0]->setCote2Pronostic($cote2);
+                                                        //### MASTER PRONO A CALCULER SEULEMENT UNE FOIS
+                                                        $output->writeln("Insert ***************" . $matchs[0]->getMasterMasterProno1());
                                                         if ($cote1 < $coteN && $cote1 < $cote2) {
                                                             $matchs[0]->setMasterProno1(true);
                                                             $matchs[0]->setMasterPronoN(false);

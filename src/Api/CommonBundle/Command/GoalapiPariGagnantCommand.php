@@ -42,6 +42,7 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
         $arrayCombinedPerdu = array();
 
         //#### TEST DATE
+        /*
         // RECUPERER L'HEURE ACTUELLE
         $dateTemp = new \DateTime('now');
         var_dump($dateTemp);
@@ -67,7 +68,7 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
             var_dump($dateTemp->format('Y-m-d H:i:s').'<<<<< '.$dateTest->format('Y-m-d H:i:s'));
         }
 
-
+*/
         //#### TEST DATE
 
 
