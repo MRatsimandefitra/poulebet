@@ -53,17 +53,6 @@ class ClassementController extends ApiController implements InterfaceDB
                         }
 
 
-
-//                        if ($itemsGains->getIsCombined()){
-//                            $voteNonGagnant = $this->getRepo(self::ENTITY_MATCHS)->findVoteCombinedNonGagnant($user->getId(),$itemsGains->getIdMise());
-//                            if (!$voteNonGagnant){
-//                                $totalGains += $itemsGains->getGainPotentiel();
-//                            }
-//                        }
-//                        else{
-//                            $totalGains += $itemsGains->getGainPotentiel();
-//                        }
-                        //////////////////////////////
 //                        $total = $total + $itemsClassement->getClassement();
                         $nom = $itemsClassement->getUtilisateur()->getNom();
                         $prenom  = $itemsClassement->getUtilisateur()->getPrenom();
@@ -120,7 +109,17 @@ class ClassementController extends ApiController implements InterfaceDB
                 if (is_array($classement) && count($classement) > 0) {
                     $total = 0;
                     foreach ($classement as $kClassement => $itemsClassement) {
-                        $total = $total + $itemsClassement->getClassement();
+//                        $total = $total + $itemsClassement->getClassement();
+                        // NE PAS METTRE DANS CLASSEMENT SI PARI COMBINE NON GAGNE
+                        if ($itemsClassement->getIsCombined() == 1){
+                            $voteNonGagnant = $this->getRepo(self::ENTITY_MATCHS)->findVoteCombinedNonGagnant($itemsUserClassement->getUtilisateur()->getId(),$itemsClassement->getIdMise());
+                            if (!$voteNonGagnant) {
+                                $total = $total + $itemsClassement->getClassement();
+                            }
+                        }
+                        else{
+                            $total = $total + $itemsClassement->getClassement();
+                        }
                         $nom = $itemsClassement->getUtilisateur()->getNom();
                         $prenom  = $itemsClassement->getUtilisateur()->getPrenom();
                         $photo = $itemsClassement->getUtilisateur()->getCheminPhoto();
@@ -175,7 +174,17 @@ class ClassementController extends ApiController implements InterfaceDB
                 if (is_array($classement) && count($classement) > 0) {
                     $total = 0;
                     foreach ($classement as $kClassement => $itemsClassement) {
-                        $total = $total + $itemsClassement->getClassement();
+//                        $total = $total + $itemsClassement->getClassement();
+                        // NE PAS METTRE DANS CLASSEMENT SI PARI COMBINE NON GAGNE
+                        if ($itemsClassement->getIsCombined() == 1){
+                            $voteNonGagnant = $this->getRepo(self::ENTITY_MATCHS)->findVoteCombinedNonGagnant($itemsUserClassement->getUtilisateur()->getId(),$itemsClassement->getIdMise());
+                            if (!$voteNonGagnant) {
+                                $total = $total + $itemsClassement->getClassement();
+                            }
+                        }
+                        else{
+                            $total = $total + $itemsClassement->getClassement();
+                        }
                         $nom = $itemsClassement->getUtilisateur()->getNom();
                         $prenom  = $itemsClassement->getUtilisateur()->getPrenom();
                         $photo = $itemsClassement->getUtilisateur()->getCheminPhoto();
