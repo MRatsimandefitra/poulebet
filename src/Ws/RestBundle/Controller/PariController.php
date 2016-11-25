@@ -764,9 +764,9 @@ class PariController extends ApiController implements InterfaceDB
             $date5minAvant = $dateTemp->add(new \DateInterval('PT5M'));
             foreach ($matchs as $kMatchs => $itemsMatchs) {
                 $idMatchs = $itemsMatchs['id'];
-                $matchs = $this->getObjectRepoFrom(self::ENTITY_MATCHS, array('id' => $idMatchs));
-                if ($matchs) {
-                    $dateMatch=$matchs->getDateMatch();
+                $matchsVerification = $this->getObjectRepoFrom(self::ENTITY_MATCHS, array('id' => $idMatchs));
+                if ($matchsVerification) {
+                    $dateMatch=$matchsVerification->getDateMatch();
                     if($date5minAvant>$dateMatch){
                         $result['code_error'] = 0;
                         $result['success'] = false;
