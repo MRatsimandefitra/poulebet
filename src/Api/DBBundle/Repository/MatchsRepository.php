@@ -506,9 +506,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
                 LEFT JOIN vu.matchs m
                 LEFT JOIN vu.utilisateur u
-                WHERE vu.gagnant is null
-                AND m.statusMatch = 'finished'
-                AND vu.idMise ='1480011131'
+                WHERE  vu.idMise ='1480011131'
                 ";
 
         $query = $this->getEntityManager()->createQuery($dql);
