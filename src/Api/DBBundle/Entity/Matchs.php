@@ -1137,14 +1137,14 @@ class Matchs
 
     public function getmaster_prono_1()
     {
-        return $this->master_prono_1;
+        return $this->masterProno1;
     }
     public function getmaster_prono_2()
     {
-        return $this->master_prono_2;
+        return $this->masterProno2;
     }
     public function getmaster_prono_3()
     {
-        return $this->master_prono_3;
+        return $this->masterProno3;
     }
 }
