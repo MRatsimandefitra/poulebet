@@ -72,8 +72,6 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
 
 
                     if($vote == $gagnant){
-                        var_dump('gagnant');
-                        //#### TEST
                     $itemsMatchsVote->setGagnant(true);
                     $gainPotentiel = $itemsMatchsVote->getGainPotentiel();
                     if($itemsMatchsVote->getIsCombined() == 0){
@@ -168,38 +166,14 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
                     $em->flush();
 
                 }else{
-                        var_dump('set false');
-                        $itemsMatchsVote->setGagnant(false);
+                        var_dump('av ');var_dump($itemsMatchsVote->getGagnant());
+                        $itemsMatchsVote->setGagnant(true);
                         $em->persist($itemsMatchsVote);
                         $em->flush();
+                        var_dump('ap ');var_dump($itemsMatchsVote->getGagnant());
                     }
                 }
             }
-            /*if($arrayCombinedGagnant){
-                foreach($arrayCombinedGagnant as $kArrayCombinedG => $itemsArrayCombinedG){
-                    $gainPotentiel = $itemsArrayCombinedG['gainPotentiel'];
-                    $utilisateurId = $itemsArrayCombinedG['idUtilisateur'];
-                    $utilisateur = $em->getRepository(self::ENTITY_UTILISATEUR)->findOneBy(array('id' => $utilisateurId));
-                    $mvtCredit = new MvtCredit();
-                    $lastSolde = $em->getRepository(self::ENTITY_MVT_CREDIT)->findLastSolde($utilisateurId);
-                    $idLast = $lastSolde[0][1];
-                    $mvtCreditLast = $em->getRepository(self::ENTITY_MVT_CREDIT)->findOneBy(array('id' => $idLast));
-                    if(!$mvtCreditLast){
-                        $solde = 0;
-                    }else{
-                        $solde  = $mvtCreditLast->getSoldeCredit() - $gainPotentiel;
-                    }
-                    $mvtCredit->setUtilisateur($utilisateur);
-                    $mvtCredit->setSoldeCredit($solde);
-                    $mvtCredit->setEntreeCredit($gainPotentiel);
-                    $mvtCredit->setTypeCredit("PAYEMENT PARI COMBINED");
-                    $mvtCredit->setDateMvt(new \DateTime('now'));
-                    $em->persist($mvtCredit);
-                    $em->flush();
-                    $output->writeln("Ajout credit combined");
-                }
-
-            }*/
 
 
         }else{
