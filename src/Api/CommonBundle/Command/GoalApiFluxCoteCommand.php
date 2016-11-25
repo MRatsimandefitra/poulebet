@@ -184,16 +184,20 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
 
                                                         if (array_key_exists($home, $resultOdds)) {
                                                             $cote1 = $resultOdds[$home];
+                                                            $matchs[0]->setCot1Pronostic($cote1);
                                                         }
                                                         if (array_key_exists('Nul', $resultOdds)) {
                                                             $coteN = $resultOdds['Nul'];
+                                                            $matchs[0]->setCoteNPronistic($coteN);
+
                                                         }
                                                         if (array_key_exists($away, $resultOdds)) {
                                                             $cote2 = $resultOdds[$away];
+                                                            $matchs[0]->setCote2Pronostic($cote2);
                                                         }
-                                                        $matchs[0]->setCot1Pronostic($cote1);
-                                                        $matchs[0]->setCoteNPronistic($coteN);
-                                                        $matchs[0]->setCote2Pronostic($cote2);
+
+
+
 
                                                         if ($cote1 < $coteN && $cote1 < $cote2) {
                                                             $matchs[0]->setMasterProno1(true);
