@@ -185,10 +185,7 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
                                                         $matchs[0]->setCote2Pronostic($cote2);
                                                         //### MASTER PRONO A CALCULER SEULEMENT UNE FOIS
 
-                                                        $output->writeln('************************************');
-                                                        $output->writeln($matchs[0]->getmaster_prono_1());
-                                                        $output->writeln($matchs[0]->getmaster_prono_2());
-                                                        $output->writeln($matchs[0]->getmaster_prono_n());
+
                                                         if (!$matchs[0]->getmaster_prono_1() && !$matchs[0]->getmaster_prono_2() && !$matchs[0]->getmaster_prono_n()){
                                                             if ($cote1 < $coteN && $cote1 < $cote2) {
                                                                 $matchs[0]->setMasterProno1(true);
@@ -207,15 +204,15 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
                                                             }
                                                         }
                                                         $em->flush();
-                                                        //$output->writeln("Insert" . $matchs[0]->getId() . " ---  Numero : " . $count);
+                                                        $output->writeln("Insert" . $matchs[0]->getId() . " ---  Numero : " . $count);
                                                     }
                                                     else {
 
-                                                        //$output->writeln("Aucun matchs trouvé - ID : " . $count);
+                                                        $output->writeln("Aucun matchs trouvé - ID : " . $count);
 
                                                     }
                                                 } else {
-                                                    //$output->writeln("Les arguments datematch equipevisiteur, equipedomicile ne sont pas complet");
+                                                    $output->writeln("Les arguments datematch equipevisiteur, equipedomicile ne sont pas complet");
                                                 }
                                             }
 
