@@ -609,18 +609,18 @@ class PariController extends ApiController implements InterfaceDB
         if ($matchs) {
             //#### PLUS DE PARI 5 MIN AVANT MATCH
             // RECUPERER L'HEURE ACTUELLE
-//            $dateTemp = new \DateTime('now');
-//            // AJOUTER 5 MINUTES
-//            // SI HEURE ACTUELLE + 5MINUTES > DATEHEURE MATCH -->>BLOQUER
-//            $date5minAvant = $dateTemp->add(new \DateInterval('PT5M'));
-//            $dateMatch=$matchs->getDateMatch();
-//            if($date5minAvant>$dateMatch){
-//                $result['code_error'] = 0;
-//                $result['success'] = false;
-//                $result['error'] = true;
-//                $result['message'] = "Pari déjà clôturé";
-//                return new JsonResponse($result);
-//            }
+            $dateTemp = new \DateTime('now');
+            // AJOUTER 5 MINUTES
+            // SI HEURE ACTUELLE + 5MINUTES > DATEHEURE MATCH -->>BLOQUER
+            $date5minAvant = $dateTemp->add(new \DateInterval('PT5M'));
+            $dateMatch=$matchs->getDateMatch();
+            if($date5minAvant>$dateMatch){
+                $result['code_error'] = 0;
+                $result['success'] = false;
+                $result['error'] = true;
+                $result['message'] = "Pari déjà clôturé";
+                return new JsonResponse($result);
+            }
             //####
             $vu = new VoteUtilisateur();
             $vu->setUtilisateur($user);
@@ -754,6 +754,30 @@ class PariController extends ApiController implements InterfaceDB
         $deviceToken = $this->getObjectRepoFrom(self::ENTITY_CONNECTED, array('username' => $user->getEMail()))->getDevice();
 
         if (!empty($matchs)) {
+
+            //#### PLUS DE PARI 5 MIN AVANT MATCH
+            // RECUPERER L'HEURE ACTUELLE
+            $dateTemp = new \DateTime('now');
+            // AJOUTER 5 MINUTES
+            // SI HEURE ACTUELLE + 5MINUTES > DATEHEURE MATCH -->>BLOQUER
+            $insertioMatchs=true;
+            $date5minAvant = $dateTemp->add(new \DateInterval('PT5M'));
+            foreach ($matchs as $kMatchs => $itemsMatchs) {
+                $idMatchs = $itemsMatchs['id'];
+                $matchs = $this->getObjectRepoFrom(self::ENTITY_MATCHS, array('id' => $idMatchs));
+                if ($matchs) {
+                    $dateMatch=$matchs->getDateMatch();
+                    if($date5minAvant>$dateMatch){
+                        $result['code_error'] = 0;
+                        $result['success'] = false;
+                        $result['error'] = true;
+                        $result['message'] = "Pari déjà clôturé";
+                        return new JsonResponse($result);
+                    }
+                }
+            }
+            //####
+
             //$idMise = uniqid(sha1("mise double"));
            $idMise = time();
             $count = 0;
