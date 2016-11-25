@@ -67,7 +67,7 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
                     if($scoreVisiteur === $scoreDomicile){
                         $gagnant = 0;
                     }
-                    var_dump($vote." ".$scoreDomicile."  ".$scoreVisiteur."  ".$gagnant);
+                    var_dump($vote." ".$scoreDomicile."  ".$scoreVisiteur."  ".$gagnant.($vote == $gagnant));
 
 
                     if($vote == $gagnant){
