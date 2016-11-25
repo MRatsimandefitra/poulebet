@@ -91,7 +91,7 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
                         $mvtCredit->setTypeCredit("GAIN PARI SIMPLE ");
                         $mvtCredit->setUtilisateur($utilisateur);
                         $em->persist($mvtCredit);
-                        $em->flush();
+                        //#### TEST $em->flush();
                         $output->writeln("Mise a jour Mouvement credit :GAIN PARI SIMPLE ");
                     }
 
@@ -149,7 +149,7 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
                             $mvtCredit->setTypeCredit("GAIN PARI COMBINE");
                             $mvtCredit->setUtilisateur($utilisateur);
                             $em->persist($mvtCredit);
-                            $em->flush();
+                            //#### TEST$em->flush();
                             $output->writeln("Mise a jour Mouvement credit :GAIN PARI COMBINE ");
                         /*if (!in_array($itemsMatchsVote->getUtilisateur()->getId(), $arrayCombinedGagnant)) {
                             $arrayCombinedGagnant[] = array(
