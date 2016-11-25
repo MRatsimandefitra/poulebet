@@ -126,7 +126,7 @@ class LiveScoreController extends ApiController implements InterfaceDB
      * @return JsonResponse
      */
     public function getMatchLiveScoreAction(Request $request){
-
+        $dqlChampionat = "SELECT m from ApiDBBundle:Matchs m
         $dqlChampionat = "SELECT m from ApiDBBundle:Matchs m
                 LEFT JOIN m.championat ch
                 where m.dateMatch BETWEEN CURRENT_DATE() AND DATE_ADD(CURRENT_DATE(), 7, 'day' )
