@@ -79,24 +79,24 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
                         $em->flush();
 
                          if($itemsMatchsVote->getIsCombined() == 0){
-//                            $gainPotentiel = $itemsMatchsVote->getGainPotentiel();
-//                            $miseTotal = $itemsMatchsVote->getMiseTotale();
-//                            $mvtCredit = new MvtCredit();
-//                            $lastSolde = $em->getRepository(self::ENTITY_MVT_CREDIT)->findLastSolde($utilisateur->getId());
-//                            $idLast = $lastSolde[0][1];
-//                            $mvtCreditLast = $em->getRepository(self::ENTITY_MVT_CREDIT)->findOneBy(array('id' => $idLast));
-//                            if(!$mvtCreditLast){
-//                                $solde = 0 + $gainPotentiel;
-//                            }else{
-//                                $solde  = $mvtCreditLast->getSoldeCredit() + $gainPotentiel;
-//                            }
-//                            $mvtCredit->setEntreeCredit($gainPotentiel);
-//                            $mvtCredit->setSoldeCredit($solde);
-//                            $mvtCredit->setTypeCredit("GAIN PARI SIMPLE ");
-//                            $mvtCredit->setUtilisateur($utilisateur);
-//                            $em->persist($mvtCredit);
-//                            $em->flush();
-//                            $output->writeln("Mise a jour Mouvement credit :GAIN PARI SIMPLE ");
+                            $gainPotentiel = $itemsMatchsVote->getGainPotentiel();
+                            $miseTotal = $itemsMatchsVote->getMiseTotale();
+                            $mvtCredit = new MvtCredit();
+                            $lastSolde = $em->getRepository(self::ENTITY_MVT_CREDIT)->findLastSolde($utilisateur->getId());
+                            $idLast = $lastSolde[0][1];
+                            $mvtCreditLast = $em->getRepository(self::ENTITY_MVT_CREDIT)->findOneBy(array('id' => $idLast));
+                            if(!$mvtCreditLast){
+                                $solde = 0 + $gainPotentiel;
+                            }else{
+                                $solde  = $mvtCreditLast->getSoldeCredit() + $gainPotentiel;
+                            }
+                            $mvtCredit->setEntreeCredit($gainPotentiel);
+                            $mvtCredit->setSoldeCredit($solde);
+                            $mvtCredit->setTypeCredit("GAIN PARI SIMPLE ");
+                            $mvtCredit->setUtilisateur($utilisateur);
+                            $em->persist($mvtCredit);
+                            $em->flush();
+                            $output->writeln("Mise a jour Mouvement credit :GAIN PARI SIMPLE ");
                     }
 
                         if($itemsMatchsVote->getIsCombined() == 1){
@@ -105,24 +105,24 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
                            $voteNonGagnant = $em->getRepository(self::ENTITY_MATCHS)->findVoteCombinedNonGagnant($utilisateur->getId(),$itemsMatchsVote->getIdMise());
                            if (!$voteNonGagnant){
                                 // ENTRER LE MVT DE CREDIT
-//                                $gainPotentiel = $itemsMatchsVote->getGainPotentiel();
-//                                $miseTotal = $itemsMatchsVote->getMiseTotale();
-//                                $mvtCredit = new MvtCredit();
-//                                $lastSolde = $em->getRepository(self::ENTITY_MVT_CREDIT)->findLastSolde($utilisateur->getId());
-//                                $idLast = $lastSolde[0][1];
-//                                $mvtCreditLast = $em->getRepository(self::ENTITY_MVT_CREDIT)->findOneBy(array('id' => $idLast));
-//                                if(!$mvtCreditLast){
-//                                    $solde = 0 + $gainPotentiel;
-//                                }else{
-//                                    $solde  = $mvtCreditLast->getSoldeCredit() + $gainPotentiel;
-//                                }
-//                                $mvtCredit->setEntreeCredit($gainPotentiel);
-//                                $mvtCredit->setSoldeCredit($solde);
-//                                $mvtCredit->setTypeCredit("GAIN PARI COMBINE");
-//                                $mvtCredit->setUtilisateur($utilisateur);
-//                                $em->persist($mvtCredit);
-//                                $em->flush();
-//                                $output->writeln("Mise a jour Mouvement credit :GAIN PARI COMBINE ");
+                                $gainPotentiel = $itemsMatchsVote->getGainPotentiel();
+                                $miseTotal = $itemsMatchsVote->getMiseTotale();
+                                $mvtCredit = new MvtCredit();
+                                $lastSolde = $em->getRepository(self::ENTITY_MVT_CREDIT)->findLastSolde($utilisateur->getId());
+                                $idLast = $lastSolde[0][1];
+                                $mvtCreditLast = $em->getRepository(self::ENTITY_MVT_CREDIT)->findOneBy(array('id' => $idLast));
+                                if(!$mvtCreditLast){
+                                    $solde = 0 + $gainPotentiel;
+                                }else{
+                                    $solde  = $mvtCreditLast->getSoldeCredit() + $gainPotentiel;
+                                }
+                                $mvtCredit->setEntreeCredit($gainPotentiel);
+                                $mvtCredit->setSoldeCredit($solde);
+                                $mvtCredit->setTypeCredit("GAIN PARI COMBINE");
+                                $mvtCredit->setUtilisateur($utilisateur);
+                                $em->persist($mvtCredit);
+                                $em->flush();
+                                $output->writeln("Mise a jour Mouvement credit :GAIN PARI COMBINE ");
                         }
                     }
 
