@@ -1143,8 +1143,8 @@ class Matchs
     {
         return $this->masterProno2;
     }
-    public function getmaster_prono_3()
+    public function getmaster_prono_n()
     {
-        return $this->masterProno3;
+        return $this->masterPronoN;
     }
 }
