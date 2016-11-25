@@ -503,12 +503,12 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
 //    }
 
         // TEST MATCH NULL QUI DEVIENT 1 GAGNANT
+        // + une journée
         $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
                 LEFT JOIN vu.matchs m
                 LEFT JOIN vu.utilisateur u
-                WHERE  vu.idMise ='1480011131'
-                ";
-
+                WHERE m.statusMatch = 'finished'
+                 ";
         $query = $this->getEntityManager()->createQuery($dql);
         return $query->getResult();
     }
