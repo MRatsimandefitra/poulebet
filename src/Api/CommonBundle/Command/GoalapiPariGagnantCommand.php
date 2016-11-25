@@ -41,28 +41,31 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
         $arrayCombinedGagnant = array();
         $arrayCombinedPerdu = array();
 
-        if($matchsVote){
-            //#### TEST DATE
-            // RECUPERER L'HEURE ACTUELLE
-            $dateTemp = new \DateTime('now');
-            var_dump($dateTemp);
-            // AJOUTER 5 MINUTES
-            $dateTemp->add(new DateInterval('P5i'));
-            var_dump($dateTemp);
-            // SI HEURE ACTUELLE + 5MINUTES > DATEHEURE MATCH -->>BLOQUER
+        //#### TEST DATE
+        // RECUPERER L'HEURE ACTUELLE
+        $dateTemp = new \DateTime('now');
+        var_dump($dateTemp);
+        // AJOUTER 5 MINUTES
+        $dateTemp->add(new DateInterval('P5i'));
+        var_dump($dateTemp);
+        // SI HEURE ACTUELLE + 5MINUTES > DATEHEURE MATCH -->>BLOQUER
 //            $dateTest = $matchsVote->get('date');
-            $dateTest =new \DateTime('now');
-            var_dump($dateTest);
+        $dateTest =new \DateTime('now');
+        var_dump($dateTest);
 
-            if($dateTemp>$dateTest){
-                var_dump('no : future');
-            }
-            else {
-                var_dump('oui : passe');
-            }
+        if($dateTemp>$dateTest){
+            var_dump('no : future');
+        }
+        else {
+            var_dump('oui : passe');
+        }
 
 
-            //#### TEST DATE
+        //#### TEST DATE
+
+
+        if($matchsVote){
+
 
             foreach($matchsVote as $kMatchsVote => $itemsMatchsVote){
                 $vote = $itemsMatchsVote->getVote();
