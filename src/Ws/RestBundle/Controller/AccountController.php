@@ -138,7 +138,9 @@ class AccountController extends ApiController implements InterfaceDB
                         'score' => $itemsMatch->getMatchs()->getScore(),
                         'scoreDomicile' => substr($itemsMatch->getMatchs()->getScore(), 0, 1),
                         'scoreVisiteur' => substr($itemsMatch->getMatchs()->getScore(), -1, 1),
-                        'status' => $itemsMatch->getMatchs()->getStatusMatch(),
+                        // MATCH NON TERMINE S'AFFICHE EN TERMINE
+//                        'status' => $itemsMatch->getMatchs()->getStatusMatch(),
+                        'status' => ($itemsMatch->getMatchs()->getStatusMatch() == 'finished') ? 'finished' : 'not_started',
                         'tempsEcoules' => $itemsMatch->getMatchs()->getTempsEcoules(),
                         'live' => ($itemsMatch->getMatchs()->getStatusMatch() == 'active') ? true : false,
                         'master_prono_1' => $itemsMatch->getMatchs()->getMasterProno1(),

@@ -215,6 +215,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
                             'scoreDomicile' => substr($vItems->getMatchs()->getScore(), 0, 1),
                             'scoreVisiteur' => substr($vItems->getMatchs()->getScore(), -1, 1),
 //                            'status' => $vItems->getMatchs()->getStatusMatch(),
+                            // MATCH NON TERMINE S'AFFICHE EN TERMINE
                             'status' => ($vItems->getMatchs()->getStatusMatch() == 'finished') ? 'finished' : 'not_started',
                             'tempsEcoules' => $vItems->getMatchs()->getTempsEcoules(),
                             'live' => ($vItems->getMatchs()->getStatusMatch() == 'active') ? true : false,
