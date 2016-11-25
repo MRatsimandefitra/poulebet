@@ -165,6 +165,9 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
 //                                                    }
                                                     $matchs = $em->getRepository(self::ENTITY_MATCHS)->findMatchsForCote($dateMatchs, $equipeDomicile, $equipeVisiteur);
 
+                                                    $cote1=NULL;
+                                                    $coteN=NULL;
+                                                    $cote2=NULL;
                                                     if ($matchs) {
                                                         // $matchs = new Matchs();
 //                                                        if ($home == "CSKA Moscou" && $away == "Bayer Leverkusen"){
