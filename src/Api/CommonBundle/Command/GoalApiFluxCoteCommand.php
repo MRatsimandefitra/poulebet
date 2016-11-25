@@ -221,7 +221,7 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
                                                         $output->writeln("Aucun matchs trouvé - ID : " . $count);
                                                     //    var_dump($da)
                                                         $dateMatch = new \DateTime($dateMatchs);
-                                                        $matchsFluxCote = $em->getRepository(self::ENTITY_MATCHS_FLUX_COTE)->findOneBy(array('dateMatch' =>$dateMatch, 'equipeDomicile' => $equipeDomicile, 'equipeVisiteur' => $equipeVisiteur ));
+                                                        $matchsFluxCote = $em->getRepository(self::ENTITY_MATCHS)->findMatchsForCote($dateMatch, $equipeDomicile, $equipeVisiteur);
                                                         if (array_key_exists($equipeDomicile, $resultOdds)) {
                                                             $cote1 = $resultOdds[$equipeDomicile];
                                                             $matchsFluxCote->setCote1($cote1);
