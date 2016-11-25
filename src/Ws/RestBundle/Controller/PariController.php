@@ -614,7 +614,7 @@ class PariController extends ApiController implements InterfaceDB
             // AJOUTER 5 MINUTES
             // SI HEURE ACTUELLE + 5MINUTES > DATEHEURE MATCH -->>BLOQUER
             $date5minAvant = $dateTemp->add(new \DateInterval('PT5M'));
-            $dateMatch=$matchs->getMatchs()->getDateMatch();
+            $dateMatch=$matchs->getDateMatch();
             if($date5minAvant>$dateMatch){
                 $result['code_error'] = 0;
                 $result['success'] = false;
@@ -622,7 +622,7 @@ class PariController extends ApiController implements InterfaceDB
                 $result['message'] = "Pari déjà clôturé";
                 return new JsonResponse($result);
             }
-            //#### TEST DATE
+            //#### TEST DATEgetDateMatch
 
 
             $vu = new VoteUtilisateur();
