@@ -126,13 +126,15 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
                             }
                         }
                         if ($gain == count($voteCombined)){
+
                             // ENTRER LE MVT DE CREDIT
                             $gainPotentiel = $itemsMatchsVote->getGainPotentiel();
                             // Set gagnant pour les votes gagants
                             foreach($voteCombined as $vote){
-                                $vote->setGagnant(true);
-                                $em->persist($vote);
-                                $em->flush();
+                                //#### TEST
+//                                $vote->setGagnant(true);
+//                                $em->persist($vote);
+//                                $em->flush();
                             }
                             $miseTotal = $itemsMatchsVote->getMiseTotale();
                             $mvtCredit = new MvtCredit();
