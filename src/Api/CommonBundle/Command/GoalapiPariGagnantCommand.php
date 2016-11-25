@@ -98,7 +98,7 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
                         if($itemsMatchsVote->getIsCombined() == 1){
                             // VERIFIER SI TOUS LES MATCHS SUIVANTS L'vote_utilisateur.idMise SONT GAGNANT
                             // SI OUI
-                            $voteNonGagnant = $this->getRepo(self::ENTITY_MATCHS)->findVoteCombinedNonGagnant($utilisateur->getId(),$itemsMatchsVote->getIdMise());
+                           $voteNonGagnant = $em->getRepository(self::ENTITY_MATCHS)->findVoteCombinedNonGagnant($utilisateur->getId(),$itemsMatchsVote->getIdMise());
                            if (!$voteNonGagnant){
                                 // ENTRER LE MVT DE CREDIT
                                 $gainPotentiel = $itemsMatchsVote->getGainPotentiel();
