@@ -189,7 +189,7 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
                                                         $output->writeln($matchs[0]->getmaster_prono_1());
                                                         $output->writeln($matchs[0]->getmaster_prono_2());
                                                         $output->writeln($matchs[0]->getmaster_prono_n());
-                                                        if ($matchs[0]->getmaster_prono_1() || $matchs[0]->getmaster_prono_2() || $matchs[0]->getmaster_prono_n())
+                                                        if ($matchs[0]->getmaster_prono_1() || $matchs[0]->getmaster_prono_2() || $matchs[0]->getmaster_prono_n()){
                                                             if ($cote1 < $coteN && $cote1 < $cote2) {
                                                                 $matchs[0]->setMasterProno1(true);
                                                                 $matchs[0]->setMasterPronoN(false);
