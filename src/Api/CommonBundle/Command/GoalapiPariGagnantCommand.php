@@ -50,7 +50,7 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
 //            $dateTest = $matchsVote->get('date');
         $dateTest = $dateTemp->add(new \DateInterval('PT5M'));
         var_dump($dateTest);
-
+        $dateTemp = new \DateTime('now');
         if($dateTemp>$dateTest){
             var_dump($dateTemp->format('Y-m-d H:i:s').'>>> '.$dateTest->format('Y-m-d H:i:s'));
         }
@@ -59,7 +59,7 @@ class GoalapiPariGagnantCommand extends ContainerAwareCommand implements Interfa
         }
         $dateTest = $dateTemp->sub(new \DateInterval('PT5M'));
         var_dump($dateTest);
-
+        $dateTemp = new \DateTime('now');
         if($dateTemp>$dateTest){
             var_dump($dateTemp->format('Y-m-d H:i:s').'>>>> '.$dateTest->format('Y-m-d H:i:s'));
         }
