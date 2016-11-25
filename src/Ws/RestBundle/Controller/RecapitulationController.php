@@ -202,6 +202,8 @@ class RecapitulationController extends ApiController implements InterfaceDB
                 foreach ($nbRecap as $k => $vItems) {
 
                     if ($count == $k && $count < $countBoucle ) {
+
+
                         $result['list_match'][] = array(
                             'idMatch' => $vItems->getMatchs()->getId(),
                             'dateMatch' => $vItems->getMatchs()->getDateMatch(),
@@ -227,7 +229,8 @@ class RecapitulationController extends ApiController implements InterfaceDB
                             'idChampionat' => $vItems->getMatchs()->getChampionat()->getId(),
                             'voted_equipe' => $vItems->getVote(),
                             'isGagne' => $vItems->getGagnant(),
-                            'imageFacebook' => ($this->getIsGagne($vItems->getId(), $vItems->getIdMise(), $vItems->getDateMise())) ? 'http://dplb.arkeup.com/upload/admin/facebook/'.$this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImageOeuf() : 'http://dplb.arkeup.com/upload/admin/facebook/'.$this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImagePoulebet()
+//                            'imageFacebook' => ($this->getIsGagne($vItems->getId(), $vItems->getIdMise(), $vItems->getDateMise())) ? 'http://dplb.arkeup.com/upload/admin/facebook/'.$this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImageOeuf() : 'http://dplb.arkeup.com/upload/admin/facebook/'.$this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImagePoulebet()
+                            'imageFacebook' => ($vItems->getGagnant()) ? 'http://dplb.arkeup.com/upload/admin/facebook/'.$this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImageOeuf() : 'http://dplb.arkeup.com/upload/admin/facebook/'.$this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImagePoulebet()
                         );
                         $count = $count + 1;
                     }

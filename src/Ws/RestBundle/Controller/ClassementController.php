@@ -42,6 +42,11 @@ class ClassementController extends ApiController implements InterfaceDB
                     $total = 0;
                     foreach ($classement as $kClassement => $itemsClassement) {
                        // NE PAS METTRE DANS CLASSEMENT SI PARI COMBINE NON GAGNE
+                        $voteNonGagnant = $this->getRepo(self::ENTITY_MATCHS)->findVoteCombinedNonGagnant($itemsClassement->getUtilisateur()->getId(),$itemsMatchsVote->getIdMise());
+                        if (!$voteNonGagnant) {
+
+                        }
+
 //                        if ($itemsGains->getIsCombined()){
 //                            $voteNonGagnant = $this->getRepo(self::ENTITY_MATCHS)->findVoteCombinedNonGagnant($user->getId(),$itemsGains->getIdMise());
 //                            if (!$voteNonGagnant){
