@@ -616,9 +616,9 @@ class PariController extends ApiController implements InterfaceDB
             $date5minAvant = $dateTemp->add(new \DateInterval('PT5M'));
             $dateMatch=$matchs->getDateMatch();
             if($date5minAvant>$dateMatch){
-                $result['code_error'] = 2;
-                $result['success'] = false;
-                $result['error'] = true;
+                $result['code_error'] = 0;
+                $result['success'] = true;
+                $result['error'] = false;
                 $result['message'] = "Pari déjà clôturé";
                 return new JsonResponse($result);
             }
