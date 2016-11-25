@@ -737,8 +737,8 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         $dql = "SELECT vu from ApiDBBundle:VoteUtilisateur vu
                 LEFT JOIN vu.matchs m
                 LEFT JOIN vu.utilisateur u              
-                WHERE vu.gagnant IS NULL
-                AND m.statusMatch = 'finished'
+                WHERE (vu.gagnant IS NULL
+                OR m.statusMatch <> 'finished')
                 AND u.id = :userId
                 GROUP BY vu.idMise ";
 
