@@ -617,6 +617,7 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         }
 
         $where[] = " vu.gagnant = true ";
+        
 
 
         if(!empty($where)){
