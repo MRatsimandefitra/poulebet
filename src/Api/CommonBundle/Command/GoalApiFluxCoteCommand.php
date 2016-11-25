@@ -220,17 +220,21 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
 
                                                         $output->writeln("Aucun matchs trouvé - ID : " . $count);
                                                     //    var_dump($da)
+                                                        $dateMatch = new \DateTime($dateMatchs);
+                                                        $matchsFluxCote = $em->getRepository(self::ENTITY_MATCHS_FLUX_COTE)->findOneBy(array('dateMatch' =>$dateMatch, 'equipeDomicile' => $equipeDomicile, 'equipeVisiteur' => $equipeVisiteur ));
                                                         if (array_key_exists($equipeDomicile, $resultOdds)) {
                                                             $cote1 = $resultOdds[$equipeDomicile];
+                                                            $matchsFluxCote->setCote1($cote1);
                                                         }
                                                         if (array_key_exists('Nul', $resultOdds)) {
                                                             $coteN = $resultOdds['Nul'];
+                                                            $matchsFluxCote->setCoteN($coteN);
                                                         }
                                                         if (array_key_exists($equipeVisiteur, $resultOdds)) {
                                                             $cote2 = $resultOdds[$equipeVisiteur];
+                                                            $matchsFluxCote->setCote2($cote2);
                                                         }
-                                                        $dateMatch = new \DateTime($dateMatchs);
-                                                        $matchsFluxCote = $em->getRepository(self::ENTITY_MATCHS_FLUX_COTE)->findOneBy(array('dateMatch' =>$dateMatch, 'equipeDomicile' => $equipeDomicile, 'equipeVisiteur' => $equipeVisiteur ));
+
                                                         $newMatchsFluxCote = false;
                                                         if(!$matchsFluxCote){
                                                             $matchsFluxCote  = new MatchsFluxCote();
@@ -238,15 +242,13 @@ class GoalApiFluxCoteCommand extends ContainerAwareCommand implements InterfaceD
                                                         }
 
                                                         $matchsFluxCote->setChampionat($championat);
-
-
                                                         $matchsFluxCote->setDateMatch($dateMatch);
                                                         $matchsFluxCote->setEquipeDomicile($equipeDomicile);
                                                         $matchsFluxCote->setEquipeVisiteur($equipeVisiteur);
                                                         $matchsFluxCote->setRegion($regionName);
-                                                        $matchsFluxCote->setCote1($cote1);
-                                                        $matchsFluxCote->setCote2($cote2);
-                                                        $matchsFluxCote->setCoteN($coteN);
+
+
+
                                                         if($newMatchsFluxCote){
                                                             $em->persist($matchsFluxCote);
                                                         }
