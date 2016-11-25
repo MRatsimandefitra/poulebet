@@ -622,11 +622,12 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
         if(!empty($where)){
             $dql .= ' WHERE ' . implode(' AND ', $where);
         }
-        if($groupUser){
-            $dql .=" GROUP BY u.id ";
-        }else{
+        // MISE DOUBLE POUR LES PARIS COMBINES
+//        if($groupUser){
+//            $dql .=" GROUP BY u.id ";
+//        }else{
             $dql .=" GROUP BY vu.idMise ";
-        }
+//        }
       //  var_dump($dql); die;
         if(empty($params)){
             $query = $this->getEntityManager()->createQuery($dql);
