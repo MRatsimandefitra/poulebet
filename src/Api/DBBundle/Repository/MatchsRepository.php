@@ -185,7 +185,9 @@ class MatchsRepository extends \Doctrine\ORM\EntityRepository
     function getMatchLiveScore()
     {
         $dql = "SELECT m from ApiDBBundle:Matchs m
-                WHERE m.statusMatch LIKE :status ";
+                LEFT JOIN m.championat ch
+                WHERE m.statusMatch LIKE :status  
+                 ORDER BY cg.rang";
         $query = $this->getEntityManager()->createQuery($dql);
         $query->setParameter('status', 'active');
         return $query->getResult();
