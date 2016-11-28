@@ -771,7 +771,8 @@ class PariController extends ApiController implements InterfaceDB
                         $result['code_error'] = 0;
                         $result['success'] = false;
                         $result['error'] = true;
-                        $result['message'] = "Pari déjà clôturé ".$matchsVerification->getMatchs()->getEquipeDomicile()." VS ".$matchsVerification->getMatchs()->getEquipeVisiteur();
+//                        $result['message'] = "Pari déjà clôturé ".$matchsVerification->getMatchs()->getEquipeDomicile()." VS ".$matchsVerification->getMatchs()->getEquipeVisiteur();
+                        $result['message'] = "Pari déjà clôturé";
                         return new JsonResponse($result);
                     }
                 }
