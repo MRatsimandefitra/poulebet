@@ -83,7 +83,7 @@ class ClassementController extends ApiController implements InterfaceDB
                         'id' => $result['list_classement'][$k]['id'],
                         'nom' =>  $result['list_classement'][$k]['nom'],
                         'prenom' =>  $result['list_classement'][$k]['prenom'],
-                        'photo' => 'http://dplb.arkeup.com/upload/admin/users/'. $result['list_classement'][$k]['photo'],
+                        'photo' => 'http://'.$this->getParameter('url_poulebet').'/upload/admin/users/'. $result['list_classement'][$k]['photo'],
                         'classement' => $itemsArrayListClassement
                     );
                 }
@@ -149,7 +149,7 @@ class ClassementController extends ApiController implements InterfaceDB
                         'id' => $result['list_classement'][$k]['id'],
                         'nom' =>  $result['list_classement'][$k]['nom'],
                         'prenom' =>  $result['list_classement'][$k]['prenom'],
-                        'photo' => 'http://dplb.arkeup.com/upload/admin/users/'.$result['list_classement'][$k]['photo'],
+                        'photo' => 'http://'.$this->getParameter('url_poulebet').'/upload/admin/users/'.$result['list_classement'][$k]['photo'],
                         'classement' => $itemsArrayListClassement
                     );
                 }
@@ -224,7 +224,7 @@ class ClassementController extends ApiController implements InterfaceDB
                         'id' => $result['list_classement'][$k]['id'],
                         'nom' =>  $result['list_classement'][$k]['nom'],
                         'prenom' =>  $result['list_classement'][$k]['prenom'],
-                        'photo' => 'http://dplb.arkeup.com/upload/admin/users/'.$result['list_classement'][$k]['photo'],
+                        'photo' => 'http://'.$this->getParameter('url_poulebet').'/upload/admin/users/'.$result['list_classement'][$k]['photo'],
                         'classement' => $itemsArrayListClassement
                     );
                 }

@@ -28,7 +28,7 @@ class PubliciteController extends ApiController implements InterfaceDB
         $pub = $this->getObjectRepoFrom(self::ENTITY_PUB, array('isPopup' => $isPopup));
         $result = array();
         if(is_object($pub)){
-            $result['cheminPub'] = 'http://dplb.arkeup.com/upload/admin/publicite/'.$pub->getCheminPub();
+            $result['cheminPub'] = 'http://'.$this->getParameter('url_poulebet').'/upload/admin/publicite/'.$pub->getCheminPub();
             $result['isPopup'] = $pub->getIsPopup();
             $result['success'] = true;
             $result['error'] = false;

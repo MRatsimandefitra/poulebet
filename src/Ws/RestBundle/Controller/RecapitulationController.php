@@ -93,8 +93,8 @@ class RecapitulationController extends ApiController implements InterfaceDB
                                     'dateMatch' => $v->getMatchs()->getDateMatch(),
                                     'equipeDomicile' => $v->getMatchs()->getEquipeDomicile(),
                                     'equipeVisiteur' => $v->getMatchs()->getEquipeVisiteur(),
-                                    'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $v->getMatchs()->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
-                                    'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $v->getMatchs()->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
+                                    'logoDomicile' => ''.$this->getParameter('url_poulebet').'/images/Flag-foot/' . $v->getMatchs()->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
+                                    'logoVisiteur' => ''.$this->getParameter('url_poulebet').'/images/Flag-foot/' . $v->getMatchs()->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
                                     'score' => $v->getMatchs()->getScore(),
                                     'scoreDomicile' => substr($v->getMatchs()->getScore(), 0, 1),
                                     'scoreVisiteur' => substr($v->getMatchs()->getScore(), -1, 1),
@@ -141,7 +141,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
                         );
                         $banniere = $this->getObjectRepoFrom(self::ENTITY_PUB, array('isPopup' => false ));
                         if($banniere && is_object($banniere)){
-                                $result['banniere'] = 'http://dplb.arkeup.com/upload/admin/publicite/'.$banniere->getCheminPub();
+                                $result['banniere'] = 'http://'.$this->getParameter('url_poulebet').'/upload/admin/publicite/'.$banniere->getCheminPub();
                         }else{
                             $result['banniere'] = null;
                         }
@@ -209,8 +209,8 @@ class RecapitulationController extends ApiController implements InterfaceDB
                             'dateMatch' => $vItems->getMatchs()->getDateMatch(),
                             'equipeDomicile' => $vItems->getMatchs()->getEquipeDomicile(),
                             'equipeVisiteur' => $vItems->getMatchs()->getEquipeVisiteur(),
-                            'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $vItems->getMatchs()->getCheminLogoDomicile() . '.png',// $vItemsData->getTeamsDomicile()->getLogo(),
-                            'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $vItems->getMatchs()->getCheminLogoVisiteur() . '.png',// $vItemsData->getTeamsVisiteur()->getLogo(),
+                            'logoDomicile' => ''.$this->getParameter('url_poulebet').'/images/Flag-foot/' . $vItems->getMatchs()->getCheminLogoDomicile() . '.png',// $vItemsData->getTeamsDomicile()->getLogo(),
+                            'logoVisiteur' => ''.$this->getParameter('url_poulebet').'/images/Flag-foot/' . $vItems->getMatchs()->getCheminLogoVisiteur() . '.png',// $vItemsData->getTeamsVisiteur()->getLogo(),
                             'score' => $vItems->getMatchs()->getScore(),
                             'scoreDomicile' => substr($vItems->getMatchs()->getScore(), 0, 1),
                             'scoreVisiteur' => substr($vItems->getMatchs()->getScore(), -1, 1),
@@ -232,8 +232,8 @@ class RecapitulationController extends ApiController implements InterfaceDB
                             'voted_equipe' => $vItems->getVote(),
                             'isGagne' => $vItems->getGagnant(),
 //                            'isGagne' => $this->getStatusRecap($vItems->getId()),
-//                            'imageFacebook' => ($this->getIsGagne($vItems->getId(), $vItems->getIdMise(), $vItems->getDateMise())) ? 'http://dplb.arkeup.com/upload/admin/facebook/'.$this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImageOeuf() : 'http://dplb.arkeup.com/upload/admin/facebook/'.$this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImagePoulebet()
-                            'imageFacebook' => ($vItems->getGagnant()) ? 'http://dplb.arkeup.com/upload/admin/facebook/'.$this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImageOeuf() : 'http://dplb.arkeup.com/upload/admin/facebook/'.$this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImagePoulebet()
+//                            'imageFacebook' => ($this->getIsGagne($vItems->getId(), $vItems->getIdMise(), $vItems->getDateMise())) ? 'http://'.$this->getParameter('url_poulebet').'/upload/admin/facebook/'.$this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImageOeuf() : 'http://'.$this->getParameter('url_poulebet').'/upload/admin/facebook/'.$this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImagePoulebet()
+                            'imageFacebook' => ($vItems->getGagnant()) ? 'http://'.$this->getParameter('url_poulebet').'/upload/admin/facebook/'.$this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImageOeuf() : 'http://'.$this->getParameter('url_poulebet').'/upload/admin/facebook/'.$this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImagePoulebet()
                         );
                         $count = $count + 1;
                     }
@@ -252,7 +252,7 @@ class RecapitulationController extends ApiController implements InterfaceDB
 
                 $banniere = $this->getObjectRepoFrom(self::ENTITY_PUB, array('isPopup' => false ));
                 if($banniere && is_object($banniere)){
-                    $result['banniere'] = 'http://dplb.arkeup.com/upload/admin/publicite/'.$banniere->getCheminPub();
+                    $result['banniere'] = 'http://'.$this->getParameter('url_poulebet').'/upload/admin/publicite/'.$banniere->getCheminPub();
                 }else{
                     $result['banniere'] = null;
                 }

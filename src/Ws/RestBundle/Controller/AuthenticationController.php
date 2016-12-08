@@ -17,7 +17,6 @@ use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 class AuthenticationController extends ApiRestController{
     const ENTITY_UTILISATEUR = 'ApiDBBundle:Utilisateur';
     const ENTITY_DEVICE = 'ApiDBBundle:Device';
-    const URL_PHOTO = "http://dplb.arkeup.com/upload/admin/users/";
     /**
      * @ApiDoc(
      *      description = "Authentification via ws mobile",
@@ -87,7 +86,7 @@ class AuthenticationController extends ApiRestController{
                 }
                 // photo de profil
                 if($userEntity->getCheminPhoto()){
-                    $user["cheminPhoto"]=self::URL_PHOTO.$userEntity->getCheminPhoto();
+                    $user["cheminPhoto"]='http://'.$this->getParameter('url_poulebet').'/upload/admin/users/'.$userEntity->getCheminPhoto();
                 }    
 
                 $pass_result = $this->encodePassword($password);

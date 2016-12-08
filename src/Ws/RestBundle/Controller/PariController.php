@@ -89,8 +89,8 @@ class PariController extends ApiController implements InterfaceDB
                         'dateMatch' => $matchsItems->getDateMatch(),
                         'equipeDomicile' => $matchsItems->getEquipeDomicile(),
                         'equipeVisiteur' => $matchsItems->getEquipeVisiteur(),
-                        'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $matchsItems->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
-                        'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $matchsItems->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
+                        'logoDomicile' => ''.$this->getParameter('url_poulebet').'/images/Flag-foot/' . $matchsItems->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
+                        'logoVisiteur' => ''.$this->getParameter('url_poulebet').'/images/Flag-foot/' . $matchsItems->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
                         'score' => $matchsItems->getScore(),
                         'scoreDomicile' => substr($matchsItems->getScore(), 0, 1),
                         'scoreVisiteur' => substr($matchsItems->getScore(), -1, 1),
@@ -126,7 +126,7 @@ class PariController extends ApiController implements InterfaceDB
                 }
                 $pub = $this->getObjectRepoFrom(self::ENTITY_PUB, array('isPopup' => false));
                 if(is_object($pub) && $pub){
-                    $result['banniere'] = 'http://dplb.arkeup.com/upload/admin/publicite/'.$pub->getCheminPub();
+                    $result['banniere'] = 'http://'.$this->getParameter('url_poulebet').'/upload/admin/publicite/'.$pub->getCheminPub();
                 }
 
                 $result['gain_potentiel_max'] = round($value);
@@ -196,8 +196,8 @@ class PariController extends ApiController implements InterfaceDB
                         'equipeDomicile' => $itemsMatchVote->getMatchs()->getEquipeDomicile(),
                         'equipeVisiteur' => $itemsMatchVote->getMatchs()->getEquipeVisiteur(),
                         'voted_equipe' => $itemsMatchVote->getVote(),
-                        'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $itemsMatchVote->getMatchs()->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
-                        'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $itemsMatchVote->getMatchs()->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
+                        'logoDomicile' => ''.$this->getParameter('url_poulebet').'/images/Flag-foot/' . $itemsMatchVote->getMatchs()->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
+                        'logoVisiteur' => ''.$this->getParameter('url_poulebet').'/images/Flag-foot/' . $itemsMatchVote->getMatchs()->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
                         'score' => $itemsMatchVote->getMatchs()->getScore(),
                         'scoreDomicile' => substr($itemsMatchVote->getMatchs()->getScore(), 0, 1),
                         'scoreVisiteur' => substr($itemsMatchVote->getMatchs()->getScore(), -1, 1),
@@ -239,8 +239,8 @@ class PariController extends ApiController implements InterfaceDB
                             'dateMatch' => $matchsItems->getDateMatch(),
                             'equipeDomicile' => $matchsItems->getEquipeDomicile(),
                             'equipeVisiteur' => $matchsItems->getEquipeVisiteur(),
-                            'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $matchsItems->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
-                            'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $matchsItems->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
+                            'logoDomicile' => ''.$this->getParameter('url_poulebet').'/images/Flag-foot/' . $matchsItems->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
+                            'logoVisiteur' => ''.$this->getParameter('url_poulebet').'/images/Flag-foot/' . $matchsItems->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
                             'score' => $matchsItems->getScore(),
                             'scoreDomicile' => substr($matchsItems->getScore(), 0, 1),
                             'scoreVisiteur' => substr($matchsItems->getScore(), -1, 1),
@@ -266,8 +266,8 @@ class PariController extends ApiController implements InterfaceDB
                             'dateMatch' => $matchsItems->getDateMatch(),
                             'equipeDomicile' => $matchsItems->getEquipeDomicile(),
                             'equipeVisiteur' => $matchsItems->getEquipeVisiteur(),
-                            'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $matchsItems->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
-                            'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $matchsItems->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
+                            'logoDomicile' => ''.$this->getParameter('url_poulebet').'/images/Flag-foot/' . $matchsItems->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
+                            'logoVisiteur' => ''.$this->getParameter('url_poulebet').'/images/Flag-foot/' . $matchsItems->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
                             'score' => $matchsItems->getScore(),
                             'scoreDomicile' => substr($matchsItems->getScore(), 0, 1),
                             'scoreVisiteur' => substr($matchsItems->getScore(), -1, 1),
@@ -290,8 +290,8 @@ class PariController extends ApiController implements InterfaceDB
                             'dateMatch' => $matchsItems->getDateMatch(),
                             'equipeDomicile' => $matchsItems->getEquipeDomicile(),
                             'equipeVisiteur' => $matchsItems->getEquipeVisiteur(),
-                            'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $matchsItems->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
-                            'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $matchsItems->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
+                            'logoDomicile' => ''.$this->getParameter('url_poulebet').'/images/Flag-foot/' . $matchsItems->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
+                            'logoVisiteur' => ''.$this->getParameter('url_poulebet').'/images/Flag-foot/' . $matchsItems->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
                             'score' => $matchsItems->getScore(),
                             'scoreDomicile' => substr($matchsItems->getScore(), 0, 1),
                             'scoreVisiteur' => substr($matchsItems->getScore(), -1, 1),
@@ -320,7 +320,7 @@ class PariController extends ApiController implements InterfaceDB
 
                 $pub = $this->getObjectRepoFrom(self::ENTITY_PUB, array('isPopup' => false));
                 if(is_object($pub) && $pub){
-                    $result['banniere'] = 'dplb.arkeup.com/upload/admin/publicite/'.$pub->getCheminPub();
+                    $result['banniere'] = ''.$this->getParameter('url_poulebet').'/upload/admin/publicite/'.$pub->getCheminPub();
                 }
 
                 $result['itemTotal'] = $nbRecapTotal;

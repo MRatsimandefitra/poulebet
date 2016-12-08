@@ -162,8 +162,8 @@ class LiveScoreController extends ApiController implements InterfaceDB
                     'minute' => $matchLiveItems->getMinute()
                 ),
                 'championat' => $matchLiveItems->getChampionat()->getId(),
-                'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $matchLiveItems->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
-                'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $matchLiveItems->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
+                'logoDomicile' => ''.$this->getParameter('url_poulebet').'/images/Flag-foot/' . $matchLiveItems->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
+                'logoVisiteur' => ''.$this->getParameter('url_poulebet').'/images/Flag-foot/' . $matchLiveItems->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
             );
         }
         $result = $dataDetailsFull;
@@ -227,8 +227,8 @@ class LiveScoreController extends ApiController implements InterfaceDB
                         'minute' => $itemsMatchsActive->getMinute()
                     ),
                     'championat' => $itemsMatchsActive->getChampionat()->getId(),
-                    'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $itemsMatchsActive->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
-                    'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $itemsMatchsActive->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
+                    'logoDomicile' => ''.$this->getParameter('url_poulebet').'/images/Flag-foot/' . $itemsMatchsActive->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
+                    'logoVisiteur' => ''.$this->getParameter('url_poulebet').'/images/Flag-foot/' . $itemsMatchsActive->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
                     'statusMatch'=> $itemsMatchsActive->getStatusMatch()
                 );
             }
@@ -252,8 +252,8 @@ class LiveScoreController extends ApiController implements InterfaceDB
                         'minute' => $itemsMatchsNotStarted->getMinute()
                     ),
                     'championat' => $itemsMatchsNotStarted->getChampionat()->getId(),
-                    'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $itemsMatchsNotStarted->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
-                    'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $itemsMatchsNotStarted->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
+                    'logoDomicile' => ''.$this->getParameter('url_poulebet').'/images/Flag-foot/' . $itemsMatchsNotStarted->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
+                    'logoVisiteur' => ''.$this->getParameter('url_poulebet').'/images/Flag-foot/' . $itemsMatchsNotStarted->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
                     'statusMatch'=> $itemsMatchsNotStarted->getStatusMatch(),
                     'heureDebut' => $itemsMatchsNotStarted->getDateMatch()->format("H:i")
                 );
@@ -276,8 +276,8 @@ class LiveScoreController extends ApiController implements InterfaceDB
                         'minute' => $itemsMatchsEnd->getMinute()
                     ),
                     'championat' => $itemsMatchsEnd->getChampionat()->getId(),
-                    'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $itemsMatchsEnd->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
-                    'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $itemsMatchsEnd->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
+                    'logoDomicile' => ''.$this->getParameter('url_poulebet').'/images/Flag-foot/' . $itemsMatchsEnd->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
+                    'logoVisiteur' => ''.$this->getParameter('url_poulebet').'/images/Flag-foot/' . $itemsMatchsEnd->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
                     'statusMatch'=> $itemsMatchsEnd->getStatusMatch()
                 );
             }
@@ -304,8 +304,8 @@ class LiveScoreController extends ApiController implements InterfaceDB
                         'minute' => $itemsMatchsToday->getMinute()
                     ),
                     'championat' => $itemsMatchsToday->getChampionat()->getId(),
-                    'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $itemsMatchsToday->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
-                    'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $itemsMatchsToday->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
+                    'logoDomicile' => ''.$this->getParameter('url_poulebet').'/images/Flag-foot/' . $itemsMatchsToday->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
+                    'logoVisiteur' => ''.$this->getParameter('url_poulebet').'/images/Flag-foot/' . $itemsMatchsToday->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
                     'statusMatch'=> $itemsMatchsToday->getStatusMatch()
                 );
             }

@@ -64,8 +64,8 @@ class ChampionatsController extends ApiController
                     'equipeDomicile' => $vData->getEquipeDomicile(),
                     'equipeVisiteur' => $vData->getEquipeVisiteur(),
 
-                    'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $vData->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
-                    'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $vData->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
+                    'logoDomicile' => ''.$this->getParameter('url_poulebet').'/images/Flag-foot/' . $vData->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
+                    'logoVisiteur' => ''.$this->getParameter('url_poulebet').'/images/Flag-foot/' . $vData->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
                     'score' => $vData->getScore(),
                     'scoreDomicile' => substr($vData->getScore(), 0, 1),
                     'scoreVisiteur' => substr($vData->getScore(), -1, 1),
@@ -123,8 +123,8 @@ class ChampionatsController extends ApiController
                     'equipeDomicile' => $vData->getEquipeDomicile(),
                     'equipeVisiteur' => $vData->getEquipeVisiteur(),
 
-                    'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $vData->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
-                    'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $vData->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
+                    'logoDomicile' => ''.$this->getParameter('url_poulebet').'/images/Flag-foot/' . $vData->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
+                    'logoVisiteur' => ''.$this->getParameter('url_poulebet').'/images/Flag-foot/' . $vData->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
                     'score' => $vData->getScore(),
                     'scoreDomicile' => substr($vData->getScore(), 0, 1),
                     'scoreVisiteur' => substr($vData->getScore(), -1, 1),

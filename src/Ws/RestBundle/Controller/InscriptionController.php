@@ -132,7 +132,7 @@ class InscriptionController extends ApiController implements InterfaceDB
             $result = array();
 
             if ($banniere && is_object($banniere)) {
-                $result['banniere'] = 'http://dplb.arkeup.com/upload/admin/publicite/' . $banniere->getCheminPub();
+                $result['banniere'] = 'http://'.$this->getParameter('url_poulebet').'/upload/admin/publicite/' . $banniere->getCheminPub();
             } else {
                 $result['banniere'] = null;
             }

@@ -245,8 +245,8 @@ class SondageController extends ApiController
                         'equipeDomicile' => $matchsItems->getEquipeDomicile(),
                         'equipeVisiteur' => $matchsItems->getEquipeVisiteur(),
 
-                        'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $matchsItems->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
-                        'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $matchsItems->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
+                        'logoDomicile' => ''.$this->getParameter('url_poulebet').'/images/Flag-foot/' . $matchsItems->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
+                        'logoVisiteur' => ''.$this->getParameter('url_poulebet').'/images/Flag-foot/' . $matchsItems->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
                         'score' => $matchsItems->getScore(),
                         'scoreDomicile' => substr($matchsItems->getScore(), 0, 1),
                         'scoreVisiteur' => substr($matchsItems->getScore(), -1, 1),
@@ -280,8 +280,8 @@ class SondageController extends ApiController
                         'equipeDomicile' => $matchsItems->getEquipeDomicile(),
                         'equipeVisiteur' => $matchsItems->getEquipeVisiteur(),
 
-                        'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $matchsItems->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
-                        'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $matchsItems->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
+                        'logoDomicile' => ''.$this->getParameter('url_poulebet').'/images/Flag-foot/' . $matchsItems->getCheminLogoDomicile() . '.png',// $vData->getTeamsDomicile()->getLogo(),
+                        'logoVisiteur' => ''.$this->getParameter('url_poulebet').'/images/Flag-foot/' . $matchsItems->getCheminLogoVisiteur() . '.png',// $vData->getTeamsVisiteur()->getLogo(),
                         'score' => $matchsItems->getScore(),
                         'scoreDomicile' => substr($matchsItems->getScore(), 0, 1),
                         'scoreVisiteur' => substr($matchsItems->getScore(), -1, 1),

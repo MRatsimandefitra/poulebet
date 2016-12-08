@@ -39,7 +39,7 @@ class AchatController extends ApiController implements InterfaceDB
         foreach($oeufs as $kOeuf => $itemsOeufs){
 
             $result['achats'][] = array(
-                'image' => "dplb.arkeup.com/images/achats/".$itemsOeufs->getImageOeuf(),
+                'image' => ''.$this->getParameter('url_poulebet').'/images/achats/'.$itemsOeufs->getImageOeuf(),
                 'productSKU' => $itemsOeufs->getProductSKU(),
                 'tarifOeuf' => $itemsOeufs->getTarifOeufs(),
                 'tarifEuro' => $itemsOeufs->getTarifEuro()
@@ -200,7 +200,7 @@ class AchatController extends ApiController implements InterfaceDB
                     $result['list_lot'][] = array(
                         'nom' => $itemsLots->getNomLot(),
                         'nbPointNecessaire' => $itemsLots->getNbPointNecessaire(),
-                        'cheminImage' => 'dplb.arkeup.com/upload/lots/' . $itemsLots->getCheminImage(),
+                        'cheminImage' => ''.$this->getParameter('url_poulebet').'/upload/lots/' . $itemsLots->getCheminImage(),
                         'decription' => $itemsLots->getDescription(),
                         'nomLong' => $itemsLots->getNomLong(),
                         'idLotCategory' => $itemsLots->getLotCategory()->getId(),

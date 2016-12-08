@@ -29,13 +29,13 @@ class AccountController extends ApiController implements InterfaceDB
         if ($user && is_object($user)) {
             $result['account'] = array();
             /*  $result['account'] = array(
-                  'photo'=> 'http://dplb.arkeup.com/upload/utilisateur/'. $user->getCheminPhoto(),
+                  'photo'=> 'http://'.$this->getParameter('url_poulebet').'/upload/utilisateur/'. $user->getCheminPhoto(),
               );*/
             $photo = $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
-          //  $result['photo'] = 'http://dplb.arkeup.com/upload/admin/users/' . $photo->getCheminPhoto();
+          //  $result['photo'] = 'http://'.$this->getParameter('url_poulebet').'/upload/admin/users/' . $photo->getCheminPhoto();
             if ($photo) {
                 $result['account'] = array(
-                   'photo'=>  'http://dplb.arkeup.com/upload/admin/users/' . $photo->getCheminPhoto()
+                   'photo'=>  'http://'.$this->getParameter('url_poulebet').'/upload/admin/users/' . $photo->getCheminPhoto()
             );
             }
 
@@ -133,8 +133,8 @@ class AccountController extends ApiController implements InterfaceDB
                         'dateMatch' => $itemsMatch->getMatchs()->getDateMatch(),
                         'equipeDomicile' => $itemsMatch->getMatchs()->getEquipeDomicile(),
                         'equipeVisiteur' => $itemsMatch->getMatchs()->getEquipeVisiteur(),
-                        'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $itemsMatch->getMatchs()->getCheminLogoDomicile() . '.png',// $itemsMatchData->getTeamsDomicile()->getLogo(),
-                        'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $itemsMatch->getMatchs()->getCheminLogoVisiteur() . '.png',// $itemsMatchData->getTeamsVisiteur()->getLogo(),
+                        'logoDomicile' => ''.$this->getParameter('url_poulebet').'/images/Flag-foot/' . $itemsMatch->getMatchs()->getCheminLogoDomicile() . '.png',// $itemsMatchData->getTeamsDomicile()->getLogo(),
+                        'logoVisiteur' => ''.$this->getParameter('url_poulebet').'/images/Flag-foot/' . $itemsMatch->getMatchs()->getCheminLogoVisiteur() . '.png',// $itemsMatchData->getTeamsVisiteur()->getLogo(),
                         'score' => $itemsMatch->getMatchs()->getScore(),
                         'scoreDomicile' => substr($itemsMatch->getMatchs()->getScore(), 0, 1),
                         'scoreVisiteur' => substr($itemsMatch->getMatchs()->getScore(), -1, 1),
@@ -157,8 +157,8 @@ class AccountController extends ApiController implements InterfaceDB
                         'idChampionat' => $itemsMatch->getMatchs()->getChampionat()->getId(),
                         //    'isGagne' => $this->getStatusRecap($itemsMatch->getId()),
                         'isGagne' => $itemsMatch->getGagnant(),
-//                        'imageFacebook' => ($this->getIsGagne($itemsMatch->getId(), 'http://dplb.arkeup.com/upload/admin/facebook/' . $itemsMatch->getIdMise(), $itemsMatch->getDateMise())) ? 'http://dplb.arkeup.com/upload/admin/facebook/' . $this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImageOeuf() : 'http://dplb.arkeup.com/upload/admin/facebook/' . $this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImagePoulebet()
-                        'imageFacebook' => ($itemsMatch->getGagnant() ? 'http://dplb.arkeup.com/upload/admin/facebook/' . $this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImageOeuf() : 'http://dplb.arkeup.com/upload/admin/facebook/' . $this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImagePoulebet())
+//                        'imageFacebook' => ($this->getIsGagne($itemsMatch->getId(), 'http://'.$this->getParameter('url_poulebet').'/upload/admin/facebook/' . $itemsMatch->getIdMise(), $itemsMatch->getDateMise())) ? 'http://'.$this->getParameter('url_poulebet').'/upload/admin/facebook/' . $this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImageOeuf() : 'http://'.$this->getParameter('url_poulebet').'/upload/admin/facebook/' . $this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImagePoulebet()
+                        'imageFacebook' => ($itemsMatch->getGagnant() ? 'http://'.$this->getParameter('url_poulebet').'/upload/admin/facebook/' . $this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImageOeuf() : 'http://'.$this->getParameter('url_poulebet').'/upload/admin/facebook/' . $this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImagePoulebet())
                     );
 
                 } else {
@@ -191,8 +191,8 @@ class AccountController extends ApiController implements InterfaceDB
                             'dateMatch' => $itemsMatch->getMatchs()->getDateMatch(),
                             'equipeDomicile' => $itemsMatch->getMatchs()->getEquipeDomicile(),
                             'equipeVisiteur' => $itemsMatch->getMatchs()->getEquipeVisiteur(),
-                            'logoDomicile' => 'dplb.arkeup.com/images/Flag-foot/' . $itemsMatch->getMatchs()->getCheminLogoDomicile() . '.png',// $itemsMatchData->getTeamsDomicile()->getLogo(),
-                            'logoVisiteur' => 'dplb.arkeup.com/images/Flag-foot/' . $itemsMatch->getMatchs()->getCheminLogoVisiteur() . '.png',// $itemsMatchData->getTeamsVisiteur()->getLogo(),
+                            'logoDomicile' => ''.$this->getParameter('url_poulebet').'/images/Flag-foot/' . $itemsMatch->getMatchs()->getCheminLogoDomicile() . '.png',// $itemsMatchData->getTeamsDomicile()->getLogo(),
+                            'logoVisiteur' => ''.$this->getParameter('url_poulebet').'/images/Flag-foot/' . $itemsMatch->getMatchs()->getCheminLogoVisiteur() . '.png',// $itemsMatchData->getTeamsVisiteur()->getLogo(),
                             'score' => $itemsMatch->getMatchs()->getScore(),
                             'scoreDomicile' => substr($itemsMatch->getMatchs()->getScore(), 0, 1),
                             'scoreVisiteur' => substr($itemsMatch->getMatchs()->getScore(), -1, 1),
@@ -216,7 +216,7 @@ class AccountController extends ApiController implements InterfaceDB
                         'miseTotal' => $itemsMatch->getMiseTotale(),
                         'matchs' => $arrayMatch,
                         'gagnantCombine' => $dataIsGagne,
-                        'imageFacebook' => ($dataIsGagne) ? $this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImageOeuf() : 'http://dplb.arkeup.com/upload/admin/facebook/'.$this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImagePoulebet(),
+                        'imageFacebook' => ($dataIsGagne) ? $this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImageOeuf() : 'http://'.$this->getParameter('url_poulebet').'/upload/admin/facebook/'.$this->getObjectRepoFrom(self::ENTITY_FACEBOOK, array())->getImagePoulebet(),
                         'statusCombine' => $dataStatus,
                         'isCombined' => $itemsMatch->getIsCombined()
                     );
@@ -260,7 +260,7 @@ class AccountController extends ApiController implements InterfaceDB
         $user->setCheminPhoto($nameImage);
         $this->insert($user, array('success' => 'success', 'error' => 'error'));
         $photo = $this->getObjectRepoFrom(self::ENTITY_UTILISATEUR, array('userTokenAuth' => $token));
-        $result['photo'] = 'http://dplb.arkeup.com/upload/admin/users/' . $photo->getCheminPhoto();
+        $result['photo'] = 'http://'.$this->getParameter('url_poulebet').'/upload/admin/users/' . $photo->getCheminPhoto();
         $result['code_error'] = 0;
         $result['success'] = true;
         $result['error'] = false;
