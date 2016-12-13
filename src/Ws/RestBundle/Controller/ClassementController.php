@@ -143,22 +143,27 @@ class ClassementController extends ApiController implements InterfaceDB
                 }
             }
             $arrayListClassement = array();
-            foreach($result['list_classement'] as $kListClassement => $itemsListClassement){
-                $arrayListClassement[] = $itemsListClassement['classement'];
-            }
-            arsort($arrayListClassement);
-            foreach($arrayListClassement as $k => $itemsArrayListClassement){
-                if($itemsArrayListClassement === $result['list_classement'][$k]['classement']){
-
-                    $arrayResult[] = array(
-                        'id' => $result['list_classement'][$k]['id'],
-                        'nom' =>  $result['list_classement'][$k]['nom'],
-                        'prenom' =>  $result['list_classement'][$k]['prenom'],
-                        'photo' => 'http://'.$this->getParameter('url_poulebet').'/upload/admin/users/'.$result['list_classement'][$k]['photo'],
-                        'classement' => $itemsArrayListClassement
-                    );
+            if (isset($result['list_classement'])){
+                foreach($result['list_classement'] as $kListClassement => $itemsListClassement){
+                    $arrayListClassement[] = $itemsListClassement['classement'];
                 }
+            }    
+            arsort($arrayListClassement);
+            $arrayResult = array();
+            if (isset($result['list_classement'])){
+                foreach($arrayListClassement as $k => $itemsArrayListClassement){
+                    if($itemsArrayListClassement === $result['list_classement'][$k]['classement']){
 
+                        $arrayResult[] = array(
+                            'id' => $result['list_classement'][$k]['id'],
+                            'nom' =>  $result['list_classement'][$k]['nom'],
+                            'prenom' =>  $result['list_classement'][$k]['prenom'],
+                            'photo' => 'http://'.$this->getParameter('url_poulebet').'/upload/admin/users/'.$result['list_classement'][$k]['photo'],
+                            'classement' => $itemsArrayListClassement
+                        );
+                    }
+
+                }
             }
             $result['list_classement'] = $arrayResult;
             $result['code_error'] = 0;
@@ -218,22 +223,27 @@ class ClassementController extends ApiController implements InterfaceDB
             }
             //var_dump($result['list_classement']); die;
             $arrayListClassement = array();
-            foreach($result['list_classement'] as $kListClassement => $itemsListClassement){
-                $arrayListClassement[] = $itemsListClassement['classement'];
-            }
-            arsort($arrayListClassement);
-            foreach($arrayListClassement as $k => $itemsArrayListClassement){
-                if($itemsArrayListClassement === $result['list_classement'][$k]['classement']){
-
-                    $arrayResult[] = array(
-                        'id' => $result['list_classement'][$k]['id'],
-                        'nom' =>  $result['list_classement'][$k]['nom'],
-                        'prenom' =>  $result['list_classement'][$k]['prenom'],
-                        'photo' => 'http://'.$this->getParameter('url_poulebet').'/upload/admin/users/'.$result['list_classement'][$k]['photo'],
-                        'classement' => $itemsArrayListClassement
-                    );
+            if (isset($result['list_classement'])){
+                foreach($result['list_classement'] as $kListClassement => $itemsListClassement){
+                    $arrayListClassement[] = $itemsListClassement['classement'];
                 }
+            }    
+            arsort($arrayListClassement);
+            $arrayResult = array();
+            if (isset($result['list_classement'])){
+                foreach($arrayListClassement as $k => $itemsArrayListClassement){
+                    if($itemsArrayListClassement === $result['list_classement'][$k]['classement']){
 
+                        $arrayResult[] = array(
+                            'id' => $result['list_classement'][$k]['id'],
+                            'nom' =>  $result['list_classement'][$k]['nom'],
+                            'prenom' =>  $result['list_classement'][$k]['prenom'],
+                            'photo' => 'http://'.$this->getParameter('url_poulebet').'/upload/admin/users/'.$result['list_classement'][$k]['photo'],
+                            'classement' => $itemsArrayListClassement
+                        );
+                    }
+
+                }
             }
             $result['list_classement'] = $arrayResult;
             $result['code_error'] = 0;
