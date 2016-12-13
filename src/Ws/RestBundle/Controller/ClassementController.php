@@ -78,6 +78,7 @@ class ClassementController extends ApiController implements InterfaceDB
                 }
             }
             arsort($arrayListClassement);
+            $arrayResult = array();
             if (isset($result['list_classement'])){
                 foreach($arrayListClassement as $k => $itemsArrayListClassement){
                     if($itemsArrayListClassement === $result['list_classement'][$k]['classement']){
