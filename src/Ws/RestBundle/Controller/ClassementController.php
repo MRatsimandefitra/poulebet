@@ -72,22 +72,26 @@ class ClassementController extends ApiController implements InterfaceDB
                 }
             }
             $arrayListClassement = array();
-            foreach($result['list_classement'] as $kListClassement => $itemsListClassement){
-                $arrayListClassement[] = $itemsListClassement['classement'];
+            if (isset($result['list_classement'])){
+                foreach($result['list_classement'] as $kListClassement => $itemsListClassement){
+                    $arrayListClassement[] = $itemsListClassement['classement'];
+                }
             }
             arsort($arrayListClassement);
-            foreach($arrayListClassement as $k => $itemsArrayListClassement){
-                if($itemsArrayListClassement === $result['list_classement'][$k]['classement']){
+            if (isset($result['list_classement'])){
+                foreach($arrayListClassement as $k => $itemsArrayListClassement){
+                    if($itemsArrayListClassement === $result['list_classement'][$k]['classement']){
 
-                    $arrayResult[] = array(
-                        'id' => $result['list_classement'][$k]['id'],
-                        'nom' =>  $result['list_classement'][$k]['nom'],
-                        'prenom' =>  $result['list_classement'][$k]['prenom'],
-                        'photo' => 'http://'.$this->getParameter('url_poulebet').'/upload/admin/users/'. $result['list_classement'][$k]['photo'],
-                        'classement' => $itemsArrayListClassement
-                    );
+                        $arrayResult[] = array(
+                            'id' => $result['list_classement'][$k]['id'],
+                            'nom' =>  $result['list_classement'][$k]['nom'],
+                            'prenom' =>  $result['list_classement'][$k]['prenom'],
+                            'photo' => 'http://'.$this->getParameter('url_poulebet').'/upload/admin/users/'. $result['list_classement'][$k]['photo'],
+                            'classement' => $itemsArrayListClassement
+                        );
+                    }
+
                 }
-
             }
             $result['list_classement'] = $arrayResult;
             $result['code_error'] = 0;
